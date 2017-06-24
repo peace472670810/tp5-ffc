@@ -1,0 +1,78 @@
+﻿<!--_meta 作为公共模版分离出去-->
+{include file="common/_meta"}
+<!--/meta 作为公共模版分离出去-->
+
+<title>分公司列表 - 账户管理 </title>
+</head>
+<body>
+<!--_header 作为公共模版分离出去-->
+
+<!--/_menu 作为公共模版分离出去-->
+
+<nav class="breadcrumb"><a href="{:url('index/welcome')}"><i class="Hui-iconfont">&#xe67f;</i> 首页 </a><span
+        class="c-gray en">&gt;</span> 彩种管理 <span class="c-gray en">&gt;</span>
+    <a href="{:url('lottery/getLottery')}">彩种列表</a><span class="c-gray en">&gt;</span>{$method}<span class="c-gray en">&gt;</span>奖金列表
+    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
+       href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="Hui-article">
+    <article class="cl pd-20 ">
+        <div class="mt-20">
+            <table class="table table-border table-bordered table-hover table-bg table-sort radius ">
+                <thead>
+                <tr class="text-c">
+                    <th width="30">PID</th>
+                    <!--<th width="80">彩种</th>-->
+                    <!--<th width="80">玩法组</th>-->
+                    <!--<th width="80">玩法</th>-->
+                    <th width="80">等级</th>
+                    <th width="80">奖金</th>
+                    <th width="80">封锁值</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="list" id="v"}
+                    <tr class="text-c">
+                        <td>{$v.p_id}</td>
+                        <!--<td></td>-->
+                        <!--<td></td>-->
+                        <!--<td></td>-->
+                        <td>{$v.p_level}</td>
+                        <td>{$v.p_prize}</td>
+                        <td>{$v.p_flock}</td>
+                    </tr>
+                {/volist}
+                </tbody>
+            </table>
+        </div>
+    </article>
+</div>
+
+
+<!--_footer 作为公共模版分离出去-->
+{include file="common/_footer"}
+<!--/_footer /作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="../../static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="../../static/lib/datatables/1.10.0/jquery.dataTables.js"></script>
+<script type="text/javascript" src="../../static/lib/laypage/1.2/laypage.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $('.table-sort').dataTable({
+            "aaSorting": [[1, "desc"]],//默认第几个排序
+            "bStateSave": true,//状态保存
+            //"aoColumnDefs": [
+            //   {"bVisible": true, "aTargets": [ 3 ]} //控制列的隐藏显示
+            //  {"orderable":true,"aTargets":[0,8,9]}// 制定列不参与排序
+
+            // ]
+            "aLengthMenu": [50]
+
+        });
+
+    });
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

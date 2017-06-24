@@ -1,0 +1,38 @@
+{if condition="!empty($page)"}
+    <div class="dataTables_info" style="float: left;" >显示 {$page.start} 到 {$page.end} ，共 {$page.total} 条，共{$page.pagecounts}页</div>
+    <div class="dataTables_info " style="float: right;" >
+        <a  href="{$page.pre_url}">上一页</a>
+        <span>
+            {$page.middle}
+        </span>
+        <a href="{$page.next_url}">下一页</a>
+    </div>
+{/if}
+
+<style type="text/css">
+    .dataTables_info{
+        padding-top: 10px;
+    }
+    .dataTables_info a{
+        text-decoration: none !important;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        display: inline-block;
+        margin-left: 2px;
+        text-align: center;
+        text-decoration: none;
+        color: #666;
+        height: 26px;
+        line-height: 26px;
+        padding: 0 10px;
+        font-size: 14px;
+    }
+    .dataTables_info a:hover{
+        background: #5a98de;
+        color: #fff;
+    }
+    .dataTables_info a.current{
+        background: #5a98de;
+        color: #fff;
+    }
+</style>

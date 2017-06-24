@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>追号详情</title>
+
+        <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+        <script src="js/common.js" type="text/javascript"></script>
+        <script type="text/javascript" src="js/layer/layer.min.js"></script> <!-- layer调用弹出层 -->
+
+        <link href="css/package.css" rel="stylesheet" type="text/css"></link>
+    </head>
+    <body class="BodyMain">
+        <div class="GameBoxall SubGamePlatePadding" style="width:1000px; margin:0 auto;">
+            <div class="Gamepart" style="  padding-bottom:30px;">
+                <script>
+                    $(function () {
+                        $('#form1 :checkbox').click(function () {
+                            var pt = this;
+                            $.each($(this).parent().parent().nextAll(), function (k, v) {
+                                $(this).find(':checkbox').attr('checked', $(pt).attr('checked'));
+                            });
+                        });
+
+                        if ($('#form1 :checkbox').length > 0) {
+                            $('input[name=cancel]').css('display', '');
+                        }
+                        else {
+                            //$('input[name=cancel]').remove();
+                        }
+                    });
+                </script>
+
+                <div>
+                    <div class="BSrecordsBox h-100">
+                        <ul class="recordsInput">
+                            <li><span class="yellow_14px">追号单编号：<?php echo $trace['wrap_id']; ?></span></li>
+                        </ul>
+                        <div class="orderDetxinxi">
+                            <p class="yellow_14px">追号单摘要</p>
+                            <ul class="orderDetxinxiBg1">
+                                <li>游戏：<span><?php echo $lottery['cname']; ?></span></li>
+                                <li>模式：<span><?php echo $GLOBALS['cfg']['modes'][$trace['modes']]; ?></span></li>
+                            </ul>
+                            <ul class="orderDetxinxiBg2">
+                                <li class="btbg2_right">单倍注数：<span><?php echo $trace['single_num']; ?></span></li>
+                                <li class="btbg2_right">总追号倍数：<span><?php echo $trace['total_multiple']; ?></span></li>
+                            </ul>
+                            <ul class="orderDetxinxiBg1">
+                                <li class="btbg2_right">计划追号期数：<span><?php echo $trace['trace_times']; ?></span></li>
+                                <li class="btbg2_right">计划总金额：<span><?php echo $trace['total_amount']; ?></span></li>
+                            </ul>
+                            <ul class="orderDetxinxiBg2">
+                                <li>奖金系列： <span> <?php echo $prizeMode; ?>系列 </span> </li>
+                                <li>中奖即停止： <span> <?php
+                                        if ($trace['stop_on_win'])
+                                            echo '是';
+                                        else
+                                            echo '否';
+                                        ?> </span> </li>
+                            </ul>
+                            <ul class="orderDetxinxiBg1">
+                                <li>追号状态：<span><?php if ($trace['status'] == 0): ?>未开始
+                                            <?php else: ?>
+                                            <b>
+                                                <?php if ($trace['status'] == 1): ?>正在进行
+                                                <?php elseif ($trace['status'] == 2): ?>已完成
+                                                <?php elseif ($trace['status'] == 3): ?>已取消
+                                            <?php endif; ?>
+                                            </b>
+<?php endif; ?></span></li>
+                                <li>投注时间：<span><?php echo $trace['create_time']; ?></span></li>
+                            </ul>
+                            <ul class="orderDetxinxiBg1">
+                            </ul>
+                        </div>
+                        <div class="order-first">
+                            <p class="orderDetxiangxTitle">订单明细</p>
+                            <ul class="orderDetxiangxCont1">
+                                <li> <span>玩法名称</span> <span>投注内容</span> <span>投注注数</span> <span>投注金额</span><span>最高奖金</span> </li>
+                            </ul>
+                            <ul class="orderDetxiangxCont2 colorfff">
+<?php foreach ($projects as $v): ?>
+                                    <li>
+                                        <span><?php echo $methods[$v['method_id']]['cname']; ?></span>
+                                        <span><?php echo $v['code']; ?></span>
+                                        <span><strong style=" color:#280"><?php echo $v['single_num']; ?></strong></span>
+                                        <span><strong style=" color:#f60"><?php echo $v['amount']; ?></strong></span>
+                                        <span><strong style=" color:#f60"><?php echo $v['will_prize']; ?></strong></span>
+                                    </li>
+<?php endforeach; ?>
+                            </ul>
+                        </div>
+                        <form name="form1" id="form1" action="index.php?c=api&a=cancelTrace" method="post">
+                            <input type="hidden" name="<?php echo isset($GLOBALS['urlSessionName']) ? $GLOBALS['urlSessionName'] : ''; ?>" value="<?php echo isset($GLOBALS['urlSessionValue']) ? $GLOBALS['urlSessionValue'] : ''; ?>"/>
+                            <p class="orderDetxiangxTitle">各期追号详情</p>
+                            <ul class="orderDetxiangxCont1 list_w">
+                                <li> <span>操作</span>
+                                    <span>追号期号</span>
+                                    <span >开奖号码</span>
+                                    <span>当期倍数</span>
+                                    <span>投注金额</span>
+                                    <span>中奖金额</span>
+                                    <span>订单状态</span>
+                                </li>
+                            </ul>
+                            <ul class="orderDetxiangxCont2 colorfff list_w">
+<?php foreach ($packages as $v): ?>
+                                    <li style=" border-bottom:1px dashed #ddd; height:24px; line-height:24px;">
+                                        <span>
+                                            <?php if ($isSelf): ?>
+                                                <?php if ($issueInfos[$v['issue']]['end_sale_time'] > $nowTime && $v['cancel_status'] == 0): ?>
+                                                    <input type="checkbox" name="pkids[]" value="<?php echo $v['package_id']; ?>"/>
+                                                <?php endif; ?>
+    <?php endif; ?>
+                                            &nbsp;
+                                        </span>
+
+                                        <span> <a target="_blank" href="/?c=api&a=packageDetail&wrap_id=<?php echo $v['wrap_id']; ?><?php echo isset($GLOBALS['urlSession']) ? $GLOBALS['urlSession'] : ''; ?>" title="查看订单详情"><?php echo $v['issue']; ?></a></span>
+                                        <span class="width_poker">
+                                            <?php if (isset($openCodes[$v['issue']])): ?>
+                                                    <?php if ($lottery['lottery_id'] == 14): ?>
+                                                    <div class="poker_kj" style="float:left;">
+                                                        <?php foreach ($openCodes[$v['issue']] as $code): ?>
+                                                            <span class="poker_kj_num <?php echo $code['suit']; ?>"><i></i><em><?php echo $code['num']; ?></em></span>
+                                                    <?php endforeach; ?>
+                                                    </div>
+                                                <?php else: ?>
+                                                    <?php echo $openCodes[$v['issue']]; ?>
+                                                <?php endif; ?>
+    <?php else: ?> &nbsp; <?php endif; ?>
+                                        </span>
+                                        <span><?php echo $v['multiple']; ?></span>
+                                        <span><strong style=" color:#280"><?php echo $v['amount']; ?></strong></span>
+                                        <span><strong><?php echo $v['prize']; ?></strong></span>
+                                        <span>
+                                            <?php if ($v['cancel_status'] > 0): ?>
+                                                <?php if ($v['cancel_status'] == 1): ?><font style=" color:#888;">个人撤单</font>
+                                                <?php elseif ($v['cancel_status'] == 2): ?><font style=" color:#888;">追中撤单</font>
+                                                <?php elseif ($v['cancel_status'] == 3): ?><font style=" color:#888;">出号撤单</font>
+                                                <?php elseif ($v['cancel_status'] == 4): ?><font style=" color:#888;">未开撤单</font>
+                                                <?php elseif ($v['cancel_status'] == 9): ?><font style=" color:#888;">公司撤单</font>
+                                                <?php endif; ?>
+                                                <?php else: ?>
+                                                <?php if ($v['check_prize_status'] == 0): ?><font style=" color:#000;">未开奖</font>
+                                                <?php elseif ($v['check_prize_status'] == 1): ?><strong style=" color:#280">已中奖</strong>
+                                                <?php else: ?><font style=" color:#f00;">未中奖</font>
+                                                <?php endif; ?>
+    <?php endif; ?>
+                                        </span>
+                                    </li>
+<?php endforeach; ?>
+                            </ul>
+                            <ul class="orderDetxiangxCont2-center">
+                                <?php if ($isSelf): ?>
+                                    <?php if ($trace['cancel_status'] == 0): ?>
+                                        <input type="button" class="btnOne" name="cancel" style="display:none" value="撤单" onclick="if (confirm('您真的要撤单吗？')) {
+                                                    this.form.submit();
+                                                }"/>
+                                           <?php endif; ?>
+<?php endif; ?>
+                                <input type="hidden" name="wrap_id" value="<?php echo $trace['wrap_id']; ?>" />
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+ 
+            </div>
+        </div>
+
+
+     
+    </body>
+</html>

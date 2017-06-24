@@ -1,0 +1,10 @@
+$(document).ready(function(){
+$("tr:odd").addClass("intro1");
+$("tr").mouseover(function(){
+	$(this).addClass("change");
+	})
+$("tr").mouseout(function(){
+	$(this).removeClass("change");
+	})
+$("tr:even").addClass("intro2")
+})

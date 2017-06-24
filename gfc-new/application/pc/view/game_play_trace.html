@@ -1,0 +1,127 @@
+<div class="beitouToolsBox">
+	<ul class="beitouToolsTop">
+		<li class="beitouToolsTopContent">
+			<ul>
+				<li class="beitouToolsTopCont1">单倍注数<span id="singleNum"></span>注,购买<span id="issuesNum2"></span>期,合计￥<span id="traceTotalAmount"></span></li>
+				<li class="beitouToolsButton"><span class="btnOne" id="confirmTraceBtn">确认追号</span><span class="btnOne" id="cancelTraceBtn">取消追号</span></li>
+			</ul>
+		</li>
+		<li class="beitouToolsTopR"></li>
+	</ul>
+	<ul class="beitouToolsQs">
+		<li>期数倍数
+            <span>
+			<input type="radio" name="multipleStyle" id="multipleStyle1" value="1" class="radio1" />
+			<label for="multipleStyle1">自定义</label>
+			</span>
+            <span>
+			<input type="radio" name="multipleStyle" id="multipleStyle2"  value="2" class="radio1" />
+			<label for="multipleStyle2">倍投工具</label>
+			</span>
+            <span>
+                当前期倒计时：<label id="remainTimerLabel"></label>
+            </span>
+        </li>
+	</ul>
+	<ul class="beitouToolsQishi">
+		<li class="beitouToolsQishiL"><span>起始</span> <span>
+			<select id="startIssue">
+				<?php foreach ($issues as $v): ?>
+				<option value="<?php echo $v['issue']; ?>"><?php echo $v['issue']; ?>期</option>
+				<?php endforeach; ?>
+			</select>
+			</span> </li>
+		<li class="beitouToolsQishiR">追
+			<input type="text" id="traceNum" class="zhuiz_number_e2" value="1" size="5"  maxlength="5" />
+			期(包含当前期最多追<span><?php echo count($issues); ?></span>期)</li>
+	</ul>
+	<div class="beitouToolsmainBox">
+		<div style="display:block;" id="multipleStyle1DIV">
+			<ul class="beitouToolsmainBoxTop" id="style1Head">
+				<li>期号</li>
+				<li>倍数</li>
+				<li>当前投入</li>
+				<li>累计投入</li>
+			</ul>
+			<ul class="beitouToolsmainBoxCont" id="style1Body">
+				<!--
+          <li>
+           <span>123456789021</span>
+           <span><input type="text" value="1" class="beitouToolsinput style1BodyMultiple" /></span>
+           <span>10.00</span>
+           <span>100.00</span>
+         </li>
+          -->
+			</ul>
+		</div>
+		<div class="beitouToolSmainbt" id="multipleStyle2DIV" style="display:none;">
+			<p>起始倍数
+				<input type="text" value="1" class="beitouToolsinput" name="startMultiple" id="startMultiple" maxlength="5" size="5"/>
+			</p>
+			<ul class="beitouToolSmainbtzk" id="beitouToolSmainbtzk">
+				<li>
+					<input type="radio" name="profitStyle"  value="1" />
+					全程利润率:
+					<input type="text" size="5" value="10" name="totalProfitRate" class="beitouToolsinput" class="beitouToolsinput" />
+					% </li>
+				<li>
+					<input type="radio" name="profitStyle"  value="2"/>
+					前
+					<input type="text" size="5" value="5" name="first5Rate" class="beitouToolsinput"/>
+					期利润率
+					<input type="text" size="5"  class="beitouToolsinput" value="10" name="first5RateValue"/>
+					%,之后利润率
+					<input type="text" size="5" value="5" class="beitouToolsinput" name="laterRateValue"/>
+					% </li>
+				<li>
+					<input type="radio" name="profitStyle"  value="3"/>
+					全程累计利润:
+					<input type="text" size="5" value="100" name="totalProfit" class="beitouToolsinput" />
+					元 </li>
+				<li>
+					<input type="radio" name="profitStyle" value="4"/>
+					前
+					<input type="text" size="5" value="5" class="beitouToolsinput" name="first5Profit" />
+					期累计利润
+					<input type="text" size="5"  class="beitouToolsinput" value="100" name="first5ProfitValue" />
+					元,之后累计利润
+					<input type="text" size="5" value="50" class="beitouToolsinput"  name="laterProfitValue" />
+					元 </li>
+			</ul>
+			<span class="beitouTooltzjhb">
+			<input type="button"  class="bt_tools_navys" id="generalPlanBtn" value="生成投资计划表"/>
+			</span>
+			<ul class="beitouToolSmainbtContTop" id="style2Head">
+				<li class="spanWidth90px">期号</li>
+				<li class="spanWidth50px">倍数</li>
+				<li class="spanWidth70px">当前投入</li>
+				<li class="spanWidth70px">累积投入</li>
+				<li class="spanWidth70px">当期奖金</li>
+				<li class="spanWidth70px">合计利润</li>
+				<li class="spanWidth70px">利润率</li>
+			</ul>
+			<ul class="beitouToolSmainBTContZneir" id="style2Body">
+				<!--
+           <li>
+             <span class="spanWidth90px"></span>
+             <span class="spanWidth50px"></span>
+             <span class="spanWidth70px"></span>
+             <span class="spanWidth70px"></span>
+             <span class="spanWidth70px"></span>
+             <span class="spanWidth70px"></span>
+             <span class="spanWidth70px"></span>
+           </li>
+            -->
+			</ul>
+		</div>
+		<div class="beitouToolsfotter">
+			<p>
+				<input  type="checkbox" value="1" name="stopOnWin" checked="checked" />
+				<span style="font-weight:bold;">中奖后停止</span>&nbsp;&nbsp;按照开奖的先后顺序，当有奖期中奖后，系统自动对未开奖的奖期进行撤单。</p>
+			<!--
+      <p><input type="checkbox" value="" checked="checked" />
+          <span style="font-weight:bold;">出号后放弃</span>&nbsp;&nbsp;延后投注时，投注号码提前开出，自动放弃后面几期投注操作。</p>
+      --> 
+		</div>
+	</div>
+</div>

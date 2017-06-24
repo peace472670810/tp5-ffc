@@ -1,0 +1,175 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5shiv.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="../../static/static/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="../../static/static/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="../../static/lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="../../static/static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="../../static/static/h-ui.admin/css/style.css" />
+<!--[if IE 6]>
+<!/meta 作为公共模版分离出去-->
+
+<title>订单管理 > 追号列表 </title>
+</head>
+<body>
+<nav class="breadcrumb"><a href="{:url('index/welcome')}"><i class="Hui-iconfont">&#xe67f;</i> 首页 </a><span class="c-gray en">&gt;</span> 订单管理 <span class="c-gray en">&gt;</span> <a href="{:url('order/getTrace')}">追号列表</a><a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+	<div class="Hui-article">
+		<article class="cl pd-20">
+	<div class="text-c">
+	  <form action="{:url('order/getTrace')}" method="post">
+	  	追号单编号：<input type="text"  name="ffc_id" value="{$data['ffc_id']}" id="" placeholder="订单编号" style="width:250px" class="input-text radius ">
+	  		&nbsp;彩种名称：<span class="select-box inline radius">
+		<select name="ffc_lid" class="select">
+			<option value>--全部彩种--</option>
+{foreach name="lottery" item="vo" }
+    <option value="{$key}" {eq name="$key" value="$data['ffc_lid']"}selected="selected"{/eq} >{$vo}</option>
+{/foreach}
+		</select>
+		</span>	
+		
+			&nbsp;	 开始追号奖期：
+		<input type="text" name="t_start_issue" id="" placeholder="开始追号奖期" style="width:120px" class="input-text radius " value="{$data['t_start_issue']}">
+			<!-- &nbsp;	是否测试账号：
+		<span class="select-box inline radius">
+		<select name="is_test" class="select  ">
+			<option value="1">测试</option>
+			<option value="0" selected="selected">非测试</option>
+		</select> 
+		</span>	 -->
+	
+		<br/><br/>
+		&nbsp;用户名：<input type="text" name="ffc_username" value="{$data['ffc_username']}" id="" placeholder="用户名" style="width:250px" class="input-text radius ">
+		&nbsp;游戏时间：
+		<input type="text"onFocus="WdatePicker({startDate:'%y-%M-%d 00:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})" id="logmin" class="input-text Wdate radius" style="width:165px;" name="start_time" value="{$data['start_time']}">-
+		<input type="text"  name="end_time" onFocus="WdatePicker({startDate:'%y-%M-%d 23:59:59',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})" id="logmax" class="input-text Wdate radius" style="width:165px;" value="{$data['end_time']}">
+		&nbsp;				
+		<button name="" id="" class="btn btn-success radius" type="submit"><i class="Hui-iconfont">&#xe665;</i> 查看</button>
+		</form>
+			</div>
+
+
+
+<!-- 			<div class="cl pd-5 bg-1 bk-gray mt-20 radius ">&nbsp;&nbsp;&nbsp;&nbsp;
+			 <span class="2"> <a href="javascript:;" target="iframeone" onclick="member_add('账户管理 > 用户列表 > 添加分公司','{:url("User/addBranch")}','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加分公司</a></span> &nbsp;&nbsp;&nbsp;&nbsp;
+			  <span class="2"> <a href="javascript:;" onclick="member_add('账户管理 > 用户列表 > 添加股东','{:url("User/addShareholders")}','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加股东</a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			   <span class="2"> <a href="javascript:;" onclick="member_add('账户管理 > 用户列表 > 添加总代','{:url("User/addGeneral")}','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加总代</a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			    <span class="2"> <a href="javascript:;" onclick="member_add('账户管理 > 用户列表 > 添加代理','{:url("User/addAgent")}','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加代理</a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			    <span class="2"> <a href="javascript:;" onclick="member_add('账户管理 > 用户列表 > 添加会员','{:url("User/addMembers")}','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加会员</a></span>
+			 </div> -->
+		<div class="mt-20 " >	
+				<table class="table table-border table-bordered table-hover table-bg table-sort radius">
+					<thead>
+						<tr class="text-c ">
+						    <th width="120">追号单编号</th>	
+				            <th width="120">帐户名</th>								
+							<th width="40">彩种类型</th>
+							<th width="60">开始追号奖期</th>
+							<th width="20">追号期数</th>
+							<th width="20">单倍注数</th>
+                            <th width="30">总倍数</th>
+                            <th width="30">总金额</th>
+							<th width="20">完成期数</th>
+							<th width="30">模式</th>
+							<th width="30">追中即停？</th>
+							<th width="70">购买时间</th>
+							<th width="30">追号状态</th>
+							<th width="30">撤单状态</th>
+							<th width="10">中奖次数</th>
+						</tr>
+					</thead>
+					<tbody>
+					{volist name="list" id="v"}
+					  <tr class="text-c">
+							<td><a class="maincolor" href="javascript:;" onclick="picture_edit('追号订单详情','{:url('order/traceDetail')}?id={:traceWrapid($v.t_id,$v.t_start_issue,$v.t_lid)}','10001')">
+                            {:traceWrapid($v.t_id,$v.t_start_issue,$v.t_lid)}
+							</a></td>
+							<td>{$v.t_username}</td>
+							{eq name="$v.t_lid" value="2"}<td>CQSSC</td>{/eq}
+							{eq name="$v.t_lid" value="6"}<td>PK0</td>{/eq}
+							{eq name="$v.t_lid" value="8"}<td>XJSSC</td>{/eq}
+							{eq name="$v.t_lid" value="9"}<td>JXKS</td>{/eq}
+                            {eq name="$v.t_lid" value="14"}<td>TJSSC</td>{/eq}
+							{eq name="$v.t_lid" value="24"}<td>GD115</td>{/eq}
+							{eq name="$v.t_lid" value="26"}<td>SY115</td>{/eq}
+							{eq name="$v.t_lid" value="27"}<td>JX115</td>{/eq}
+							{eq name="$v.t_lid" value="28"}<td>FC3D</td>{/eq}
+							{eq name="$v.t_lid" value="29"}<td>P3P5</td>{/eq}
+							{eq name="$v.t_lid" value="30"}<td>HBKS</td>{/eq}
+							<td>{$v.t_start_issue}</td>
+							<td>{$v.t_trace_times}</td>
+							<td>{$v.t_single_num}</td>
+       						<td >{$v.t_total_multiple}</td>
+							<td>{$v.t_total_amount}</td>
+							<td>{$v.t_finish_times}</td>
+							{eq name="$v.t_modes" value="1"}<td>2元</td>{/eq}
+							{eq name="$v.t_modes" value="0.5"}<td>1元</td>{/eq}
+							{eq name="$v.t_modes" value="0.1"}<td>2角</td>{/eq}
+							{eq name="$v.t_modes" value="0.05"}<td>1角</td>{/eq}
+							{eq name="$v.t_modes" value="0.01"}<td>2分</td>{/eq}
+							{eq name="$v.t_modes" value="0.005"}<td>1分</td>{/eq}
+							
+							{eq name="$v.t_stop_on_win" value="1"}<td>是</td>{/eq}
+							{eq name="$v.t_stop_on_win" value="2"}<td>否</td>{/eq}
+							<td>{$v.t_add_time}</td>
+							
+							{eq name="$v.t_status" value="0"}<td>未开始</td>{/eq}
+							{eq name="$v.t_status" value="1"}<td>正在进行</td>{/eq}
+							{eq name="$v.t_status" value="2"}<td>已完成</td>{/eq}
+							{eq name="$v.t_status" value="3"}<td>已取消</td>{/eq}
+							<td>{$v.t_status}</td>
+							<td>{$v.t_win_times}</td>
+			         </tr>
+					{/volist}
+					</tbody>
+				</table>
+			</div>
+		</article>
+	</div>
+
+
+<!--_footer 作为公共模版分离出去-->
+{include file="common/_footer"}
+<!--/_footer /作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="../../static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="../../static/lib/datatables/1.10.0/jquery.dataTables.js"></script>
+<script type="text/javascript" src="../../static/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('.table-sort').dataTable({
+		"aaSorting": [[ 1, "desc" ]],//默认第几个排序
+		"bStateSave": true,//状态保存
+		
+	});
+	$('.table-sort tbody').on( 'click', 'tr', function () {
+		if ( $(this).hasClass('selected') ) {
+			$(this).removeClass('selected');
+		}
+		else {
+			table.$('tr.selected').removeClass('selected');
+			$(this).addClass('selected');
+		}
+	});
+});
+function picture_edit(title,url,id){
+	var index = layer.open({
+		type: 2,
+		title: title,
+		content: url
+	});
+	layer.full(index);
+}
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

@@ -1,0 +1,125 @@
+@charset "utf-8";
+/* CSS Document */
+/*resetCSS*/
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td{
+padding:0;margin:0;}
+table{border-collapse: collapse;}
+fieldset,img{border:0;}
+address,caption,cite,code,dfn,em,var{font-weight: normal;font-style: normal;}
+ol, ul {list-style: none;}
+caption{text-align: left;}
+h1,h2,h3,h4,h5,h6{font-weight: normal;font-size:100%;}
+q:before,q:after{}
+abbr,acronym{border:0;}
+/*resetCSS*/
+/* MainCSS */
+body { width:100%; height:100%;font-size:12px;font-family: Tahoma, "\5FAE\8F6F\96C5\9ED1";color:#333; }
+body.loginbody{ height:100%; background:#39322a url(../images/bodybg-fuzzy.jpg) no-repeat top center; width:100%; height:100%;font-size:12px;font-family: Tahoma, "\5FAE\8F6F\96C5\9ED1";color:#333; }
+.fl{float:left;}.fr{float:right;}
+a{ color:#333;text-decoration:none;}
+a:hover{ color:#e40000;text-decoration:none;}
+.clear{clear:both; width:100%; height:0px; overflow:hidden;}
+.clear10{clear:both; width:100%; height:10px; overflow:hidden;}
+.clear20{clear:both; width:100%; height:20px; overflow:hidden;}
+input,textarea,select{font-family:"\5FAE\8F6F\96C5\9ED1";}
+.hide{ display:none;}
+/*************************************新登录***************************************/
+.bg{ position:absolute; z-index:-999; width:100%; height:100%; overflow:hidden; text-align:center;}
+.wg{ position:absolute; background:url(../images/bodybg.jpg) no-repeat top center; width:100%; height:100%; z-index:-1;}
+.loginCont{ width:100%;}
+.logoForm{ width:460px; padding:10px 0; position:absolute;height:400px;left:50%;top:40%;margin-left:-245px; margin-top:-190px;}
+/* logo */
+.logoForm dt{ width:100%; margin-top:0; float:left;}
+.logoForm .logo{ background:url(../images/logo.png) no-repeat; width:335px; height:113px; margin:0 auto;}
+.logoForm .MemberLogin{background: url(../images/memberlogin.png) no-repeat; width:95px; height:83px; margin:0px auto auto;}
+/* login */
+.logoForm dd{ width:100%; margin-top:0px; float:left;}
+.logoForm ul{ width:100%}
+.logoForm ul li{ width:100%; float:left; margin-top:15px;}
+.logoForm ul li label{ width:90px; float:left; font-size:18px; line-height:40px; text-align:center; color:#333;/*text-shadow: 1px 1px 0px #333;*/}
+.logoForm ul li .txt01{ background:url(../images/txtbg.png) no-repeat;width:290px; float:left; height:40px; line-height:40px; border:none; padding-left:10px; color:#fff; font-size:14px;}/* 文本 */
+/* 登陆按钮 */
+.logoForm ul li .btn_login{ background: url(../images/btn01.png) no-repeat top; width:145px; height:41px; line-height:41px; border:none; display:block; float:left; font-size:16px; color:#fff; cursor:pointer;text-shadow: 1px 1px #000}
+.logoForm ul li .btn_login:hover{ background: url(../images/btn01.png) no-repeat bottom; color:#ff0;}
+/* 忘记密码 */
+.logoForm ul li .btn_forgotPSW{background: url(../images/btn02.png) no-repeat top; width:145px; height:41px; line-height:41px; border:none; display:block; float:left;margin-left:10px; font-size:16px; color:#fff; cursor:pointer;text-shadow: 1px 1px #000}
+.logoForm ul li .btn_forgotPSW:hover{background: url(../images/btn02.png) no-repeat bottom;color:#ff0;}
+/* 验证 */
+.tips{ position:absolute;width:400px;height:40px;line-height:40px; left:490px; text-align:left;}
+/*版权*/
+.footer{ width:100%; color:#333; font-size:12px; height:20px; line-height:20px; text-align:center; position:fixed; _position:absolute; bottom:0px; background: url(../images/copyrightBG.png) repeat-x;}
+
+.k_piao{/* background:url(../images/kfu.jpg) no-repeat; */ width:130px; height:160px; position:fixed; right:7%; bottom:10%; z-index:9999; }
+.k_close{ width:16px; height:16px; display:block; position:absolute;right:0; top:0; cursor:pointer; }
+
+/************************************注册页面****************************************************/
+.Reg_page{ background:url(../images/reg_background.jpg) no-repeat center 80px; width:100%; height:900px;}
+.Reg_header{ width:100%; height:85px; background:#19afe6; border-bottom:1px solid #1e9dcc; overflow:hidden;}
+.topcent{ width:1000px; height:64px; line-height:64px; margin:8px auto; overflow:hidden;}
+.Reglogo{ float:left; width:329px;}
+.TopLink{ float:right; width:300px; text-align:center; color:#fff;}
+.TopLink a{ color:#ff0;}
+.TopLink a:hover{ text-decoration:underline;}
+	
+.RegMain{ background:url(../images/reg_translucentBg.png) no-repeat top center; width:1000px; height:680px; margin:30px auto; overflow:hidden}
+.RegDl{ width:580px; margin:50px auto;}
+.RegDl dt h1{}
+.RegDl dd{ margin-top:50px; width:100%;}
+.RegDl dd ul{}
+.RegDl dd ul li{ width:100%; height:60px; margin-top:5px; clear:both;}
+.RegDl dd ul li label{ width:100px; float:left; height:30px; line-height:33px; text-align:center; }
+.RegDl dd ul li .reginput{ float:left; border:1px solid #c0c0c0; width:370px;  height:38px; padding-left:10px; line-height:38px;border-radius:5px; font-size:14px;}
+.RegDl dd ul li .regyzm{ float:left; border:1px solid #c0c0c0; width:180px;  height:38px; padding-left:10px; line-height:38px; border-radius:5px;font-size:14px;}
+.RegDl dd ul li i{ height:25px; line-height:25px; padding-left:100px; float:left; font-style: normal; font-size:12px; width:382px; clear:both;}
+#agree,#code{cursor: pointer;}
+.RegBtn{ background:url(../images/reg_btn01.gif) no-repeat top; width:380px; height:40px; border:none;cursor: pointer;}
+.RegBtn:hover{background:url(../images/reg_btn01.gif) no-repeat bottom;}
+/*---------------------------------------注册成功弹出层页面--------------------------------------*/
+.popLayer {display:none; }
+.reg_poplayer{ width:470px; background:#f0f0f0; position:absolute;top:50%; left:50%; margin-left:-235px;margin-top:-120px; text-align:center; line-height:30px;  z-index:999}
+.CloseLayer{ position:absolute; right:10px; top:10px;}
+.reg_poplayer dl dt{ width:100%; height:46px; line-height:46px; background:#19afe6;}
+.reg_poplayer dl dt h1{ text-indent:1em; color:#fff; font-size:20px; width:100%; text-align:left;}
+.reg_poplayer dl h2{ font-size:14px}
+.reg_poplayer dl label{ font-size:14px; font-weight:bold;}
+.reg_poplayer dl dd{ width:100%; padding:20px 0 10px 0;}
+.reglogin{ background:url(../images/regok_btn.png) no-repeat top; width:160px; height:30px; display: inline-block; border:none; margin:10px auto;}
+.reglogin:hover{background:url(../images/regok_btn.png) no-repeat bottom;}
+.maskLayer { width:100%; height:100%; background: url(../images/masklayer.png) repeat; position:absolute; top:0; left:0; z-index:0; }
+/*--------------------------------------- 首页红包弹出框 --------------------------------------------*/
+.popLayer { display:none; }
+.maskLayer { width:100%; height:100%; background: url(../images/blue/masklayer.png) repeat; position:absolute; top:0; left:0; z-index:100; }
+.redEnvelopeLayer { width:702px; margin:0 auto; position:absolute; top:70px; left:50%; margin-left:-350px; z-index:999; }
+.redEnvelopeTop { width:702px; height:58px; background:url(../images/blue/red_layer_top.png) no-repeat; position: relative; float:left; }
+.CloseLayer_red { width:25px; height:25px; background:url(../images/blue/red_close.png) no-repeat top; position:absolute; top:17px; right:20px; }
+.CloseLayer_red:hover { background:url(../images/blue/red_close.png) no-repeat bottom; }
+.redEnvelopeFoot { background:url(../images/blue/red_layer_bottom.png) no-repeat; width:702px; height:102px; float:left; }
+.redEnvelopeMain { float:left; width:702px; background:#fff0d6; }
+.redEnvelopeTab { width:95%; margin:20px auto; }
+.redEnvelopeTab th { height:35px; font-size:14px; border-bottom:1px dotted #ccc;  }
+.redEnvelopeTab td { border-bottom:1px dotted #ccc; font-size:12px; line-height:30px; }
+.org { color:#ff7200; }
+.green { color:#31a00d; }
+.gray { color:#b2b2b2; }
+.yellow { color:#cc8b00 }
+.money { font-size:16px; font-family:  Verdana, Geneva, sans-serif; font-weight:bold; color:#ff7200; width:70%; margin:0 auto; display:inline-block; text-align:left; }
+a.receive { background:url(../images/blue/red_btn_receive.png) no-repeat; width:42px; height:18px; line-height:18px; display:inline-block; font-size:12px; color:#fff; text-decoration:none; }
+a.receive:link{ color:#fff;}
+a.receive:hover { color:#ff0 }
+a.disreceive { background: url(../images/blue/red_btn_receive_dis.png) no-repeat; width:42px; height:18px; line-height:18px; display:inline-block; font-size:12px; color:#999; text-decoration:none; }
+.tips_red { color:#666; }
+.RedEnvelope { background: url(../images/blue/red_topIcon.png) no-repeat; width:30px; height:20px; position:relative; float:right; margin:10px 0 0 10px; }
+.RedEnvelope em { width:15px; height:14px; line-height:14px; text-align:center; position:absolute; right:0; top:0; font-size:10px; font-family:Arial, Helvetica, sans-serif; color:#fff; font-style:normal; }
+
+/*4字按钮*/
+.receive2 { background:url(../images/blue/red_btn_receive2.png) no-repeat top; width:56px; height:18px; line-height:18px; display:inline-block; font-size:12px; color:#fff; text-decoration:none; }
+.receive2:link{ color:#fff;}
+.receive2:hover { color:#ff0 }
+.disreceive2 { background: url(../images/blue/red_btn_receive2.png) no-repeat bottom; width:56px; height:18px; line-height:18px; display:inline-block; font-size:12px; color:#999; text-decoration:none; }
+/*2*/
+/* 展开收缩 */
+.togStyle { display:none; text-align:left; line-height:20px; width:86%; margin:0 auto; color:#555; padding:10px 7%; background:#feeccc; border-bottom:1px dotted #ccc; }
+.slidetog_div a { width:11px; height:11px; display:inline-block; background:url(../images/blue/tog.gif) no-repeat top; margin-left:5px; }
+.slidetog_div a.a_sub { width:11px; height:11px; display:inline-block; background:url(../images/blue/tog.gif) no-repeat bottom; margin-left:5px;  }
+.thTittle{ width:48px; margin:0 auto; display:block;}
+.thTittle em{ float:left; font-style:normal;}

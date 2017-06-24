@@ -1,0 +1,100 @@
+
+a:visited { color: #3333ff;}
+a{ text-decoration: none;}
+
+table{ border-collapse: collapse; border-spacing: 1px; border-color: grey;}
+.table1{ text-align: left; border-collapse: collapse; border: 1px solid black; width: 90%; padding: 1px; margin-left: 50px;}
+.table2{ float: left; border-collapse: collapse; width: 300px; padding: 0; margin: 0；}
+.table3{ text-align: left; border-collapse: collapse; border: 1px solid black; width: 50%; padding: 1px;}
+.table4{ float: left; border-collapse: collapse; width: 280px; padding: 0; margin: 0；}
+.table5{ border-collapse: collapse; width: 100%; padding: 0; margin: 0；}
+
+.button1{ margin: 10px; cursor: pointer; width: 40px; height: 25px; float: left; text-align: center; background: url(../images/redblack/agent/add.png) no-repeat;}
+.button2{ margin: 10px; cursor: pointer; width: 38px; height: 25px; float: right; text-align: center; background: url(../images/redblack/agent/minus.png) no-repeat;}
+
+th { border: 1px solid #bac5cf;}
+td{ border-collapse: collapse; border: 1px solid #bac5cf; padding: 1px; height: 28px;}
+
+.color{ color: #33CC33;}
+.red{ color:red;}
+
+input[type=text] { width: 40px; height: 18px; display: inline-block; font: 14px Helvetica, sans-serif; text-align: center;}
+input[type="radio"] { margin: 3px 3px 0px 5px;}
+[type=radio]:checked ~ .tabSelect ~ .content { z-index: 1;}
+
+ul { list-style-type: none; margin: 0; padding: 0;}
+
+.mid{ width: 100%; color: white;}
+
+.td-mid{ vertical-align: middle;}
+.td-top{ vertical-align: top;}
+
+#home-scroll-m{ width: auto; height: 30px; color: #fff; font-size: 14px; background-color: black;}
+
+body{ font-family: Tahoma, Arial, Helvetica, "Microsoft YaHei New", "Microsoft Yahei", "微软雅黑", 宋体, SimSun, STXihei, "华文细黑", sans-serif; width: 100%; height: 100%; font: 14px Verdana; color: #000; margin: 0;}
+
+#top-part { display: block; height: 109px; width: 100%; position: relative;}
+
+#main-wrapper { min-width: 1450px;}
+
+user agent stylesheetdiv { display: block;}
+
+.wrapper { min-height: 100%; height: auto !important; height: 100%; margin: 0 auto -47px;}
+
+#menu2-bg { width: 100%; height: 42px;}
+
+#menu2-item { color: #fff; font-size: 14px; padding-left: 20px;}
+
+#home-container { position: relative; height: 100%;}
+
+#main-content { margin: 10px; padding: 0px 20px; height:100%; width: 1390px;}
+
+.backup{ width: 1430px; margin-top: 10px; text-align: center; font-size: 14px; border: solid 1px #bac5cf;}
+.backup tr:nth-child(odd) { background: #eef1f3;}
+
+.selection { min-height: 40px; background-color: #50c5c2; left: 5px; width: 1430px; border-bottom: 1px solid #50c5c2; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-right-radius: 5px;}
+
+.content { position: absolute; top: 25px; left: 0; background: white; right: 0; bottom: 0; min-height: 650px;}
+.contents{ width: 980px;}
+
+.tabs { position: relative; min-height: 500px; /* This part sucks */ min-width: 1450px; clear: both; margin: 20px;}
+.tab { float: left;}
+.tab .tabSelect { background: #f7f8fa; padding: 10px; border: 1px solid #ccc; left: 1px; border-top-left-radius: 5px; border-top-right-radius: 5px; color: #50c5c2; cursor: pointer; margin-right: 5px;}
+.tab [type=radio] { display: none;}
+.tab [type=radio]:checked ~ .tabSelect { background: #50c5c2; z-index: 2; color: #f7f8fa;}
+
+.tabordion { color: #333; display: block; font-family: arial, sans-serif; font-size: 14px; margin: 0; position: relative; min-width: 1450px; margin-top: 10px;}
+.tabordion section { display: block;}
+.tabordion section label { background: #f1f3f5; border:1px solid #bac5cf; cursor: pointer; display: block; font-size: 14px; font-weight: bold; padding: 10px 25px; width: 80px; border-top-left-radius: 5px; border-bottom-right-radius: 0px; border-top-right-radius: 0px; border-bottom-left-radius: 5px; margin-bottom: 5px; color: #38414f; margin-left: 10px;}
+.tabordion section article { display: none; left: 142px; top: 300px; max-width: 1030px; position: absolute; top: 0;}
+.tabordion input[name="sections"]:checked + label { background: white; color: #38414f; width: 160px; margin-left: 0px; border: none;}
+.tabordion input[name="sections"]:checked ~ article { display: block; top: 30px; min-height: 600px}
+
+.right-table { font-family: Arial, Helvetica, sans-serif, "微软雅黑","黑体"; font-size: 14px; float: left; width: 300px;}
+.right-table tr:nth-child(odd) { background: #eef1f3;}
+
+.border { border-left: 1px solid #bac5cf; border-right: 1px solid #bac5cf; border-bottom: none; border-top: none;}
+.gtBorder { border: 1px solid #bac5cf; font-weight: bold;}
+.block { position: absolute;background: #fff;width: 490px;}
+.underline{ padding-bottom: 1px; border-bottom: 1px solid black;}
+.box{ width: 100%; background-color: #50c5c2; padding: 5px; border-radius: 5px;}
+.floating-box { display: inline-block; margin: 0; padding: 0; width: 25%;}
+
+.right { text-align: right; padding-right: 5px;}
+.center { text-align: center; height: 28px;}
+
+.subBut { padding:5px 15px; background:#50c5c2; border:0 none; color: white; cursor:pointer; margin-left: 20px; font-size: 14px; border: 1px solid white; border-radius: 5px;}
+
+.userTreeForm { padding: 10px}
+
+.col1{ border: none; border-bottom: 1px solid #bac5cf; border-left: 1px solid #bac5cf; text-align: center; width: 130px;}
+.col2{ border: none; border-bottom: 1px solid #bac5cf; border-right: 1px solid #bac5cf; text-align: center;  width: 130px;}
+.col3{ border: 1px solid #bac5cf; border-top: none; text-align: center;  width: 130px;}
+.col4{ border: 1px solid #bac5cf; border-top: none; text-align: center; width: 94px;}
+
+.ctCol1{ border: 1px solid #bac5cf;  border-right: none;  border-top: none; width: 128px;}
+.ctCol2{ border: 1px solid #bac5cf;  border-left: none;  border-top: none; width: 128px;}
+.ctCol3{ border: 1px solid #bac5cf; border-top: none; width: 124px;}
+.ctCol4{ border: 1px solid #bac5cf; border-top: none; width: 88px;}
+
+.sec_key{width: 170px; float: left; padding: 3px}

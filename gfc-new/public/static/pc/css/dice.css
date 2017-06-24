@@ -1,0 +1,317 @@
+html { overflow-y: scroll; height: 100%; }
+body, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, p, blockquote, th, td { margin: 0px; padding: 0px; }
+body { font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; line-height: 1.5; font-family: Tahoma, Arial, 宋体, sans-serif; color: rgb(85, 85, 85); height: 100%; background-color: rgb(255, 255, 255); }
+body { background-color: rgb(240, 241, 246); }
+body { background-color: rgb(0, 0, 0); }
+body, button, input, .footer { font-family: Tahoma, Arial, 'Microsoft Yahei', sans-serif; }
+.main { position: relative; border-width: 0px 1px 1px; border-style: none solid solid; border-color: transparent rgb(194, 194, 210) rgb(194, 194, 210); background-color: rgb(255, 255, 255); }
+.main, .dice-wrap { border: none; background: url(../images/redblack/dice/game/k3-dice/bg.jpg) 50% -20px no-repeat; }
+.main { z-index: 1; }
+.dice-wrap { width: 1000px; margin: 0px auto; position: relative; height: 800px; }
+.dice-panel { width: 860px; margin: 0px auto; height: 172px; position: relative; z-index: 2; background: url(../images/redblack/dice/game/k3-dice/top_panel_bg.png) 50% 0% no-repeat; }
+.logo { float: left; margin-top: 24px; }
+.logo { margin-top: 2px; }
+.logo { width: 109px; height: 60px; position: absolute; left: 12px; top: 48px; text-indent: -9999em; background: url(../images/redblack/dice/game/k3-dice/logo.png) 50% 0% no-repeat; }
+.dice-panel .shortcuts { position: absolute; top: 120px; left: 10px; }
+a { color: rgb(0, 155, 125); text-decoration: none; }
+.dice-panel .shortcuts a { color: rgb(139, 139, 139); display: block; width: 100px; height: 18px; line-height: 18px; padding: 0px 5px; border: 1px solid rgb(71, 71, 71); margin-bottom: 5px; }
+.lottery-records, .lottery-info-number { border-radius: 3px; position: absolute; box-shadow: rgba(159, 159, 159, 0.129412) 1px 1px 1px; background-color: rgb(20, 20, 20); }
+.lottery-info-number { width: 180px; height: 26px; line-height: 26px; font-size: 18px; text-align: center; padding: 0px 5px; left: 142px; top: 45px; color: rgb(157, 157, 157); letter-spacing: 2px; }
+.lottery-status { position: absolute; left: 142px; top: 77px; width: 192px; height: 82px; }
+.lottery-status .soldout, .lottery-countdown { width: 100%; height: 100%; position: absolute; left: 0px; top: 0px; font-size: 50px; text-align: center; color: rgb(255, 168, 0); line-height: 80px; display: none; }
+.lottery-countdown { width: 184px; height: 80px; margin: 1px 4px; }
+.lottery-countdown span { display: block; float: left; width: 40px; height: 80px; text-indent: -9999em; background-image: url(../images/redblack/dice/game/k3-dice/countdown_01.png?Ss); background-position: -424px 0px; background-repeat: no-repeat; }
+.lottery-countdown .time-0 { background-position: -360px 0px; }
+.lottery-countdown .time-7 { background-position: -240px 0px; }
+.lottery-countdown .time-colon { width: 24px; background-position: -400px 0px; }
+.lottery-countdown .time-3 { background-position: -80px 0px; }
+.lottery-countdown .time-2 { background-position: -40px 0px; }
+.lottery-number { display: inline-block; height: 60px; margin-left: 10px; line-height: 62px; vertical-align: middle; }
+.lottery-number { position: absolute; left: 346px; top: 12px; width: 150px; height: 140px; }
+.lottery-number span { width: 44px; height: 44px; position: absolute; text-indent: -9999em; background-image: url(../images/redblack/dice/game/k3-dice/dice.png); background-position: 0px 0px; background-repeat: no-repeat; }
+.lottery-number .dice-ball-1 { background-position: 0px 0px; }
+.lottery-number .dice-ball-2 { background-position: -44px 0px; }
+.lottery-number .dice-ball-4 { background-position: 0px -44px; }
+.lottery-records { width: 295px; height: 115px; left: 533px; top: 45px; color: rgb(157, 157, 157); padding: 0px 10px; }
+.record-top { padding: 2px 0px; line-height: 20px; }
+.record-top a { float: right; color: rgb(139, 139, 139); text-decoration: underline; font-size: 12px; }
+.record-top strong { color: rgb(152, 192, 94); font-size: 14px; }
+.record-content { height: 88px; overflow: hidden; }
+.jspContainer { overflow: hidden; position: relative; }
+.jspPane { position: absolute; }
+li { list-style: none; }
+.record-content li { height: 22px; clear: both; }
+.record-content li div { text-align: center; float: left; }
+.record-content li .rec1 { width: 70px; text-align: left; }
+.dice-number { width: 16px; height: 0px; display: inline-block; padding-top: 16px; overflow: hidden; vertical-align: middle; background-image: url(../images/redblack/dice/game/k3-dice/dice-small.png); background-repeat: no-repeat; }
+.dice-number-1 { background-position: 0px 0px; }
+.record-content .dice-number { float: left; margin-right: 2px; margin-top: 3px; }
+.dice-number-2 { background-position: -17px 0px; }
+.dice-number-4 { background-position: 0px -17px; }
+.record-content li .rec2 { width: 18.75%; }
+.record-content li .rec3 { width: 18.75%; color: rgb(255, 198, 0); }
+.record-content li .rec4 { width: 18.75%; }
+.record-content li .rec5 { width: 18.75%; color: rgb(152, 192, 94); }
+.dice-number-5 { background-position: -17px -17px; }
+.dice-number-3 { background-position: -34px 0px; }
+.dice-number-6 { background-position: -34px -17px; }
+.jspVerticalBar { position: absolute; top: 0px; right: 0px; width: 8px; height: 100%; background: red; }
+.jspVerticalBar { width: 4px; }
+.jspCap { display: none; }
+.jspArrow { text-indent: -20000px; display: block; cursor: pointer; padding: 0px; margin: 0px; background: rgb(80, 80, 109); }
+.jspArrow.jspDisabled { cursor: default; background: rgb(128, 128, 141); }
+.jspVerticalBar .jspArrow { height: 16px; }
+.jspVerticalBar .jspArrow { height: 4px; }
+.jspTrack { position: relative; background: rgb(34, 45, 57); }
+.jspTrack { background-color: rgb(58, 58, 58); }
+.jspDrag { position: relative; top: 0px; left: 0px; cursor: pointer; background: rgb(219, 184, 80); }
+.jspDrag { background-color: rgb(95, 95, 95); }
+.dice-table { width: 964px; height: 414px; position: absolute; left: 29px; top: 240px; background: url(../images/redblack/dice/game/k3-dice/sheet_bg.jpg) 50% 0% no-repeat; }
+.dice-sheet { position: absolute; background-repeat: no-repeat; }
+.dice-sheet-0 { width: 184px; height: 98px; left: 38px; top: 0px; }
+.dice-sheet .dice-sheet-bg { position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; z-index: 0; opacity: 0; transition: all 0.3s ease-in; }
+.dice-sheet-0 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-0.png); }
+.dice-sheet-1 { width: 180px; height: 48px; left: 32px; top: 100px; }
+.dice-sheet-1 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-1.png); }
+.dice-sheet-2 { width: 86px; height: 36px; left: 225px; top: 25px; }
+.dice-sheet-2 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-2.png); }
+.dice-sheet-3 { width: 87px; height: 37px; left: 222px; top: 65px; }
+.dice-sheet-3 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-3.png); }
+.dice-sheet-4 { width: 88px; height: 38px; left: 219px; top: 105px; }
+.dice-sheet-4 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-4.png); }
+.dice-sheet-5, .dice-sheet-6, .dice-sheet-7, .dice-sheet-8, .dice-sheet-9, .dice-sheet-10 { width: 53px; height: 47px; top: 17px; }
+.dice-sheet-5 { left: 323px; }
+.dice-sheet-5 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-5.png); }
+.dice-sheet-6 { left: 376px; }
+.dice-sheet-6 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-6.png); }
+.dice-sheet-7 { left: 429px; }
+.dice-sheet-7 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-7.png); }
+.dice-sheet-8 { left: 482px; }
+.dice-sheet-8 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-8.png); }
+.dice-sheet-9 { left: 535px; }
+.dice-sheet-9 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-9.png); }
+.dice-sheet-10 { left: 588px; }
+.dice-sheet-10 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-10.png); }
+.dice-sheet-11 { width: 336px; height: 74px; left: 314px; top: 73px; }
+.dice-sheet-11 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-11.png); }
+.dice-sheet-12 { width: 86px; height: 36px; left: 652px; top: 25px; }
+.dice-sheet-12 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-12.png); }
+.dice-sheet-13 { width: 87px; height: 37px; left: 654px; top: 64px; }
+.dice-sheet-13 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-13.png); }
+.dice-sheet-14 { width: 88px; height: 37px; left: 656px; top: 105px; }
+.dice-sheet-14 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-14.png); }
+.dice-sheet-15 { width: 184px; height: 97px; left: 742px; top: 0px; }
+.dice-sheet-15 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-15.png); }
+.dice-sheet-16 { width: 180px; height: 47px; left: 752px; top: 100px; }
+.dice-sheet-16 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-16.png); }
+.dice-sheet-17, .dice-sheet-18, .dice-sheet-19, .dice-sheet-20, .dice-sheet-21, .dice-sheet-22, .dice-sheet-23, .dice-sheet-24, .dice-sheet-25, .dice-sheet-26, .dice-sheet-27, .dice-sheet-28, .dice-sheet-29, .dice-sheet-30 { height: 78px; top: 151px; }
+.dice-sheet-17 { width: 70px; left: 22px; }
+.dice-sheet-17 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-17.png); }
+.dice-sheet-18 { width: 68px; left: 88px; }
+.dice-sheet-18 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-18.png); }
+.dice-sheet-19 { width: 68px; left: 153px; }
+.dice-sheet-19 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-19.png); }
+.dice-sheet-20 { width: 66px; left: 219px; }
+.dice-sheet-20 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-20.png); }
+.dice-sheet-21 { width: 66px; left: 285px; }
+.dice-sheet-21 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-21.png); }
+.dice-sheet-22 { width: 64px; left: 351px; }
+.dice-sheet-22 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-22.png); }
+.dice-sheet-23 { width: 64px; left: 416px; }
+.dice-sheet-23 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-23.png); }
+.dice-sheet-24 { width: 64px; left: 482px; }
+.dice-sheet-24 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-24.png); }
+.dice-sheet-25 { width: 64px; left: 548px; }
+.dice-sheet-25 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-25.png); }
+.dice-sheet-26 { width: 66px; left: 611px; }
+.dice-sheet-26 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-26.png); }
+.dice-sheet-27 { width: 66px; left: 677px; }
+.dice-sheet-27 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-27.png); }
+.dice-sheet-28 { width: 68px; left: 741px; }
+.dice-sheet-28 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-28.png); }
+.dice-sheet-29 { width: 68px; left: 806px; }
+.dice-sheet-29 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-29.png); }
+.dice-sheet-30 { width: 70px; left: 870px; }
+.dice-sheet-30 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-30.png); }
+.dice-sheet-31, .dice-sheet-32, .dice-sheet-33, .dice-sheet-34, .dice-sheet-35, .dice-sheet-36, .dice-sheet-37, .dice-sheet-38, .dice-sheet-39, .dice-sheet-40, .dice-sheet-41, .dice-sheet-42, .dice-sheet-43, .dice-sheet-44, .dice-sheet-45 { height: 92px; top: 238px; }
+.dice-sheet-31 { width: 64px; left: 59px; }
+.dice-sheet-31 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-31.png); }
+.dice-sheet-32 { width: 64px; left: 119px; }
+.dice-sheet-32 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-32.png); }
+.dice-sheet-33 { width: 62px; left: 179px; }
+.dice-sheet-33 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-33.png); }
+.dice-sheet-34 { width: 62px; left: 238px; }
+.dice-sheet-34 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-34.png); }
+.dice-sheet-35 { width: 60px; left: 298px; }
+.dice-sheet-35 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-35.png); }
+.dice-sheet-36 { width: 60px; left: 358px; }
+.dice-sheet-36 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-36.png); }
+.dice-sheet-37 { width: 58px; left: 417px; }
+.dice-sheet-37 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-37.png); }
+.dice-sheet-38 { width: 58px; left: 477px; }
+.dice-sheet-38 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-38.png); }
+.dice-sheet-39 { width: 58px; left: 536px; }
+.dice-sheet-39 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-39.png); }
+.dice-sheet-40 { width: 58px; left: 595px; }
+.dice-sheet-40 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-40.png); }
+.dice-sheet-41 { width: 60px; left: 653px; }
+.dice-sheet-41 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-41.png); }
+.dice-sheet-42 { width: 62px; left: 711px; }
+.dice-sheet-42 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-42.png); }
+.dice-sheet-43 { width: 63px; left: 770px; }
+.dice-sheet-43 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-43.png); }
+.dice-sheet-44 { width: 63px; left: 829px; }
+.dice-sheet-44 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-44.png); }
+.dice-sheet-45 { width: 66px; left: 887px; }
+.dice-sheet-45 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-45.png); }
+.dice-sheet-46, .dice-sheet-47, .dice-sheet-48, .dice-sheet-49, .dice-sheet-50, .dice-sheet-51 { height: 62px; top: 346px; }
+.dice-sheet-46 { width: 96px; left: 128px; }
+.dice-sheet-46 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-46.png); }
+.dice-sheet-47 { width: 96px; left: 266px; }
+.dice-sheet-47 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-47.png); }
+.dice-sheet-48 { width: 94px; left: 407px; }
+.dice-sheet-48 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-48.png); }
+.dice-sheet-49 { width: 94px; left: 546px; }
+.dice-sheet-49 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-49.png); }
+.dice-sheet-50 { width: 96px; left: 684px; }
+.dice-sheet-50 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-50.png); }
+.dice-sheet-51 { width: 98px; left: 822px; }
+.dice-sheet-51 .dice-sheet-bg { background-image: url(../images/redblack/dice/game/k3-dice/sheets/compress/sheet-51.png); }
+.ui-icon { display: inline-block; text-indent: -9999em; vertical-align: middle; background-image: url(../images/redblack/dice/game/k3-dice/ui-icons.png); background-repeat: no-repeat; }
+.game-tips { width: 16px; height: 16px; position: absolute; z-index: 100; overflow: hidden; cursor: pointer; background-position: -120px 0px; }
+.game-tips-hezhi { left: 33px; top: 153px; }
+.game-tips-santonghaotongxuan { left: 320px; top: 75px; }
+.game-tips-santonghaodanxuan { left: 325px; top: 0px; }
+.game-tips-ertonghaofuxuan { left: 228px; top: 0px; }
+.game-tips-erbutonghao { left: 20px; top: 235px; }
+.game-tips-yibutonghao { left: 5px; top: 342px; }
+.game-tips-daxiao { left: 50px; top: 30px; }
+.game-tips-danshuang { left: 40px; top: 103px; }
+.dice-recycle { width: 100%; height: 135px; margin-top: 470px; opacity: 0; background: url(../images/redblack/dice/game/k3-dice/recycle.png) 50% 50% no-repeat; }
+.dice-ctrl { width: 100%; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(61, 61, 61); padding-top: 4px; z-index: 2; background-color: rgb(40, 40, 40); }
+.dice-bar-wrap { width: 100%; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(31, 31, 31); border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(61, 61, 61); background-color: rgb(48, 47, 47); }
+.dice-bar { width: 1000px; margin: 0px auto; padding: 10px 0px; color: rgb(201, 201, 201); position: relative; height: 60px; }
+.dice-balance, .dice-chip-wrap, .ui-simulation-wrap, .action-buttons { float: left; height: 60px; }
+.dice-balance, .dice-chip-wrap, .multiple-counter { padding-right: 10px; border-right-width: 1px; border-right-style: solid; border-right-color: rgb(24, 24, 24); }
+.dice-balance { line-height: 30px; font-size: 14px; width: 190px; }
+.dice-balance .bet-amount { color: rgb(255, 170, 0); }
+.dice-balance label { color: rgb(201, 201, 201); }
+.dice-balance .bet-balance { color: rgb(177, 148, 100); }
+.bet-balance .ui-icon { width: 17px; height: 17px; margin-left: 4px; cursor: pointer; }
+.bet-balance-refresh { background-position: 0px 0px; }
+.bet-balance-recharge { background-position: -30px 0px; }
+.dice-chip-wrap, .action-buttons, .continus-counter { padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(84, 84, 84); }
+.dice-chip-wrap { position: relative; width: 320px; }
+.dice-chip-choose { width: 250px; height: 46px; margin-top: 15px; position: relative; }
+.dice-chip, .dice-chip-mirror { width: 50px; height: 46px; text-indent: -9999em; cursor: pointer; background-image: url(../images/redblack/dice/game/k3-dice/chips.png); background-repeat: no-repeat; }
+.dice-chip-1 { background-position: 0px 0px; }
+.dice-chip-choose .dice-chip, .dice-chip-custom .dice-chip-mirror { float: left; transition: opacity, background, margin-top 0.3s ease-in; }
+.dice-chip-choose .dice-chip-hide { display: none; }
+.dice-chip-2 { background-position: -50px 0px; }
+.dice-chip-5 { background-position: -100px 0px; }
+.dice-chip-10 { background-position: -150px 0px; }
+.dice-chip-20 { background-position: -200px 0px; }
+.dice-chip-50 { background-position: -250px 0px; }
+.dice-chip-100 { background-position: -300px 0px; }
+.dice-chip-selected { position: relative; z-index: 3; margin-top: -10px; }
+.dice-chip-500 { background-position: -350px 0px; }
+.dice-chip-1000 { background-position: -400px 0px; }
+.dice-chip-5000 { background-position: -450px 0px; }
+.dice-chip-choose .dice-chip-shadow { width: 100%; height: 16px; position: absolute; left: 0px; bottom: 0px; z-index: 2; background-color: rgb(48, 47, 47); }
+.dice-chip-wrap .dice-chip-button { width: 70px; height: 70px; position: absolute; right: 5px; top: 0px; text-indent: -9999em; background: url(../images/redblack/dice/game/k3-dice/dice-custom-button.png) no-repeat; }
+.dice-chip-custom { position: absolute; top: -80px; width: 500px; border-radius: 3px; border-bottom-width: 4px; border-bottom-style: solid; border-bottom-color: rgb(34, 36, 41); border-top-width: 4px; border-top-style: solid; border-top-color: rgb(81, 81, 81); padding: 5px 5px 0px; background-color: rgb(51, 50, 50); }
+.dice-chip-custom .dice-chip-hide { opacity: 0.2; background-image: url(../images/redblack/dice/game/k3-dice/chips-hide.png); }
+.ui-simulation-wrap { padding: 0px 5px; }
+.ui-simulation-wrap { position: relative; font-size: 14px; }
+.ui-simulation-title { text-align: center; line-height: 30px; }
+.ui-simulation-wrap .ui-icon { right: 8px; top: 6px; }
+.ui-tips { position: absolute; left: 0px; top: 0px; border-radius: 3px; background-color: rgba(48, 48, 48, 0.85098); }
+.ui-simulation-wrap .ui-tips { display: none; position: absolute; z-index: 101; top: 0px; left: 105px; width: auto; white-space: nowrap; word-spacing: normal; background-color: rgb(0, 0, 0); }
+.ui-tips-text { padding: 5px 10px; color: rgb(255, 255, 255); display: block; }
+.ui-tips-arrow { position: absolute; content: ""; border: 5px solid rgba(48, 48, 48, 0.85098); width: 0px; height: 0px; line-height: 0; }
+.ui-tips-right .ui-tips-arrow { border-bottom-color: transparent; border-left-color: transparent; border-top-color: transparent; left: -10px; margin-top: -5px; top: 50%; }
+.ui-simulation-wrap .ui-tips-right .ui-tips-arrow { border-right-color: rgb(0, 0, 0); }
+.ui-simulation-counter { display: block; position: static; width: 88px; }
+.ui-simulation-counter .counter-action { width: 20px; height: 20px; cursor: pointer; float: left; margin-top: 3px; }
+.ui-simulation-counter .counter-decrease { background-position: -60px 0px; }
+.ui-simulation-counter .disabled { opacity: 0.2; cursor: not-allowed; }
+input, button, textarea, select { font-family: inherit; font-size: inherit; font-weight: inherit; }
+input, button, textarea, select { }
+select, input, button, textarea { font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 100%; line-height: normal; font-family: Tahoma, Arial, sans-serif; }
+.multiple-counter .ui-icon { right: 13px; }
+.multiple-counter .ui-tips { left: 100px; }
+.action-buttons { height: 45px; padding: 15px 10px 0px; }
+.ui-button, .btn { display: inline-block; border-style: solid none none; border-top-width: 1px; border-top-color: rgb(108, 108, 108); border-radius: 3px; padding: 5px 10px; color: rgb(168, 168, 168); cursor: pointer; vertical-align: middle; font-size: 14px; margin: 0px 2px; line-height: 20px; box-shadow: rgba(0, 0, 0, 0.498039) 0px 1px 3px; height: auto; font-weight: normal; background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(64, 64, 64)), to(rgb(53, 53, 53))); background-color: rgb(59, 59, 59); }
+.ui-button-primary { border-top-color: rgb(190, 26, 68); color: rgb(0, 0, 0); background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(196, 135, 0)), to(rgb(254, 197, 0))); background-color: rgb(196, 135, 0); }
+.action-buttons button { width: 48px; white-space: nowrap; }
+.action-buttons button.disabled { opacity: 0.4; cursor: not-allowed; }
+.history-toggle { cursor: pointer; font-size: 20px; color: rgb(127, 127, 127); width: 50px; padding: 5px 10px; text-align: center; position: absolute; right: 0px; top: -1px; line-height: 24px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-style: none solid solid; border-right-color: rgb(31, 31, 31); border-bottom-color: rgb(31, 31, 31); border-left-color: rgb(31, 31, 31); border-radius: 0px 0px 3px 3px; height: 60px; background-color: rgb(39, 39, 39); }
+.history-toggle i { display: block; line-height: 0; width: 0px; height: 0px; content: ""; border-width: 5px; border-style: solid; border-color: rgb(126, 126, 126) transparent transparent; margin: 6px auto 0px; }
+.game-history-wrap { display: none; background-color: rgb(39, 39, 39); }
+.game-history { width: 1000px; margin: 0px auto; position: relative; }
+.history-top { position: relative; height: 50px; line-height: 50px; text-align: right; }
+.history-more { font-size: 12px; margin-right: 15px; color: rgb(115, 114, 114); text-decoration: underline; position: relative; cursor: pointer; }
+.history-close { font-size: 20px; color: rgb(169, 169, 169); cursor: pointer; }
+.history-content { padding-bottom: 10px; }
+.program-chase-list li { height: 30px; line-height: 30px; border-radius: 4px; color: rgb(153, 153, 153); font-size: 12px; clear: both; }
+.program-chase-list-header li { color: rgb(177, 148, 100); font-size: 14px; }
+.program-chase-list li div { float: left; text-align: left; }
+.program-chase-list .cell1 { width: 18%; }
+.program-chase-list .cell2 { width: 16%; }
+.program-chase-list .cell3 { width: 16%; }
+.program-chase-list .cell4 { width: 16%; }
+.program-chase-list .cell5 { width: 12%; }
+.program-chase-list .cell6 { width: 12%; }
+.program-chase-list .cell7 { width: 10%; }
+address, caption, cite, code, dfn, em, th, var { font-style: normal; font-weight: normal; }
+.program-chase-list li a { color: rgb(193, 127, 0); text-decoration: underline; }
+.pop { width: 488px; padding: 10px; border: 1px solid rgb(202, 202, 202); text-align: center; word-wrap: break-word; background-color: rgb(255, 255, 255); }
+.w-9 { width: 450px !important; }
+.j-ui-miniwindow { width: 488px; padding: 10px; border: 1px solid rgb(202, 202, 202); position: absolute; left: 0px; top: 0px; display: none; z-index: 700; background-color: rgb(255, 255, 255); }
+.j-ui-miniwindow { border-radius: 3px; border-color: rgb(45, 45, 45); color: rgb(157, 157, 157); box-shadow: rgba(0, 0, 0, 0.4) 4px 4px 6px; padding-bottom: 20px; background-color: rgba(23, 23, 22, 0.8); }
+.j-ui-miniwindow, .j-ui-miniwindow .text-note { color: rgb(199, 191, 138); font-size: 14px; }
+.pop .hd { height: 28px; line-height: 18px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(239, 239, 239); font-size: 14px; font-weight: 700; text-align: left; }
+.j-ui-miniwindow .hd { height: 28px; line-height: 18px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(239, 239, 239); font-size: 14px; font-weight: 700; }
+.j-ui-miniwindow .hd { border-bottom-color: rgb(0, 0, 0); }
+.pop .close { float: right; width: 15px; height: 14px; cursor: pointer; background-position: -240px -20px; }
+.alert i, .alert-mini i, .pop i, .pop .close, .notice .close, .notice .ico-warning, .ui-check i, .prompt dt i { background-image: url(../images/redblack/dice/common/ui-alert.png); background-repeat: no-repeat; }
+.j-ui-miniwindow .close { float: right; width: 15px; height: 14px; cursor: pointer; background: url(../images/redblack/dice/common/ui-alert.png) -240px -20px no-repeat; }
+.j-ui-miniwindow .close { }
+.j-ui-miniwindow .hd .title { display: none; }
+.pop .bd { padding: 10px; text-align: left; }
+.j-ui-miniwindow .bd { padding: 10px; }
+.j-ui-miniwindow .hd + .bd { border-top-width: 1px; border-top-style: solid; border-top-color: rgba(255, 255, 255, 0.2); }
+.btn { position: relative; display: inline-block; height: 32px; border: 1px solid rgb(202, 202, 202); padding: 0px 15px; line-height: 32px; text-align: center; vertical-align: middle; font-size: 14px; font-weight: 700; color: rgb(85, 85, 85); cursor: pointer; border-radius: 3px; box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 2px; background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.0588235)); background-color: rgb(255, 255, 255); }
+.btn-important, .pop .confirm { color: rgb(255, 255, 255); border-color: rgb(1, 150, 121); background-color: rgb(10, 177, 145); }
+.ui-button-important, .btn-important { border-top-color: rgb(95, 164, 52); color: rgb(177, 214, 154); background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(57, 97, 31)), to(rgb(48, 82, 26))); background-color: rgb(56, 96, 31); }
+.btn-inner { position: absolute; right: 0px; top: 0px; }
+.btn-important .btn-inner, .pop .confirm .btn-inner { }
+.j-ui-mask { z-index: 600; }
+.ui-tips-alert { background-color: rgba(255, 48, 92, 0.85098); }
+.ui-tips-alert .ui-tips-arrow { border: 5px solid rgba(255, 48, 92, 0.85098); }
+.ui-tips-bottom .ui-tips-arrow { border-left-color: transparent; border-top-color: transparent; border-right-color: transparent; top: -10px; margin-left: -5px; left: 50%; }
+.ui-tips-top .ui-tips-arrow { border-right-color: transparent; border-bottom-color: transparent; border-left-color: transparent; bottom: -10px; margin-left: -5px; left: 50%; }
+.pop .ui-form .textarea {
+    width: 320px;
+    height: 84px;
+    overflow-y: auto;
+}
+
+.bg-toolbar {
+    position: relative;
+    z-index: 2;
+    height: 36px;
+    background-color: rgb(51, 51, 51);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#33000000', endColorstr='#33000000');
+}
+.toolbar {
+    background-color: #222;
+}
+.toolbar {
+    position: relative;
+    z-index: 100;
+    height: 36px;
+    margin-top: -36px;
+    color: #FFF;
+}
+ 

@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title></title>
+        <link rel="stylesheet" type="text/css" href="css/gray.css" />
+    </head>
+
+    <body>
+        <!-- 内页公用板块 -->
+        <div class="GameBoxall SubGamePlatePadding">
+            <div class="Gamepart">
+    
+                <div class="clear"></div>
+                <div class="sub_public">
+         
+                    <div class="sub_ContBox">
+                        <div class="subContCent">
+                            <!-- 搜索栏 -->
+                            <div class="SearchBar">
+                                <form method="GET" action="" id="form1" name="form1">
+                                    <input type="hidden" name="<?php echo isset($GLOBALS['urlSessionName']) ? $GLOBALS['urlSessionName'] : ''; ?>" value="<?php echo isset($GLOBALS['urlSessionValue']) ? $GLOBALS['urlSessionValue'] : ''; ?>"/>
+                                    <ul>
+                                        <li>
+                                            <label>游戏名称：</label>
+                                            <select class="SelectStyle w128px" name="lottery_id">
+                                                <option value="0">请选择</option>
+                                                <?php foreach ($lotterys as $v): ?>
+                                                    <option value="<?php echo $v['lottery_id']; ?>"><?php echo $v['cname']; ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </li>
+                                        <li>
+                                            <label>订单编号：</label>
+                                            <input size="20" type="text" name="wrap_id" class="txtStyle">
+                                        </li>
+                                        <li>
+                                            <label>游戏时间：</label>
+                                            <div class="MutiTxt">
+                                                <input class="Wdate txtStyle w85px datepicker85" onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd'})" my97mark="false" id="start_time" name="start_time" size="16">
+                                                <em>到</em>
+                                                <input class="Wdate txtStyle w85px datepicker85" onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd'})" my97mark="false" id="end_time" name="end_time" size="16">
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <input type="submit" value="查询" class="btnStyle m010" name="submit">
+                                        </li>
+                                    </ul>
+                                    <input type="hidden" name="c" value="api"/><input type="hidden" name="a" value="<?php echo ACTION; ?>"/>
+                                </form>
+                            </div>
+                            <!-- 列表数据 -->
+                            <div class="clear"></div>
+                            <form name="form2" id="form2" action="" method="GET">
+                                <input type="hidden" name="<?php echo isset($GLOBALS['urlSessionName']) ? $GLOBALS['urlSessionName'] : ''; ?>" value="<?php echo isset($GLOBALS['urlSessionValue']) ? $GLOBALS['urlSessionValue'] : ''; ?>"/>
+                                <table class="tab01" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <th>订单编号</th>
+                                        <th>彩种</th>
+                                        <th>开始追号奖期</th>
+                                        <th>追号期数</th>
+                                        <th>总金额</th>
+                                        <th>完成期数</th>
+                                        <th>模式</th>
+                                        <th>追中即停？</th>
+                                        <th>购买时间</th>
+                                        <th>追号状态</th>
+                                    </tr>
+                                    <?php if ($traces): ?>
+                                        <?php foreach ($traces as $v): ?>
+                                            <tr class="recordsContent">
+                                                <td><a title="查看追号详情" target="_blank" href="/?c=api&a=traceDetail&wrap_id=<?php echo $v['wrap_id']; ?><?php echo isset($GLOBALS['urlSession']) ? $GLOBALS['urlSession'] : ''; ?>"><?php echo $v['wrap_id']; ?></a></td>
+                                                <td><span class="yellow"><?php echo $lotterys[$v['lottery_id']]['cname']; ?></span></td>
+                                                <td><?php echo $v['start_issue']; ?></td>
+                                                <td><?php echo $v['trace_times']; ?></td>
+                                                <td><strong class="yellow"><?php echo $v['total_amount']; ?></strong></td>
+                                                <td><?php echo $v['finish_times']; ?></td>
+                                                <td><?php echo $GLOBALS['cfg']['modes'][$v['modes']]; ?></td>
+                                                <td><?php if ($v['stop_on_win'] == 0): ?><font color="red">否</font><?php elseif ($v['stop_on_win'] == 1): ?>是<?php endif; ?></td>
+                                                <td><?php echo date("m/d H:i:s", strtotime($v['create_time'])); ?></td>
+                                                <td><?php if ($v['status'] == 0): ?>未开始<?php elseif ($v['status'] == 1): ?>正在进行<?php elseif ($v['status'] == 2): ?>已完成<?php elseif ($v['status'] == 3): ?>已取消<?php endif; ?></td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                        <tr>
+                                            <th colspan="10"><div class="bottom_info">本页金额小计: <span class="yellow"><?php echo number_format($totalAmount, 2); ?></span> 元  </div></th>
+                                        </tr>
+                                    <?php else: ?>
+                                        <tr>
+                                            <th colspan="10" class="bom">暂无数据显示</th>
+                                        </tr>
+                                    <?php endif; ?>
+
+                                </table>
+                                
+                                
+                            </form>
+                            <!-- 分页 -->
+                            <div class="Page">
+                                <?php echo $pageList; ?>
+                            </div>
+                            <!-- 分页end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+        <script src="js/ds.js" type="text/javascript"></script>
+         <script src="js/jqextend.js" type="text/javascript"></script>
+        <script src="js/My97DatePicker/WdatePicker.js"></script>
+<script>
+    $(function() {
+        //准备数据
+        //设置默认值
+        $('select[name=lottery_id]').val('<?php echo $lottery_id; ?>').change();
+        $('#start_time').val('<?php echo date('Y-m-d', strtotime($start_time)); ?>');
+        $('#end_time').val('<?php echo date('Y-m-d', strtotime($end_time)); ?>');
+        $('select[name=modes]').val('<?php echo empty($modes)?0:$modes; ?>');
+        $('input[name=wrap_id]').val('<?php echo $wrap_id; ?>');
+ 
+    });
+</script>
+    </body>
+</html>

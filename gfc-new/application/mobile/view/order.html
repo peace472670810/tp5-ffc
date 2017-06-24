@@ -1,0 +1,334 @@
+<div id="orderSelect" data-role="page" data-theme="a" class="hl-page" data-dom-cache="true" data-url="orderSelect"
+     style="padding-top: 37px;padding-bottom: 79px;min-height: 620px;background: #f6f6f3;">
+    <div data-role="header" data-position="fixed" data-tap-toggle="false" class="hl-header" style="position: fixed;">
+        <div class="hl-order-container">
+            <div class="hl-header-button-container">
+                <div class="hl-header-button">
+                    <a href="#cp"><img src="../../static/mobile/css/pic/hostlogo.png"></a>
+                </div>
+                <div id="orderTitle" class="hl-order-title"></div>
+                <div class="hl-order-countdown-label">
+                    <div class="hl-order-countdown-container">
+                        <a href="javascript:;" class="btn-menu" id="btn-menu"
+                           style="font-weight: normal;border: 1px solid #bb286e;border-radius: 5px;background: -webkit-gradient(linear, 0 0, 0 70%, from(#f94539), to(#e8291d));box-shadow: 0 1px 1px #fc7f77 inset;padding: 8px 6px 6px 6px;margin: 8px 10px 0 10px; line-height: 24px;"><img
+                                src="../../static/mobile/css/pic/t01017d298c164b6f29.png"></a>
+                        <!--<a href="javascript:;" class="btn-chart" id="btn-chart" style="border: 1px solid #bb286e;border-radius: 5px;background: -webkit-gradient(linear, 0 0, 0 70%, from(#f94539), to(#e8291d));box-shadow: 0 1px 1px #fc7f77 inset;padding: 6px 6px 8px 6px;margin: 3px 10px 0 10px;"><i></i></a>-->
+                        <!--                                <span class="hl-order-countdown-title">截止:</span>-->
+                        <!--                                <span id="orderCountdown" class="hl-order-countdown-text">--:--:--</span>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pop-box2-bar"></div>
+    <div class="pop-box3" id="tools">
+        <div class="pop-box2-bar"></div>
+        <div class="filt-popc">
+            <ul style="margin-left:-40px;margin-top: 8px;margin-bottom: 2px;">
+                <li><a href="#orderConfirm" id="selected" class="btn-pop">已选号码</a></li>
+                <li><a href="#draw" class="btn-pop">开奖结果</a></li>
+                <li><a href="#search" class="btn-pop">投注记录</a></li>
+            </ul>
+        </div>
+    </div>
+    <!--<div class="pop" style="font-size: 20px;display: none;width: 100%;height: 30px;text-align: center;">加载中...</div>
+    <div class="scrollWrapper" id="scrollWrapper">
+       <iframe id="chartlist" src="about:blank" name="chartlist" frameborder="no" border="0" marginwidth="0" marginheight="0" style="position: relative;overflow: scroll;max-width: 100%;width: 100%;height:280px">
+       </iframe>
+        </div>-->
+    <!--<script>
+        function setIframeSrc() {
+            var s ="?c=game&a=chart";
+            var iframe1 = document.getElementById('chartlist');
+            if (-1 == navigator.userAgent.indexOf("MSIE")) {
+                iframe1.src = s;
+            } else {
+                iframe1.location = s;
+            }
+        }
+        setTimeout(setIframeSrc, 5);
+    </script>-->
+    <!-- /header -->
+    <div data-role="content" class="hl-content">
+        <div style="float:left;position: relative;top: 2px;padding: 4px 0px 4px 10px;font-size: 16px;line-height: 22px">
+            <span id="orderPeriod" class="hl-order-countdown-title"
+                  style="width: 110px;white-space: nowrap;text-overflow:ellipsis;overflow: hidden;text-align: left;">截止:</span><br/>
+            <span id="orderCountdown" class="hl-order-countdown-text">--:--:--</span>
+        </div>
+        <div class="historyResult"
+             style="text-align: center;width: 200px;float: right;top: 6px;padding: 4px 0px 4px 0px;font-size: 16px;line-height: 20px;position: relative;font-style: normal;color:#000">
+            <span id="orderLastkj"></span>
+            <ul id="historyNum" data-role="listview" data-inset="true"></ul>
+        </div>
+        <div class="hl-top-nav hl-top-nav-order" style="border-top: 1px solid #d4d7d7;">
+            <div style="background: #f6f6f3;border-bottom: 1px solid #d4d7d7;width: 35%;float: left;position: absolute;height: 44px;padding:8px 0 0 12px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;    font-size: 14px;">
+                余额：<br><label id="memberAccountfact">...</label>元
+            </div>
+            <div class="hl-order-container"
+                 style="background: #f6f6f3;border-bottom: 1px solid #d4d7d7;width: 65%;float:right;height: 52px;">
+                <div class="hl-order-select-container">
+                    <select class="hl-order-select" name="gameOptionList" id="gameOptionList" data-role="fieldcontain"
+                            data-native-menu="true" data-shadow="true"></select>
+                </div>
+            </div>
+        </div>
+        <div class="content-primary hl-order-main">
+            <div class="hl-order-main-container">
+                <!--<div id="inputType" style="border-bottom:1px solid #e1e1e1;height: 55px;">
+                    <div id="enterNum" style="float: right;padding-right: 20px">
+                    <a data-role="button" data-inline="true" data-theme="a" style="    border: 1px solid rgb(218, 45, 35);display: inline-block;background: #cd1b03;" value="手工录入" id="inputHand"><span style="color: #fff;font-weight: normal;">手工录入</span></a>
+                    <a data-role="button" data-inline="true" data-theme="a" style="border: 1px solid rgb(218, 45, 35);display: inline-block;background: #cd1b03;" value="常规录入" id="inputBall"><span style="color: #fff;font-weight: normal;">常规录入</span></a>
+                        </div>
+                    <div style="float:left;position: relative;top: 6px;padding: 4px 0px 4px 29px;font-size: 16px;line-height: 30px">
+                        <span id="orderPeriod" class="hl-order-countdown-title">截止:</span>
+                        <span id="orderCountdown" class="hl-order-countdown-text">--:--:--</span>
+                    </div>
+                </div>-->
+                <ul id="numberList" data-role="listview" data-inset="true"></ul>
+                <div id="textinput">
+                    <textarea name="textarea" id="textHandInput"></textarea>
+                    <div style="margin-left: 5%;margin-right: 5%;">
+                        <span style="font-weight: bold;font-size: 18px;display: block;float: left;height: 30px;">示例：</span>
+                        <p id="inputSample"></p>
+                        <span style="font-weight: bold;font-size: 18px;display: block;float: left;height: 90px;">提示：</span>
+                        <p>请把您已有的大底号码复制或者输入到下边文本框中。<br>
+                            每注号码之间用 空格 或者 换行符 隔开。<br>
+                            仅支持单式。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /content -->
+    <div data-role="footer" data-position="fixed" data-tap-toggle="false" class="hl-footer" style="position: fixed;">
+        <div class="hl-order-footer">
+            <div class="hl-order-footer-left" style="text-align: center;">
+                <span class="hl-order-footer-text"></span>
+            </div>
+            <div class="hl-order-select-footer" style="width: 100%;">
+                <div class="ui-grid-b">
+                    <div class="ui-block-a" id="cather" style="width: 27%"><a id="orderCheck" data-role="button"
+                                                                              data-theme="b" data-inline="true"
+                                                                              style="border: 1px solid #f6f6f3;background: #cd1b02;color: #ffffff;height: 38px;line-height: 23px;width: 100%;margin-left: 0;">直接投注</a>
+                    </div>
+                    <div class="ui-block-c" style="width: 46%"><a id="addNumbox" href="#" data-role="button"
+                                                                  data-theme="c" data-inline="true"
+                                                                  style=" width: 100%; background: #52bf7f;height: 38px;line-height: 23px;color: #ffffff;margin-left: 0;border: 1px solid #f6f6f3;"><span
+                            style="background: url(../../css/pic/icon_addnmu.png) no-repeat;width: 15px;display:inline-block;height: 15px;vertical-align: middle;margin-right: 5px;"></span>添加到号码篮<em
+                            id="group">0</em></a></div>
+                    <!--<a id="orderAuto" href="#" data-role="button" data-theme="c" data-inline="true">机选</a></div>-->
+                    <!--<div class="ui-block-b"><a id="orderClear" href="#" data-role="button" data-theme="c" data-inline="true">清空</a></div>-->
+                    <div id="enterNum" class="ui-block-b" style="width: 27%">
+                        <a data-role="button" data-inline="true" data-theme="a"
+                           style="border: 1px solid #f6f6f3;background: #cd1b02;color: #ffffff;height: 38px;line-height: 23px;width: 100%;margin-left: 0;"
+                           value="手工录入" id="inputHand">手工录入</a>
+                        <a data-role="button" data-inline="true" data-theme="a"
+                           style="border: 1px solid #f6f6f3;background: #cd1b02;color: #ffffff;height: 38px;line-height: 23px;width: 100%;margin-left: 0;"
+                           value="常规录入" id="inputBall">常规录入</a>
+                    </div>
+                </div><!-- /grid-a -->
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /footer -->
+    <!-- popup -->
+    <div data-role="popup" data-overlay-theme="a" data-theme="a" class="ui-corner-all hl-system-popup"
+         data-position-to="window" data-history="false">
+        <div data-role="header" data-theme="a" class="ui-corner-top hl-system-popup-title">
+            <h1>友情提示</h1>
+        </div>
+        <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content hl-system-popup-body">
+            <p class="hl-system-popup-text"></p>
+            <br>
+            <br>
+            <ul data-role="controlgroup" data-type="horizontal" class="hl-bottom-nav-menu hl-system-popup-footer">
+                <li><a href="#" data-role="button" data-inline="true" class="popup-close" data-transition="flow"
+                       data-theme="b">确认</a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="selectLayer">
+    </div>
+    <!-- /popup -->
+</div>
+<!--  orderConfirm start -->
+<div id="orderConfirm" data-role="page" data-theme="a" class="hl-page" data-dom-cache="true" data-url="orderConfirm">
+    <div data-role="header" data-position="fixed" data-tap-toggle="false" class="hl-header" style="position: fixed;">
+        <div class="hl-order-container">
+            <div class="hl-header-button-container">
+                <div class="hl-header-button">
+                    <a href="#orderSelect" class="btn-qgkj" id="sourceUrl"
+                       style="font-weight: normal;color: #fff;left: 10px; margin-left: 15px;padding-top: 5px;"><img
+                            src="../../static/mobile/css/pic/back.png" style="position: fixed; margin-left: -12px"/>
+                        <div style="margin-top: -8px;">继续选号</div>
+                    </a>
+                </div>
+                <div id="orderTitle" class="hl-order-title">投注详情</div>
+                <div class="hl-order-countdown-label">
+                    <div class="hl-order-countdown-container">
+                        <span class="hl-order-countdown-title"
+                              style="color: #fff;font-weight: normal;font-style: normal;">截止:</span>
+                        <span id="orderConfirmCountdown" class="hl-order-countdown-text"
+                              style="color: #fff;font-weight: normal;font-style: normal;">--:--:--</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /header -->
+    <div data-role="content" class="hl-content">
+        <div class="content-primary hl-order-confirm-main">
+            <div class="hl-order-confirm-main-container">
+                <ul id="orderList" data-role="listview" data-inset="true"
+                    style="border: 2px solid #cd1b02;border-radius:3px"></ul>
+            </div>
+            <p id="tools" style="clear: both;height: 38px;padding: 0 0 0 2px;"><a href="#" class="btn2 red"
+                                                                                  id="orderRnd1" act="rnd1" method="1">机选1注</a><a
+                    href="#" id="orderRnd5" class="btn2 red" act="rnd5" method="5">机选5注</a><a href="#" class="btn3"
+                                                                                              id="orderClear"
+                                                                                              act="delall"
+                                                                                              method="0"
+                                                                                              style="color: #333;font-weight: normal">全部删除</a>
+            </p>
+        </div>
+        <!-- /content -->
+        <div class="hl-order-confirm-setting">
+            <span class="hl-order-confirm-text">彩种:</span>
+            <span class="hl-order-confirm-game"></span>
+            <span class="hl-order-confirm-bet-no"></span>
+            <span class="hl-order-confirm-text">期</span>
+        </div>
+        <div class="hl-order-confirm-setting">
+            <span class="hl-order-confirm-text">倍数:</span>
+            <input type="tel" name="txtMultiplier" id="txtMultiplier" value="1" maxlength="4" min="1" max="9999"
+                   class="hl-order-confirm-input" data-mini="true" data-inline="true"
+                   onkeyup="this.value=this.value.replace(/\D/g,'')"
+                   onafterpaste="this.value=this.value.replace(/\D/g,'')">
+            <!--                    <span class="hl-order-confirm-text">&nbsp;</span>-->
+            <div class="multipleDiv">
+                <span class="hl-order-confirm-text">追:</span>
+                <input type="tel" name="txtCno" id="txtCno" value="1" class="hl-order-confirm-input multipleDiv"
+                       maxlength="3" min="1" max="200" data-mini="true" data-inline="true"
+                       onkeyup="this.value=this.value.replace(/\D/g,'')"
+                       onafterpaste="this.value=this.value.replace(/\D/g,'')">
+                <span class="hl-order-confirm-text">期</span>
+            </div>
+            <div class="lvlup multipleDiv">
+                <button id="advCno" data-role="button" data-icon="arrow-d" data-iconpos="right" data-mini="true"
+                        data-inline="true">高级
+                </button>
+            </div>
+        </div>
+        <div id="advCnoList" class="multipleDiv" style="display: none">
+            <table width="95%">
+                <tr>
+                    <td>期号(最多<span id="maxIssueCount">1</span>期)</td>
+                    <td width="70px" style="text-align: center;">倍数</td>
+                </tr>
+            </table>
+            <div id="advCnoListTable">
+
+            </div>
+        </div>
+        <div class="hl-order-confirm-footer-top">
+            <fieldset data-role="controlgroup" data-type="horizontal" style="display: none">
+                <legend>当前模式:</legend>
+                <select name="slider" id="slider">
+                </select>
+            </fieldset>
+            <fieldset data-role="controlgroup" data-type="horizontal">
+                <legend>模式:</legend>
+                <div class="controlbar">
+                    <div>
+                        <input type="radio" name="unit" id="unit1" value="1" checked="checked"> <label for="unit1"
+                                                                                                       style="border-right: 1px solid #d4d7d7;height: 20px;margin-top: 5px;line-height: 6px;">2元</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="unit" id="unit4" value="0.5"> <label for="unit4"
+                                                                                       style="border-right: 1px solid #d4d7d7;height: 20px;margin-top: 5px;line-height: 6px;">1元</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="unit" id="unit2" value="0.1"> <label for="unit2"
+                                                                                       style="border-right: 1px solid #d4d7d7;height: 20px;margin-top: 5px;line-height: 6px;">2角</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="unit" id="unit3" value="0.01"><label for="unit3"
+                                                                                       style="height: 20px;margin-top: 5px;line-height: 6px;">2分</label>
+                    </div>
+                </div>
+            </fieldset>
+
+        </div>
+        <div data-role="fieldcontain" class="hl-order-confirm-setting hl-order-confirm-footer-top2">
+            <div class="hl-order-confirm-setting-left">
+                <label>中奖后停止
+                    <input type="checkbox" name="withdrawlWin" data-iconpos="right" id="withdrawlWin" checked="checked"
+                           data-mini="true" class="hl-order-confirm-withdraw-input">
+                </label>
+            </div>
+
+        </div>
+        <div class="hl-order-confirm-setting" style="border-bottom: 0;">
+            <div id="confirmmemberAccount" style="float: left;display: inline;">
+            </div>
+
+        </div>
+    </div>
+    <div data-role="footer" data-position="fixed" data-tap-toggle="false" class="hl-footer">
+        <div class="hl-order-footer">
+            <div class="hl-order-footer-left">
+                        <span class="hl-order-confirm-footer-text">
+                            共<span id="lblMultiplier" class="hl-order-confirm-multiplier-val"></span>注, <span
+                                id="lblTotal" class="hl-order-confirm-total-val" val="0"></span>元
+                        </span>
+            </div>
+            <div class="hl-order-confirm-footer">
+                <div style="padding-left: 5%">
+                    <!--<div class="ui-block-a"><a id="orderConfirmAdd" href="#orderSelect" data-role="button" data-theme="c" data-inline="true">加号</a></div>-->
+                    <div><a id="orderConfirmOrder" data-role="button" data-theme="b" data-inline="true"
+                            style="border: 1px solid #cb1c02;background: #cb1c02;color: #fff;width: 90%;height: 38px;line-height: 26px;">确定投注</a>
+                    </div>
+                </div><!-- /grid-a -->
+            </div>
+        </div>
+    </div>
+    <!-- /footer -->
+    <!-- popup -->
+    <div data-role="popup" id="placeOrderPopup" data-overlay-theme="a" data-theme="c"
+         class="ui-corner-all  hl-system-confirm" data-position-to="window" data-history="false">
+        <div data-role="header" data-theme="a" class="ui-corner-top hl-confirm-title">
+            <h1>投注信息</h1>
+        </div>
+        <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content hl-confirm-body">
+            <p class="hl-system-confirm-text"></p>
+            <br>
+            <br>
+            <div class="hl-bottom-nav-menu hl-confirm-footer">
+                <a href="#" data-role="button" class="popup-cancel" data-inline="true" data-theme="c"
+                   style="width: 43%;">取消</a>
+                <a href="#" class="popup-confirm" data-role="button" data-inline="true" data-transition="flow"
+                   data-theme="b" style="width: 43%;color: #fff">确认</a>
+            </div>
+        </div>
+    </div>
+    <div data-role="popup" data-overlay-theme="a" data-theme="a" class="ui-corner-all hl-system-popup"
+         data-position-to="window" data-history="false">
+        <div data-role="header" data-theme="a" class="ui-corner-top hl-system-popup-title">
+            <h1>投注信息</h1>
+        </div>
+        <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content hl-system-popup-body">
+            <p class="hl-system-popup-text"></p>
+            <br>
+            <br>
+            <ul data-role="controlgroup" data-type="horizontal" class="hl-bottom-nav-menu hl-system-popup-footer">
+                <li><a href="#" class="popup-close" data-role="button" data-inline="true" data-transition="flow"
+                       data-theme="b">确认</a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="popLayer">
+    </div>
+    <!-- /popup -->
+</div>

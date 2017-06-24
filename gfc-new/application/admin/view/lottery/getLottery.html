@@ -1,0 +1,83 @@
+﻿<!--_meta 作为公共模版分离出去-->
+{include file="common/_meta"}
+<!--/meta 作为公共模版分离出去-->
+
+<title>分公司列表 - 账户管理 </title>
+</head>
+<body>
+<!--_header 作为公共模版分离出去-->
+
+<!--/_menu 作为公共模版分离出去-->
+
+	<nav class="breadcrumb"><a href="{:url('index/welcome')}"><i class="Hui-iconfont">&#xe67f;</i> 首页 </a><span class="c-gray en">&gt;</span> 彩种管理 <span class="c-gray en">&gt;</span> 
+	<a href="{:url('lottery/getLottery')}">彩种列表</a>
+	<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+	<div class="Hui-article">
+		<article class="cl pd-20 ">
+			<div class="mt-20">
+				<table class="table table-border table-bordered table-hover table-bg table-sort radius ">
+					<thead>
+						<tr class="text-c">
+						<th width="30">LID</th>
+				           <th width="80">名称</th>
+							<th width="200">描述</th>
+							<th width="30">类型</th>
+							<th width="50">状态</th>
+           					<th width="80">操作</th>
+						</tr>
+					</thead>
+					<tbody>
+
+					{volist name="list" id="v"}
+						<tr class="text-c">
+							<td>{$v.lid}</td>
+							<td>{$v.cname}</td>
+							<td>{$v.description}</td>
+							<td>{$v.lottery_type}</td>
+							<td class="td-status">
+								{if condition= "$v.status eq 8" }
+									<span class="label label-success radius">已启用</span>
+								{else/}
+									<span class="label label-error radius">禁用</span>
+								{/if}
+							</td>
+							<td class="td-manage">
+								<a style="text-decoration:none"  href="{:url('lottery/method_groups')}?lid={$v.lid}&lottery={$v.cname}" title="查看玩法组"><i class="Hui-iconfont">&#xe695;</i>&nbsp;查看玩法组</a>
+							</td>
+						</tr>
+					{/volist}
+					</tbody>
+				</table>
+			</div>
+		</article>
+	</div>
+
+
+<!--_footer 作为公共模版分离出去-->
+{include file="common/_footer"}
+<!--/_footer /作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="../../static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="../../static/lib/datatables/1.10.0/jquery.dataTables.js"></script>
+<script type="text/javascript" src="../../static/lib/laypage/1.2/laypage.js"></script>
+
+<script type="text/javascript">
+$(function(){
+	$('.table-sort').dataTable({
+		"aaSorting": [[ 1, "desc" ]],//默认第几个排序
+		"bStateSave": true,//状态保存
+		//"aoColumnDefs": [
+		//   {"bVisible": true, "aTargets": [ 3 ]} //控制列的隐藏显示
+		//  {"orderable":true,"aTargets":[0,8,9]}// 制定列不参与排序
+		 
+		// ]
+		 "aLengthMenu":[50]
+
+	});
+	
+});
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

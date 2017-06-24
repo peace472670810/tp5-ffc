@@ -1,0 +1,98 @@
+﻿<!--_meta 作为公共模版分离出去-->
+{include file="common/_meta"}
+<!--/meta 作为公共模版分离出去-->
+<title>追号订单详情 </title>
+</head>
+<body>
+<!--_header 作为公共模版分离出去-->
+<!--/_menu 作为公共模版分离出去-->
+		<article class="cl pd-20">		
+			<div class="cl pd-5 bg-1 bk-gray mt-20">         
+           追号订单编号：
+			 </div>
+			<div class="mt-20">
+		<form method="post" action="" id="form-member-add" >
+				<table class="table table-border table-bordered table-hover table-bg table-sort">
+					<thead>
+						<tr class="text-c">
+						     <th width="50">编号</th>
+				            <th width="80">玩法简称</th>
+							<th width="90">中文名称</th>							
+							<th width="60">封锁值</th>
+							<th width="80">最后修改时间</th>				
+						</tr>
+					</thead>	
+       			<tbody>	
+						<tr class="text-c">
+						    <td>1</td>
+							<td>qqq</td>
+							<td>qq群</td>
+							<td>
+                            <div class="formControls  col-sm-8">
+							<input type="text" class="input-text radius"  value="1000000" name="f_lock_limit" datatype="*6-8" nullmsg="封锁值不能为空！">
+							</div></td>
+							<td>2017</td>
+						</tr>				
+					</tbody>
+				</table>
+            <div class="text-c"><br/>
+              <button name="" id="" class="btn btn-warning radius" type="submit"><i class="Hui-iconfont">&#xe6d7;</i> 保存<i class="Hui-iconfont">&#xe6d7;</i></button>
+			</div>
+		</form>			
+		</article>
+<!--_footer 作为公共模版分离出去-->
+{include file="common/_footer"}
+<!--/_footer /作为公共模版分离出去-->
+<script type="text/javascript" src="../../static/lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
+<script type="text/javascript" src="../../static/lib/jquery.validation/1.14.0/validate-methods.js"></script> 
+<script type="text/javascript" src="../../static/lib/jquery.validation/1.14.0/messages_zh.js"></script> 
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="../../static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="../../static/lib/datatables/1.10.0/jquery.dataTables.js"></script>
+<script type="text/javascript" src="../../static/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('.table-sort').dataTable({
+		"aaSorting": [[ 1, "desc" ]],//默认第几个排序
+		"bStateSave": true,//状态保存
+		"aoColumnDefs": [
+		  //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+		  //{"orderable":false,"aTargets":[0,8,9]}// 制定列不参与排序
+		]
+	});
+	$("#form-member-add").validate({
+		rules:{
+            f_lock_limit:{
+				required:true,
+				minlength:6,
+				number:true,
+				min:10,
+				//maxlength:8,
+				digits:true
+			},
+		},
+        onkeyup:true,
+        focusCleanup:true,
+        success:"valid",   
+        submitHandler:function(form){
+           $(form).ajaxSubmit({
+				"type":"post",
+				"url":"{:url('lottery/addLocks')}",
+				"success":function(res,status){
+				    if(res){
+                        layer.msg('修改成功!',{icon:1,time:2000});
+                       setTimeout(function(){
+                          location.replace(location.href);
+					   },1000);
+					}else{
+                        layer.msg('修改失败!',{icon:2,time:2000});
+					}
+				}
+			});
+        }   
+	});
+});
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

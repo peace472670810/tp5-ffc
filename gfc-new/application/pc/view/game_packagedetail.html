@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>订单详情</title>
+
+        <link href="css/package.css" rel="stylesheet" type="text/css"></link>
+        <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+        <script src="js/common.js" type="text/javascript"></script>
+        <script type="text/javascript" src="js/layer/layer.min.js"></script> <!-- layer调用弹出层 -->
+        <script>
+            $(function () {
+                $('#buttonCanle').click(function () {
+                    if (!confirm('您真的要撤单吗？')) {
+                        return false;
+                    }
+                    $.post(
+                            'index.php?c=api&a=cacelPackage',
+                            {
+                                'wrap_id': $("#wrap_id").val()
+                            },
+                    function (response) {
+                        if (response.errno == 0) {
+                            layer.msg('<div title="提示">' + response.errstr + '</div>', 2, function () {
+                                location.reload(); //自动关闭后可做一些刷新页面等操作
+                            });
+                        }
+                        else {
+                            layer.alert(response.errstr);
+                        }
+                    }, 'json');
+                });
+
+            });
+
+        </script>
+
+    </head>
+    <body class="BodyMain">
+        <div class="GameBoxall SubGamePlatePadding" style="width:1000px; margin:0 auto;">
+            <div class="Gamepart" style="  padding-bottom:30px;">
+                <div class="BSrecordsBox h-100">
+                    <ul class="recordsInput">
+                        <li><span class="yellow_14px">订单编号:<?php echo $package['wrap_id']; ?></span></li>
+                    </ul>
+                    <div class="orderDetxinxi">
+                        <p class="yellow_14px">订单摘要</p>
+                        <ul class="orderDetxinxiBg1">
+                            <li>投注用户：<span><?php echo $user['username']; ?></span></li>
+                            <li>奖期：<span><?php echo $lottery['cname']; ?> 第 <?php echo $package['issue']; ?> 期</span></li>
+                        </ul>
+                        <ul class="orderDetxinxiBg2">
+                            <li class="btbg2_right">单倍注数：<span><?php echo $package['single_num']; ?></span></li>
+                            <li class="btbg2_right">投注倍数：<span><?php echo $package['multiple']; ?></span></li>
+                        </ul>
+                        <ul class="orderDetxinxiBg1">
+                            <li class="btbg2_right">投注模式：<span><?php echo $GLOBALS['cfg']['modes'][$package['modes']]; ?>模式</span></li>
+                            <li class="btbg2_right">是否追号：<span><?php if ($package['trace_id'] > 0): ?>是<?php else: ?>否<?php endif; ?></span></li>
+                        </ul>
+                        <ul class="orderDetxinxiBg2">
+                            <li class="btbg2_right">总金额：<span><?php echo $package['amount']; ?></span></li>
+                            <li class="btbg2_right">奖金系列： <span> <?php echo $prizeMode; ?>系列 </span> </li>
+                        </ul>
+                        <ul class="orderDetxinxiBg1">
+                            <li>投注时间：<span><?php echo $package['create_time']; ?></span></li>
+                            <li class="btbg2_right width_poker"><em style="float:left;">开奖号码：</em>
+                                <?php if ($lottery['lottery_id'] == 14): ?>
+                                    <div class="poker_kj" style="float:left;">
+                                        <?php foreach ($openCode as $v): ?>
+                                            <span class="poker_kj_num <?php echo $v['suit']; ?>"><i></i><em><?php echo $v['num']; ?></em></span>
+                                        <?php endforeach; ?>
+                                    </div>
+                                <?php else: ?>
+                                    <span> <?php if (isset($openCode)) echo $openCode; ?> </span>
+                                <?php endif; ?>
+                            </li>
+                        </ul>
+                        <ul class="orderDetxinxiBg1">
+                            <li>订单状态：<span>
+                                    <?php if ($package['cancel_status'] == 0): ?>
+                                        <?php if ($package['check_prize_status'] == 0): ?>未判奖
+                                        <?php elseif ($package['check_prize_status'] == 1): ?>已中奖
+                                        <?php else: ?>未中奖
+                                        <?php endif; ?>
+                                    <?php else: ?>
+                                        <b>
+                                            <?php if ($package['cancel_status'] == 1): ?>个人撤单
+                                            <?php elseif ($package['cancel_status'] == 2): ?>追中撤单
+                                            <?php elseif ($package['cancel_status'] == 3): ?>出号撤单
+                                            <?php elseif ($package['cancel_status'] == 4): ?>未开撤单
+                                            <?php elseif ($package['cancel_status'] == 9): ?>系统撤单
+                                            <?php endif; ?>
+                                        </b>
+                                    <?php endif; ?>
+                                </span></li>
+                            <li class="btbg2_right">中奖金额：<span><?php echo $package['prize']; ?></span></li>
+                        </ul>
+                        <ul class="orderDetxinxiBg1">
+                        </ul>
+                    </div>
+                    <form name="form1" id="form1" action="index.php?c=game&a=cacelPackage" method="post">
+                        <input type="hidden" name="<?php echo isset($GLOBALS['urlSessionName']) ? $GLOBALS['urlSessionName'] : ''; ?>" value="<?php echo isset($GLOBALS['urlSessionValue']) ? $GLOBALS['urlSessionValue'] : ''; ?>"/>
+                        <div class="order-first">
+                            <p class="orderDetxiangxTitle">订单明细</p>
+                            <ul class="orderDetxiangxCont1">
+                                <li> <span>玩法名称</span> <span>投注内容</span> <span>投注注数</span> <span>投注金额</span><span>奖金</span></li>
+                            </ul>
+                            <ul class="orderDetxiangxCont2 colorfff">
+                                <?php foreach ($projects as $v): ?>
+                                    <li>
+                                        <span><?php echo $methods[$v['method_id']]['cname']; ?></span>
+                                        <span><?php echo str_replace('|', ' ', $v['code']); ?></span>
+                                        <span><strong style="color:#280"><?php echo $v['single_num']; ?></strong></span>
+                                        <span><strong style="color:#f60"><?php echo $v['amount']; ?></strong></span>
+                                        <span><?php if ($v['prize'] > 0): ?><strong style="color:red"><?php echo $v['prize']; ?></strong><?php else: ?><?php echo $v['prize']; ?><?php endif; ?></span>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                            <ul class="orderDetxiangxCont2-center" style="height: 60px">
+                                <input type="hidden" name="wrap_id" value="<?php echo $package['wrap_id']; ?>" id="wrap_id" />
+                                <?php if ($isSelf): ?>
+                                    <?php if ($package['cancel_status'] == 0): ?>
+<!--                                        <input type="button" class="btnOne" name="buttonCanle" id="buttonCanle" value="撤单" />-->
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

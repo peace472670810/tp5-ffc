@@ -1,0 +1,99 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5shiv.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="../../static/static/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="../../static/static/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="../../static/lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="../../static/static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="../../static/static/h-ui.admin/css/style.css" />
+<!--[if IE 6]>
+<!/meta 作为公共模版分离出去-->
+
+<title>日志管理 > 会员登录日志 </title>
+</head>
+<body>
+<nav class="breadcrumb"><a href="{:url('index/welcome')}"><i class="Hui-iconfont">&#xe67f;</i> 首页 </a><span class="c-gray en">&gt;</span> 日志管理 <span class="c-gray en">&gt;</span> <a href="{:url('logs/getUserlogs')}">会员登录日志</a><a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+	<div class="Hui-article">
+		<article class="cl pd-20">
+	<div class="text-c">
+	  <form action="{:url('logs/getUserlogs')}" method="get">
+	  用户名：<input type="text" name="u_username" value="{$data['u_username']}" id="" placeholder="用户名" style="width:200px" class="input-text radius ">
+		&nbsp;
+       IP地址：<input type="text" name="u_client_ip" value="{$data['u_client_ip']}" id="" placeholder="IP地址" style="width:200px" class="input-text radius ">
+		&nbsp;
+		操作时间：
+		<input type="text"onFocus="WdatePicker({startDate:'%y-%M-%d 00:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})" id="logmin" class="input-text Wdate" style="width:165px;" name='start_time' 
+		value="{$data['start_time']}" >-
+		<input type="text"   onFocus="WdatePicker({startDate:'%y-%M-%d 23:59:59',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})" id="logmax" class="input-text Wdate radius" style="width:165px;" name='end_time'
+		value="{$data['end_time']}">
+						
+		&nbsp;
+		<button name=""  class="btn btn-success radius" type="submit"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
+		</form>
+			</div>
+		<div class="mt-20 " >	
+				<table class="table table-border table-bordered  table-hover  table-bg table-sort radius  ">
+					<thead>
+						<tr class="text-c  ">
+						   <th width="50">编号</th>
+				           <th width="80">帐户名</th>								
+							<th width="40">控制器</th>
+							<th width="40">动作</th>						            
+							<th width="30">状态</th>
+                            <th width="80">操作时间</th>
+							<th width="150">数据详细</th>
+							<th width="60">客户IP</th>
+                            <th width="60">代理域名</th>
+                            <th width="60">代理IP</th>
+						</tr>
+					</thead>
+					<tbody>
+					{volist name="list" id="v"}
+						 <tr class="text-c">
+							<td>{$v.u_log_id}</td>
+							<td>{$v.u_username}</td>
+							<td>{$v.u_control}</td>
+							<td>{$v.u_action}</td>
+							{eq name="$v.u_is_success" value="1"}<td><span class="label  label-success radius"><b>成功</b></span></td>{/eq}
+							{eq name="$v.u_is_success" value="0"}<td><span class="label  label-error radius"><b>失败</b></span></td>{/eq}
+							<td>{$v.u_date}</td>
+							 <td>{$v.u_remark}</td>
+							<td>{$v.u_client_ip}</td>
+       						<td >{$v.u_domain}</td>
+							<td>{$v.u_proxy_ip}</td>
+						  </tr>
+					{/volist}
+					</tbody>
+				</table>
+			</div>{include file="page"}
+		</article>
+		
+	</div>
+<!--_footer 作为公共模版分离出去-->
+{include file="common/_footer"}
+<!--/_footer /作为公共模版分离出去-->
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="../../static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="../../static/lib/datatables/1.10.0/jquery.dataTables.js"></script>
+<script type="text/javascript" src="../../static/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('.table-sort').dataTable({
+		"aaSorting": [[ 1, "desc" ]],//默认第几个排序
+		"bStateSave": true,//状态保存
+		 "aLengthMenu":[50]		
+	});
+	});
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

@@ -1,0 +1,88 @@
+@charset "utf-8";
+/* CSS Document */
+body, ul, li, dl, dd, dt, img, p, iframe, h1, h2, h3, form, input { font-weight: normal; list-style: none outside none; margin: 0; padding: 0; }
+html, body, div, p, ul, li, dl, dt, dd, h1, h2, h3, h4, h5, h6, form, input, select, button, textarea, iframe, table, th, td { margin: 0; padding: 0; }
+body { background: url(../images/bg1.jpg) #cbd9e6 no-repeat center; width: auto; height: auto; line-height: 12px; }
+body, #gb, #gt-submit.jfk-button { font-family: arial, sans-serif; }
+body { font: 13px arial, sans-serif; margin: 0; padding: 0; }
+ul, li { list-style-type: none; }
+iframe { border: 0px solid red; padding: 0px; margin: 0px; overflow: hidden; }
+img { border: 0 none; vertical-align: top; }
+h1, h2, h3, h4, h5, h6 { font-size: 16px; }
+body, input, select, button, textarea, div, li, p, span, a { color:#001233; font-family: "微软雅黑", "宋体", Arial, Verdana, Tahoma; }
+body, input, select, button, textarea { font-size: 12px; }
+button { cursor: pointer; }
+i, em, cite { font-style: normal; }
+a:active { text-decoration: underline; }
+a:hover { text-decoration: none; }
+a:focus { outline: none; }
+a.fy:link { color: #F2F2F2; font-family: 宋体; font-size: 12px; text-decoration: none; }
+a:link { color:#3B8FB2; text-decoration: none; }
+.fixed:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
+.fixed { display: block; min-height: 1%; }
+*html .fixed { height: 1%; }
+.clear { diplay: block!important; float: none!important; clear: both; overflow: hidden; width: auto!important; height: 0!important; margin: 0 auto!important; padding: 0!important; font-size: 0; line-height: 0; }
+.more { float: right; }
+.more a { font-weight: normal; font-size: 12px; }
+.fl, .fr { display: inline; float: left; }
+.fr { float: right; }
+/*通用提示框*/
+.tisBox { width: 310px; height: 120px; background: #FCFCFC; border: 2px solid #B9B9B9; overflow: hidden; }
+.tisBox ul.tisTitle { width: auto; height: 24px; line-height: 24px; background: url(../Web/images/sprBg.png) 0 -102px repeat-x; color: #484848; text-indent: 15px; font-weight: bold; border-bottom: 1px solid #DEDEDE; }
+.tisBox ul { width: auto; height: auto; }
+.tisBox ul li { float: left; }
+.tisBox ul li.tisPic { background: url(../images/sprPic.png) -379px -149px no-repeat; width: 31px; height: 32px; margin: 20px; _margin: 15px; }
+.tisBox ul li.tisContent { margin: 10px 0 0 20px; color: #484848; width: 200px; word-break: break-all; overflow: hidden; line-height: 18px; }
+.tisBox p.tisBtn { background: url(../images/sprPic.png) -379px -185px no-repeat; width: 48px; height: 21px; color: #757575; text-align: center; line-height: 21px; float: right; margin: 20px 20px 0 0; cursor: pointer; }
+/*追号*/
+.beitouToolsBox { width: 530px; text-indent: 10px; }
+.beitouToolsTop { height: 40px; overflow: hidden; width: auto; border-radius: 8px; }
+.beitouToolsTop li { float: left; }
+.beitouToolsBox ul.beitouToolsTop li.beitouToolsTopL, .beitouToolsBox ul.beitouToolsTop li.beitouToolsTopR { background: url(../images/pngset.png) no-repeat; width: 6px; height: 42px; overflow: hidden; }
+.beitouToolsBox .beitouToolsTopL { background-position: -29px -152px; }
+.beitouToolsBox .beitouToolsTopR { background-position: -40px -152px; }
+.beitouToolsBox .beitouToolsTopContent { background: #127FC0; height: 36px; width: 100%; overflow: hidden; padding: 0 5px 0 5px; color: #fff; line-height: 36px; font-size: 14px; }
+.beitouToolsButton { margin-right: 8PX; }
+.beitouToolsBox ul.beitouToolsTop li.beitouToolsTopContent ul li.beitouToolsTopCont1 span { padding: 0 3px 0 3px; color: #FFC700; }
+.beitouToolsBox ul.beitouToolsTop li.beitouToolsTopContent ul li.beitouToolsTopCont1, .beitouToolsQishi li.beitouToolsQishiL { float: left; }
+.beitouToolsBox ul.beitouToolsTop li.beitouToolsTopContent ul li.beitouToolsButton, .beitouToolsQishi li.beitouToolsQishiR { float: right; }
+.beitouToolsButton span { display: block; float: left; font-size: 12px; margin: 6px 0 0 5px; line-height: 23px; border-radius: 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; }
+.beitouToolsQishi, .beitouToolsQs { width: auto; height: 30px; overflow: hidden; line-height: 30px; color: #666; background: #f7fbfe; border: 1px solid #c7eafe; }
+.beitouToolsQs { margin: 0px auto; }
+.beitouToolsQs li span input { cursor: pointer; margin-left: 10px; }
+.beitouToolsQishi { margin: 1px auto; }
+.beitouToolsQishi li.beitouToolsQishiR { margin-right: 10px; }
+.beitouToolsQishi li.beitouToolsQishiR input { _margin-top: 4px; }
+.beitouToolsQishi li.beitouToolsQishiR input, .beitouToolsinput { height: 18px; color: #3B8FB2; background: #E1F0F7; border: 1px solid #C7EAFE; margin: 0 5px 0 5px; line-height: 20px; text-align: center; }
+.beitouToolsQishi li.beitouToolsQishiL span { display: block; float: left; }
+.beitouToolsQishi li.beitouToolsQishiL span select option { background: #FFF; }
+.beitouToolsQishi li.beitouToolsQishiL span select { width: 150px; margin-top: 4px; height: 18px; color: #3B8FB2; background: #E1F0F7; border: 1px solid #C7EAFE; margin: 6px 5px 0 5px; +margin:3px 5px 0 5px;
+line-height: 20px; text-align: left; }
+.beitouToolsQishi li.beitouToolsQishiR span { color: #F98901; margin: 0 5px 0 5px; }
+.beitouToolsmainBox { width: auto; margin: 0 auto; height: auto; overflow: hidden; }
+.beitouToolSmainbtContTop, .beitouToolsmainBoxTop { width: 490px; margin: 0 auto; height: 25px; line-height: 25px; background: #c7deec; }
+.beitouToolSmainbtContTop li, .beitouToolsmainBoxTop li { color: #003C60; }
+.beitouToolsmainBoxTop li, .beitouToolsmainBoxCont li span, .beitouToolSmainbtContTop li { float: left; }
+.beitouToolsmainBoxTop li { width: 120px; text-align: center; }
+.beitouToolSmainBTContZneir, .beitouToolsmainBoxCont { width: 490px; border: 1px solid #C7EAFE; margin: 0 auto; }
+.beitouToolsmainBoxCont { height: 402px; overflow-y: auto; }
+.beitouToolSmainBTContZneir { height: 228px; overflow: auto; }
+.beitouToolSmainBTContZneir li, .beitouToolsmainBoxCont li { background: #595959; line-height: 26px; height: 26px; /*overflow:hidden;*/ margin-top: 1px; _margin-top: -5px; }
+.beitouToolsmainBoxCont li span { display: block; width: 117px; text-align: center; }
+.beitouToolsinput { width: 50px; margin: 3px auto; *margin:2px auto;
+}
+.beitouToolsfotter { width: 490px; margin: 5px auto; color: #fff; }
+.beitouToolSmainbt { width: 518px; }
+.beitouToolSmainbt p, .beitouToolsfotter p { line-height: 24px; }
+.beitouToolSmainbt { color: #fff; }
+.beitouToolSmainbt p { margin-left: 15px }
+.beitouToolSmainbt p input { margin-left: 5px; }
+.beitouToolSmainbtzk { width: 490px; margin: 5px auto; border: 1px solid #C7EAFE; }
+.beitouToolSmainbt li { margin-left: 10px; color: #aca899; }
+.beitouToolSmainbt li input { color: #aca899; }
+.beitouToolSmainbtzk li.checked { margin-left: 10px; color: #003C60; }
+.beitouToolSmainbtzk li.checked input { color: #F98901; }
+.beitouTooltzjhb { width: 100px; margin: 5px auto; display: block; }
+.beitouToolSmainbtContTop li { color: #000; text-align: center; }
+.beitouToolSmainBTContZneir li span { float: left; text-align: center; }
+.ui-dialog { border-radius: 8px!important; }

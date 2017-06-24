@@ -1,0 +1,38 @@
+<div id="draw" data-role="page" data-theme="a" class="hl-page" data-dom-cache="true" data-url="draw">
+    <div data-role="header" data-position="fixed" data-tap-toggle="false" class="hl-header" style="position: fixed;">
+        <div id="drawmemberAccount"
+             style="height: 45px;line-height: 45px;color: #ffffff;background: transparent;font-size: 12px;font-weight: normal;position: fixed;top:0px;width: 100%;">
+        </div>
+        <div class="hl-logo">
+        </div>
+        <div class="hl-title">KG官方彩</div>
+        <div data-role="navbar" class="hl-top-nav">
+            <ul>
+                <li><a href="#cp">
+                    <div style="border-right:1px solid #d4d7d7"><span style="color: #666666">彩票大厅</span></div>
+                </a></li>
+                <li><a href="#draw" data-role="button">
+                    <div style="border-right:1px solid #d4d7d7"><span style="color: #cb1c02">开奖结果</span></div>
+                </a></li>
+                <li><a href="#search" data-role="button" class="hl-btn-last"><span
+                        style="color: #666666">投注记录</span></a></li>
+            </ul>
+        </div>
+        <div class="hl-options"></div>
+    </div>
+    <!-- /header -->
+    <div data-role="content" class="hl-content" style="padding-top: 43px;">
+        <div class="hl-draw-container">
+            <div class="hl-draw-select-container">
+                <select class="hl-draw-select" name="drawGameList" id="drawGameList" data-role="fieldcontain"
+                        data-native-menu="true" data-shadow="true"></select>
+            </div>
+        </div>
+        <div class="content-primary hl-draw-main">
+            <div class="hl-draw-main-container">
+                <ul id="drawList" data-role="listview" data-inset="true"></ul>
+            </div>
+
+        </div>
+    </div>
+</div>

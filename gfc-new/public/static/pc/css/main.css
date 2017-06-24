@@ -1,0 +1,72 @@
+@charset "utf-8";
+/* CSS Document */
+/*resetCSS*/
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td { padding:0; margin:0; }
+table { border-collapse: collapse; }
+fieldset, img { border:0; }
+address, caption, cite, code, dfn, em, var { font-weight: normal; font-style: normal; }
+ol, ul { list-style: none; }
+caption { text-align: left; }
+h1, h2, h3, h4, h5, h6 { font-weight: normal; font-size:100%; }
+q:before, q:after { }
+abbr, acronym { border:0; }
+/*resetCSS*/
+/* MainCSS */
+body { background:url(../images/body_bg.png) repeat; width:100%; font-size:12px; color:#333;font-family:"Microsoft YaHei" }
+.fl { float:left; }
+.fr { float:right; }
+a { color:#333; text-decoration:none; }
+a:hover { color:#dd1715; text-decoration: underline; }
+.clear0 { clear:both; height:0px; overflow:hidden; }
+.clear5 { clear:both; height:5px; overflow:hidden; }
+.clear10 { clear:both; height:10px; overflow:hidden; }
+.clear20 { clear:both; height:20px; overflow:hidden; }
+.clear30 { clear:both; height:30px; overflow:hidden; }
+.oh{ overflow: hidden }
+.org{ color:#f60 }
+.green{ color:#280 }
+input, textarea, select { font-family:"Microsoft YaHei" }}
+/*public*/
+.header{ width:100%}
+.toplink{ width:100%; height:30px; background:url(../images/top_bg.png) repeat-x; line-height:30px;}
+.toplink .topcenter{ width:1000px; margin:0 auto; height:30px; line-height:30px; }
+.TopleftLink{ float:left; text-align:left;}
+.ToprightLink{ float:right; text-align:right;}
+.banner{ background:url(../images/banner.jpg) no-repeat top center; width:100%; height:526px;}
+.banCont{ width:1000px; height:526px; position:relative; margin:0 auto;}
+.regBtn{ position: absolute; top:390px; right:220px; background:url(../images/reg_btn.png) no-repeat top; width:244px; height:72px; display:block;}
+.regBtn:hover{  background:url(../images/reg_btn.png) no-repeat bottom;}
+.betBtn{ position: absolute; top:390px; right:220px; background:url(../images/bet_btn.png) no-repeat top; width:244px; height:72px; display:block;}
+.betBtn:hover{  background:url(../images/bet_btn.png) no-repeat bottom;}
+.maincont{ width:100%; background:url(../images/cont_bg.png) repeat; height:1384px;}
+.Tab01{ width:1000px; margin:0 auto; line-height:30px; font-size:18px; margin-top:20px;}
+.Tab01 em{ color:#dd1715;}
+.Tab01 .txt{ text-indent:2em; margin:10px auto;}
+.Tab01 .txt02{ line-height:40px; margin:0px auto;}
+.tzList{ margin-top:20px;}
+.tzList li{ float:left; width:25%;}
+.tzList li .tz_box{ width:100%; height:70px;}
+.tzList li .tz_box img{ float:left;}
+.tzList li .tz_box .txtbox{ float:left; padding-left:10px;}
+.tzList li .tz_box .txtbox h2{ font-size:30px; color:#563500;}
+.tzList li .tz_box .txtbox h3{ font-size:16px; color:#563500}
+a.tz_btn{ clear:both; background:url(../images/tc_btn.png) no-repeat top; width:133px; height:35px; line-height:30px; text-align:center; font-size:16px; color:#ffe270; display:block; margin-top:10px; margin-left:20px;}
+a.tz_btn:Hover{background:url(../images/tc_btn.png) no-repeat bottom; text-decoration:none;}
+/* 版权 */
+.footer{ width:100%; height:90px; line-height:80px; text-align:center; background:url(../images/footer_bg.png) repeat-x; color:#fff; font-size:14px;}
+/**/
+/*注册弹出层*/
+.popLayer{ float:left; height:auto;padding:0 10px 30px 10px ; display:none;}/*ShowBox01 layer01*/
+.RegForm{ width:100%;}
+.RegForm ul{ width:80%; margin:10px auto;}
+.RegForm ul li{ width:100%; float:left; margin-top:10px;}
+.RegForm ul li .label01{ width:220px; font-size:14px; text-align:right; width:90px; float:left; height:32px; line-height:32px;}
+.RegForm ul li .txt01{ width:220px; height:30px; line-height:30px; border:1px solid #ddd; padding-left:5px; float:left;}
+.RegForm ul li .txt02{ width:110px; height:30px; line-height:30px; border:1px solid #ddd; padding-left:5px; float:left}
+.RegForm ul li .yzm{ float:left; margin-left:8px;}
+/*新加注册框提示样式*/
+.RegForm ul li em{ color:#f00; font-size:14px; font-family: Verdana, Geneva, sans-serif}
+.RegForm ul li i{ font-style:normal; width:227px; padding:5px 0 0 90px; line-height:16px; font-size:12px;  clear:both; float:left;}
+
+.k_piao{/* background:url(../images/kfu.jpg) no-repeat; */ width:130px; height:160px; position:fixed; right:7%; top:50%; margin-top:-70px; z-index:9999; }
+.k_close{ width:16px; height:16px; display:block; position:absolute;right:0; top:0; cursor:pointer; }

@@ -1,0 +1,783 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>投注</title>
+    <link rel="stylesheet" type="text/css" href="../../static/pc/css/skin_black.css"/>
+    <link rel="stylesheet" type="text/css" href="../../static/pc/css/skin_black_layer.css"/>
+    <script type="text/javascript" src="../../static/pc/js/jquery-1.8.3.min.js"></script>
+</head>
+<body>
+<div class="page">
+    <!-- 公告 S-->
+    <div class="gg_box">
+        <div class="header_bulletin">
+                    <span class="header_bulletin_icon btn_sp">
+                    </span>
+            <div class="noticelist">
+                <div id="notice2">
+                </div>
+            </div>
+        </div>
+        <div id="layer_containerMore" class="layer_containerMore" style="display: none;"></div>
+        <p class="user_inf">欢迎您，<span id="nowUsername">yaboxiaxi3</span> &nbsp;余额：<span
+                class="user_inf_s2" id="nowBalance"></span></p>
+        <div class="hd_skin_box" id="hdSkinBox">
+            <a href="javascript:;" class="btn_changeSkin btn_sp" title="皮肤" id="btnChangeSkin"></a>
+            <ul class="skin_list" id="skinList" style="display:none">
+                <li><a href="javascript:;" class="btn_skin_blue btn_sp" title="蓝色"></a></li>
+                <li><a href="javascript:;" class="btn_skin_black btn_sp" title="黑色"></a></li>
+                <li><a href="javascript:;" class="btn_skin_red btn_sp" title="红色"></a></li>
+                <li><a href="javascript:;" class="btn_skin_green btn_sp" title="绿色"></a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- 公告 E-->
+    <!-- 头部公共导航 S-->
+    <div class="pg_top_nav">
+        <ul class="pg_top_nav_ul">
+            <li>
+                <a href="javascript:;" title="" class="pg_top_nav1 pg_top_nav_sp">
+                    <!--                          <span class="pg_top_nav_ul_s1">香港彩</span>
+                                                  <span class="pg_top_nav_ul_s2">封盘</span>-->
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;" title="" class="pg_top_nav2 pg_top_nav_sp">
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;" title="" class="pg_top_nav3 pg_top_nav_sp">
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;" title="" class="pg_top_nav4 pg_top_nav_sp">
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;" title="" class="pg_top_nav5 pg_top_nav_sp">
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;" title="" class="pg_top_nav6 pg_top_nav_sp">
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;" title="" class="pg_top_nav7 pg_top_nav_sp">
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;" title="" class="pg_top_nav8 pg_top_nav_sp">
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;" title="更多游戏" class="pg_top_nav9 pg_top_nav_sp" id="moreGame">
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;" title="设置" class="pg_top_nav10 pg_top_nav_sp" id="shezhi">
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="top_nav_menu" id="topNavMenu" style="display:none">
+        <!--<a href="javascript:;">广东11选5</a>-->
+    </div>
+    <!-- 头部公共导航 E-->
+    <div class="cai_kind" id="caiKind" style="display:none">
+        <div class="cai_kind_box">
+            <p class="cai_kind_title">选择显示彩种</p>
+            <a href="javascript:;" class="btn_close" title="关闭" id="btnClose">x</a>
+            <ul class="cai_kind_xz" id="caiKndXz">
+            </ul>
+            <form action="" method="" class="cai_kind_xz2">
+                <label><input name="Fruit" type="radio" value="" id="quanXuan"/>全选</label>
+                <label><input name="Fruit" type="radio" value="" id="fanXuan"/>反选</label>
+            </form>
+            <p class="cai_kind_zy">注：可拖动彩种位置来改变彩种排序</p>
+            <div class="cai_kind_btn_box">
+                <a href="javascript:;" class="cai_kind_btn_sure btn_sp" title="确定" id="caiKindTrue"></a>
+                <a href="javascript:;" class="cai_kind_btn_qx btn_sp" title="取消" id="caiKindQx"></a>
+            </div>
+        </div>
+    </div>
+    <!-- header S-->
+    <div class="header">
+        <a href="javascript:;" class="logo" title="山东11选5"> <img
+                src="../../static/pc/images/black/SD11Y.png"/></a>
+        <div class="header_center">
+            <div class="user_tz">
+                <p class="user_tz_p1">第<span id="thisIssueSpan"></span>期</p>
+                <p class="user_tz_p2" id="thisIssueTimerIcon">投注还剩</p>
+            </div>
+            <div class="time_bg" id="thisIssueRemainTime">
+                <div class="time_h">
+                    <span class="time_0 time_sp"></span>
+                    <span class="time_0 time_sp"></span>
+                </div>
+                <div class="time_m">
+                    <span class="time_0 time_sp"></span>
+                    <span class="time_0 time_sp"></span>
+                </div>
+                <div class="time_s">
+                    <span class="time_0 time_sp"></span>
+                    <span class="time_0 time_sp"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="header_right">
+            <div class="user_tz">
+                <p class="user_tz_p1">第<span id="lastIssueSpan"></span>期</p>
+                <p class="user_tz_p2">开奖结果</p>
+            </div>
+            <div class="kj_ball ball5" style="display:none">
+                <span class="kj_ball0 kj_ball_sp"></span>
+                <span class="kj_ball1 kj_ball_sp"></span>
+                <span class="kj_ball2 kj_ball_sp"></span>
+                <span class="kj_ball3 kj_ball_sp"></span>
+                <span class="kj_ball4 kj_ball_sp"></span>
+            </div>
+            <div class="kj_ball ball10" style="display:none">
+                <span class="kj_small_ball0 kj_ball_sp"></span>
+                <span class="kj_small_ball1 kj_ball_sp"></span>
+                <span class="kj_small_ball2 kj_ball_sp"></span>
+                <span class="kj_small_ball3 kj_ball_sp"></span>
+                <span class="kj_small_ball4 kj_ball_sp"></span>
+                <span class="kj_small_ball5 kj_ball_sp"></span>
+                <span class="kj_small_ball6 kj_ball_sp"></span>
+                <span class="kj_small_ball7 kj_ball_sp"></span>
+                <span class="kj_small_ball8 kj_ball_sp"></span>
+                <span class="kj_small_ball9 kj_ball_sp"></span>
+            </div>
+        </div>
+    </div>
+    <!-- header E-->
+    <!-- 下注 S-->
+    <div class="even_xz">
+        <div class="hehe" id="hehe">
+            <ul class="even_xz_nav" id="evenXzNav">
+            </ul>
+        </div>
+        <div class="even_xz_left official_game">
+            <div class="xz_rule">
+                <div class="xz_rule_left">
+                    <div class="dqwf">当前玩法：
+                        <em class="dqwf_sel" id="curMethod"></em>
+                    </div>
+                    <div class="wfsm">
+                        <span class="xz_rule_icon btn_sp"></span>
+                        <span class="methodDesc" id="methodDesc"></span>
+                        <span class="methodTipInfo" id="methodTipInfo">【查看详细规则】</span>
+                        <span class="prizeDesc" id="prizeDesc"></span>
+
+                    </div>
+
+                </div>
+                <div class="even_xz_right_btn_box">
+                    <a class="btn_qst btn_sp" title="走势图" target="_blank"
+                       href="index.php?c=api&a=chart&lottery_id=2&urlSession=3b8befed8f19ab240f8875c50166019e1c85a585"></a>
+                    <a href="javascript:;" title="奖金规则" class="btn_jjgz btn_sp" id="prizerule"></a>
+                    <a href="javascript:;" title="" class="btn_zthm btn_sp" id="inputBtn"></a>
+                </div>
+            </div>
+
+            <br/>
+            <div class="mod-select-info" id="rxpos"></div>
+            <div class="chooseNO selectArea" id="selectArea">
+            </div>
+            <div class="zhu_num">
+                <div class="zhu_num_box">
+                    <p class="zhu_num_p1">您选了 <span id="betCount">0</span>注，</p>
+                    <p class="zhu_num_p2">共 <span id="betAmount">0.00</span>元</p>
+                    <span id="curPrizeSpanShower" style="display: none"></span>
+                    <input type="hidden" id="curPrizeSpan" class="SelectStyle"/>
+                    <span id="showWinTip" style="display: none">
+                                ，若中<span
+                            style=" border-bottom: #000 2px dotted ;cursor:  help; text-decoration-color: #000;"
+                            title="有些玩法分为若干等级，请参考游戏规则。" id="prizeAmountDetail">最高奖金</span><em
+                            class="yellow betAmount" id="prizeAmount">0</em>元，您将盈利<em class="yellow betAmount"
+                                                                                      id="winAmount">11</em>元
+                            </span>
+                </div>
+                <div class="even_xz_right_btn_box2">
+                    <a href="javascript:;" title="机选一注" class="btn_jxyz btn_sp machineChoice" id="machineChoice1"></a>
+                    <a href="javascript:;" title="机选五注" class="btn_jxwz btn_sp machineChoice" id="machineChoice5"></a>
+                    <a href="javascript:;" title="添加号码" class="btn_tjhm btn_sp" id="selectCodeBtn"></a>
+                </div>
+            </div>
+        </div>
+        <div class="even_xz_left even_xz_left_non_official_game non_official_game"
+             style="margin-top: 60px;display:none;" id="non_official_game_top">
+        </div>
+    </div>
+    <!-- 下注 E-->
+    <!-- 添加号码 S-->
+    <div class="add_num official_game">
+        <div class="add_num_text">
+            <div class="bt_add">
+                <p class="bt_add_p1">倍投</p>
+                <a href="javascript:;" class="btn_subNum" id="btnSubNum">-</a>
+                <input type="text" class="inp_number" value="1" id="multiple" name="multiple">
+                <a href="javascript:;" class="btn_addNum" id="btnAddNum">+</a>
+                <p class="bt_add_p2">倍[最大5000]</p>
+            </div>
+        </div>
+        <ul class="moshi">
+            <!--<li class="ms_yuan_li"><a href="javascript:;" class="ms_yuan modesDIV" val="1">元模式</a></li>
+            <li class="ms_jiao_li"><a href="javascript:;" class="ms_jiao modesDIV" val="0.1">角模式</a></li>
+            <li class="ms_fen_li"><a href="javascript:;" class="ms_fen modesDIV" val="0.01">分模式</a></li>-->
+            <li class="ms_2yuan_li"><a href="javascript:;" class="ms_2yuan modesDIV" val="1">2元</a></li>
+            <li class="ms_1yuan_li"><a href="javascript:;" class="ms_1yuan modesDIV" val="0.5">1元</a></li>
+            <li class="ms_jiao_li"><a href="javascript:;" class="ms_jiao modesDIV" val="0.1">2角</a></li>
+            <li class="ms_fen_li"><a href="javascript:;" class="ms_fen modesDIV" val="0.01">2分</a></li>
+            <input type="hidden" id="modesDIV"/>
+        </ul>
+        <p class="add_num_zhushu">方案注数：<span id="totalBetCount">0</span>注</p>
+        <p class="add_num_jine">金额：<span id="totalBetAmount">0</span>元</p>
+        <div class="num_try">
+            <div class="num_try_text">
+                <ul class="num_try_text_list" id="projectList">
+                </ul>
+            </div>
+            <div class="num_try_btn_box">
+                <a href="javascript:;" class="btn_sure btn_sp" title="确定投注" id="confirmBtn"></a>
+                <a href="javascript:;" class="btn_zh btn_sp" title="我要追号" id="traceBtn"></a>
+                <a href="javascript:;" class="btn_qk btn_sp" title="清空号码" id="clearProjectBtn"></a>
+            </div>
+        </div>
+    </div>
+    <!-- 添加号码 E-->
+    <!-- 历史开奖 S-->
+    <div class="old_kj">
+        <div class="kj_left">
+            <div class="old_kj_title">
+                <p class="old_kj_title_p1"><span class="old_kj_title_icon btn_sp"></span>历史开奖</p>
+                <a href="/?c=api&a=chart&lottery_id=2&urlSession=3b8befed8f19ab240f8875c50166019e1c85a585"
+                   class="btn_more btn_sp" title="更多历史号码" target="_blank"></a>
+            </div>
+            <div class="old_kj_left_box">
+                <div class="old_kj_left_box_title" id="todayIssuesHead">
+                </div>
+                <ul class="old_kj_left_box_list" id="todayIssuesBody">
+                </ul>
+            </div>
+        </div>
+        <div class="kj_right">
+            <div class="kj_right_btn_box">
+                <a href="javascript:;" class="kj_right_btn_myFa btn_sp" title="我的方案"></a>
+                <a href="javascript:;" class="kj_right_btn_myZh btn_sp" title="我的追号"></a>
+                <a href="javascript:;" class="kj_right_btn_moreFa btn_sp" title="更多方案" id="touzhu_jl"></a>
+            </div>
+            <div class="old_kj_right_box" id="mybetList">
+                <div class="old_kj_right_box_title">
+                    <p class="old_kj_right_box_title_p1">期号</p>
+                    <p class="old_kj_right_box_title_p2">投注金额</p>
+                    <p class="old_kj_right_box_title_p2">状态</p>
+                </div>
+                <ul class="old_kj_right_box_list" id="mybetListContent">
+                </ul>
+            </div>
+            <div class="old_kj_right_box" id="myTraceList">
+                <div class="old_kj_right_box_title">
+                    <p class="old_kj_right_box_title_p1">起始期</p>
+                    <p class="old_kj_right_box_title_p2">投注总额</p>
+                    <p class="old_kj_right_box_title_p2">状态(完成/总)</p>
+                </div>
+                <ul class="old_kj_right_box_list" id="myTraceListContent">
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- 历史开奖 E-->
+</div>
+
+<script type="text/javascript" src="../../static/pc/js/ds.js"></script>
+<script type="text/javascript" src="../../static/pc/js/layer/layer.min.js"></script>
+<script src="../../static/pc/js/jqextend.js" type="text/javascript"></script>
+<script src="../../static/pc/js/betcp.bak.js" type="text/javascript"></script>
+<script type="text/javascript">
+    function showBalance() {
+        try {
+            $('#nowBalance').text('...');
+            $.post(
+                "{:url('Game/showbalance')}",
+                {},
+                function (response) {
+                    if (response) {
+                        response = eval('(' + response + ')');
+                        $('#nowBalance').text('￥' + response.balance);
+                        if (response.username) {
+                            if ($('#nowUsername').text() != response.username) {
+                                layer.msg('您已经在别处登录了本彩票平台<br/>现在为你切换到用户<br/>' + response.username, 4, 10);
+                                $('#nowUsername').text(response.username);
+                            }
+                        }
+                    }
+                }, 'json');
+        }
+        catch (e) {
+        }
+
+    }
+    function urlSession() {
+        return '&urlSession=' + Math.random();
+    }
+    var lottery_id = {$lottery.lid};
+    var lottery_type = {$lottery.lottery_type};
+    var openedIssues = {$json_openedIssues};
+    var total_profit = 1-{$lottery.total_profit};
+    var json_methods = {$json_methods};
+    var cname = "{$lottery.cname}";
+    var maxPrize = {$maxCombPrize};
+    var getCurIssueUrl = "{:url('Game/getCurIssue')}";
+    $(function () {
+        $.bet({
+            lotteryId: lottery_id,
+            lotteryName: cname,
+            prizeRate: total_profit,
+            lotteryType: lottery_type,
+            methods: json_methods,
+            maxCombPrize: maxPrize,
+            openedIssues: openedIssues,
+            minRebateGaps: [{"from": "0", "to": "0.10", "gap": "0.005"}],
+            rebate: 0.090,
+            defaultMode: 1,
+            defaultRebate: 0.090,
+            missHot: {
+                "miss": [{
+                    "01": 14,
+                    "02": 20,
+                    "03": 2,
+                    "04": 24,
+                    "05": 16,
+                    "06": 0,
+                    "07": 1,
+                    "08": 5,
+                    "09": 30,
+                    "10": 37,
+                    "11": 7
+                }, {
+                    "01": 18,
+                    "02": 3,
+                    "03": 12,
+                    "04": 17,
+                    "05": 2,
+                    "06": 1,
+                    "07": 0,
+                    "08": 11,
+                    "09": 4,
+                    "10": 10,
+                    "11": 14
+                }, {
+                    "01": 1,
+                    "02": 0,
+                    "03": 22,
+                    "04": 7,
+                    "05": 3,
+                    "06": 29,
+                    "07": 14,
+                    "08": 2,
+                    "09": 5,
+                    "10": 8,
+                    "11": 12
+                }, {
+                    "01": 2,
+                    "02": 4,
+                    "03": 27,
+                    "04": 3,
+                    "05": 0,
+                    "06": 25,
+                    "07": 15,
+                    "08": 9,
+                    "09": 23,
+                    "10": 5,
+                    "11": 10
+                }, {
+                    "01": 19,
+                    "02": 2,
+                    "03": 0,
+                    "04": 18,
+                    "05": 12,
+                    "06": 14,
+                    "07": 9,
+                    "08": 4,
+                    "09": 7,
+                    "10": 33,
+                    "11": 3
+                }],
+                "hot": [{
+                    "01": 0,
+                    "02": 0,
+                    "03": 3,
+                    "04": 0,
+                    "05": 0,
+                    "06": 1,
+                    "07": 3,
+                    "08": 1,
+                    "09": 0,
+                    "10": 0,
+                    "11": 2
+                }, {
+                    "01": 0,
+                    "02": 3,
+                    "03": 0,
+                    "04": 0,
+                    "05": 3,
+                    "06": 1,
+                    "07": 2,
+                    "08": 0,
+                    "09": 1,
+                    "10": 0,
+                    "11": 0
+                }, {
+                    "01": 1,
+                    "02": 1,
+                    "03": 0,
+                    "04": 1,
+                    "05": 3,
+                    "06": 0,
+                    "07": 0,
+                    "08": 2,
+                    "09": 1,
+                    "10": 1,
+                    "11": 0
+                }, {
+                    "01": 2,
+                    "02": 1,
+                    "03": 0,
+                    "04": 2,
+                    "05": 2,
+                    "06": 0,
+                    "07": 0,
+                    "08": 1,
+                    "09": 0,
+                    "10": 2,
+                    "11": 0
+                }, {"01": 0, "02": 1, "03": 4, "04": 0, "05": 0, "06": 0, "07": 1, "08": 1, "09": 1, "10": 0, "11": 2}]
+            },
+            getCurUrl:getCurIssueUrl,
+
+        });
+    });
+</script>
+<script src="../../static/pc/js/betcq.ext.bak.js" type="text/javascript"></script>
+<script src="../../static/pc/js/jquery.countdown.min.js" type="text/javascript"></script>
+<script src="../../static/pc/js/jqueryUI/jquery-ui.min.js" type="text/javascript"></script>
+<script>
+    var sortLotterys = {$sortLotterys};
+    function initSortLotterys() {
+        $('#topNavMenu').empty();
+        $('.pg_top_nav_sp').empty();
+        if (!sortLotterys) {
+            return;
+        }
+        var sortIns = 0;
+        for (var i in sortLotterys) {
+            if (sortLotterys[i]['isopened'] == 1) {
+                if (sortIns < 8) {
+                    var sortli = $('.pg_top_nav' + (sortIns + 1).toString());
+                    sortli.attr('title', sortLotterys[i]['cname']);
+                    sortli.attr('href', '/?c=api&a=' + sortLotterys[i]['alink'] + urlSession());
+                    var tmphtml = '<span class="pg_top_nav_ul_s1">' + sortLotterys[i]['cname'] + '</span><span class="pg_top_nav_ul_s2 lottery_timer" lottery="' + sortLotterys[i]['lotteryId'] + '">载入中</span>';
+                    sortli.html(tmphtml);
+                }
+                else {
+                    var tmphtml = '<a href="/?c=api&a=' + sortLotterys[i]['alink'] + urlSession() + '">' + sortLotterys[i]['cname'] + '</a>';
+                    $('#topNavMenu').append(tmphtml);
+                }
+                sortIns++;
+            }
+        }
+
+    }
+    //彩种列表
+    initSortLotterys();
+    function refreshLottery() {
+        $('.lottery_timer').each(function () {
+            var lottery_issue = $(this);
+            var lotteryId = lottery_issue.attr('lottery');
+            if (lotteryId) {
+                $.ajax({
+                    url: "?c=api&a=play" + urlSession(),
+                    type: "POST",
+                    data: {
+                        op: "getCurIssue",
+                        lotteryId: lotteryId
+                    },
+                    cache: false,
+                    dataType: "json",
+                    timeout: 30000,
+                    success: function (response) {
+                        if (response.errno == 0) {
+                            lottery_issue.attr('title', response.issueInfo.issue);
+                            var d = response.issueInfo.end_time.match(/(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})/gi);
+                            d = new Date(RegExp.$1, RegExp.$2, RegExp.$3, RegExp.$4, RegExp.$5, RegExp.$6);
+                            serverTime = response.serverTime.match(/(\d{4})\/(\d{2})\/(\d{2}) (\d{2}):(\d{2}):(\d{2})/gi);
+                            var serverTime = new Date(RegExp.$1, RegExp.$2, RegExp.$3, RegExp.$4, RegExp.$5, RegExp.$6);
+                            var now = new Date();
+                            var offset = d.getTimezoneOffset() / 60 + 8;
+                            var nowDate = new Date(serverTime.getTime() - (3600000 * offset));
+                            var nd = new Date(now.getTime() - nowDate.getTime() + d.getTime() - (3600000 * offset));
+//                              console.log(response.issueInfo.end_time);
+//                               console.log(response.serverTime);
+//                                    console.log(serverTime);
+//                                    console.log(nowDate);
+//                                    console.log(nd.getTime());
+                            lottery_issue.countdown(nd.getTime(), function (event) {
+                                var tmpTitle = $(this).attr('title').toString();
+                                tmpTitle = tmpTitle.substr(tmpTitle.length - 4).replace('-', '');
+                                var totalHours = event.offset.totalDays * 24 + event.offset.hours;
+                                $(this).html(event.strftime(totalHours + ':%M:%S'));
+                            });
+                        } else {
+                            lottery_issue.text('封盘');
+                            //alert("获取当前期数据失败");
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        lottery_issue.text('载入中');
+                        //alert("调用当前期数据失败，请再次尝试");
+                    }
+                });
+            }
+        });
+    }
+    setInterval('refreshLottery()', 20000);
+    //刷新彩种列表倒计时
+    refreshLottery();
+    var btnAddNum = document.getElementById("btnAddNum");
+    var btnSubNum = document.getElementById("btnSubNum");
+    var inpNumber = document.getElementById("multiple");
+    btnAddNum.onclick = function () {
+        var num = inpNumber.value;
+        if (num >= 5000) {
+            num = 5000;
+        } else {
+            num++;
+        }
+        inpNumber.value = num;
+        $('#multiple').keyup();
+    }
+
+    btnSubNum.onclick = function () {
+        var num = inpNumber.value;
+        if (num <= 1) {
+            num = 1;
+        } else {
+            num--;
+        }
+        inpNumber.value = num;
+        $('#multiple').keyup();
+    }
+
+    // 导航菜单
+    var evenXzNav = document.getElementById("evenXzNav");
+    var evenXzNavLi = evenXzNav.getElementsByTagName("li");
+    var evenXzNavMenu = document.getElementById("evenXzNavMenu");
+
+    // 浮层
+    function show(showbBtn, showBox) {
+        var showbBtn = document.getElementById(showbBtn);
+        var showBox = document.getElementById(showBox);
+        showbBtn.onmousemove = function () {
+            showBox.style.display = "block";
+        }
+    }
+    ;
+    //皮肤
+    show("hdSkinBox", "skinList");
+    //设置
+    function initSetLotterys() {
+        $('#caiKndXz').empty();
+        if (!sortLotterys) {
+
+            return;
+        }
+        for (var i in sortLotterys) {
+            var checked = '';
+
+            if (sortLotterys[i]['isopened'] == 1) {
+                checked = ' checked="checked" ';
+            }
+            var tmphtml = '<li><input ' + checked + ' name="' + sortLotterys[i]['name'] + '" type="checkbox" id="' + sortLotterys[i]['name'] + '"  value="' + sortLotterys[i]['name'] + '" /><lable onclick="$(\'#' + sortLotterys[i]['name'] + '\').click();' + '">' + sortLotterys[i]['cname'] + '</lable></li>';
+            $('#caiKndXz').append(tmphtml);
+        }
+        $('#caiKndXz li').css('cursor', 'move');
+
+        $('#caiKndXz').sortable();
+    }
+
+
+    initSetLotterys();
+
+    var shezhi = document.getElementById("shezhi");
+    var caiKind = document.getElementById("caiKind");
+    shezhi.onclick = function () {
+        caiKind.style.display = "block";
+        initSetLotterys();
+    }
+
+    //更多游戏
+    var moreGame = document.getElementById("moreGame");
+    var topNavMenu = document.getElementById("topNavMenu");
+    moreGame.onmouseover = function () {
+        topNavMenu.style.display = "block";
+    }
+    moreGame.onmouseout = function () {
+        topNavMenu.style.display = "none";
+    }
+    topNavMenu.onmouseover = function () {
+        topNavMenu.style.display = "block";
+    }
+    topNavMenu.onmouseout = function () {
+        topNavMenu.style.display = "none";
+    }
+
+
+    function hide(hidebBtn, hideBox) {
+        var hidebBtn = document.getElementById(hidebBtn);
+        var hideBox = document.getElementById(hideBox);
+        hidebBtn.onmouseout = function () {
+            hideBox.style.display = "none";
+        }
+    }
+    ;
+
+    hide("hdSkinBox", "skinList");
+
+
+    //全选-反选
+    var quanXuan = document.getElementById("quanXuan");
+    var fanXuan = document.getElementById("fanXuan");
+    var caiKndXz = document.getElementById("caiKndXz");
+    var caiKndXzLab = caiKndXz.getElementsByTagName("input")
+    quanXuan.onclick = function () {
+        for (var i = 0; i < caiKndXzLab.length; i++) {
+            if (caiKndXzLab[i].checked !== true) {
+                caiKndXzLab[i].checked = "checked";
+            }
+        }
+    }
+
+    fanXuan.onclick = function () {
+        for (var i = 0; i < caiKndXzLab.length; i++) {
+            if (caiKndXzLab[i].checked == true) {
+                caiKndXzLab[i].checked = false;
+            } else {
+                caiKndXzLab[i].checked = true;
+            }
+        }
+    }
+
+
+    //关闭设置弹窗
+    var btnClose = document.getElementById("btnClose");
+    var caiKind = document.getElementById("caiKind");
+
+    function closeKind() {
+        var caiKind = document.getElementById("caiKind");
+        caiKind.style.display = "none";
+    }
+    $('#btnClose').click(function () {
+        var caiKind = document.getElementById("caiKind");
+        caiKind.style.display = "none";
+    });
+    $('#caiKindQx').click(function () {
+        var caiKind = document.getElementById("caiKind");
+        caiKind.style.display = "none";
+    });
+
+
+    $('#caiKindTrue').click(function () {
+        if (sortLotterys) {
+            var newSortLotterys = [];
+
+            $sortlis = $('#caiKndXz li input');
+            $sortlis.each(function (i, v) {
+                var item = {};
+                for (var j in sortLotterys) {
+                    if (sortLotterys[j]['name'] == $(v).val()) {
+                        item['lotteryId'] = sortLotterys[j]['lotteryId'];
+                        item['name'] = sortLotterys[j]['name'];
+                        item['cname'] = sortLotterys[j]['cname'];
+                        item['alink'] = sortLotterys[j]['alink'];
+                        item['isopened'] = $(v).attr('checked') ? 1 : 0;
+                    }
+
+                }
+                if (item != {}) {
+                    newSortLotterys.push(item);
+                }
+            });
+            if (newSortLotterys != []) {
+                sortLotterys = newSortLotterys;
+
+
+                $.ajax({
+                    url: window.location.href + urlSession(),
+                    type: "POST",
+                    data: {
+                        op: "sortLotterysSave",
+                        sortLotterys: sortLotterys
+                    },
+                    cache: false,
+                    dataType: "json",
+                    timeout: 30000,
+                    success: function (response) {
+
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        //alert("调用当前期数据失败，请再次尝试");
+                    }
+                });
+
+
+                initSortLotterys();
+                refreshLottery()
+            }
+
+        }
+
+        var caiKind = document.getElementById("caiKind");
+        caiKind.style.display = "none";
+    });
+    function skinSave(skin) {
+        $.ajax({
+            url: window.location.href + urlSession(),
+            type: "POST",
+            data: {
+                op: "skinSave",
+                skin: skin
+            },
+            cache: false,
+            dataType: "json",
+            timeout: 1000,
+            success: function (response) {
+                if (response && response.errno == 0) {
+                    window.location.reload();
+                }
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                //alert("调用当前期数据失败，请再次尝试");
+            }
+        });
+    }
+    $('.btn_skin_blue').click(function () {
+        skinSave('blue');
+    });
+    $('.btn_skin_black').click(function () {
+        skinSave('black');
+    });
+    $('.btn_skin_red').click(function () {
+        skinSave('red');
+    });
+    $('.btn_skin_green').click(function () {
+        skinSave('green');
+    });
+</script>
+
+
+</body>
+</html>

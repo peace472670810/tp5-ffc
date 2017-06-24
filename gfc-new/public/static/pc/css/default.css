@@ -1,0 +1,52 @@
+/* 常用背景色 #E8ECA0 #e8dC90 #888C40 */
+body { margin: 0px; padding: 0px; color: #000; border: 0px solid #f00; background: #fff;/*url(../images/bg.jpg);*/ font: 12px "sans-serif", "Arial", "Verdana"; }
+iframe { border: 0px solid red; padding: 0px; margin: 0px; overflow: hidden; }
+/* #E8ECA0 #e8dC90 #888C40 */
+
+table { padding: 0px; border-spacing: 0px; margin: 0px 0px 0px 0px; border: 0px solid #f00; border-collapse: collapse; }
+table thead { background-color: #D3DCE3; }
+tr, td { font-size: 11px; padding: 3px; border: 1px solid #ccc; }
+h2 { background: none repeat scroll 0 0 #F5F5EF; border: 1px solid #399677; color: #9CACAF; font-size: 12px; height: 22px; margin: 0 0 6px; overflow: hidden; padding: 5px 5px; }
+h4 { color: #000; font-size: 12px; margin: 0 0 0px; padding: 0px 5px; }
+input, textarea, select { font: 12px "courier new"; color: #000; margin: 1px 2px; padding: 1px 8px; }
+a:visited { color: blue; text-decoration: none; }
+a:link { color: blue; text-decoration: none; }
+a:hover { color: #EB8A3D; text-decoration: underline; }
+a:active { color: #EB8A3D; text-decoration: underline; }
+a:link, a:visited { text-decoration: underline; cursor: hand; }
+img { border: 0px; }
+form, select, a { font-size: 12px; }
+textarea { font-size: 12px; }
+input, select, textarea { vertical-align: middle; padding: 0px; margin: 1px 1px 1px 5px; font-size: 12px; }
+
+#leftFrame { overflow: auto; }
+#mainFrame { overflow: auto; border: 0px solid #f00; }
+#userLeftFrame { overflow: auto; }
+#userMainFrame { overflow: auto; border: 0px solid #f00; }
+form { margin: 0px; padding: 0px; }
+/* 整个页面内容 */
+#container { padding: 10px 5px 10px 5px; border: 0px solid #f00; }
+/* 主列表 */
+#listDiv { margin: 10px 0px 10px 0px; padding: 0px; width: 100%; border: 0px solid #888C40; }
+#listDiv td { text-align: center; }
+#addDiv { margin: 20px 0px 10px 0px; padding: 0px; width: 100%; border: 0px solid #f00; }
+#addDiv table { margin: 0px; }
+#addDiv td { padding: 5px; }
+/* 主表格 */
+.mainList { /*width:100%;*/
+}
+.indecator { width: 100%; background-color: #E8ECA0; }
+.submit { width: auto; padding: 1px 2px 1px 5px; letter-spacing: 2px; background: button; }
+.hand { cursor: pointer; }
+.rowTitle { background: #c8cCA0; }
+#pageList { float: right; }
+.clear { clear: both; float: none; font-size: 0px; margin: 0; padding: 0; display: block; }
+.nowrap { white-space: nowrap; }
+#rightLink { float: right; border: 0px solid #ff0000; width: 10%; height: 100%; background-color: #DCE4F3; margin: 0px; padding: 0px; }
+#vipLevel sup { color: red; font-size: 12px; font-weight: bold; }
+h2 .rightSpan a { background: url("../images/icon_add.gif") no-repeat scroll 3px center #fff; border-color: #2F7B63; border-style: solid; border-width: 1px 2px 2px 1px; color: #fff; display: block; font-size: 12px; font-weight: 400; padding: 2px 5px 2px 10px; text-decoration: none; }
+h2 .rightSpan { float: right; padding: 0px 5px 0px 5px; }
+h2 .leftSpan { color: #FF5151; float: left; margin-top: 3px; }
+h2 a { font-size: 12px; }
+h2 a:link { color: black; }
+h2 a:visited { color: black; }

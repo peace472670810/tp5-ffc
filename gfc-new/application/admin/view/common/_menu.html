@@ -1,0 +1,117 @@
+<aside class="Hui-aside">
+	<div class="menu_dropdown bk_2">
+		<dl id="menu-article">
+			<dt><i class="Hui-iconfont">&#xe616;</i> 即时注单<i class="Hui-iconfont menu_dropdown-arrow">&#xe6a1;</i></dt>
+		</dl>
+		<dl id="menu-member">
+			<dt><i class="Hui-iconfont">&#xe60d;</i> 账户管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dd>
+				{if condition="session('level') eq '5'"}
+					<ul>
+						<li><a href="{:url('user/getuser4')}?u_level=4&u_top_5={:session('u_name')}" title="分公司列表" target="iframeone">分公司列表</a></li>
+					</ul>
+					<ul>
+						<li><a href="{:url('user/getuser3')}?u_level=3&u_top_5={:session('u_name')}" title="股东列表" target="iframeone">股东列表</a></li>
+					</ul>
+					<ul>
+						<li><a href="{:url('user/getuser2')}?u_level=2&u_top_5={:session('u_name')}" title="总代列表" target="iframeone">总代列表</a></li>
+					</ul>
+					<ul>
+						<li><a href="{:url('user/getuser1')}?u_level=1&u_top_5={:session('u_name')}" title="代理列表" target="iframeone">代理列表</a></li>
+					</ul>
+					<ul>
+						<li><a href="{:url('user/getuser0')}?u_level=0&u_top_5={:session('u_name')}" title="会员列表" target="iframeone">会员列表</a></li>
+					</ul>
+				{/if}
+				{if condition="session('level') eq '4'"}
+				<ul>
+					<li><a href="{:url('user/getuser3')}?u_level=3&u_top_4={:session('u_name')}" title="股东列表" target="iframeone">股东列表</a></li>
+				</ul>
+				<ul>
+					<li><a href="{:url('user/getuser2')}?u_level=2&u_top_4={:session('u_name')}" title="总代列表" target="iframeone">总代列表</a></li>
+				</ul>
+				<ul>
+					<li><a href="{:url('user/getuser1')}?u_level=1&u_top_4={:session('u_name')}" title="代理列表" target="iframeone">代理列表</a></li>
+				</ul>
+				<ul>
+					<li><a href="{:url('user/getuser0')}?u_level=0&u_top_4={:session('u_name')}" title="会员列表" target="iframeone">会员列表</a></li>
+				</ul>
+				{/if}
+				{if condition="session('level') eq '3'"}
+				<ul>
+					<li><a href="{:url('user/getuser2')}?u_level=2&u_top_3={:session('u_name')}" title="总代列表" target="iframeone">总代列表</a></li>
+				</ul>
+				<ul>
+					<li><a href="{:url('user/getuser1')}?u_level=1&u_top_3={:session('u_name')}" title="代理列表" target="iframeone">代理列表</a></li>
+				</ul>
+				<ul>
+					<li><a href="{:url('user/getuser0')}?u_level=0&u_top_3={:session('u_name')}" title="会员列表" target="iframeone">会员列表</a></li>
+				</ul>
+				{/if}
+				{if condition="session('level') eq '2'"}
+				<ul>
+					<li><a href="{:url('user/getuser1')}?u_level=1&u_top_2={:session('u_name')}" title="代理列表" target="iframeone">代理列表</a></li>
+				</ul>
+				<ul>
+					<li><a href="{:url('user/getuser0')}?u_level=0&u_top_2={:session('u_name')}" title="会员列表" target="iframeone">会员列表</a></li>
+				</ul>
+				{/if}
+				{if condition="session('level') eq '1'"}
+				<ul>
+					<li><a href="{:url('user/getuser0')}?u_level=0&u_top_1={:session('u_name')}" title="会员列表" target="iframeone">会员列表</a></li>
+				</ul>
+				{/if}
+				<ul>
+					<li><a href="{:url('admin/adminList')}" target="iframeone" title="子账号列表">子账号列表</a></li>
+				</ul>
+			</dd>
+		</dl>
+			<dl id="menu-picture">
+			<dt><i class="Hui-iconfont">&#xe613;</i> 开奖管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dd>
+			<ul>
+					<li><a href="{:url('drawhistory/getIssues')}"  target="iframeone"title="盘口管理">盘口管理</a></li>
+				</ul>
+				<ul>
+					<li><a href="{:url('drawhistory/getDrawhistory')}"  target="iframeone"title="历史开奖">历史开奖</a></li>
+				</ul>
+			</dd>
+		</dl>
+			<dl id="menu-product">
+			<dt><i class="Hui-iconfont">&#xe6bf;</i> 报表管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dd>
+				<ul>
+					<li><a href="{:url('order/getOrder')}"  target="iframeone"title="订单列表">注单列表</a></li>
+				</ul>
+				<ul>
+					<li><a href="{:url('order/getTrace')}"  target="iframeone"title="追号列表">追号列表</a></li>
+				</ul>
+				<ul>
+					<li><a href="{:url('report/getReport')}?u_level={:session('level')}&u_username={:session('u_name')}" target="iframeone" title="交互报表">交付报表</a></li>
+				</ul>
+				<ul>
+					<li><a href="{:url('report/userReport')}?u_level={:session('level')}&u_username={:session('u_name')}" target="iframeone" title="交互报表">会员报表</a></li>
+				</ul>
+			</dd>
+		</dl>
+		<dl id="menu-picture2">
+			<dt><a href="{:url('lottery/getLottery')} " target="iframeone" title="彩种管理"><i class="Hui-iconfont">&#xe68c;</i><i class="Hui-iconfont menu_dropdown-arrow">&#xe6a1;</i> 彩种列表</a></dt>
+		
+		</dl>
+		<dl id="menu-picture3">
+			<a href="{:url('notices/getNotice')}"   target="iframeone" title="公告管理"><i class="Hui-iconfont"><dt>&#xe692;&nbsp;</i>公告管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6a1;</i></dt></a>
+		</dl>
+		<dl id="menu-system4">
+			<dt><i class="Hui-iconfont">&#xe623;</i> 日志管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dd>
+				<ul>
+					<li><a href="{:url('logs/getUserlogs')}" target="iframeone" title="系统日志">会员登录日志</a></li>
+				</ul>
+				<ul>
+					<li><a href="{:url('logs/getlogs')}"  target="iframeone" title="系统日志">用户操作日志</a></li>
+				</ul>
+			</dd>
+		</dl>
+	</div>
+</aside>
+<div class="dislpayArrow hidden-xs"><a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a></div>

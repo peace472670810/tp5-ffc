@@ -1,0 +1,136 @@
+<!--_meta 作为公共模版分离出去-->
+{include file="common/_meta"}
+<!--/meta 作为公共模版分离出去-->
+
+<title>添加用户 - 用户管理</title>
+</head>
+<body>
+<article class="cl pd-20">
+	<form action="{:url('user/addUser')}" method="post" class="form form-horizontal" id="form-member-add">
+	  		<div class="row cl">
+		   <input name="level" type='hidden' value="{$level}"></input>
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>
+							{eq name="$level+1" value="4"}分公司{/eq}
+							{eq name="$level+1" value="3"}股东{/eq}
+							{eq name="$level+1" value="2"}总代{/eq}
+							{eq name="$level+1" value="1"}代理{/eq}
+							账号：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="{$u_username}" placeholder="" id="u_username" name="u_top_{$level+1}" >
+			</div>
+		</div>
+				<div class="row cl">
+		   <input name="level" type='hidden' value="{$level}"></input>
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>{eq name="$level+1" value="4"}分公司{/eq}
+							{eq name="$level+1" value="3"}股东{/eq}
+							{eq name="$level+1" value="2"}总代{/eq}
+							{eq name="$level+1" value="1"}代理{/eq}占成(%)：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="" id="u_proportion_{$level+1}" name="u_proportion_{$level+1}">
+			</div>
+		</div>
+				<div class="row cl">
+		   <input name="level" type='hidden' value="{$level}"></input>
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>自己占成(%)：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="" id="u_proportion_{$level}" name="u_proportion_{$level}">
+			</div>
+		</div>
+
+		<div class="row cl">
+		   <input name="level" type='hidden' value="{$level}"></input>
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>账号名：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="" id="username" name="u_username">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>输入密码：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="password" class="input-text" value="" placeholder="" id="u_pwd" name="u_pwd">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3">昵称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="password" class="input-text" value="" placeholder="" id="real_name" name="u_nick_name">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>是否测试账号：</label>
+			<div class="formControls col-xs-8 col-sm-9 skin-minimal">
+				<div class="radio-box">
+					<input name="is_test" type="radio" id="sex-1" value="0" checked>
+					<label for="sex-1">非测试</label>
+				</div>
+				<div class="radio-box">
+					<input type="radio" id="sex-2" name="is_test" value="1">
+					<label for="sex-2">测试</label>
+				</div>
+
+			</div>
+		</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+				<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+			</div>
+		</div>
+	</form>
+</article>
+
+<!--_footer 作为公共模版分离出去-->
+{include file="common/_footer"}
+<!--/_footer /作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
+<script type="text/javascript" src="lib/jquery.validation/1.14.0/validate-methods.js"></script> 
+<script type="text/javascript" src="lib/jquery.validation/1.14.0/messages_zh.js"></script> 
+<script type="text/javascript">
+$(function(){
+	$('.skin-minimal input').iCheck({
+		checkboxClass: 'icheckbox-blue',
+		radioClass: 'iradio-blue',
+		increaseArea: '20%'
+	});
+	
+	$("#form-member-add").validate({
+		rules:{
+			username:{
+				required:true,
+				minlength:2,
+				maxlength:16
+			},
+			sex:{
+				required:true,
+			},
+			mobile:{
+				required:true,
+				isMobile:true,
+			},
+			email:{
+				required:true,
+				email:true,
+			},
+			uploadfile:{
+				required:true,
+			},
+			
+		},
+		onkeyup:false,
+		focusCleanup:true,
+		success:"valid",
+		submitHandler:function(form){
+			$(form).ajaxSubmit();
+			var index = parent.layer.getFrameIndex(window.name);
+			parent.$('.btn-refresh').click();
+			parent.layer.close(index);
+		}
+	});
+});
+</script> 
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

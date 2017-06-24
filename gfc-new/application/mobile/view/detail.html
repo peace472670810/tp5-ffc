@@ -1,0 +1,179 @@
+<div id="detail" data-role="page" data-theme="a" class="hl-page" data-dom-cache="true" data-url="detail">
+    <div data-role="header" data-position="fixed" data-tap-toggle="false" class="hl-header">
+        <div class="hl-account-button-container">
+            <div class="hl-header-button" style="padding:5px 8px 10px 2px;margin-top: 5px;">
+                <a id="back_search"
+                   style="text-decoration: none;color: #fff;font-weight: normal;padding-left: 16px"><img
+                        src="../../static/mobile/css/pic/back.png" style="position: fixed; margin-left: -12px;padding-top:2px"/>返回</a>
+            </div>
+            <div class="hl-title" style="width: 100%;position: fixed;z-index: -1;font-size: 16px;padding-left: 10px">
+                订单编号 <span id="detailNumber" class="hl-detail-order" style="font-size: 12px;"></span></div>
+            <div class="hl-options"></div>
+        </div>
+    </div>
+    <!-- /header -->
+    <div data-role="content" class="hl-content">
+        <div class="content-primary hl-detail-main">
+            <div class="hl-detail-main-container">
+                <ul id="detailList" data-role="listview" data-inset="true" style="    border: 2px solid #cd1b02;"></ul>
+            </div>
+            <div class="hl-detail-main-container">
+                <div class="hl-detail-normal">
+                    <div data-role="fieldcontain">
+                        <label class="hl-detail-display-label">投注用户:</label>
+                        <label id="detail_username" class="hl-detail-display-text"></label>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label class="hl-detail-display-label">投注时间:</label>
+                        <label id="detail_create_time" class="hl-detail-display-text"></label>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label class="hl-detail-display-label">彩种:</label>
+                        <label id="detail_lottery" class="hl-detail-display-text"></label>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label class="hl-detail-display-label">奖期:</label>
+                        <label id="detail_issue" class="hl-detail-display-text"></label>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label class="hl-detail-display-label">单倍注数:</label>
+                        <label id="detail_single_num" class="hl-detail-display-text"></label>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label class="hl-detail-display-label">投注倍数:</label>
+                        <label id="detail_multiple" class="hl-detail-display-text"></label>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label class="hl-detail-display-label">投注模式:</label>
+                        <label id="detail_modes" class="hl-detail-display-text"></label>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label class="hl-detail-display-label">是否追号:</label>
+                        <label id="detail_is_trace" class="hl-detail-display-text"></label>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label class="hl-detail-display-label">总金额:</label>
+                        <label id="detail_amount" class="hl-detail-display-text"></label>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label class="hl-detail-display-label">奖金系列:</label>
+                        <label id="detail_prizeMode" class="hl-detail-display-text"></label>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label class="hl-detail-display-label">开奖号码:</label>
+                        <label id="detail_openCodes" class="hl-detail-display-text"></label>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label class="hl-detail-display-label">订单状态:</label>
+                        <label id="detail_status" class="hl-detail-display-text"></label>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label class="hl-detail-display-label">中奖金额:</label>
+                        <label id="detail_prize" class="hl-detail-display-text"></label>
+                    </div>
+                </div>
+                <div class="hl-detail-cno">
+                    <div data-role="fieldcontain">
+                        <label class="hl-detail-display-label">游戏:</label>
+                        <label id="detail2_lottery" class="hl-detail-display-text"></label>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label class="hl-detail-display-label">奖期:</label>
+                        <label id="detail2_issue" class="hl-detail-display-text"></label>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label class="hl-detail-display-label">模式:</label>
+                        <label id="detail2_modes" class="hl-detail-display-text"></label>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label class="hl-detail-display-label">单倍注数:</label>
+                        <label id="detail2_single_num" class="hl-detail-display-text"></label>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label class="hl-detail-display-label">总追号倍数:</label>
+                        <label id="detail2_total_multiple" class="hl-detail-display-text"></label>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label class="hl-detail-display-label">计划追号期数:</label>
+                        <label id="detail2_trace_times" class="hl-detail-display-text"></label>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label class="hl-detail-display-label">计划总金额:</label>
+                        <label id="detail2_total_amount" class="hl-detail-display-text"></label>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label class="hl-detail-display-label">奖金系列:</label>
+                        <label id="detail2_prizeMode" class="hl-detail-display-text"></label>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label class="hl-detail-display-label">中奖即停止:</label>
+                        <label id="detail2_stop_on_win" class="hl-detail-display-text"></label>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label class="hl-detail-display-label">追号状态:</label>
+                        <label id="detail2_status" class="hl-detail-display-text"></label>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label class="hl-detail-display-label">投注时间:</label>
+                        <label id="detail2_create_time" class="hl-detail-display-text"></label>
+                    </div>
+                    <div class="hl-detail-main-container" style="padding-left: 0px;">
+                        <ul id="zhuihaoList" data-role="listview" data-inset="true"></ul>
+                    </div>
+                </div>
+                <!-- End zhuihao -->
+            </div>
+        </div>
+    </div>
+    <!-- /content -->
+    <div data-role="footer" data-position="fixed" data-tap-toggle="false" class="hl-footer">
+        <div class="hl-detail-footer">
+            <div class="hl-detail-footer-left">
+                <span class="hl-detail-footer-text"></span>
+            </div>
+            <div class="hl-detail-footer-right">
+                <ul data-role="controlgroup" data-type="horizontal" class="hl-bottom-nav-menu">
+                    <!--                            <li><a id="cancelpackage" href="#" data-role="button" data-theme="b" style="width: 90%;height: 36px;line-height: 28px;color: #fff">撤单</a></li>-->
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /footer -->
+
+    <!-- popup -->
+    <div data-role="popup" id="withdrawPopup" data-overlay-theme="a" data-theme="a" class="ui-corner-all hl-confirm"
+         data-position-to="window" data-history="false">
+        <div data-role="header" data-theme="a" class="ui-corner-top hl-confirm-title">
+            <h1>友情提示</h1>
+        </div>
+        <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content hl-confirm-body">
+            <p>确定要撤单吗？</p>
+            <br>
+            <br>
+            <ul data-role="controlgroup" data-type="horizontal" class="hl-bottom-nav-menu hl-confirm-footer">
+                <li><a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c"
+                       style="width: 43%;">取消</a></li>
+                <li><a id="confirmWithdraw" href="#" data-role="button" data-inline="true" data-rel="back"
+                       data-transition="flow" data-theme="b" style="width: 43%;color:#fff">确认</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- /popup -->
+    <!-- popup -->
+    <div data-role="popup" data-overlay-theme="a" data-theme="a" class="ui-corner-all hl-system-popup"
+         data-position-to="window" data-history="false">
+        <div data-role="header" data-theme="a" class="ui-corner-top hl-system-popup-title">
+            <h1>友情提示</h1>
+        </div>
+        <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content hl-system-popup-body">
+            <p class="hl-system-popup-text"></p>
+            <br>
+            <br>
+            <ul data-role="controlgroup" data-type="horizontal" class="hl-bottom-nav-menu hl-system-popup-footer">
+                <li><a href="#" data-role="button" data-inline="true" class="popup-close" data-transition="flow"
+                       data-theme="b">确认</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- /popup -->
+</div>

@@ -1,0 +1,37 @@
+.subTopBar { width: 100%; height: 35px; float: left;  }
+.newgame_lob { width: 108px; height: 36px; float: left; cursor: all-scroll; background:url(../images/redblack/game_lob_btn.png) no-repeat; }
+.hide { display: none; }
+.GamePopLayer { width: 340px; padding-bottom: 20px; position: absolute; top: 35px; left: 0px; z-index: 99999; }
+.GamePopLayer ul { width: 93%; margin: 15px auto; position: relative; z-index: 100; }
+.GamePopLayer ul li { border-bottom-width: 1px; border-bottom-style: dotted; border-bottom-color: rgb(153, 153, 153); overflow: hidden; padding: 5px 0px; width: 100%; float: left; }
+.GamePopLayer ul dt { width: 61px; float: left; padding: 12px 15px 10px 10px; }
+fieldset, img { border: 0px; }
+.GamePopLayer ul dd { width: 70%; float: left; line-height: 22px; margin-top: 10px; }
+.GamePopLayer ul dd h2 { font-size: 16px; color: rgb(255, 255, 0); margin: 0px; position: relative; }
+.GamePopLayer ul dd a { display: inline-block; padding-right: 10px; color: rgb(255, 255, 255); }
+.shadowLayer { width: 100%; height: 100%; opacity: 0.85; position: absolute; top: 0px; left: 0px; z-index: 0; background: rgb(0, 0, 0); }
+.subTopBar .SubTit { height: 33px; line-height: 33px; float: left; margin: 2px 0px 0px 2px; padding: 0px 20px; overflow: hidden; background: rgb(51, 51, 51); }
+.subTopBar .SubTit h3 { font-size: 16px; color: rgb(255, 255, 255); }
+.playNav { float: left; padding-left: 5px; }
+.playNav ul { width: 100%; }
+.playNav ul li { float: left; display: inline-block; height: 35px; line-height: 35px; color: rgb(255, 255, 255); cursor: pointer; position: relative; z-index: 10000; }
+.playNav ul li label { cursor: pointer; height: 35px; padding: 0px 10px; display: block; }
+.playNav ul li ul.methodPopStyle { position: absolute; left: 0px; top: 35px; line-height: 33px; z-index: 9999; display: none; }
+.playNav ul li ul.methodPopStyle li { width: 89px; margin-bottom: -1px; float: none; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(0, 0, 0); padding: 0px 15px; background: rgb(0, 0, 0); }
+.playNav ul li.methodGroup_selected { color: rgb(255, 255, 0); background: rgb(255, 173, 0); }
+.playNav ul li ul.methodPopStyle li.method_selected { color: rgb(255, 255, 0); background: rgb(255, 173, 0); }
+.subTopBar .crumbs { float: left; height: 35px; line-height: 35px; color: rgb(255, 255, 255); margin-left: 15px; }
+.noticelist { margin-top: 1px;height: 36px; overflow: hidden; width: 200px; padding: 0px 10px 0px 22px; background: url(../images/redblack/notice.png) 0px 9px no-repeat; }
+.noticelist div { width: 178px; height: 36px; overflow: hidden; }
+.subTopBar .crumbs a { color: rgb(255, 255, 255); }
+#layer_containerMore { display: none; }
+.MoreNewsCont { width: 490px; height: 100%; overflow: auto; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(204, 204, 204); float: right; background: rgb(255, 255, 255); }
+.popNewsLayer { line-height: 25px; color: rgb(51, 51, 51); padding: 20px; height: 500px; overflow-x: hidden; overflow-y: scroll; font-size: 14px; background: url(../images/redblack/newPopLayerBg.png) repeat-y; }
+.popNewsLayer h2 { font-size: 22px; text-align: center; margin: 0px auto 20px; border-bottom-width: 1px; border-bottom-style: dotted; border-bottom-color: rgb(204, 204, 204); padding-bottom: 20px; }
+.MainListUl_More { color: rgb(51, 51, 51); font-size: 12px; padding: 10px 0px 10px 10px; overflow: hidden; float: right; width: 349px; }
+.MainListUl_More ul { width: 100%; }
+.MainListUl_More ul li { height: 30px; line-height: 30px; width: 100%; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(204, 204, 204); }
+.MainListUl_More ul li .listpart { float: left; padding-left: 20px; overflow: hidden; width: 65%; background: url(../images/redblack/listtip.png) 5px 12px no-repeat; }
+.MainListUl_More ul li .listpart a { color: rgb(51, 51, 51); float: left; }
+.MainListUl_More ul li .time { float: right; color: rgb(153, 153, 153); padding-right: 10px; }
+.results span {color:rgb(255, 173, 0);}

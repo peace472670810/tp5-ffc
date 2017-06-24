@@ -1,0 +1,100 @@
+/*公告滚动*/
+.noticelist{ 
+    overflow:hidden;
+    /*width:500px;*/
+    padding: 0 2px;  
+    vertical-align:  bottom;
+}
+.noticelist div{ 
+    float: left;
+    width:700px;
+    height:22px; overflow:hidden;
+    color: #adadad;
+    font-size: 12px;
+}
+
+.noticelist a{ 
+    color: #adadad;
+}
+
+.layer_container{ display:none;}
+.popNewsLayer{ line-height:25px; color:#333; padding:20px; height:500px; overflow:hidden; overflow-y:scroll; font-size:14px;}
+.popNewsLayer h2{ font-size:22px; text-align:center; margin:0 auto 20px auto; border-bottom:1px dotted #ccc; padding-bottom:20px; }
+.popNewsLayer .tabnew1113 { width:100%; margin:10px auto;}
+.popNewsLayer .tabnew1113 th{ border:1px solid #ccc; background:#f0f0f0;}
+.popNewsLayer .tabnew1113 td{ border:1px solid #ccc;}
+
+.MoreNewsCont{ width:490px; background:#fff; height:100%; overflow: auto; border-left:1px solid #ccc; float:right}
+.MainListUl_More{color:#333; font-size:12px; padding:10px 0px 10px 10px; overflow:hidden; float:right; width:349px;}
+.MainListUl_More ul { width:100%; }
+.MainListUl_More ul li { height:30px; line-height:30px;  width:100%; border-bottom:1px solid #ccc;}
+.MainListUl_More ul li:hover {  height:30px; line-height:30px;  width:100%; background:#fff; border-bottom:1px solid #ccc; border-right:none;}
+.MainListUl_More ul li .listpart { float:left; padding-left:20px; overflow:hidden; width:65%; }
+.MainListUl_More ul li .listpart a { color:#333; float:left; }
+.MainListUl_More ul li .listpart img { float:left; margin-top:9px; padding-left:8px; }
+.MainListUl_More ul li .listpart a:hover { color:#f60; }
+.MainListUl_More ul li .time { float:right; color:#999; padding-right:10px; }
+.MainListUl_More ul li .listpart strong{ font-weight:100; padding:0 1px; color:#333; cursor:pointer;}
+.MainListUl_More ul li .listpart strong:hover{color:#f60; padding:0 2px; text-decoration:underline;}
+
+
+/*投注界面-追号弹出层-样式新增2014-12-4 14:51:19*/
+.AddNumberPop{ display:none;}
+.beitouToolsBox { width:700px; }
+.beitouToolsBox .beitouToolsTop { width:100%; background:#eee; }
+.beitouToolsBox .beitouToolsTop .beitouToolsTopContent { width:100%; height:30px; clear:both;}
+.beitouToolsBox .beitouToolsTop .beitouToolsTopContent ul { width:95%; margin:0 auto; height:30px; line-height:30px; }
+.beitouToolsTopR{ display:none;}
+li.beitouToolsTopCont1 { float:left;}
+li.beitouToolsTopCont1 span{ color:#f60; padding:0 2px; font-weight:bold;}
+li.beitouToolsButton { float:right; }
+li.beitouToolsButton .btnOne{ background:#333; color:#fff; padding:3px 5px; margin-left:5px; cursor:pointer;border-radius:5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;}
+li.beitouToolsButton .btnOne:hover{ background:#000; color:#ff0;}
+.beitouToolsBox .beitouToolsQs { width:100%; background:#333; height:30px; line-height:30px; margin:5px auto; text-indent:1em; color:#fff; }
+.beitouToolsBox .beitouToolsQs span { }
+.beitouToolsBox .beitouToolsQs span label { }
+.beitouToolsBox .beitouToolsQs span input { }
+.beitouToolsBox .beitouToolsQs span label#remainTimerLabel{ color:#ff0; font-weight:bold;}
+.beitouToolsBox .beitouToolsQishi { width:95%; background:none; height:30px; line-height:30px; margin:0 auto; }
+.beitouToolsBox .beitouToolsQishi .beitouToolsQishiL { float:left}
+.beitouToolsBox .beitouToolsQishi .beitouToolsQishiL select{ font-size:12px; width:200px; height:20px;}
+.beitouToolsBox .beitouToolsQishi .beitouToolsQishiR { float:right;}
+.beitouToolsBox .beitouToolsQishi .beitouToolsQishiR span{ color:#f60; padding:0 5px; font-weight:bold;}
+.zhuiz_number_e2{ width:30px; text-align:center; height:18px; line-height:18px; text-align:center; border:1px solid #7089c5; background:#dbe4fa; font-size:12px;}
+/*内容大容器*/
+.beitouToolsmainBox { width:100%; background:#f5f5f5; overflow: hidden; }
+/* 内容小容器 */
+.beitouToolsmainBox #multipleStyle1DIV { width:95%; background:#fff;border:1px solid #ddd; margin:10px auto auto; overflow:hidden; }
+.beitouToolsmainBox #multipleStyle1DIV .beitouToolsmainBoxTop { width:100%; clear:both;}
+.beitouToolsmainBox #multipleStyle1DIV .beitouToolsmainBoxTop li { float:left; width:25%; height:30px; line-height:30px; text-align:center; background:#333; color:#fff; }
+.beitouToolsmainBox #multipleStyle1DIV .beitouToolsmainBoxCont { width:100%; height:220px; overflow:hidden; overflow-y:auto}
+.beitouToolsmainBox #multipleStyle1DIV .beitouToolsmainBoxCont li { background:#f5f5f5; border-bottom:1px solid #fff; width:100%; height:30px; line-height:30px; float:left;}
+.beitouToolsmainBox #multipleStyle1DIV .beitouToolsmainBoxCont li span{float:left; width:25%; text-align:center; overflow:hidden; }
+/**/
+.beitouToolsmainBox #multipleStyle1DIV .beitouToolsmainBoxCont li:hover{ background:#e0e0e0;}
+.beitouToolsmainBox #multipleStyle1DIV .beitouToolsmainBoxCont li .beitouToolsinput { width:30px; height:18px; line-height:18px; text-align:center; margin-top:5px; border:1px solid #7089c5; background:#dbe4fa; font-size:12px;}
+/**/
+.beitouToolsmainBox .beitouToolSmainbt { width:95%; overflow:hidden; margin: 0 auto; }
+.beitouToolsmainBox .beitouToolSmainbt input.beitouToolsinput{ width:40px; height:18px; line-height:18px; text-align:center;border:1px solid #ccc; background:#fefefe; font-size:12px;}
+.beitouTooltzjhb{ width:100%; background:#eee; text-align:center; height:40px; display:block; overflow:hidden; margin:0px auto;}
+input.bt_tools_navys{ background:#D88F04; width:140px; height:26px; line-height:20px; text-align:center; border:1px solid #D88F04; font-size:14px; margin:8px auto; cursor:pointer;border-radius:5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; color:#fff;}
+input.bt_tools_navys:hover{background:#e29b14;}
+/*倍投工具*/
+.beitouToolsmainBox .beitouToolSmainbt  p{ height:30px; line-height:30px;}
+.beitouToolsmainBox .beitouToolSmainbt .beitouToolSmainbtzk{ border:1px solid #ddd; padding:5px 0; background:#fff;}
+.beitouToolsmainBox .beitouToolSmainbt .beitouToolSmainbtzk li{ width:90%; height:30px; line-height:30px; margin:0 auto;}
+.beitouToolSmainbt .beitouToolSmainbtContTop{ width:100%;}
+.beitouToolSmainbt .beitouToolSmainbtContTop li{ float:left; text-align:center; background:#333; height:30px; line-height:30px; color:#fff;}
+/**/
+.beitouToolSmainBTContZneir{ width:662px; border:1px solid #ddd; height:auto; clear:both; overflow:hidden; padding-bottom:5px; height:120px; overflow-y:auto}
+.beitouToolSmainBTContZneir li{ width:100%; float:left;}
+.beitouToolSmainBTContZneir li:hover{ background:#e0e0e0;}
+.beitouToolSmainBTContZneir span{float:left; text-align:center; background:none; height:30px; line-height:30px;}
+/**/
+.beitouToolSmainbt .spanWidth90px{ width:20%;}
+.beitouToolSmainbt .spanWidth50px{ width:10%;}
+.beitouToolSmainbt .spanWidth70px{ width:14%;}
+.beitouToolSmainBTContZneir span.spanWidth50px{width:10%; *width:9%;}
+/**/
+.beitouToolsmainBox .beitouToolsfotter { width:95%; height:35px; line-height:35px; margin:0 auto; }
+/*投注界面-追号弹出层-end*/

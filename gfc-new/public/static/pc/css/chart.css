@@ -1,0 +1,105 @@
+@charset "utf-8";
+html, body { background-color: #D4D4D4; color: #333333; font-family: Verdana, Arial; font-size: 12px; margin: 0; padding: 0; text-align: center; width: 100%; }
+textarea { resize: none; }
+a, a:link, a:visited, a:active { cursor: pointer; outline: medium none; }
+img { border: 0 none; vertical-align: middle; }
+li { line-height: 23px; list-style-type: none; outline: medium none; text-align: left; }
+form { margin: 0; }
+.clear, .c { clear: both; font-size: 0; height: 0; line-height: 0; margin: 0; padding: 0; width: 0; }
+h1, h2, h3, h4, h5, p, ul, li { margin: 0; padding: 0; }
+/*-------------------------------------------------------------------------------------------------*/
+#chartsTable { background: none repeat scroll 0 0 #D0D0D0; border: 1px solid #00537d; border-spacing: 1px; font-family: 宋体, Arial; padding: 0; font-size: 12px; }
+.history .history_code table td { padding: 8px 0; }
+.history .history_code table { background-color: #FFFFFF; margin: 0; padding: 0; }
+.history .ball01, .history .ball02 { background: url("../images/redblack/ball.png") no-repeat scroll -34px -57px rgba(0, 0, 0, 0); color: #FFFFFF; font-size: 14px; font-weight: bold; height: 25px; width: 26px; }
+
+.history .ball02 { background-position: -59px -57px; }
+.history .ball13, .history .ball14 { color: #888888; }
+.history .wdh { height: 25px; }
+.history tr { text-align: center; }
+#chartsTable td { background-color: #FFFFFF; border: 0 none; }
+#chartsTable .th td { background-color: #000; color: #fff; font-weight: bold; }
+#chartsTable .wth { background: url("../images/redblack/ball.png") no-repeat scroll -9px -57px #FEFAEB; border: 0 none; color: #FFFFFF; font-weight: bold; height: 25px; width: 26px; }
+#chartsTable .issue { height: 25px; width: auto; display: block; }
+#chartsTable .td0 { background-color: #FFFFFF; }
+#chartsTable .td1 { background-color: #FFEEFF; }
+#chartsTable .tb { height: 22px; line-height: 22px; }
+#chartsTable .tb td { color: #333333; }
+#showissue { border: 1px solid #FFFFFF; height: 21px; width: 53px; }
+.history .none { background: none repeat scroll 0 0 rgba(0, 0, 0, 0) !important; }
+#tm { height: 26px; line-height: 26px; }
+.history a { color: #003399; text-decoration: none; }
+.history a:hover { text-decoration: underline; }
+.history .div_s1 { background-color: #FFFFFF; text-align: left; width: 1100px; }
+.history .th td { background-color: #CCCCCC; height: 22px; line-height: 22px; }
+.win_bot { background: url("../images/redblack/ts.gif") no-repeat scroll left -120px rgba(0, 0, 0, 0); bottom: 55px; height: 124px; position: fixed; right: 0; text-align: left; width: 218px; z-index: 999; }
+.win_bot h5 { color: #FFFFFF; display: block; float: left; font-weight: normal; height: 16px; line-height: 16px; overflow: hidden; padding: 6px 0 8px 20px; width: 140px; }
+.wb_close { background: url("../images/redblack/ts.gif") no-repeat scroll right -120px rgba(0, 0, 0, 0); cursor: pointer; float: right; height: 14px; margin: 8px; width: 14px; }
+.wb_con { height: 70px; margin: 0 3px 3px 0; overflow-x: hidden; overflow-y: scroll; padding: 0 0 0 10px; }
+.wb_con p { text-indent: 20px; }
+a.wb_p, a.wb_n { color: #333333; display: block; float: left; height: 16px; margin: 1px 10px 0 13px; text-align: center; text-decoration: none; width: 40px; }
+a.wb_p { padding-left: 12px; }
+a.wb_n { float: right; padding-right: 12px; }
+.keyboard { background-color: #EAEAEA; border: 1px solid #CDCDCD; display: none; padding: 5px; position: absolute; width: 460px; z-index: 10; }
+.keyboard .clear { clear: both; }
+.keyboard ul { }
+.keyboard ul li { text-align: center; }
+.keyboard ul .numkey { padding-left: 45px; }
+.keyboard ul .funtion { padding-left: 120px; }
+.keyboard ul li div { background: none repeat scroll 0 0 #EAEAEA; border: 1px outset #FFFFFF; cursor: pointer; display: block; float: left; margin: 3px; padding: 2px 10px; }
+.keyboard ul li div:hover { background: none repeat scroll 0 0 #FFFFFF; }
+.keyboard ul li div.on { background: none repeat scroll 0 0 #181818; color: #FFFFFF; }
+.numkeyboard { background-color: #EAEAEA; border: 1px solid #CDCDCD; display: none; padding: 5px; position: absolute; width: 360px; z-index: 10; }
+.numkeyboard .clear { clear: both; }
+.numkeyboard ul { }
+.numkeyboard ul li { text-align: center; }
+.numkeyboard ul .funtion { padding-left: 110px; }
+.numkeyboard ul li div { background: none repeat scroll 0 0 #EAEAEA; border: 1px outset #FFFFFF; cursor: pointer; display: block; float: left; margin: 3px; padding: 2px 10px; }
+.numkeyboard ul li div:hover { background: none repeat scroll 0 0 #FFFFFF; }
+.numkeyboard ul li div.on { background: none repeat scroll 0 0 #181818; color: #FFFFFF; }
+.user_list { position: relative; }
+.user_list .betting_input { padding-left: 25px; }
+.usermenulist { background: url("../images/redblack/help_bg.gif") no-repeat scroll -50px top rgba(0, 0, 0, 0); cursor: pointer; height: 10px; left: -4px; padding-top: 5px; position: absolute; top: 34px; }
+.usermenulist .usermenutitle, .usermenulist .user_box_in { float: left; }
+.usermenulist .usermenutitle { background: url("../images/redblack/help_bg.gif") no-repeat scroll -50px bottom rgba(0, 0, 0, 0); color: #333333; font-size: 12px; height: 140px; line-height: 15px; margin-bottom: 3px; padding: 5px 0 5px 10px; text-decoration: none; width: 28px; }
+.user_box_in { display: none; height: 200px; margin-top: -5px; width: 150px; }
+.mainnotice .banner { border: 1px solid #666666; height: 386px; overflow: hidden; position: relative; width: 720px; }
+.mainnotice .img { border: 0 none; }
+.mainnotice .banner_info { bottom: 0; color: #FFFFFF; left: 5px; line-height: 30px; position: absolute; z-index: 1001; }
+.mainnotice .banner_ul { border: 1px solid #FFFFFF; bottom: 3px; list-style-type: none; margin: 0; opacity: 0.75; padding: 0; position: absolute; right: 5px; z-index: 1002; }
+.mainnotice #banner ul li { background-color: #6F4F67; border: 1px solid #FFFFFF; color: #FFFFFF; cursor: pointer; display: block; float: left; padding: 0 8px; }
+.mainnotice #banner ul li.on { background-color: #990000; }
+.mainnotice .banner_list { position: absolute; }
+#rightcon { display: block; padding: 10px; width: 100%; }
+.rc_con_ti .warninginfo { border-right: 1px solid #CCCCCC; float: left; margin-right: 10px; padding-right: 15px; }
+.rc_con_ti .noticeinfo { float: left; padding: 0 5px; }
+.rc_con_ti .noticeinfo li { display: block; height: 25px; line-height: 24px; overflow: hidden; width: 245px; }
+.rc_con_ti .noticeinfo li span { color: #B1B0B0; font-size: 10px; margin-right: 3px; }
+.rc_con_ti .noticeinfo li a { color: #666666; text-decoration: none; }
+.rc_con_ti .noticeinfo li a:hover, .news_l ul li a.act { color: #0068B7; }
+.rc_con_ti table { padding: 5px; }
+.rc_con_ti table td { line-height: 25px; }
+.rc_con_ti table .nl { font-weight: bold; padding-right: 15px; text-align: right; }
+.issue > div { background: none repeat scroll 0 0 #EEEEEE; color: #000000; padding: 0; white-space: nowrap; font-size: 14px; }
+.tenthousand { background-color: #d3edfe!important; height: 25px; width: 26px; }
+.thousand { background-color: #fef3bb!important; height: 25px; width: 26px; }
+.hundred { background-color: #d3fac3!important; height: 25px; width: 26px; }
+.ten { background-color: #d3edfe!important; height: 25px; width: 26px; }
+.single { background-color: #fef3bb!important; height: 25px; width: 26px; }
+
+/*pork*/
+.tenthousand_pork{ height: 25px; width: 100%;}
+.tenthousand_pork1{height: 90%; width: 90%;margin:2px;  color: #FFFFFF;  font-weight: bold; }
+.poker_xt_th { text-align: left }
+.poker_kj { text-align: center }
+.poker_kj_num { position: relative; float: left;  width: 16px; height: 18px; text-align: left; font-size: 15px; font-family: Tahoma, Arial; line-height: 18px; zoom: 1; white-space: nowrap; }
+.poker_kj_num i { position: absolute; top: 3px; left: 5px; overflow: hidden; background: url(../images/redblack/poker_ico_15c81a0.png?20150615) no-repeat }
+.poker_kj_num em { margin-left: 16px; letter-spacing: -1px; width: 18px; text-align: center; display: block }
+.poker_kj_num .poker_kj_num_10 { margin-left: 17px }
+.poker_hongt i {  top: 5px; left: 7px; width: 13px; height: 12px; background-position: -215px -2px }
+.poker_heit i {  top: 5px; left: 7px; width: 11px; height: 12px; background-position: -201px -1px }
+.poker_meih i {  top: 5px; left: 7px; width: 13px; height: 12px; background-position: -231px -1px }
+.poker_fangk i { top: 5px; left: 7px; width: 10px; height: 14px; background-position: -248px -1px }
+.pork_form{  color: #FFFFFF;  font-size: 14px;  font-weight: bold;  height: 25px;  width: 26px;}
+.pork_wth { border: 0 none; font-weight: bold; height: 25px; width: 26px; }
+/*pork*/

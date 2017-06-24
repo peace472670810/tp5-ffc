@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html class="ui-mobile">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <link rel="Bookmark" type="image/x-icon" href="../../static/mobile/images/favicon57.ico"/>
+    <link rel="icon" type="image/x-icon" href="../../static/mobile/images/favicon57.ico"/>
+    <link rel="shortcut icon" type="image/x-icon" href="../../static/mobile/images/favicon57.ico"/>
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="../../static/mobile/images/favicon57.ico"/>
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../static/mobile/images/favicon72.ico"/>
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../static/mobile/images/favicon114.ico"/>
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../static/mobile/images/favicon144.ico"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, target-densityDpi=medium-dpi,maximum-scale=1, user-scalable=no">
+    <title></title>
+    <link rel="stylesheet" href="../../static/mobile/css/jquery.mobile-1.2.1.min.css">
+    <link rel="stylesheet" href="../../static/mobile/css/custom.css">
+    <script type="text/javascript" lang="javascript" src="../../static/mobile/js/jquery-1.7.2.min.js"></script>
+    <!--<script src="js/layer/layer.js"></script>-->
+    <script type="text/javascript" lang="javascript">
+        $(document).on("mobileinit", function () {
+            $.mobile.changePage.defaults.changeHash = true;
+            $.mobile.defaultPageTransition = "none";
+            $.mobile.page.prototype.options.domCache = true;
+            $.mobile.buttonMarkup.hoverDelay = 10;
+        });
+    </script>
+    <script type="text/javascript" lang="javascript" src="../../static/mobile/js/jquery.mobile-1.2.1.min.js"></script>
+    <script type="text/javascript" lang="javascript" src="../../static/mobile/js/jquery.plugin.min.js"></script>
+    <script type="text/javascript" lang="javascript" src="../../static/mobile/js/jquery.countdown.min.js"></script>
+    <script type="text/javascript" lang="javascript" src="../../static/mobile/js/jquery.countdown-zh-CN.js"></script>
+    <script type="text/javascript" lang="javascript" src="../../static/mobile/js/jquery.vticker.js"></script>
+    <script type="text/javascript" lang="javascript" src="../../static/mobile/js/jquery.md5.js"></script>
+    <script type="text/javascript" lang="javascript">
+        //返回当前请求的服务端信息
+        var SV = {"isLogin": true, "id": "jimm1", "a": [{"id": "1"}]};
+        var RP_STATIC = '../../static/mobile/';//资源静态文件的跟路径
+        var RP_DATA = '../../static/mobile/';//数据层网址的跟路径
+        var BALANCE_URL = "{:url('Game/showBalance')}";//钱包地址
+        var OPENISSUE_URL = "{:url('Game/getOpenedIssues')}";//开奖记录地址
+        $(function () {
+            app.login(SV);
+        });
+    </script>
+</head>
+
+<body class="hl-body ui-mobile-viewport ui-overlay-a" style="background: #f6f6f3">
+<!--  login start -->
+<!--  login end -->
+<!--  cp start -->
+{include file="hall"}
+<!--  draw start -->
+{include file="draw"}
+<!--  search start -->
+{include file="search"}
+<!--  detail start -->
+{include file="detail"}
+<!--  orderSelect start -->
+{include file="order"}
+<!-- preload images -->
+<div style="display: none">
+    <img src="../../static/mobile/images/ico-logout.png">
+    <img src="../../static/mobile/images/ico-progress.gif">
+    <img src="../../static/mobile/images/ico-blank.png">
+</div>
+
+<script type="text/javascript" lang="javascript" src="../../static/mobile/js/common.js"></script>
+<!--缓存data-->
+<script type="text/javascript" lang="javascript" src="../../static/mobile/js/cache.js"></script>
+<!--程序控制器-->
+<script type="text/javascript" lang="javascript" src="../../static/mobile/js/app.js"></script>
+<!-- 面板处理 start -->
+<script type="text/javascript" lang="javascript" src="../../static/mobile/js/allPages.js"></script>
+<!--  服务器数据 -->
+<script type="text/javascript" lang="javascript" src="../../static/mobile/js/dal.js"></script>
+
+<div class="ui-loader ui-corner-all ui-body-a ui-loader-default"><span class="ui-icon ui-icon-loading"></span>
+    <h1>loading</h1></div>
+<script>
+    $div1 = $('.pop-box3');
+    $('#btn-menu').click(function (w) {
+        $div1.toggle();
+        w.stopPropagation();
+    });
+    $(document).bind('click', function () {
+        if ($div1.is(":visible")) {
+            $div1.hide();
+        }
+    });
+    $("#sourceUrl").click(function () {
+        var num = cache.getBet().length;
+        document.getElementById('group').innerHTML = num;
+    });
+
+</script>
+<script>
+    window.location.hash = "";
+</script>
+<script>
+    var slide = function (option) {
+        var defaults = {
+            container: 'hl-draw-main-container',
+            next: function () {
+            }
+        }
+        var start,
+            end,
+            length,
+            isLock = false,//是否锁定整个操作
+            isCanDo = false,//是否移动滑块
+            isTouchPad = (/hp-tablet/gi).test(navigator.appVersion),
+            hasTouch = 'ontouchstart' in window && !isTouchPad;
+        var obj = document.querySelector(option.container);
+        var loading = obj.firstElementChild;
+        var offset = loading.clientHeight;
+        var objparent = obj.parentElement;
+
+        var fn =
+            {
+//移动容器
+            translate: function (diff) {
+                obj.style.webkitTransform = 'translate3d(0,' + diff + 'px,0)';
+                obj.style.transform = 'translate3d(0,' + diff + 'px,0)';
+            },
+//设置效果时间
+            setTransition: function (time) {
+                obj.style.webkitTransition = 'all ' + time + 's';
+                obj.style.transition = 'all ' + time + 's';
+            },
+//返回到初始位置
+            back: function () {
+                fn.translate(0 - offset);
+//标识操作完成
+                isLock = false;
+            },
+            addEvent: function (element, event_name, event_fn) {
+                if (element.addEventListener) {
+                    element.addEventListener(event_name, event_fn, false);
+                } else if (element.attachEvent) {
+                    element.attachEvent('on' + event_name, event_fn);
+                } else {
+                    element['on' + event_name] = event_fn;
+                }
+            }
+        };
+
+        fn.translate(0 - offset);
+        fn.addEvent(obj, 'touchstart', start);
+        fn.addEvent(obj, 'touchmove', move);
+        fn.addEvent(obj, 'touchend', end);
+        fn.addEvent(obj, 'mousedown', start)
+        fn.addEvent(obj, 'mousemove', move)
+        fn.addEvent(obj, 'mouseup', end)
+
+//滑动开始
+        function start(e) {
+            if (objparent.scrollTop <= 0 && !isLock) {
+                var even = typeof event == "undefined" ? e : event;
+//标识操作进行中
+                isLock = true;
+                isCanDo = true;
+//保存当前鼠标Y坐标
+                start = hasTouch ? even.touches[0].pageY : even.pageY;
+//消除滑块动画时间
+                fn.setTransition(0);
+            }
+            return false;
+        }
+
+//滑动中
+        function move(e) {
+            if (objparent.scrollTop <= 0 && isCanDo) {
+                var even = typeof event == "undefined" ? e : event;
+//保存当前鼠标Y坐标
+                end = hasTouch ? even.touches[0].pageY : even.pageY;
+                if (start < end) {
+                    even.preventDefault();
+//消除滑块动画时间
+                    fn.setTransition(0);
+//移动滑块
+                    if ((end - start - offset) / 2 <= 150) {
+                        length = (end - start - offset) / 2;
+                        fn.translate(length);
+                    }
+                    else {
+                        length += 0.3;
+                        fn.translate(length);
+                    }
+                }
+            }
+        }
+
+//滑动结束
+        function end(e) {
+            if (isCanDo) {
+                isCanDo = false;
+//判断滑动距离是否大于等于指定值
+                if (end - start >= offset) {
+//设置滑块回弹时间
+                    fn.setTransition(1);
+//保留提示部分
+                    fn.translate(0);
+//执行回调函数
+
+                    if (typeof option.next == "function") {
+                        option.next.call(fn, e);
+                    }
+                } else {
+//返回初始状态
+                    fn.back();
+                }
+            }
+        }
+    }
+    slide({
+        container: ".hl-draw-main-container", next: function (e) {
+//松手之后执行逻辑,ajax请求数据，数据返回后隐藏加载中提示
+            var that = this;
+            setTimeout(function () {
+                draw.search(true);
+                that.back.call();
+            }, 2000);
+        }
+    });
+</script>
+
+</body>
+</html>

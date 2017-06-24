@@ -1,0 +1,184 @@
+<html xmlns:esun="" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>娱乐平台 - 走势分析</title>
+        <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+            <meta content="no-cache" http-equiv="Pragma">
+                <script src="js/jquery.js" type="text/javascript"></script>
+                <script src="js/line.js" type="text/javascript" language="javascript"></script>
+                <script language="JavaScript">function ResumeError() {
+                        return true;
+                    }
+                    window.onerror = ResumeError;</script>
+                <script>
+                    $(function () {
+                        //显示遗漏
+                        var nols = $("div[class^='ball03'],div[class^='ball04']");
+                        $("#no_miss").click(function () {
+                            var checked = $(this).attr("checked");
+                            $.each(nols, function (i, n) {
+                                if (checked == true) {
+                                    n.style.display = 'none';
+                                } else {
+                                    n.style.display = 'block';
+                                }
+                            });
+                        });
+                    });
+                </script>
+                <link href="css/chart.css" rel="stylesheet" type="text/css" />
+                <script language="javascript">
+                    fw.onReady(function () {
+                        Chart.init();
+                        DrawLine.bind("chartsTable", "has_line");
+                        <?php foreach ($codeGroup as $k => $v) : ?>
+                            DrawLine.color('<?php if ($k % 2 == 0): ?>#499495<?php else: ?>#E4A8A8<?php endif; ?>');
+                                    DrawLine.add((parseInt(<?php echo $k; ?>) *<?php echo $totalNum; ?> +<?php echo $totalGroup; ?> + 1), 2,<?php echo $totalNum; ?>, 0);
+                        <?php endforeach; ?>
+                                DrawLine.draw(Chart.ini.default_has_line);
+                                if ($("#chartsTable").width() > $('body').width())
+                                {
+                                    $('body').width($("#chartsTable").width() + "px");
+                                }
+                                $("#container").height($("#chartsTable").height() + "px");
+                                $("#missedTable").width($("#chartsTable").width() + "px");
+                                resize();
+
+                            });
+                            function resize() {
+                                window.onresize = func;
+                                function func() {
+                                    window.location.href = window.location.href;
+                                }
+                            }
+                            function daysBetween(start, end) {
+                                var startY = start.substring(0, start.indexOf('-'));
+                                var startM = start.substring(start.indexOf('-') + 1, start.lastIndexOf('-'));
+                                var startD = start.substring(start.lastIndexOf('-') + 1, start.length);
+
+                                var endY = end.substring(0, end.indexOf('-'));
+                                var endM = end.substring(end.indexOf('-') + 1, end.lastIndexOf('-'));
+                                var endD = end.substring(end.lastIndexOf('-') + 1, end.length);
+
+                                var val = (Date.parse(endY + '/' + endM + '/' + endD) - Date.parse(startY + '/' + startM + '/' + startD)) / 86400000;
+                                return Math.abs(val);
+                            }
+                            function toggleMiss() {
+                                $('#missedTable').toggle();
+                            }
+                </script>
+                </head>
+                <body>
+                    <div id="rightcon">
+                        <div style="display:none;" class="win_bot" id="msgbox">
+                            <h5 id="msgtitle"></h5>
+                            <div class="clear"></div>
+                            <div class="wb_con">
+                                <p id="msgcontent"></p>
+                            </div>
+                            <div class="clear"></div>
+                            <a id="msgpre" onClick="javascript:prenotice();" href="#" class="wb_p">上一条</a><a onClick="javascript:nextnotice();" href="#" class="wb_n">下一条</a> </div>
+                        <script language="javascript">
+                        </script>
+                        <style>
+                            esun\:*{behavior:url(#default#VML)}
+                        </style>
+                        <div class="rc_con history">
+                            <div class="rc_con_lt"></div>
+                            <div class="rc_con_rt"></div>
+                            <div class="rc_con_lb"></div>
+                            <div class="rc_con_rb"></div>
+                            <div class="rc_con_to">
+                                <div class="rc_con_ti">
+                                    <div class="history_code" >
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0" id="tm">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="300" align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong> <font color="#FF0000"><?php echo $lottery['cname']; ?>：</font> 基本走势 </strong></td>
+                                                    <td align="left"><form method="POST">
+                                                            <span>
+                                                                <label for="has_line">
+                                                                    <input type="checkbox" id="has_line" value="checkbox" name="checkbox2">
+                                                                        显示折线 </label>
+                                                            </span>&nbsp; <span>
+                                                                <label for="no_miss">
+                                                                    <input type="checkbox" id="no_miss" value="checkbox" name="checkbox">
+                                                                        不带遗漏</label>
+                                                            </span>
+                                                        </form></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="hrc_list">
+                                        <div class="hrl_list">
+                                            <table width="100%" border="0" cellspacing="1" cellpadding="0" id="chartsTable">
+                                                <tbody>
+                                                    <tr class="th">
+                                                        <td   rowspan="2"><div style="width:auto;">期号</div></td>
+                                                        <td colspan="<?php echo $totalGroup; ?>" rowspan="2">开奖号码</td>
+                                                        <?php foreach ($codeGroup as $v) : ?>
+                                                            <td colspan="<?php echo $totalNum; ?>"><?php echo $v['name']; ?></td>
+                                                        <?php endforeach; ?>
+                                                    </tr>
+                                                    <tr class="th">
+                                                        <?php foreach ($codeGroup as $v) : ?>
+                                                            <?php foreach ($vaildnum as $num) : ?>
+                                                                <td width="25" class="wdh"><?php echo $num; ?></td>
+                                                            <?php endforeach; ?>
+                                                        <?php endforeach; ?>
+                                                    </tr>
+                                                    <tr>
+                                                        <?php foreach ($codes as $k => $v) : ?>
+                                                            <td class="issue"><div><?php echo $v['issue']; ?></div></td>
+                                                            <?php foreach ($v['openNumber'] as $num): ?>
+                                                                <td width="17" align="center"><div class="wth"><?php echo $num; ?></div></td>
+                                                            <?php endforeach; ?>
+                                                            <?php foreach ($codeGroup as $kk => $vv): ?>
+                                                                <?php foreach ($vaildnum as $kkk => $vvv): ?>
+                                                                    <?php if ($vvv == $v['openNumber'][$kk]): ?>
+                                                                        <td width="27" align="center" class="charball">
+                                                                            <div class="<?php if ($kk == 0 || $kk == 5): ?>tenthousand<?php elseif ($kk == 1 || $kk == 6): ?>thousand<?php elseif ($kk == 2 || $kk == 7): ?>hundred<?php elseif ($kk == 3 || $kk == 8): ?>ten<?php elseif ($kk == 4 || $kk == 9): ?>single<?php endif; ?>">
+                                                                                <div class="ball0<?php echo $vv['ballstytle']; ?>" >
+                                                                                    <?php echo $v['openNumber'][$kk]; ?>
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+                                                                    <?php else : ?>
+                                                                        <td width="27" align="center" class="wdh">
+                                                                            <div class="<?php if ($kk == 0 || $kk == 5): ?>tenthousand<?php elseif ($kk == 1 || $kk == 6): ?>thousand<?php elseif ($kk == 2 || $kk == 7): ?>hundred<?php elseif ($kk == 3 || $kk == 8): ?>ten<?php elseif ($kk == 4 || $kk == 9): ?>single<?php endif; ?>">
+                                                                                <div class="ball0<?php echo $vv['normalstytle']; ?>">
+                                                                                    <?php echo isset($v['miss_info'][$kk][$vvv]) ? $v['miss_info'][$kk][$vvv] : ''; ?>
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+                                                                    <?php endif; ?>
+                                                                <?php endforeach; ?>
+                                                            <?php endforeach; ?>
+
+                                                        </tr>
+                                                    <?php endforeach; ?>
+                                                    <tr class="th">
+                                                        <td rowspan="2"><div style="width:200px; margin: 0 auto; text-align: center;">期号</div></td>
+                                                        <td colspan="<?php echo $totalGroup; ?>" rowspan="2">开奖号码</td>
+                                                        <?php foreach ($codeGroup as $v) : ?>
+                                                            <?php foreach ($vaildnum as $num) : ?>
+                                                                <td  class="wdh"><?php echo $num; ?></td>
+                                                            <?php endforeach; ?>
+                                                        <?php endforeach; ?>
+                                                    </tr>
+                                                    <tr class="th">
+                                                        <?php foreach ($codeGroup as $v) : ?>
+                                                            <td colspan="<?php echo $totalNum; ?>"><?php echo $v['name']; ?></td>
+                                                        <?php endforeach; ?>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </body>
+                </html>

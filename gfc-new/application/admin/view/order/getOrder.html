@@ -1,0 +1,136 @@
+﻿{include file="common/_meta"}
+<!--[if IE 6]>
+<!/meta 作为公共模版分离出去-->
+
+<title>订单管理 > 订单列表 </title>
+</head>
+<body>
+<nav class="breadcrumb"><a href="{:url('index/welcome')}"><i class="Hui-iconfont">&#xe67f;</i> 首页 </a><span class="c-gray en">&gt;</span> 订单管理 <span class="c-gray en">&gt;</span> <a href="{:url('order/getOrder')}">订单列表</a><a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+	<div class="Hui-article">
+		<article class="cl pd-20">
+	<div class="text-c">
+	  <form action="{:url('order/getOrder')}" method="post">
+	  	订单编号：<input type="text" name="ffc_id" id="" placeholder="订单编号" style="width:250px" class="input-text radius " value="{$data['ffc_id']}">&nbsp;
+	  		彩种名称：<span class="select-box inline radius" >
+		<select name="ffc_lid" class="select"  id="member_d" >
+			<option value>--全部彩种--</option>
+{foreach name="lottery" item="vo" }
+    <option value="{$key}">{$vo}</option>
+{/foreach}
+
+		</select>
+		</span>	
+				&nbsp;玩法：<span class="select-box inline radius">
+		<select name="ffc_m_id" class="select" id='ffc_m_id'>
+			<option value>--全部方法--</option>
+		</select>
+		</span>	
+				&nbsp;奖期：
+		<input type="text" name="ffc_issue" id="" placeholder="奖期" style="width:120px" class="input-text radius " value="{$data['ffc_issue']}">
+		<br/><br/>
+		&nbsp;用户名：<input type="text" value="{$data['ffc_username']}" name="ffc_username" id="" placeholder="用户名" style="width:250px" class="input-text radius ">
+		&nbsp;游戏时间：
+		<input type="text"onFocus="WdatePicker({startDate:'%y-%M-%d 00:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})" name="start_time" id="logmin" class="input-text Wdate radius" style="width:165px;" value="{$data['start_time']}">-
+		<input type="text"  name="end_time" onFocus="WdatePicker({startDate:'%y-%M-%d 23:59:59',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})" id="logmax" class="input-text Wdate radius" style="width:165px;" value="{$data['end_time']}">
+		&nbsp;订单状态：
+		<span class="select-box inline radius">
+		<select name="order_state" class="select">
+			<option value="1" >已派彩</option>
+			<option value="2" >未派彩</option>
+
+		</select>
+		</span>
+		&nbsp;
+		<button name=""  class="btn btn-success radius" type="submit"><i class="Hui-iconfont">&#xe665;</i> 查看</button>
+		</form>
+			</div>
+
+		<div class="mt-20 " >
+		
+				<table class="table table-border table-bordered table-hover table-bg table-sort radius">
+					<thead>
+						<tr class="text-c ">
+						<th width="150">订单编号</th>	
+				           <th width="150">帐户名</th>								
+							<th width="30">彩种类型</th>
+							<th width="60">奖期</th>
+							<th width="30">单倍注数</th>
+                            <th width="30">倍数</th>
+                            <th width="30">模式</th>
+							<th width="50">投注金额</th>
+							<th width="50">奖金系列</th>
+							<th width="70">购买时间</th>
+							<th width="70">奖期截止时间</th>
+							<th width="30">中奖状态</th>
+							<th width="50">奖金</th>
+							<th width="30">派奖状态</th>
+							<th width="30">撤单状态</th>
+						</tr>
+					</thead>
+					<tbody>
+					{volist name="list" id="v"}
+						 <tr class="text-c">
+							<td>{$v.ffc_id}</td>
+							<td>{$v.ffc_username}</td>
+							<td>{$v.ffc_lid}</td>
+							<td>{$v.ffc_issue}</td>
+							<td>{$v.ffc_single_num}</td>
+							<td>{$v.ffc_multiple}</td>
+       						<td >{$v.ffc_modes}</td>
+							<td>{$v.ffc_amount}</td>
+							<td>奖金系列</td>
+						    <td>ffc_add_time</td>
+						    <td>ffc_add_time</td>
+						    <td>ffc_check_prize_status</td>
+						    <td>ffc_prize</td>
+						    <td>ffc_send_prize_status</td>
+						    <td>ffc_cancel_status</td>
+							</td>{/eq}						
+			   </tr>
+					{/volist}
+					</tbody>
+				</table>
+			</div>
+		</article>
+	</div>
+
+
+<!--_footer 作为公共模版分离出去-->
+{include file="common/_footer"}
+<!--/_footer /作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="../../static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="../../static/lib/datatables/1.10.0/jquery.dataTables.js"></script>
+<script type="text/javascript" src="../../static/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('.table-sort').dataTable({
+		"aaSorting": [[1, "desc" ]],//默认第几个排序
+		"bStateSave": true,//状态保存
+	});
+	$('#member_d').change(function(){
+		var id=this.value;
+		var tmp="<optgroup label='三星'>";
+		if(id){
+		$("#ffc_m_id").empty();
+		$.get("{:url('Order/ajax')}",{"lid":id},function(data){ 
+			$("#ffc_m_id").append("<option value>--全部方法--</option>");
+			$.each(data, function(indx,obj){	
+               //<optgroup label="三星">
+                var tmp = '<option value="' + obj.m_id + '">&nbsp;&nbsp;' + obj.m_cname + '</option>';
+                $("#ffc_m_id").append(tmp);
+			});            
+			});
+	   }else{
+	   	   $("#ffc_m_id").empty();
+	   	   $("#ffc_m_id").append("<option value>--全部方法--</option>");
+	   }			
+	});
+	
+});
+
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>
