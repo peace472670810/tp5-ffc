@@ -1,0 +1,267 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="lib/html5shiv.js"></script>
+    <script type="text/javascript" src="lib/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="../../static/static/h-ui/css/H-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../static/static/h-ui.admin/css/H-ui.admin.css"/>
+    <link rel="stylesheet" type="text/css" href="../../static/lib/Hui-iconfont/1.0.8/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="../../static/static/h-ui.admin/skin/default/skin.css" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="../../static/static/h-ui.admin/css/style.css"/>
+    <!--[if IE 6]>
+    <!/meta 作为公共模版分离出去-->
+    <title>报表管理 > 交付报表 </title>
+</head>
+<body>
+<nav class="breadcrumb"><a href="{:url('index/welcome')}" class="maincolor"><i class="Hui-iconfont">&#xe67f;</i> 首页 </a><span
+        class="c-gray en">&gt;</span> 报表管理 <span class="c-gray en">&gt;</span>
+    <a href="{:url('report/getReport')}" class="maincolor">交付列表</a> <span class="c-gray en">&gt;</span>
+    <a href="{:url('report/getReport')}?u_level={$u_level}&u_username={$u_username}" class="maincolor">分公司【{$u_username}】</a>
+    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
+       href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="Hui-article">
+    <article class="cl pd-20">
+        <div class="text-c">
+            <form action="{:url('report/getReport')}" method="get">
+                开奖时间：
+                <input type="text" readonly name="start_time" value="{$start_time}"
+                       onFocus="WdatePicker({startDate:'%y-%M-%d 00:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})"
+                       id="logmin" class="input-text Wdate radius " style="width:165px;">
+                -
+                <input type="text" readonly name="end_time" value="{$end_time}"
+                       onFocus="WdatePicker({startDate:'%y-%M-%d 23:59:59',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})"
+                       id="logmax" class="input-text Wdate radius" style="width:165px;">
+                <span>
+					<input name="time_type" type="radio" value="0" id="sex-1" {eq name="$time_type" value="0" } checked {/eq}>
+					<label for="sex-1"  selected="selected">北京时间 (2017-05-29 10:18:06) </label>
+					<input type="radio" id="sex-2" name="time_type" value="1" {eq name="$time_type" value="1" } checked {/eq}>
+					<label for="sex-2">美东时间 (2017-05-28 22:18:06) </label>
+			</span>
+                <input type="hidden" name="u_username" value="{$u_username}"/>
+                <input type="hidden" name="u_level" value="{$u_level}"/>
+                <button name="" id="" class="btn btn-success radius" type="submit"><i class="Hui-iconfont">&#xe665;</i>
+                    查看
+                </button>
+            </form>
+        </div>
+        <div class="mt-20 ">
+
+            <table class="table table-border table-bordered table-hover table-bg table-sort radius">
+                <thead>
+                <tr class="text-c ">
+                    <th width="80" rowspan="2">账号（股东）</th>
+                    <th width="40" rowspan="2">订单数</th>
+                    <th colspan="3">会员</th>
+                    <th width="30" rowspan="2">盈率</th>
+                    <th colspan="4">股东</th>
+                    <th width="30" rowspan="2">实占比例</th>
+                    <th colspan="3">分公司</th>
+                    <th width="40" rowspan="2">贡献上级</th>
+                    <th width="40" rowspan="2">应付上级</th>
+                </tr>
+                <tr class="text-c ">
+                   {neq name='2' value="$bytype"}
+                     <th width="35" onclick=" bytyoe(2); "><a class="maincolor" href="javascript:;">下注金额   <i class="Hui-iconfont">&#xe679;</i></a> </th>
+                    {/neq} 
+                    {eq name='2' value="$bytype"}
+                    <th width="35" onclick=" bytyoe(1); "><a class="maincolor" href="javascript:;">下注金额<i class="Hui-iconfont">&#xe674;</i></a> </th>
+                    {/eq} 
+                    <th width="35">有效金额</th>
+                    {neq name='4' value="$bytype"}
+                     <th width="35" onclick=" bytyoe(4); "><a class="maincolor" href="javascript:;">结果 <i class="Hui-iconfont">&#xe679;</i> </a></th>
+                    {/neq} 
+                    {eq name='4' value="$bytype"}
+                    <th width="35" onclick=" bytyoe(3); "><a class="maincolor" href="javascript:;">结果<i class="Hui-iconfont">&#xe674;</i></a> </th>
+                    {/eq} 
+                    <th width="35">实占金额</th>
+                    <th width="35">实占输赢</th>
+                    <th width="35">结果</th>
+                    <th width="35">上交分公司</th>
+                    <th width="35">实占金额</th>
+                    <th width="35">实占输赢</th>
+                    <th width="35">结果</th>
+                </tr>
+                </thead>
+                <tbody>
+                {if condition="!empty($list)"}
+                {volist name="list" id="v"}
+                <tr class="text-c">
+                    <td> <a class="maincolor" href="{:url('Report/getReport')}?u_username={$v.o_top3}&u_level=3&start_time={$start_time}&end_time={$end_time}">{$v.o_top3} </a>
+                        <span style="color:red;">（股东）</span>
+                    </td>
+
+                    <td>{$v.counts}</td>
+                    <td>
+                        {:NumToStr($v['o_amount'])}
+                    </td>
+                    <td>{:NumToStr($v['o_amount'])}</td>
+
+                    {gt name="$v.o_amount" value="$v.wins"}
+                    <td style="color: #FF0000;"><?php echo bcsub(NumToStr($v['wins']),NumToStr($v['o_amount']),4);?></td>
+                    {/gt}
+                    {lt name="$v.o_amount" value="$v.wins"}
+                    <td style="color: #0000FF;"><?php echo bcsub(NumToStr($v['wins']),NumToStr($v['o_amount']),4);?></td>
+                    {/lt}
+                    {eq name="$v.o_amount" value="$v.wins"}
+                    <td><?php echo bcsub(NumToStr($v['wins']),NumToStr($v['o_amount']),4);?></td>
+                    {/eq}
+
+                    {notempty name="v.wins"}
+                    {gt name="$v.o_amount" value="$v.wins"}
+                    <td style="color: #0000FF;">
+                        <?php echo YingToStr($v['o_amount'],$v['wins'])*100;?>%
+                    </td>
+                    {/gt}
+                    {lt name="$v.o_amount" value="$v.wins"}
+                    <td style="color: #FF0000;">
+                        <?php echo YingToStr($v['o_amount'],$v['wins'])*100;?>%</td>
+                    {/lt}
+                    {eq name="$v.o_amount" value="$v.wins"}
+                    <td> <?php echo YingToStr($v['o_amount'],$v['wins'])*100;?>%</td>
+                    {/eq}
+                    {else/}
+                    <td>  0.00%</td>
+                    {/notempty}
+
+                    <td>
+                        {:NumToStr($v['o_amount3'])}
+                    </td>
+                    <td>{:NumToStr($v['o_win3'])}</td>
+                    {empty name="$v.o_win3" }
+                    <td>{:NumToStr($v['o_win3'])}</td>
+                    {/empty}
+                    {gt name="$v.o_win3" value="0.0000"}
+                    <td style="color: #0000FF;">{:NumToStr($v['o_win3'])}</td>
+                    {/gt}
+                    {notempty name="$v.o_win3" }
+                    {lt name="$v.o_win3" value="0.0000"}
+                    <td style="color: #FF0000;">{:NumToStr($v['o_win3'])}</td>
+                    {/lt}
+                    {/notempty}
+                    <td>
+                        <?php echo bcadd(NumToStr($v['o_win5']),NumToStr($v['o_win4']),4);?>
+                    </td>
+                    <td style="color: #f97c00;">
+                        {notempty name="text['o_amount4']"}
+                        <?php echo bcdiv(NumToStr($v['o_amount4']),NumToStr($text['o_amount4']),6)*100;?>%
+                        {else /}
+                        0.00%
+                        {/notempty}
+                    </td>
+                    <td>{:NumToStr($v['o_amount4'])}</td>
+                    <td>{:NumToStr($v['o_win4'])}</td>
+                    {empty name="$v.o_win3" }
+                    <td>{:NumToStr($v['o_win3'])}</td>
+                    {/empty}
+                    {gt name="$v.o_win3" value="0.0000"}
+                    <td style="color: #0000FF;">{:NumToStr($v['o_win3'])}</td>
+                    {/gt}
+                    {notempty name="$v.o_win3" }
+                    {lt name="$v.o_win3" value="0.0000"}
+                    <td style="color: #FF0000;">{:NumToStr($v['o_win3'])}</td>
+                    {/lt}
+                    {/notempty}
+                    <td>{:NumToStr($v['o_amount5'])}</td>
+                    <td>{:NumToStr($v['o_win5'])}</td>
+                </tr>
+                {/volist}
+                {/if}
+                {notempty name="$text" }
+                <tr class="text-c">
+                    <td><b>合计</b></td>
+                    <td>{$text.counts}</td>
+                    <td>{:NumToStr($text['o_amount'])}</td>
+                    <td>{:NumToStr($text['o_amount'])}</td>
+                    {gt name="$text.o_amount" value="$text.wins"}
+                    <td style="color: #FF0000;"><?php echo bcsub(NumToStr($text['wins']),NumToStr($text['o_amount']),4);?></td>
+                    {/gt}
+                    {lt name="$text.o_amount" value="$text.wins"}
+                    <td style="color: #0000FF;"><?php echo bcsub(NumToStr($text['wins']),NumToStr($text['o_amount']),4);?></td>
+                    {/lt}
+                    {eq name="$text.o_amount" value="$text.wins"}
+                    <td><?php echo bcsub(NumToStr($text['wins']),NumToStr($text['o_amount']),4);?></td>
+                    {/eq}
+
+                    {notempty name="text.wins"}
+                    {gt name="$text.o_amount" value="$text.wins"}
+                    <td style="color: #0000FF;">
+                        <?php echo YingToStr($text['o_amount'],$text['wins'])*100;?>%
+                    </td>
+                    {/gt}
+                    {lt name="$text.o_amount" value="$text.wins"}
+                    <td style="color: #FF0000;">
+                        <?php echo YingToStr($text['o_amount'],$text['wins'])*100;?>%</td>
+                    {/lt}
+                    {eq name="$text.o_amount" value="$text.wins"}
+                    <td> <?php echo YingToStr($text['o_amount'],$text['wins'])*100;?>%</td>
+                    {/eq}
+                    {else /}
+                    <td>0.00%</td>
+                    {/notempty}
+                    <td>{:NumToStr($text['o_amount3'])}</td>
+                    <td>{:NumToStr($text['o_win3'])}</td>
+                    {empty name="$text.o_win3" }
+                    <td>{:NumToStr($text['o_win3'])}</td>
+                    {/empty}
+                    {gt name="$text.o_win3" value="0.0000"}
+                    <td style="color: #0000FF;">{:NumToStr($text['o_win3'])}</td>
+                    {/gt}
+                    {notempty name="$text.o_win3" }
+                    {lt name="$text.o_win3" value="0.0000"}
+                    <td style="color: #FF0000;">{:NumToStr($text['o_win3'])}</td>
+                    {/lt}
+                    {/notempty}
+                    <td>{:NumToStr($text['o_win3'])+NumToStr($text['o_win5'])}
+
+                    </td>
+                    <td style="color: #f97c00;">100%</td>
+                    <td>{:NumToStr($text['o_amount4'])}</td>
+                    <td>{:NumToStr($text['o_win4'])}</td>
+                    {empty name="$text.o_win4" }
+                    <td>{:NumToStr($text['o_win4'])}</td>
+                    {/empty}
+                    {gt name="$text.o_win4" value="0.0000"}
+                    <td style="color: #0000FF;">{:NumToStr($text['o_win4'])}</td>
+                    {/gt}
+                    {notempty name="$text.o_win4" }
+                    {lt name="$text.o_win4" value="0.0000"}
+                    <td style="color: #FF0000;">{:NumToStr($text['o_win4'])}</td>
+                    {/lt}
+                    {/notempty}
+                    <td>{:NumToStr($text['o_amount5'])}</td>
+                    <td>{:NumToStr($text['o_win5'])}</td>
+                </tr>
+                {/notempty}
+                </tbody>
+            </table>
+            <!-- 分页start-->
+            {include file="page"}
+            <!-- 分页end-->
+        </div>
+    </article>
+</div>
+
+
+<!--_footer 作为公共模版分离出去-->
+{include file="common/_footer"}
+<!--/_footer /作为公共模版分离出去-->
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="../../static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="../../static/lib/datatables/1.10.0/jquery.dataTables.js"></script>
+<script type="text/javascript" src="../../static/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript">
+function bytyoe(type){
+     window.location.href = "{:url('report/getReport')}?u_level={$u_level}&u_username={$u_username}&start_time={$start_time}&end_time={$end_time}&bytype="+type;
+ }
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

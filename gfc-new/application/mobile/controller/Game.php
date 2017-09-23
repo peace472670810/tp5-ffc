@@ -34,72 +34,214 @@ class game extends Base
      * 投注页面
      */
     public function Play($lid = 2){
-//        $data = ['test'=>1];
-//        //1.获取所有彩种
-//        $res= json_decode(forwarding('lotteryForwarding','\app\Service\lottery\business\lottery','getLot',$data),true);
-//        $lot_lis = $res['data'];
-//        $sortLotterys = [];
-//        foreach ($lot_lis as $v){
-//            $sortLotterys[] = array('lotteryId' => $v['lid'],
-//                'name' => $v['name'],
-//                'cname' => $v['cname'],
-//                'alink' => strtolower($v['name']),
-//                'isopened' => 1);
-//        }
-//        $this->assign('sortLotterys',json_encode($sortLotterys));
-//        //2.处理彩种
-//      $lottery =  $lot_lis[$lid];
-//
-//      $this->assign('lottery',$lottery);
-//      $this->assign('minRebateGaps',$lottery['min_rebate_gaps']);
-//        //得到全包奖金
-//      $this->assign('maxCombPrize', $lottery['zx_max_comb'] * 2);
-//        //得到所有玩组法列表及玩法列表和奖金列表
-//      $mgs = forwarding('lotteryForwarding','\app\Service\lottery\business\method_groups','getMethodGroupsByLid',['lid'=>$lid]);
-////      Log::record(json_decode($mgs,true),'error');
-//      $this->assign('json_methods',$mgs);
-//        //得到当天已开奖奖期
-//        if ($lid == 8 && date('Hi') <= '0200') { //对于跨天的在0点以后，应取昨天的$belong_date
-//            $belong_date = date('Y-m-d', strtotime('-1 day'));
-//        } else {
-//            $belong_date = date('Y-m-d');
-//        }
-//        $issuelist = json_decode(forwarding('lotteryForwarding','\app\Service\lottery\business\issues','getIssueList',['lid'=>$lid,'amount'=>15,'before_date'=>$belong_date,'status_code'=>2]),true);
-//        $issues = array();
-//        $maxOpenissue = 10;
-//        $tmp = $issuelist['data'];
-//        foreach ($tmp as $v) {
-//            $issues[] = array(
-//                'issue_id' => $v['i_id'],
-//                'issue' => $v['i_issue'],
-//                'code' => $v['i_code'],
-//            );
-//            $maxOpenissue--;
-//            if ($maxOpenissue <= 0) {
-//                break;
-//            }
-//        }
-//        $this->assign('json_openedIssues',json_encode($issues));
-//        $this->assign('username',session('u_username'));
+        $user = $this->user;
+        if (empty($user['u_username'])) {
+            $this->assign('url', 'javascript:;');
+            $this->assign('message', "用户已经退出，请进入平台重新登录！");
+            return $this->fetch('./message');
+        }
+        //判断站点运营状态
+        $is_run = $this->is_run();
+        if($is_run['status']){
+            $this->assign('message',$is_run['message'] );
+            return $this->fetch('./message');
+        }
+        $username = unwrapUsername($user['u_username']);
+        $this->assign('username',$username);
+        //动态更新加载
+        $this->assign('v',time());
         return  $this->fetch("./play");
     }
 
     /**
-     * ajax  请求数据页面
-     *
+     *下注
      */
-    public function ajaxData(){
-
+    public function buy(){
+        $data =  $this->request->post();
+        $server = $this->request->server();
+        $user = $this->user;
+        $odd = $user['o_adds'];
+        $data['user'] = $user['user'];
+        $data['SERVER_ADDR'] = $server['SERVER_ADDR'];
+        $data['REMOTE_ADDR'] = $server['REMOTE_ADDR'];
+        $data['odd'] = strtolower($odd);
+        if($data['traceCount'] >0){//追号
+            if($user['u_is_test'] == 2){//试玩不能追号
+                return ['errno'=>1,'errstr'=>'试玩用户不能追号,正式会员才能进行追号！'];
+            }
+            $res = json_decode(forwarding('lotteryForwarding', '\app\Service\order\business\play', 'Trace', $data), true);
+            if($res['data']){
+                return ['errno'=>0,'ordersums' =>$res['data']];
+            }else{
+                return ['errno'=>1,'errstr'=>$res['message']];
+            }
+        }else{//普通下注
+            $res = json_decode(forwarding('lotteryForwarding', '\app\Service\order\business\play', 'Buy', $data), true);
+            if($res['data']){
+                return ['errno'=>0,'ordersums' =>$res['data']];
+            }else{
+                return ['errno'=>1,'errstr'=>$res['message']];
+            }
+        }
     }
+
     /**
      * 获取当前期
      */
-    public function getCurIssue(){
-
+    public function getCurIssue()
+    {
+        $lid = $this->request->post('lotteryId');
+        $curIssue = $this->memcache->get('mobile'.$lid,'curIssue');
+        if(empty($curIssue)){
+            $curIssue = json_decode(forwarding('lotteryForwarding', '\app\Service\lottery\business\issues', 'getCurrentIssue', ['lid' => $lid]), true);
+            $this->memcache->set('mobile'.$lid,'curIssue',$curIssue,1);
+        }
+        if (!empty($curIssue['data']['issueInfo'])) {
+            $result = array('errno' => 0, 'errstr' => '', 'issueInfo' => $curIssue['data']['issueInfo'], 'lastIssueInfo' => $curIssue['data']['lastIssueInfo'], 'serverTime' => date('Y/m/d H:i:s'));
+        } else {
+            $result = array('errno' => 2, 'errstr' => '当前彩种处于封盘状态');
+        }
+        return $result;
     }
 
-    public function getOpenedIssues(){
+    /**
+     * 获取彩种详情
+     */
+    public function getLotteryInfo(){
+        $lid = $this->request->get('lid');
+        //判断该彩种是否在运营getLidStatus
+        $conf =  $this->memcache->get('mobileLottery'.$lid,'conf');
+        $user = $this->user;
+        if(empty($conf)){
+            $conf = json_decode(forwarding('lotteryForwarding', '\app\Service\lottery\business\config', 'getLidStatus', ['lid'=>$lid]), true);
+            $this->memcache->set('mobileLottery'.$lid,'conf',$conf,1);
+        }
+        if($conf['data']){
+            if($this->checkLotteryId($lid)){
+                $res = $this->memcache->get('mobile'.$lid,'getLottery');
+                if(empty($res)){
+                    $res = json_decode(forwarding('lotteryForwarding', '\app\Service\lottery\business\lottery', 'getLottery', $lid), true);
+                    $this->memcache->set('mobile'.$lid,'getLottery',$res,3);
+                }
+                $mgs =  $this->memcache->get('mobile'.$lid,'getMethodGroupsByLid');
+                if(empty($mgs)){
+                    $mgs = forwarding('lotteryForwarding', '\app\Service\lottery\business\method_groups', 'getMethodGroupsByLid', ['lid' => $lid,'odd'=>strtolower($user['o_adds'])]);
+                    $this->memcache->set('mobile'.$lid,'getMethodGroupsByLid',$mgs,30);
+                }
+                $lottery = $res['data'];
+                $arr = [
+                    'lotteryId' => $lid,
+                    'lotteryName'=> $lottery['cname'],
+                    'propertyId'=>$lottery['property_id'],
+                    'lotteryType'=> $lottery['lottery_type'],
+                    'methods'=> json_decode($mgs,true),
+                    'maxCombPrize'=>2000,
+                    'minRebateGaps'=>$lottery['min_rebate_gaps'],
+                    'rebate'=>0,
+                    'prizeRate'=> (1 - $lottery['total_profit']),
+                    'defaultMode'=>1,
+                    'defaultRebate'=> 0,
+                    'missHot'=> "0",
+                    'errno' =>0
+                ];
+                return $arr;
+            }else{
+                return ['errno'=>1];
+            }
+        }else{
+            return ['errno'=>1,'message'=>$conf['message']];
+        }
+    }
+    /**
+     * 订单详情
+     */
+    public  function orderDetail(){
+        $data= $this->request->get();
+        $user = $this->user;
+        $data['user'] = $user;
+        $data['username'] = $user['u_username'];
+        $res =json_decode(forwarding('lotteryForwarding','\app\Service\order\business\play', 'mobileOrderDetail', $data),true);
+        if($res['data']){
+            return $res['data'];
+        }else{
+            return false;
+        }
+    }
+    /**
+     * 追号注单详情
+     */
+    public function orderTraceDetail(){
+        $data= $this->request->get();
+        $user = $this->user;
+        $data['user'] = $user;
+        $data['username'] = $user['u_username'];
+        $res =json_decode(forwarding('lotteryForwarding','\app\Service\order\business\play', 'mobileTraceDetail', $data),true);
+        if($res['data']){
+            return $res['data'];
+        }else{
+            return false;
+        }
+    }
 
+    /**
+     * 追号撤单
+     */
+    public function cancelTrace($data = []){
+        $data = $this->request->post();
+        $user = $this->user;
+        $data['user'] = $user;
+        $data['username'] = $user['u_username'];
+        $res =json_decode(forwarding('lotteryForwarding','\app\Service\order\business\play', 'cancelTrace', $data),true);
+        if($res['data']){
+            return ['errno' => 0, 'errstr' => '撤单成功'];
+        }else{
+            return ['errno' => 1, 'errstr' =>$res['message'] ];
+        }
+    }
+    /**
+     * 投注记录
+     */
+    public function buyRecord(){
+        $user = $this->user;
+        $data['user'] = $user;
+        $data['lid'] = $this->request->get('lottery_id');
+        $data['lid'] = empty($data['lid'])?2:$data['lid'];
+        $data['curPage'] = $this->request->get('curPage');
+        $data['day'] = $this->request->get('day');
+        $data['username'] = $user['u_username'];
+        $res = json_decode(forwarding('lotteryForwarding', '\app\Service\order\business\play', 'getMobileBuyRecord', $data), true);
+        return  $res['data'];
+    }
+    /**
+     * 追号页面
+     * 获取可以追的期数
+     */
+    public function getTracePage(){
+        $data['lid'] = $this->request->post('lid');
+        $issuelist = json_decode(forwarding('lotteryForwarding', '\app\Service\lottery\business\issues', 'getMobileTraceIssue', $data), true);
+        $issuelist = $issuelist['data'];
+        if(empty($issuelist)){
+            return   ['errno' => 2, 'errstr' => $issuelist];
+        }else{
+            return  ['errno' => 0, 'errstr' => '', 'issues' => $issuelist, 'prize' => 0, 'prizeLimit' => 999998, 'content' => ''];
+        }
+    }
+    /**
+     * 得到当天已开奖奖期
+     */
+    public function getOpenedIssues(){
+        $lid = $this->request->post('lid');
+        $lid = empty($lid)?2:$lid;
+        $issuelist = $this->memcache->get('user', 'issueslist' . $lid);
+        if (empty($issuelist)) {
+            $issuelist = json_decode(forwarding('lotteryForwarding', '\app\Service\lottery\business\issues', 'getIssueList', ['lid' => $lid, 'status_code' => 3,'is_mobile'=>1]), true);
+            $this->memcache->set('user', 'issueslist' . $lid, $issuelist, 5);
+        }
+      if($issuelist['data']){
+          return $issuelist['data'];
+      }else{
+          return false;
+      }
     }
     /**
      * //{"code":100000,"data":{"money":"0","siteId":1001,"username":"ceshi777"},"message":"Nomal"}
@@ -107,16 +249,36 @@ class game extends Base
      * @return int
      */
     public function showBalance(){
-
-        $arr = [
-            "code"=>100000,
-            "data"=>["money"=>1000,"siteId"=>1001,"username"=>"ceshi777"],
-            "message"=>"Nomal"
-        ];
-        if (is_array($arr)) {
-//            $result['balance'] = cutNum($arr['data']['money']);
-            $result['balance'] = number_format($arr['data']['money'], 2);
+        $user =$this->user;
+        if(empty($user['u_username'])){
+            return -1;
         }
-        return $result;
+        $ip = $this->request->ip();
+        $res = json_decode(forwarding('lotteryForwarding', '\app\Service\users\business\frontUsers', 'tongjizaixian', ['username'=>$user['u_username'],'ip'=>$ip]),true);//判断用户登录session_id用户互踢
+        if($res['data']){
+            return  -2;
+        }
+        $list = json_decode(forwarding('lotteryForwarding', '\app\Service\DS\business\wallet', 'getBalance', ['username'=>unwrapUsername($user['u_username']),'siteId'=>$user['u_site_id']]), true);
+        if($list['data']){
+            $result['balance'] = number_format(round($list['data'], 2),2);
+            return $result;
+        }else{
+            return 0.0000;
+        }
+    }
+    /**
+     * 获取全部指定彩种当前奖期
+     */
+    public function getAllCurIssue(){
+        $lids = '2,6,8,9,14,24,26,27,28,29,30';
+        $curIssue = $this->memcache->get('getCurrentIssue'.$lids,'current');
+        if(empty($curIssue)){
+            $curIssue = json_decode(forwarding('lotteryForwarding', '\app\Service\lottery\business\issues', 'getAllCurrentIssue', ['lids' => $lids]), true);
+            $this->memcache->set('getCurrentIssue'.$lids,'current',$curIssue,1);
+        }
+        if($curIssue['data']){
+            $arr =  array('issueInfo'=>$curIssue['data'], 'serverTime' => time());
+        }
+        return $arr;
     }
 }

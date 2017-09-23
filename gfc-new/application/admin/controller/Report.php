@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace app\admin\controller;
 use app\admin\controller\Base;
 use think\Request;
@@ -14,8 +14,18 @@ class Report extends Base{
      * @return mixed
      */
     public function getReport(){
-        $data['u_level'] = $this->request->get('u_level');
-        $data['u_username'] = $this->request->get('u_username');
+        $data['u_level'] = $this->request->get('u_level','');
+        $data['u_username'] =  $this->request->get('u_username','');
+        $data['sess_level'] = session('level');
+        $data['sess_name']  = session('u_name');
+        $data['bytype']=$this->request->get('bytype','');
+        if(empty($data['u_level'])){
+            $level = $data['sess_level'];
+            $username = $data['sess_name'];
+        }else{
+            $level = $data['u_level'];
+            $username = $data['u_username'];
+        }
         $data['start_time'] = $this->request->get('start_time');
         $data['start_time'] = empty( $data['start_time'])?date('Y-m-d 00:00:00'): $data['start_time'];
         $data['end_time'] = $this->request->get('end_time');
@@ -25,69 +35,77 @@ class Report extends Base{
         $data['page'] = $this->request->get('page');
         $res =  json_decode(forwarding('reportForwarding','\app\Service\report\business\report','getReportList',$data),true);
         if($res['data']){
+            $this->assign('text',$res['data']['text']);
             $this->assign('list',$res['data']['list']);
-            $url = $this->request->baseUrl().'?u_level='.$data['u_level'].'&u_username='.$data['u_username'].'&start_time='.$data['start_time'].'&end_time='.$data['end_time'];
+            $url = $this->request->baseUrl().'?u_level='.$level.'&u_username='.$data['u_username'].'&start_time='.$data['start_time'].'&end_time='.$data['end_time'].'&bytype='.$data['bytype'];
             $this->assign('page',$this->getPage($url,$data['page']+1,$res['data']['page']['count'],$res['data']['page']['start'],$res['data']['page']['end']));
+        }else{
+            return $this->error($res['message']);
         }
-        $this->assign('u_level',$data['u_level']);
-        $this->assign('u_username',$data['u_username']);
+        $this->assign('bytype',$data['bytype']);
+        $this->assign('u_level',$level);
+        $this->assign('u_username',$username);
         $this->assign('start_time',$data['start_time']);
         $this->assign('end_time',$data['end_time']);
         $this->assign('time_type',$data['time_type']);
-        return $this->fetch('Report/getReport');
-      }
+        return $this->fetch('report/getReport'.$level);
+    }
 
     /**
      * 会员报表
      */
     public function userReport(){
-        $data['u_level'] = $this->request->get('u_level');
-        $data['u_username'] = $this->request->get('u_username');
-        $data['start_time'] = $this->request->get('start_time');
-        $data['start_time'] = empty( $data['start_time'])?date('Y-m-d'): $data['start_time'];
-        $data['end_time'] = $this->request->get('end_time');
-        $data['end_time'] = empty( $data['end_time'])?date('Y-m-d H:i:s'): $data['end_time'];
-        $data['time_type'] = $this->request->get('time_type');
-        $data['time_type'] =  empty($data['time_type'])?0:$data['time_type'];
+        $data['bytype']=$this->request->get('bytype','');
+        $data['start_time'] = $this->request->get('start_time',date('Y-m-d 00:00:00'));
+        $data['end_time'] = $this->request->get('end_time',date('Y-m-d 23:59:59'));
+        $data['name'] = $this->request->get('name','');
+        $data['time_type'] =  $this->request->get('time_type',0);
         $data['page'] = $this->request->get('page');
+        $data['u_level'] = session('level');
+        $data['u_username'] = session('u_name');
         $res =  json_decode(forwarding('reportForwarding','\app\Service\report\business\report','userReportList',$data),true);
         if($res['data']){
             $this->assign('list',$res['data']['list']);
-            $url = $this->request->baseUrl().'?u_level='.$data['u_level'].'&u_username='.$data['u_username'].'&start_time='.$data['start_time'].'&end_time='.$data['end_time'];
+            $url = $this->request->baseUrl().'?name='.$data['name'].'&start_time='.$data['start_time'].'&end_time='.$data['end_time'].'&bytype='.$data['bytype'].'&time_type'.$data['time_type'];
             $this->assign('page',$this->getPage($url,$data['page']+1,$res['data']['page']['count'],$res['data']['page']['start'],$res['data']['page']['end']));
+        }else{
+            return $this->error($res['message']);
         }
-        $this->assign('u_level',$data['u_level']);
-        $this->assign('u_username',$data['u_username']);
+        $this->assign('name',$data['name']);
+        $this->assign('bytype',$data['bytype']);
         $this->assign('start_time',$data['start_time']);
         $this->assign('end_time',$data['end_time']);
         $this->assign('time_type',$data['time_type']);
-        return $this->fetch('Report/userReport');
+        return $this->fetch('report/userReport');
     }
 
     /**
-     *会员报表详情
+     *会员详情列表
      */
     public function detailReport(){
+        $data['bytype']=$this->request->get('bytype','');
         $data['u_level'] = 0;
         $data['u_username'] = $this->request->get('u_username');
-        $data['start_time'] = $this->request->get('start_time');
-        $data['start_time'] = empty( $data['start_time'])?date('Y-m-d'): $data['start_time'];
-        $data['end_time'] = $this->request->get('end_time');
-        $data['end_time'] = empty( $data['end_time'])?date('Y-m-d H:i:s'): $data['end_time'];
-        $data['time_type'] = $this->request->get('time_type');
-        $data['time_type'] =  empty($data['time_type'])?0:$data['time_type'];
+        $data['start_time'] = $this->request->get('start_time',date('Y-m-d 00:00:00'));
+        $data['end_time'] = $this->request->get('end_time',date('Y-m-d 23:59:59'));
+        $data['time_type'] = $this->request->get('time_type',0);
         $data['page'] = $this->request->get('page');
+        $data['sess_level'] = session('level');
+        $data['sess_name'] = session('u_name');
         $res =  json_decode(forwarding('reportForwarding','\app\Service\report\business\report','getReportDetail',$data),true);
         if($res['data']){
             $this->assign('list',$res['data']['list']);
-            $url = $this->request->baseUrl().'?u_username='.$data['u_username'].'&start_time='.$data['start_time'].'&end_time='.$data['end_time'];
+            $url = $this->request->baseUrl().'?u_username='.$data['u_username'].'&start_time='.$data['start_time'].'&end_time='.$data['end_time'].'&bytype='.$data['bytype'];
             $this->assign('page',$this->getPage($url,$data['page']+1,$res['data']['page']['count'],$res['data']['page']['start'],$res['data']['page']['end']));
+        }else{
+            return $this->error($res['message']);
         }
         $this->assign('u_username',$data['u_username']);
         $this->assign('start_time',$data['start_time']);
+        $this->assign('bytype',$data['bytype']);
         $this->assign('end_time',$data['end_time']);
         $this->assign('time_type',$data['time_type']);
-        return $this->fetch('Report/detailReport');
+        return $this->fetch('report/detailReport');
     }
 }
- ?>
+?>

@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>追号详情</title>
+
+    <script type="text/javascript" src="../../static/pc/js/jquery-1.8.3.min.js?v={$v}"></script>
+    <script src="../../static/pc/js/common.js?v={$v}" type="text/javascript"></script>
+    <script type="text/javascript" src="../../static/pc/js/layer/layer.min.js?v={$v}"></script> <!-- layer调用弹出层 -->
+    <link rel="Bookmark" type="image/x-icon" href="../../static/mobile/images/favicon57.ico?v={$v}"/>
+    <link rel="icon" type="image/x-icon" href="../../static/mobile/images/favicon57.ico?v={$v}"/>
+    <link href="../../static/pc/css/package.css?v={$v}" rel="stylesheet" type="text/css"></link>
+</head>
+<body class="BodyMain">
+<div class="GameBoxall SubGamePlatePadding" style="width:1000px; margin:0 auto;">
+    <div class="Gamepart" style="  padding-bottom:30px;">
+        <script>
+            $(function () {
+                $('#form1 :checkbox').click(function () {
+                    var pt = this;
+                    $.each($(this).parent().parent().nextAll(), function (k, v) {
+                        $(this).find(':checkbox').attr('checked', $(pt).attr('checked'));
+                    });
+                });
+
+                if ($('#form1 :checkbox').length > 0) {
+                    $('input[name=cancel]').css('display', '');
+                }
+                else {
+                    //$('input[name=cancel]').remove();
+                }
+            });
+        </script>
+
+        <div>
+            <div class="BSrecordsBox h-100">
+                <ul class="recordsInput">
+                    <li><span class="yellow_14px">追号单编号：{$traceDetail.wrapId}</span></li>
+                </ul>
+                <div class="orderDetxinxi">
+                    <p class="yellow_14px">追号单摘要</p>
+                    <ul class="orderDetxinxiBg1">
+                        <li>游戏：<span>{$traceDetail.lidName}</span></li>
+                        <li>模式：<span>{$traceDetail.t_modes}</span></li>
+                    </ul>
+                    <ul class="orderDetxinxiBg2">
+                        <li class="btbg2_right">单倍注数：<span>{$traceDetail.t_single_num}</span></li>
+                        <li class="btbg2_right">总追号倍数：<span>{$traceDetail.t_total_multiple}</span></li>
+                    </ul>
+                    <ul class="orderDetxinxiBg1">
+                        <li class="btbg2_right">计划追号期数：<span>{$traceDetail.t_trace_times}</span></li>
+                        <li class="btbg2_right">计划总金额：<span>{$traceDetail.t_total_amount}</span></li>
+                    </ul>
+                    <ul class="orderDetxinxiBg2">
+                        <li>中奖即停止： <span> {$traceDetail.t_stop} </span></li>
+                        <li>投注时间：<span>{$traceDetail.t_add_time}</span></li>
+                    </ul>
+                    <ul class="orderDetxinxiBg1">
+                        <li>追号状态：<span><b>{$traceDetail.status}</b></span></li>
+                        <li>投注总金额：<span>{$traceDetail.t_total_amount}</span></li>
+                    </ul>
+                    <ul class="orderDetxinxiBg1">
+                    </ul>
+                </div>
+                <div>
+                    <p class="orderDetxiangxTitle">下注内容</p>
+                    <ul class="orderDetxiangxCont1 list_w">
+                        <li>
+                            <span>玩法组名</span>
+                            <span>玩法</span>
+                            <span>注数</span>
+                            <!--<span>下注金额</span>-->
+                            <span style="width: auto;">下注号码</span>
+                        </li>
+                    </ul>
+                    <ul class="orderDetxiangxCont2 colorfff list_w">
+                        {volist name="$traceDetail.detail" id="v"}
+                            <li style=" border-bottom:1px dashed #ddd; height:24px; line-height:24px;">
+                                <span>{$v.mg_name}</span>
+                                <span class="width_poker" style="color:red">{$v.m_name}</span>
+                                <span >{$v.nums}</span>
+                                <span style="width: auto;">{$v.number}</span>
+                            </li>
+                        {/volist}
+                    </ul>
+                </div>
+                <form name="form1" id="form1" action="{:url('Game/cancelTrace')}" method="post">
+                    <p class="orderDetxiangxTitle">各期追号详情</p>
+                    <ul class="orderDetxiangxCont1 ">
+                        <li><span>操作</span>
+                            <span>追号期号</span>
+                            <span>开奖号码</span>
+                            <span>当期倍数&nbsp;&nbsp;含注单数</span>
+                            <span>投注金额</span>
+                            <span>中奖金额</span>
+                            <span>订单状态</span>
+                        </li>
+                    </ul>
+                    <ul class="orderDetxiangxCont2 colorfff list_w">
+                        {volist name="$traceDetail.order" id="v"}
+                            <li style=" border-bottom:1px dashed #ddd; height:24px; line-height:24px;">
+                                {if condition="$v.cancel_status eq 1"}
+                                        <span><input type="checkbox" name="issues[]" value="{$v.ds_qishu}"></span>
+                                {else/}
+                                    <span>&nbsp;</span>
+                                {/if}
+                                <span> <a target="_blank" href="{:url('Game/traceOrderDetail')}?issue={$v.ds_qishu}&trace_id={$traceDetail.t_id}" title="查看追号订单详情">{$v.ds_qishu}</a></span>
+                                <span class="width_poker" style="color:red">{if condition="$v.ds_balls neq ''"}{$v.ds_balls}{else/}{$v.issue_status}{/if}</span>
+                                <span>{$v.multiple}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$v.total_nums}</span>
+                                <span><strong style="color:#280">{$v.total_amount}</strong></span>
+                                <span><strong>{$v.total_prize}</strong></span>
+                                <span><font style=" color:#f00;">{if condition="empty($v['status'])"}注单异常{else/}{$v.status}{/if}</font></span>
+                            </li>
+                        {/volist}
+                    </ul>
+                    <ul class="orderDetxiangxCont2-center">
+                        <input type="button" class="btnOne" name="cancel" style="display:none" value="撤单" onclick="if (confirm('您真的要撤单吗？')) { this.form.submit();}"/>
+                        <input type="hidden" name="trace_id" value="{$traceDetail.t_id}"/>
+                    </ul>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

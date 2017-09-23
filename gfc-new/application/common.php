@@ -19,7 +19,12 @@ if(!function_exists('data_encode')){
         ]);
     }
 }
-
+if(!function_exists('getlocationByIp')){
+    function getlocationByIp($ip){
+        $ipModel = new \vendor\ip();
+        return $ipModel->loc($ip,3);
+    }
+}
 //输入格式解码
 if(!function_exists('data_decode')){
     function data_decode($data = ''){
@@ -37,6 +42,13 @@ if(!function_exists('put_encode')){
         ]);
     }
 }
+if(!function_exists('floattostr')){
+    function floattostr( $val )
+    {
+        preg_match( "#^([\+\-]|)([0-9]*)(\.([0-9]*?)|)(0*)$#", trim($val), $o );
+        return $o[1].sprintf('%d',$o[2]).($o[3]!='.'?$o[3]:'');
+    }
+}
 //中转层调用加载
 if(!function_exists('forwarding')){
 
@@ -47,12 +59,185 @@ if(!function_exists('forwarding')){
      * @return json
      */
     function forwarding($forwarding='',$modelName='',$mothod='',$data=''){
-        $forwarding = '\app\Service\Forwarding\\'.$forwarding;
+        $forwarding = '\app\Service\forwarding\\'.$forwarding;
         if(!class_exists($forwarding)){
-            return  data_encode('','1000000',$forwarding.'不存在');
+            return  put_encode('','1000000',$forwarding.'不存在');
         }
+
         $result = new $forwarding($modelName,$mothod,$data);
         return $result->put_data();
+    }
+}
+if(!function_exists('wrapUsername')){
+    /**
+     * @param $username 外接网站的用户名
+     * @param $customerId
+     * @param $siteId
+     * @param bool $onlyWarper
+     * @return string 平台用户名
+     */
+    function wrapUsername($siteId, $username, $onlyWarper = false){
+        return  $siteId . ($onlyWarper ? '' : '_' . $username);
+    }
+}
+if(!function_exists('unwrapUsername')){
+    /**
+     *
+     * @param $username平台用户名
+     * @return string外接网站的用户名
+     */
+    function unwrapUsername($username)
+    {
+        preg_match("/^\d+_(\w+)/", $username, $matches);//888888_kkkk2
+        if(empty($matches)){
+            return '';
+        }
+        return $matches[1];
+    }
+
+}
+if(!function_exists('mode10Issues')){
+    /**
+     * 奖期取模
+     */
+    function mode10Issues($str){
+        $len = strlen($str);
+        if($len<=6){
+            return intval($str)%10;
+        }else{
+            $str = '1'.substr($str,-6);
+            return intval($str)%10;
+        }
+    }
+}
+if(!function_exists('isOnline')){
+    /**
+     * 判断用户是否在线
+     * @param $username
+     */
+    function isOnline($username){
+        $res =json_decode(forwarding('UserForwarding','\app\Service\users\business\frontUsers','isOnline',['username'=>$username]),true);
+        if($res['data']){
+            return '<span class="label  label-success radius"><b>在线</b></span>';
+        }else{
+            return '<span class="label  label-error radius"><b>离线</b></span>';
+        }
+    }
+}
+if(!function_exists('addLogs')){
+    /**
+     *用户日志
+     * @param $arr
+     * @param int $type  1 用户登录日志 2 管理员登录日志
+     */
+    function addLogs($arr,$type=1){
+        if($type == 1){
+            $res = forwarding('UserForwarding','\app\Service\usersLogs\business\userlogs','addUserLogs',$arr);
+        }else{
+            $res = forwarding('UserForwarding','\app\Service\usersLogs\business\logs','addLogs',$arr);
+        }
+    }
+}
+//按规则生成唯一订单编号 P表示order
+if(!function_exists('orderWrapId')){
+//    function orderWrapId($package_id, $issue, $lottery_id) {
+//        //CQ30714120141716P
+//        $str = '';
+//        switch ($lottery_id) {
+//            case '2':
+//                $str = 'CQ';
+//                break;
+//            case '26':
+//                $str = 'SD';
+//                break;
+//            case '3':
+//                $str = 'HLJ';
+//                break;
+//            case '8':
+//                $str = 'XJ';
+//                break;
+//            case '5':
+//                $str = 'CQ';
+//                break;
+//            case '27':
+//                $str = 'JX';
+//                break;
+//            case '24':
+//                $str = 'GD';
+//                break;
+//            case '14':
+//                $str = 'TJ';
+//                break;
+//            case '28':
+//                $str = '3D';
+//                break;
+//            case '29':
+//                $str = 'P3';
+//                break;
+//            case '11':
+//                $str = 'FF';
+//                break;
+//            case '9':
+//                $str = 'JS';
+//                break;
+//            case '13':
+//                $str = 'KF';
+//                break;
+//            case '14':
+//                $str = 'PK';
+//                break;
+//            case '15':
+//                $str = 'JXS';
+//                break;
+//            case '6':
+//                $str = 'P10';
+//                break;
+//            case '30':
+//                $str = 'HBKS';
+//                break;
+//        }
+//        $str .= 'S'.$lottery_id.'I'.substr(str_replace('-', '', $issue), 4).'P';
+//        $str .= str_pad($package_id, 12, '0', STR_PAD_LEFT);
+//        $result = "{$str}P";
+//        return $result;
+//    }
+    function orderWrapId($order_id,$issue='',$lottery_id=''){
+//        $order_id = $order_id/1000000000000;
+        return $order_id;
+    }
+}
+if(!function_exists('unOrderWrapId')){
+    //CQ034000000003381P
+//    function unOrderWrapId($sn){
+//        preg_match('`^\w+P(\d+)P$`Ui', $sn, $match);
+//        return  empty($match[1])?'':$match[1];
+//    }
+    function unOrderWrapId($sn){
+        return $sn;
+    }
+}
+
+if(!function_exists('dcEncrypt')){
+    /**
+     * 加密签名函数
+     * 需要配置环境支持iconv，否则中文参数不能正常处理
+     * @param type $data string
+     * @param type $key string
+     * @return type string
+     */
+    function dcEncrypt($data, $key) {
+        $key = iconv("GB2312", "UTF-8", $key);
+        $data = iconv("GB2312", "UTF-8", $data);
+        $b = 64; // byte length for md5
+        if (strlen($key) > $b) {
+            $key = pack("H*", md5($key));
+        }
+        $key = str_pad($key, $b, chr(0x00));
+        $ipad = str_pad('', $b, chr(0x36));
+        $opad = str_pad('', $b, chr(0x5c));
+        $k_ipad = $key ^ $ipad;
+        $k_opad = $key ^ $opad;
+        return md5($k_opad . pack("H*", md5($k_ipad . $data)));
     }
 }
 
@@ -208,102 +393,90 @@ function fliter_escape($value) {
 function fliter_str($value) {
     $badstr = array("\0", "%00", "\r", '&', ' ', '"', "'", "<", ">", "   ", "%3C", "%3E");
     $newstr = array('', '', '', '&', ' ', '"', "'", "<", ">", "   ", "<", ">");
-$value  = str_replace($badstr, $newstr, $value);
-$value  = preg_replace('/&((#(\d{3,5}|x[a-fA-F0-9]{4}));)/', '&\\1', $value);
-return $value;
+    $value  = str_replace($badstr, $newstr, $value);
+    $value  = preg_replace('/&((#(\d{3,5}|x[a-fA-F0-9]{4}));)/', '&\\1', $value);
+    return $value;
 }
 
 function substrb($string,$shu){
-      $len=strlen($string);
-      if($len>$shu){
-           $value=mb_substr($string,0,$shu);
-          return  $value.'<span class="c-red">......</span>';
-      }
-     return  $string;
+    $len=strlen($string);
+    if($len>$shu){
+        $value=mb_substr($string,0,$shu);
+        return  $value.'<span class="c-red">......</span>';
+    }
+    return  $string;
 }
+
+/**
+ * 去除标签
+ * @param $string
+ * @param $shu
+ * @return string
+ */
 function fliter_substrb($string,$shu){
- $str=fliter_html($string);
-
-   $len=strlen($str);
-      if($len>$shu){
-           $value=mb_substr($str,0,$shu);
-          return  $value.'<span class="c-red">......</span>';
-      }
-      return  $str;
-
+    $str=strip_tags($string,"<img><p><b><b><br><i><strong><em><span><h>");
+    $len=strlen($str);
+    if($len>$shu){
+        $value=mb_substr($str,0,$shu);
+        return  $value.'<span class="c-red"> <b>......</b></span>';
+    }
+    return  $str;
 }
- //追号订单编码
-function traceWrapid($trace_id, $issue, $lottery_id) {
-//        //T130117001010028E
-        switch ($lottery_id){
-            case '1':
-                $str = 'CQ';
-                break;
-            case '2':
-                $str = 'SD';
-                break;
-            case '3':
-                $str = 'HLJ';
-                break;
-            case '4':
-                $str = 'XJ';
-                break;
-            case '5':
-                $str = 'CQ';
-                break;
-            case '6':
-                $str = 'JX';
-                break;
-            case '7':
-                $str = 'GD';
-                break;
-            case '8':
-                $str = 'TJ';
-                break;
-            case '9':
-                $str = '3D';
-                break;
-            case '10':
-                $str = 'P3';
-                break;
-            case '11':
-                $str = 'FF';
-                break;
-            case '12':
-                $str = 'JS';
-                break;
-            case '13':
-                $str = 'KF';
-                break;
-            case '14':
-                $str = 'PK';
-                break;
-            case '15':
-                $str = 'JXS';
-                break;
-            case '16':
-                $str = 'P10';
-                break;
 
-            case '17':
-                $str = 'HBKS';
-                break;
-            case '18':
-                $str = '5FC';
-                break;
-            
-            case '19':
-                $str = 'HN';
-                break;
+/**
+ * 去除标签 前台公告用
+ * @param $string
+ * @param $shu
+ * @return string
+ */
+function pc_fliter_substrb($string){
+    $str=strip_tags($string);
+    $len=strlen($str);
+    if($len>400){
+        $value=mb_substr($str,0,400);
+        return  $value.'......';
+    }
+    return  $str;
+}
+//统计数字太大时出现科学计算法，交付报表。
+function NumToStr($num){
+    if (stripos($num,'e')===false) return   bcdiv($num, 1000000,4);;
+    $num = trim(preg_replace('/[=\'"]/','',$num,1),'"');
+    $result = "";
+    while ($num > 0){
+        $v = $num - floor($num / 10)*10;
+        $num = floor($num / 10);
+        $result   =   $v . $result;
+    }
+    return   bcdiv($result, 1000000,4);
+}
 
-            default:
-                throw new exception2("Unknown rules for lottery {$lottery_id}");
-                break;
+//统计数字太大时出现科学计算法，交付报表,盈率。
+function YingToStr($num,$wins){
+    if (stripos($num,'e')===false){
+        $result = $num ;
+    }else{
+        $num = trim(preg_replace('/[=\'"]/','',$num,1),'"');
+        $result = "";
+        while ($num > 0){
+            $v = $num - floor($num / 10)*10;
+            $num = floor($num / 10);
+            $result   =   $v . $result;
         }
-        $str .= substr(str_replace('-', '', $issue), -8);
-        $str .= str_pad($trace_id, 7, '0', STR_PAD_LEFT);
-        $result = "{$str}T";
-        return $result;
-        //return 'T' . encode($trace_id) . 'E';
     }
 
+    if (stripos($wins,'e')===false){
+        $data = $wins ;
+    }else{
+        $wins = trim(preg_replace('/[=\'"]/','',$wins,1),'"');
+        $data = "";
+        while ($wins > 0){
+            $v = $wins - floor($wins / 10)*10;
+            $wins = floor($wins / 10);
+            $data   =   $v . $data;
+        }
+    }
+
+    $str=bcsub($result, $data,4);
+    return   bcdiv($str, $result,6);
+}

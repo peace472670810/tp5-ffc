@@ -52,11 +52,12 @@
     <div data-role="content" class="hl-content">
         <div style="float:left;position: relative;top: 2px;padding: 4px 0px 4px 10px;font-size: 16px;line-height: 22px">
             <span id="orderPeriod" class="hl-order-countdown-title"
-                  style="width: 110px;white-space: nowrap;text-overflow:ellipsis;overflow: hidden;text-align: left;">截止:</span><br/>
+                  style="width: 140px;white-space: nowrap;text-overflow:ellipsis;overflow: hidden;text-align: left;">截止:</span><br/>
             <span id="orderCountdown" class="hl-order-countdown-text">--:--:--</span>
+            <span id="orderPeriod1" class="hl-order-countdown-title" style="width: 140px;white-space: nowrap;text-overflow:ellipsis;overflow: hidden;text-align: left;display: none;">封盘倒计时:</span><br/>
+            <span id="orderCountdown1" class="hl-order-countdown-text" style="display: none;">--:--:--</span>
         </div>
-        <div class="historyResult"
-             style="text-align: center;width: 200px;float: right;top: 6px;padding: 4px 0px 4px 0px;font-size: 16px;line-height: 20px;position: relative;font-style: normal;color:#000">
+        <div class="historyResult" style="text-align: center;width: 200px;float: right;top: 6px;padding: 4px 0px 4px 0px;font-size: 16px;line-height: 20px;position: relative;font-style: normal;color:#000">
             <span id="orderLastkj"></span>
             <ul id="historyNum" data-role="listview" data-inset="true"></ul>
         </div>
@@ -108,24 +109,15 @@
             </div>
             <div class="hl-order-select-footer" style="width: 100%;">
                 <div class="ui-grid-b">
-                    <div class="ui-block-a" id="cather" style="width: 27%"><a id="orderCheck" data-role="button"
-                                                                              data-theme="b" data-inline="true"
-                                                                              style="border: 1px solid #f6f6f3;background: #cd1b02;color: #ffffff;height: 38px;line-height: 23px;width: 100%;margin-left: 0;">直接投注</a>
+                    <div class="ui-block-a" id="cather" style="width: 27%"><a id="orderCheck" data-role="button" data-theme="b" data-inline="true" style="border: 1px solid #f6f6f3;background: #cd1b02;color: #ffffff;height: 38px;line-height: 23px;width: 100%;margin-left: 0;">直接投注</a>
                     </div>
-                    <div class="ui-block-c" style="width: 46%"><a id="addNumbox" href="#" data-role="button"
-                                                                  data-theme="c" data-inline="true"
-                                                                  style=" width: 100%; background: #52bf7f;height: 38px;line-height: 23px;color: #ffffff;margin-left: 0;border: 1px solid #f6f6f3;"><span
-                            style="background: url(../../css/pic/icon_addnmu.png) no-repeat;width: 15px;display:inline-block;height: 15px;vertical-align: middle;margin-right: 5px;"></span>添加到号码篮<em
-                            id="group">0</em></a></div>
+                    <div class="ui-block-c" style="width: 46%"><a id="addNumbox" href="#" data-role="button" data-theme="c" data-inline="true" style=" width: 100%; background: #52bf7f;height: 38px;line-height: 23px;color: #ffffff;margin-left: 0;border: 1px solid #f6f6f3;">
+                        <span style="background: url(../../static/mobile/css/pic/icon_addnmu.png) no-repeat;width: 15px;display:inline-block;height: 15px;vertical-align: middle;margin-right: 5px;"></span>
+                        添加到号码篮<em id="group">0</em></a></div>
                     <!--<a id="orderAuto" href="#" data-role="button" data-theme="c" data-inline="true">机选</a></div>-->
                     <!--<div class="ui-block-b"><a id="orderClear" href="#" data-role="button" data-theme="c" data-inline="true">清空</a></div>-->
-                    <div id="enterNum" class="ui-block-b" style="width: 27%">
-                        <a data-role="button" data-inline="true" data-theme="a"
-                           style="border: 1px solid #f6f6f3;background: #cd1b02;color: #ffffff;height: 38px;line-height: 23px;width: 100%;margin-left: 0;"
-                           value="手工录入" id="inputHand">手工录入</a>
-                        <a data-role="button" data-inline="true" data-theme="a"
-                           style="border: 1px solid #f6f6f3;background: #cd1b02;color: #ffffff;height: 38px;line-height: 23px;width: 100%;margin-left: 0;"
-                           value="常规录入" id="inputBall">常规录入</a>
+                    <div id="enterNum" class="ui-block-b" style="width: 27%"><a data-role="button" data-inline="true" data-theme="a" style="border: 1px solid #f6f6f3;background: #cd1b02;color: #ffffff;height: 38px;line-height: 23px;width: 100%;margin-left: 0;" value="手工录入" id="inputHand">手工录入</a>
+                        <a data-role="button" data-inline="true" data-theme="a" style="border: 1px solid #f6f6f3;background: #cd1b02;color: #ffffff;height: 38px;line-height: 23px;width: 100%;margin-left: 0;" value="常规录入" id="inputBall">常规录入</a>
                     </div>
                 </div><!-- /grid-a -->
                 </ul>
@@ -169,7 +161,7 @@
                 <div class="hl-order-countdown-label">
                     <div class="hl-order-countdown-container">
                         <span class="hl-order-countdown-title"
-                              style="color: #fff;font-weight: normal;font-style: normal;">截止:</span>
+                              style="color: #fff;font-weight: normal;font-style: normal;" id="orderStop">截止:</span>
                         <span id="orderConfirmCountdown" class="hl-order-countdown-text"
                               style="color: #fff;font-weight: normal;font-style: normal;">--:--:--</span>
                     </div>

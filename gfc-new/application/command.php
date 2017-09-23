@@ -9,4 +9,8 @@
 // | Author: yunwuxin <448901948@qq.com>
 // +----------------------------------------------------------------------
 
-return [];
+return [
+	'app\home\command\checkOrder',
+    'app\home\command\checkTestOrder',
+    'app\home\command\validation',
+];

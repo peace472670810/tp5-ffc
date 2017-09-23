@@ -1,5 +1,5 @@
 ﻿//page change event
-        $(document).on('pagechange', function() {
+$(document).on('pagechange', function() {
     //initialiaze
     app.init();
 });
@@ -12,7 +12,6 @@ $(document).on('pageinit', function() {
         var type = $(this).attr("val");
         $(document).trigger("refresh", type);
     });
-
     $(".logout").off("click").click(function() {
         app.logout();
     });

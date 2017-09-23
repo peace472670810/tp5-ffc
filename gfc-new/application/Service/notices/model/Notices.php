@@ -17,13 +17,14 @@ class Notices extends Model
      * @return array|false|\PDOStatement|string|Model
      */
    public  function getList($data=[]){
-        $result = $this->where('n_status','eq','1')->select();  
-        $list = [];
-        foreach ($result as $v){
-            $list[] =  $v->data;
-        }
-       
-        return  $list;
+       $start = $data['page']*$data['count'];
+       $count = $data['count'];
+       $arr['list'] =  $this->query("select * from  ffc_notices where n_status=1  limit $start,$count");
+       $total = $this->query("select count(*) from  ffc_notices where n_status=1  limit 1");
+       $arr['total'] = $total[0]['count(*)'];
+       $arr['start'] = $start;
+       $arr['end'] = $start + $count;
+        return  $arr;
     }
 
     /**

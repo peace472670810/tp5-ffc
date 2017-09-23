@@ -1,0 +1,260 @@
+﻿<!--_meta 作为公共模版分离出去-->
+{include file="common/_meta"}
+<!--/meta 作为公共模版分离出去-->
+<style type="text/css">
+.demo{width:700px; margin:30px auto}
+.times{height:80px; width:320px; margin:0 auto; background:url(images/clock.jpg) no-repeat; padding-left:50px}
+.times p{height:20px; line-height:20px;}
+.endtime{font-size:20px; font-family:"Microsoft Yahei"; color:#000}
+.prolist{margin:10px auto}
+.prolist li{float:left; width:320px; height:240px; margin:10px; font-size:14px; position:relative}
+.prolist li img{width:320px; height:198px;}
+.showtime{position:absolute; top:174px; height:24px; line-height:24px; background:#333; color:#fff; opacity:.6; display:none}
+</style>
+
+
+<title>即时注单 </title>
+</head>
+<body>
+		<nav class="breadcrumb"><a class="maincolor" href="{:url('index/welcome')}"><i class="Hui-iconfont">&#xe67f;</i> 首页</a> <span class="c-gray en">&gt;</span> <a class="maincolor" href="{:url('Instant/getInstant')}">即时注单</a><a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+	<div class="Hui-article">
+		<article class="cl pd-20">		
+
+			 <div class="tabBar cl">
+					{volist name="lottery" id="v"}
+						<a href="{:url('Instant/getInstant')}?id={$key}"> <span {if condition="$id eq $key"} class="current"{/if}>{$v}</span></a>
+					{/volist}
+				</div>
+		<div class="cl" id='instant'>
+
+		<span class="f-l" style="width: 66%" >
+			<div class="mt-20">
+				<table class="table table-border table-bordered table-hover table-bg table-sort radius" >
+					<thead>
+						<tr class="text-c">
+				            <th width="80">玩法大类</th>
+							<th width="100">投注总额</th>							
+							<th width="80">总笔数</th>
+											
+						</tr>
+					</thead>
+                   {volist name='text' id='vo'}
+                      <tr class="text-c">
+                            <td><a class="maincolor" href="{:url('instant/groupInstant')}?lid={$vo.lid}&mg_id={$vo.mg_id}&mg_name={$vo.mg_name}&o_issue={$vo.o_issue}" title="订单查看">{$vo.mg_name}</a></td>
+                         	<td>
+                                   {empty name="vo.o_amount"}
+									暂无下注
+									{else /}
+									{$vo.o_amount}
+									{/empty}
+                         	</td>
+                         	<td>
+                                  	{empty name="vo.count"}
+									暂无下注
+									{else /}
+									{$vo.count}
+									{/empty}
+
+                         	</td>
+                       </tr>
+                   {/volist}
+                   <tr class="text-c">
+                            <td>合计</td>
+                         	<td>
+                                   {empty name="huizon.o_amounts"}
+									暂无合计
+									{else /}
+									{$huizon.o_amounts}
+									{/empty}
+                         	</td>
+                         	<td>
+                                  	{empty name="huizon.counts"}
+									暂无合计
+									{else /}
+									{$huizon.counts}
+									{/empty}
+
+                         	</td>
+                       </tr>
+				</table>
+			</div>
+		</span>
+		<span class="f-r" style="width: 32%">
+               <div class="mt-20">
+				<table class="table table-border table-bordered table-striped" >
+					<thead>
+						<tr class="text-c">
+				            <th width="35%">彩种</th>
+                            <th>{$lottery[$id]}</th> 
+				        </tr>
+				        </thead>      
+				        <tr  class="text-c">
+				        	<th width="35%">本期期数</th>	
+				        	<th>{$list.issueInfo.issue}</th>
+				        </tr>
+				        <tr  class="text-c">
+				        	<th width="35%">本期开盘时间</th>	
+				        	<th>{$list.issueInfo.input_time}</th>
+				        </tr>
+				        <tr  class="text-c">
+				        	<th width="35%">本期封盘时间</th>	
+				        	<th>{$list.issueInfo.end_time}</th>
+				        </tr>
+				 
+						<tr  class="text-c">
+							<th width="35%">距离封盘时间</th>
+							<th><div class="endtime" value="{$list.issueInfo.fenpan_time}"></div></th>
+						</tr>	
+						<tr  class="text-c">
+							<th width="35%">上期期数</th>
+							<th id='issue'>{$list.lastIssueInfo.issue}</th>
+						</tr>						
+						<tr  class="text-c">
+							
+							<th width="35%">上期开奖结果</th>	
+							<th id='code'>{$list.lastIssueInfo.code}</th>					
+						</tr>
+						<tr class="text-c">
+							<th width="35%" >注单更新时间</th>	
+							<th>
+							   <span style="width:30%;" id="genxin" >
+							   	 60秒
+							   </span>
+							   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<span class="select-box " style="width: 40%; ">
+								  <select class="select"  name="dom1" id='AutoUpdate'>
+								    <option value="60" selected>60秒</option>
+								    <option value="30">30秒</option>
+								    <option value="20">20秒</option>
+								    <option value="10">10秒</option>
+								    <option value="5">5秒</option>
+								  </select>
+								</span>
+
+							</th>	
+						</tr>
+					     <tr class="text-c">
+							<th colspan="2"><a href="javascript:;"  id='getId' class="btn btn-success-outline radius">立即更新</a></th>	
+						</tr>
+                   
+				</table>
+			</div>
+		</span>
+		</div>				
+		</article>
+	</div>
+
+	<tbody>
+<!--_footer 作为公共模版分离出去-->
+{include file="common/_footer"}
+<!--/_footer /作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="../../static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="../../static/lib/datatables/1.10.0/jquery.dataTables.js"></script>
+<script type="text/javascript" src="../../static/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript">
+var serverTime = {$list.issueInfo.instant_time} * 1000;
+$('#getId').click(function(){
+		$.ajax({
+		  url: "{:url('Instant/ajaxInstant')}?id={$id}&issue={$list.issueInfo.issue}",
+		  cache: false,
+		  success: function(html){
+		  	$(".f-l").empty();
+		    $(".f-l").append(html);
+		     layer.msg('更新成功!',{icon:1,time:500});
+		  }
+		});  
+	});
+
+$(function(){ 
+	    var cou=30;
+	    var getInstant=function(){
+      	  window.setTimeout(function () {  	  	
+       	          cou--;      	                      
+                if (cou == 0) {
+                	self.location.reload();
+                    return;
+                }
+                getInstant();
+            }, 1000);
+      }
+	 var dateTime = new Date();
+     var difference = dateTime.getTime() - serverTime;
+     var int=setInterval(function(){
+      $(".endtime").each(function(){
+        var obj = $(this);
+        var endTime = new Date(parseInt(obj.attr('value')) * 1000);
+        var nowTime = new Date();
+        var nMS=endTime.getTime() - nowTime.getTime() + difference;
+        var myD=Math.floor(nMS/(1000 * 60 * 60 * 24));
+        var myH=Math.floor(nMS/(1000*60*60)) % 24;
+        var myM=Math.floor(nMS/(1000*60)) % 60;
+        var myS=Math.floor(nMS/1000) % 60;
+        var myMS=Math.floor(nMS/100) % 10;
+        if(myD>= 0){
+			var str = myH+"小时"+myM+"分"+myS+"."+myMS+"秒";
+        }else{
+            var str = "已封盘！";  
+            $('#getId').click();    				
+			getInstant();
+			clearInterval(int);
+		}
+		obj.html(str);
+      });
+    }, 100);
+	
+	    var AutoUpdate = parseInt($("#AutoUpdate").val());
+        $("#AutoUpdate").change(function () {
+            AutoUpdate = parseInt($(this).val());
+        });
+        var AutoUpdateTimeout = function () {
+            window.setTimeout(function () {
+                if (isNaN(AutoUpdate)) {
+                    AutoUpdateTimeout();
+                    return;
+                }          
+                AutoUpdate--;
+                $("#genxin").empty();
+				$("#genxin").append(AutoUpdate+'秒');
+                if (AutoUpdate == 0) {
+                     $('#getId').click();
+                    AutoUpdate = parseInt($("#AutoUpdate").val());
+                }
+                AutoUpdateTimeout();
+            }, 1000);
+        };
+        AutoUpdateTimeout();
+
+       var num = 20;
+       var lastIssueInfo=function(){    	    
+       	     window.setTimeout(function () {
+                  if (isNaN(num)) {
+                    lastIssueInfo();
+                    return;
+                  }
+       	          num--;      	                      
+                if (num < 0) {
+                     $.ajax({
+						  url: "{:url('Instant/lastIssueInfo')}?id={$id}",
+						  cache: false,
+						  success: function(data){
+						  	var arr=eval('('+data+')'); 
+						  	$("#code").empty();
+						  	$("#issue").empty();
+						    $("#code").append(arr.code);
+						    $("#issue").append(arr.issue);
+						  }
+					}); 
+                     num = 20;
+                }
+                lastIssueInfo();
+            }, 1000);
+       };
+        lastIssueInfo();
+  
+    });
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

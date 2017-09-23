@@ -1,0 +1,236 @@
+﻿<!--_meta 作为公共模版分离出去-->
+{include file="common/_meta"}
+<!--/meta 作为公共模版分离出去-->
+<title>订单详情 </title>
+</head>
+<body>
+<!--_header 作为公共模版分离出去-->
+<!--/_menu 作为公共模版分离出去-->
+<article class="cl pd-20">
+	<div class="cl pd-5 bg-1 bk-gray mt-20">
+		订单编号：<b>{$list.ffc_id}</b>
+	</div>
+	<table class="table table-border table-bordered  ">
+		<thead>
+		<tr >
+			<th width="30">投注用户：</th>
+			<td width="150">{$list.o_username}</td>
+			<th width="30">游戏：</th>
+			<td width="150">
+				{switch name="list.o_lid" }
+				{case value="2"}重庆时时彩{/case}
+				{case value="8"}新疆时时彩{/case}
+				{case value="14"}天津时时彩{/case}
+				{case value="30"}湖北快三{/case}
+				{case value="9"}江苏快三{/case}
+				{case value="24"}广东11选5{/case}
+				{case value="26"}山东11选5{/case}
+				{case value="27"}江西11选5{/case}
+				{case value="28"}福彩3D{/case}
+				{case value="29"}排列三/五{/case}
+				{case value="6"}PK拾{/case}
+				{default /}
+				{/switch}&nbsp;&nbsp;第{$list.o_issue}期
+			</td>
+		</tr>
+
+		<tr>
+			<th >总注数：</th>
+			<td>{$list.o_single_num}</td>
+			<th>投注倍数：</th>
+			<td>{$list.o_multiple}</td>
+		</tr>
+		<tr>
+			<th>模式：</th>
+			{eq name="$list.o_modes" value="1"}<td>2元模式</td>{/eq}
+			{eq name="$list.o_modes" value="0.5"}<td>1元模式</td>{/eq}
+			{eq name="$list.o_modes" value="0.1"}<td>2角模式</td>{/eq}
+			{eq name="$list.o_modes" value="0.05"}<td>1角模式</td>{/eq}
+			{eq name="$list.o_modes" value="0.01"}<td>2分模式</td>{/eq}
+			{eq name="$list.o_modes" value="0.005"}<td>1分模式</td>{/eq}
+			<th>是否追号：</td>
+			<td>
+				{eq name="list.o_trace_id" value="0"}否{else/}是{/eq}
+			</td>
+		</tr>
+		<tr>
+			<th>订单总金额：</td>
+			<td>{$list.o_amount}</td>
+			<th>奖金盘口：</th>
+			<td>{$list.o_pan}</td>
+
+		</tr>
+		<tr>
+			<th>投注时间：</td>
+			<td>{$list.o_add_time}</td>
+			<th>开奖号码：</th>
+			<td>{$list.ds_balls}</td>
+
+		</tr>
+		<tr>
+			<th>截止时间；</td>
+			<td>{$list.o_draw_time}</td>
+			<th>订单状态：</th>
+			<td>{eq name="list.o_is_jiesuan" value="0"}未判断{/eq}
+				{eq name="list.o_is_jiesuan" value="1"}中奖{/eq}
+				{eq name="list.o_is_jiesuan" value="2"}未中奖{/eq}
+			</td>
+
+		</tr>
+
+		<tr>
+			<th>最后更新时间：</th>
+			<td>{$list.o_update_time}</td>
+			<th>是否撤单：</td>
+			<td>{eq name="list.o_is_cancel" value="0"}未撤单{/eq}
+				{eq name="list.o_is_cancel" value="1"}用户撤单{/eq}
+				{eq name="list.o_is_cancel" value="2"}追中撤单{/eq}
+				{eq name="list.o_is_cancel" value="5"}追中撤单{/eq}
+				{eq name="list.o_is_cancel" value="3"}出号撤单{/eq}
+				{eq name="list.o_is_cancel" value="4"}未开撤单{/eq}
+				{eq name="list.o_is_cancel" value="9"}管理员撤单{/eq}
+			</td>
+		</tr>
+		<tr>
+			<th>派奖状态：</td>
+			<td>{eq name="list.o_is_pay" value="0"}未派奖{/eq}
+				{eq name="list.o_is_pay" value="1"}已派奖{/eq}</td>
+			<th>中奖金额：</th>
+			<td>{$list.o_wins}</td>
+		</tr>
+	</table>
+
+	<div class="cl pd-5 bg-1 bk-gray mt-20">
+		玩法中奖等级说明
+	</div>
+	<table class="table table-border table-bordered ">
+		<thead>
+		<tr class="text-c">
+			<th width="50">玩法</th>
+			<th width="50">中奖等级金额</th>
+		</tr>
+		{volist name='list.code' id='vo'}
+		<tr class="text-c">
+			<th>{$vo.m_cname}</th>
+			<th>
+				{volist name='vo.odd' id='v' }
+				奖金级别{$v.level}>>>中奖金额为{$v.jiner}元。&nbsp;&nbsp;
+				{/volist}
+			</th>
+
+		</tr>
+		{/volist}
+	</table>
+	{notempty name="list.o_hit_detail"}
+	{neq name="list.o_wins" value="0.0000"}
+	<div class="cl pd-5 bg-1 bk-gray mt-20">
+		订单中奖说明：
+	</div>
+	<table class="table table-border table-bordered ">
+		<thead>
+		<tr class="text-c">
+			<th width="30">玩法</th>
+			<th width="50">中奖号码</th>
+			<th width="50">中奖等级和注数</th>
+
+
+		</tr>
+		{volist name='list.o_hit_detail' id='vo'}
+		<tr class="text-c">
+			<th>{$vo.c_name}</th>
+			<th>{$vo.number}</th>
+
+			<th>    {volist name='vo.hit' id='v' }
+				奖金级别{$v.level}------注数{$v.count} &nbsp;&nbsp;
+
+				{/volist}
+			</th>
+		</tr>
+		{/volist}
+	</table>
+	{/neq}
+
+	{/notempty}
+	<div class="cl pd-5 bg-1 bk-gray mt-20">
+		订单明细
+	</div>
+	<table class="table table-border table-bordered ">
+		<thead>
+		<tr class="text-c">
+			<th width="50">玩法</th>
+			<th width="90">投注号码</th>
+			<th width="50">投注注数</th>
+			<th width="50">投注倍数</th>
+			<th width="50">投注模式</th>
+			<th width="50">投注金额</th>
+			<th width="50">投注盘口</th>
+
+		</tr>
+		{volist name='list.code' id='vo'}
+		<tr class="text-c">
+			<th>{$vo.m_cname}</th>
+			<th>{$vo.number}</th>
+			<th>{$vo.zushu}</th>
+			<th>{$list.o_multiple}</th>
+			{eq name="$list.o_modes" value="1"}<th>2元模式</th>{/eq}
+			{eq name="$list.o_modes" value="0.5"}<th>1元模式</th>{/eq}
+			{eq name="$list.o_modes" value="0.1"}<th>2角模式</th>{/eq}
+			{eq name="$list.o_modes" value="0.05"}<th>1角模式</th>{/eq}
+			{eq name="$list.o_modes" value="0.01"}<th>2分模式</th>{/eq}
+			{eq name="$list.o_modes" value="0.005"}<th>1分模式</th>{/eq}
+			<th>{$vo.jine}</th>
+			<th>{$list.o_pan}</th>
+
+		</tr>
+		{/volist}
+	</table>
+
+</article><tbody>
+<!--_footer作为公共模版分离出去-->
+{include file="common/_footer"}
+<!--/_footer /作为公共模版分离出去-->
+<script type="text/javascript" src="../../static/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="../../static/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="../../static/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="../../static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="../../static/lib/datatables/1.10.0/jquery.dataTables.js"></script>
+<script type="text/javascript" src="../../static/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $("#form-member-add").validate({
+            rules:{
+                f_lock_limit:{
+                    required:true,
+                    minlength:6,
+                    number:true,
+                    min:10,
+                    //maxlength:8,
+                    digits:true
+                },
+            },
+            onkeyup:true,
+            focusCleanup:true,
+            success:"valid",
+            submitHandler:function(form){
+                $(form).ajaxSubmit({
+                    "type":"post",
+                    "url":"{:url('lottery/addLocks')}",
+                    "success":function(res,status){
+                        if(res){
+                            layer.msg('修改成功!',{icon:1,time:2000});
+                            setTimeout(function(){
+                                location.replace(location.href);
+                            },1000);
+                        }else{
+                            layer.msg('修改失败!',{icon:2,time:2000});
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

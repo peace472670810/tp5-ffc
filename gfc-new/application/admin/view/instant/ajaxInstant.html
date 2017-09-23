@@ -1,0 +1,54 @@
+﻿
+		<span class="f-l" style="width: 100%">
+			<div class="mt-20">
+				<table class="table table-border table-bordered table-hover table-bg table-sort radius" >
+					<thead>
+						<tr class="text-c">
+				            <th width="80">玩法大类</th>
+							<th width="100">投注总额</th>							
+							<th width="80">总笔数</th>
+											
+						</tr>
+					</thead>
+                   {volist name='text' id='vo'}
+                      <tr class="text-c">
+                            <td><a class="maincolor" href="{:url('instant/groupInstant')}?lid={$vo.lid}&mg_id={$vo.mg_id}&mg_name={$vo.mg_name}&o_issue={$vo.o_issue}" title="订单查看">{$vo.mg_name}</a></td>
+                         	<td>
+                                   {empty name="vo.o_amount"}
+									暂无下注
+									{else /}
+									{$vo.o_amount}
+									{/empty}
+                         	</td>
+                         	<td>
+                                  	{empty name="vo.count"}
+									暂无下注
+									{else /}
+									{$vo.count}
+									{/empty}
+
+                         	</td>
+                       </tr>
+                   {/volist}
+                   <tr class="text-c">
+                            <td>合计</td>
+                         	<td>
+                                   {empty name="huizon.o_amounts"}
+									暂无合计
+									{else /}
+									{$huizon.o_amounts}
+									{/empty}
+                         	</td>
+                         	<td>
+                                  	{empty name="huizon.counts"}
+									暂无合计
+									{else /}
+									{$huizon.counts}
+									{/empty}
+
+                         	</td>
+                       </tr>
+				</table>
+			</div>
+		</span>
+		

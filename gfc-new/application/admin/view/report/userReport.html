@@ -18,34 +18,39 @@
     <link rel="stylesheet" type="text/css" href="../../static/static/h-ui.admin/css/style.css"/>
     <!--[if IE 6]>
     <!/meta 作为公共模版分离出去-->
-    <title>报表管理 > 交付报表 </title>
+    <title>报表管理 > 会员报表 </title>
 </head>
 <body>
-<nav class="breadcrumb"><a href="{:url('index/welcome')}"><i class="Hui-iconfont">&#xe67f;</i> 首页 </a><span
+<nav class="breadcrumb"><a class="maincolor" href="{:url('index/welcome')}"><i class="Hui-iconfont">&#xe67f;</i> 首页 </a><span
         class="c-gray en">&gt;</span> 报表管理 <span class="c-gray en">&gt;</span>
-    <a href="{:url('report/userReport')}?u_level={$u_level}&u_username={$u_username}">会员报表</a>
+    <a class="maincolor" href="{:url('report/userReport')}">会员报表</a>
     <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
        href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="Hui-article">
     <article class="cl pd-20">
         <div class="text-c">
             <form action="{:url('report/userReport')}" method="get">
+            用户名：<input type="text" value="{$name}" name="name" id="" placeholder="用户名"
+                                 style="width:250px" class="input-text radius ">
+                &nbsp;
                 开奖时间：
                 <input type="text" readonly name="start_time" value="{$start_time}"
                        onFocus="WdatePicker({startDate:'%y-%M-%d 00:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})"
-                       id="logmin" class="input-text Wdate" style="width:165px;">
+                       id="logmin" class="input-text Wdate radius" style="width:165px;">
                 -
                 <input type="text" readonly name="end_time" value="{$end_time}"
                        onFocus="WdatePicker({startDate:'%y-%M-%d 23:59:59',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})"
                        id="logmax" class="input-text Wdate radius" style="width:165px;">
                 <span>
-					<input name="time_type" type="radio" value="0" id="sex-1" checked>
+                 &nbsp;
+					<input name="time_type" type="radio" value="0" id="sex-1" 
+                     {equal name="time_type" value="0"}checked{/equal}
+                     >
 					<label for="sex-1">北京时间 (2017-05-29 10:18:06) </label>
-					<input type="radio" id="sex-2" name="time_type" value="1">
+					<input type="radio" id="sex-2" name="time_type" value="1" {equal name="time_type" value="1"}checked{/equal} >
 					<label for="sex-2">美东时间 (2017-05-28 22:18:06) </label>
 			</span>
-                <input type="hidden" name="u_username" value="{$u_username}"/>
-                <input type="hidden" name="u_level" value="{$u_level}"/>
+             &nbsp;
                 <button name="" id="" class="btn btn-success radius" type="submit"><i class="Hui-iconfont">&#xe665;</i>
                     查看
                 </button>
@@ -56,26 +61,64 @@
             <table class="table table-border table-bordered table-hover table-bg table-sort radius">
                 <thead>
                 <tr class="text-c ">
-                    <th width="40">ID</th>
+                    
                     <th width="80">帐户</th>
-                    <th width="60">订单数</th>
-                    <th width="100">总投注额</th>
-                    <th width="100">总奖金</th>
-                    <th width="100">实际输赢</th>
+
+                     {neq name='8' value="$bytype"}
+                     <th width="60" onclick=" bytyoe(8); "><a class="maincolor" href="javascript:;">订单数   <i class="Hui-iconfont">&#xe679;</i> </a></th>
+                    {/neq} 
+                    {eq name='8' value="$bytype"}
+                    <th width="60" onclick=" bytyoe(7); "><a class="maincolor" href="javascript:;">订单数<i class="Hui-iconfont">&#xe674;</i></a> </th>
+                    {/eq} 
+                   
+                     {neq name='2' value="$bytype"}
+                     <th width="100" onclick=" bytyoe(2); "><a class="maincolor" href="javascript:;">总投注额   <i class="Hui-iconfont">&#xe679;</i> </a></th>
+                    {/neq} 
+                    {eq name='2' value="$bytype"}
+                    <th width="100" onclick=" bytyoe(1); "><a class="maincolor" href="javascript:;">总投注额<i class="Hui-iconfont">&#xe674;</i></a> </th>
+                    {/eq} 
+
+
+                    {neq name='4' value="$bytype"}
+                     <th width="100" onclick=" bytyoe(4); "><a class="maincolor" href="javascript:;">总奖金   <i class="Hui-iconfont">&#xe679;</i> </a></th>
+                    {/neq} 
+                    {eq name='4' value="$bytype"}
+                    <th width="100" onclick=" bytyoe(3); "><a class="maincolor" href="javascript:;">总奖金<i class="Hui-iconfont">&#xe674;</i></a> </th>
+                    {/eq} 
+
+                    {neq name='6' value="$bytype"}
+                     <th width="100" onclick=" bytyoe(6); "><a class="maincolor" href="javascript:;">输赢   <i class="Hui-iconfont">&#xe679;</i> </a></th>
+                    {/neq} 
+                    {eq name='6' value="$bytype"}
+                    <th width="100" onclick=" bytyoe(5); "><a class="maincolor" href="javascript:;">输赢<i class="Hui-iconfont">&#xe674;</i> </a></th>
+                    {/eq} 
+                   
+                    
+                    <th width="100">赢率</th>
                 </tr>
                 </thead>
                 <tbody>
                 {if condition="!empty($list)"}
                 {volist name="list" id="v"}
-                <tr class="text-c">
-                    <td>{$v.u_id}</td>
+                <tr class="text-c">            
                     <td>
-                        <a href="{:url('Report/getReportDetail')}?u_username={$v.u_username}&u_level={$v.u_level}&start_time={$start_time}&end_time={$end_time}">{$v.u_username}</a>
+                   <a class="maincolor" href="{:url('Report/detailReport')}?u_username={$v.u_username}&start_time={$start_time}&end_time={$end_time}">{$v.u_username} </a>
                     </td>
-                    <td>{$v.counts}</td>
-                    <td>{$v.amount}</td>
-                    <td>{$v.prize}</td>
-                    <td>{$v.wins}</td>
+                    <td> {$v.counts}</td>
+                    <td> {:NumToStr($v.amount)}</td>
+                    <td> {:NumToStr($v.wins)}</td>
+                
+              {gt name="$v.amount" value="$v.wins"} 
+              <td style="color: #FF0000;">{:NumToStr($v.result)}</td> 
+              {/gt}
+              {lt name="$v.amount" value="$v.wins"}
+               <td style="color: #0000FF;">{:NumToStr($v.result)}</td>
+              {/lt}
+              {eq name="$v.amount" value="$v.wins"} 
+              <td>{:NumToStr($v.result)}</td> 
+              {/eq}
+                              
+                <td>  <?php echo bcdiv(NumToStr($v['wins']),NumToStr($v['amount']),4)*100;?>% </td>
                 </tr>
                 {/volist}
                 {/if}
@@ -97,64 +140,17 @@
 <script type="text/javascript" src="../../static/lib/datatables/1.10.0/jquery.dataTables.js"></script>
 <script type="text/javascript" src="../../static/lib/laypage/1.2/laypage.js"></script>
 <script type="text/javascript">
-    $(function () {
-        $('.table-sort').dataTable({
-            "aaSorting": [[1, "desc"]],//默认第几个排序
-            "bStateSave": true,//状态保存
-
-        });
-        $('.table-sort tbody').on('click', 'tr', function () {
-            if ($(this).hasClass('selected')) {
-                $(this).removeClass('selected');
-            }
-            else {
-                table.$('tr.selected').removeClass('selected');
-                $(this).addClass('selected');
-            }
-        });
+function picture_edit(title,url,id){
+    var index = layer.open({
+        type: 2,
+        title: title,
+        content: url
     });
-    /*用户-添加*/
-    function member_add(title, url, w, h) {
-        layer_show(title, url, w, h);
+    layer.full(index);
     }
-    /*用户-查看*/
-    function member_show(title, url, id, w, h) {
-        layer_show(title, url, w, h);
-    }
-    /*用户-停用*/
-    function member_stop(obj, id) {
-        layer.confirm('确认要停用吗？', function (index) {
-            $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_start(this,id)" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe6e1;</i></a>');
-            $(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已停用</span>');
-            $(obj).remove();
-            layer.msg('已停用!', {icon: 5, time: 1000});
-        });
-    }
-
-    /*用户-启用*/
-    function member_start(obj, id) {
-        layer.confirm('确认要启用吗？', function (index) {
-            $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_stop(this,id)" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>');
-            $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
-            $(obj).remove();
-            layer.msg('已启用!', {icon: 6, time: 1000});
-        });
-    }
-    /*用户-编辑*/
-    function member_edit(title, url, id, w, h) {
-        layer_show(title, url, w, h);
-    }
-    /*密码-修改*/
-    function change_password(title, url, id, w, h) {
-        layer_show(title, url, w, h);
-    }
-    /*用户-删除*/
-    function member_del(obj, id) {
-        layer.confirm('确认要删除吗？', function (index) {
-            $(obj).parents("tr").remove();
-            layer.msg('已删除!', {icon: 1, time: 1000});
-        });
-    }
+function bytyoe(type){
+     window.location.href = "{:url('report/userReport')}?name={$name}&time_type={$time_type}&start_time={$start_time}&end_time={$end_time}&bytype="+type;
+ }
 </script>
 <!--/请在上方写此页面业务相关的脚本-->
 </body>

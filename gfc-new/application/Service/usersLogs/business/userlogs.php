@@ -43,10 +43,10 @@ class userlogs
             'u_control'    => empty($arr['u_control'])?'':$arr['u_control'],
             'u_action'     => empty($arr['u_action'])?'':$arr['u_action'],
             'u_is_success' => empty($arr['u_is_success'])?0:$arr['u_is_success'],
-            'u_remark'     => empty($arr['u_remark'])?'':serialize($arr['u_remark']),
-            'u_client_ip'  => $GLOBALS['REQUEST']['client_ip'],
-            'u_proxy_ip'   => $GLOBALS['REQUEST']['proxy_ip'],
-            'u_domain'     => $_SERVER['HTTP_HOST'],
+            'u_remark'     => empty($arr['u_remark'])?'':$arr['u_remark'],
+            'u_client_ip'  => empty($arr['u_client_ip'])?'':$arr['u_client_ip'],
+            'u_proxy_ip'   => empty($arr['u_proxy_ip'])?'':$arr['u_proxy_ip'],
+            'u_domain'     => empty($arr['u_domain'])?'':$arr['u_domain'],
             'u_date'       => date('Y-m-d H:i:s'),
         );
         $res = $this->logs_model->addUserLogs($data);
@@ -114,7 +114,8 @@ class userlogs
         }
         $start = DEFAULT_PER_PAGE*$page;
         $sql .= $where." order by u_date desc  limit $start,".DEFAULT_PER_PAGE;
-        if($list['data'] = $this->logs_model->query($sql)){
+        $list['data'] = $this->logs_model->query($sql);
+        if(!empty($list['data'])){
             $sql_count = "select count(*)  from `ffc_userlogs` where 1".$where;
             $pacgecount = $this->logs_model->query($sql_count);
             $list['page']['count'] = $pacgecount[0]['count(*)'];
@@ -124,7 +125,8 @@ class userlogs
             $list['page']['start'] = $start+1;
             $list['page']['end'] = DEFAULT_PER_PAGE*($page+1);
             return  put_encode($list,'','查询成功');
+        }else{
+            return put_encode(true,'','');
         }
-        return put_encode(false,'9100012',self::$error_code['9100012']);
     }
 }

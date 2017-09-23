@@ -1,34 +1,34 @@
-﻿<!DOCTYPE HTML>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="renderer" content="webkit|ie-comp|ie-stand">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
-	<meta http-equiv="Cache-Control" content="no-siteapp" />
-	<!--[if lt IE 9]>
-	<script type="text/javascript" src="lib/html5shiv.js"></script>
-	<script type="text/javascript" src="lib/respond.min.js"></script>
-	<![endif]-->
-	<link rel="stylesheet" type="text/css" href="../../static/static/h-ui/css/H-ui.min.css" />
-	<link rel="stylesheet" type="text/css" href="../../static/static/h-ui.admin/css/H-ui.admin.css" />
-	<link rel="stylesheet" type="text/css" href="../../static/lib/Hui-iconfont/1.0.8/iconfont.css" />
-	<link rel="stylesheet" type="text/css" href="../../static/static/h-ui.admin/skin/default/skin.css" id="skin" />
-	<link rel="stylesheet" type="text/css" href="../../static/static/h-ui.admin/css/style.css" />
-	<!--[if IE 6]>
-    <!/meta 作为公共模版分离出去-->
-
-	<title> 账户管理 > 动态 -</title>
+﻿<!--_meta 作为公共模版分离出去-->
+{include file="common/_meta"}
+<!--/meta 作为公共模版分离出去-->
+<title> 账户管理 > 动态 -</title>
 </head>
 <body>
-<nav class="breadcrumb"><a href="{:url('index/welcome')}"><i class="Hui-iconfont">&#xe67f;</i> 首页 </a><span class="c-gray en">&gt;</span> 账户管理 <span class="c-gray en">&gt;</span>
-	<a href="javascript:location.replace(location.href);">总代列表</a>	<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+
+<nav class="breadcrumb"><a href="{:url('index/welcome')}" class="maincolor"><i class="Hui-iconfont">&#xe67f;</i> 首页 </a>
+
+	<span class="c-gray en">&gt;</span> 账户管理
+
+	{notempty name="$post.u_top_4"}
+	<span class="c-gray en">&gt;</span><a href="{:url('User/getUser4')}" class="maincolor">分公司列表【{$post.u_top_4}】</a>
+	{/notempty}
+
+	{notempty name="$post.u_top_3"}
+	<span class="c-gray en">&gt;</span><a href="{:url('User/getUser3')}?u_username={$post.u_top_4}{notempty name='$post.u_top_4'}&u_top_4={$post.u_top_4} {/notempty}" class="maincolor">股东列表【{$post.u_top_3}】</a>
+	{/notempty}
+	<span class="c-gray en">&gt;</span><a href="javascript:location.replace(location.href);" class="maincolor">总代列表</a>
+	<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" >
+		<i class="Hui-iconfont">&#xe68f;</i></a>
+</nav>
+
 <div class="Hui-article">
 	<article class="cl pd-20">
 		<div class="text-c">
-			<form action="{:url('User/search')}" method="post">
+			<form action="{:url('User/getUser2')}" method="post">
 				用户名：<input type="text" name="u_username" id="" value="{$post.u_username}" placeholder="用户名" style="width:250px" class="input-text radius ">
 				<input type="hidden" name='u_level' value="{$post.u_level}">
+				<input type="hidden" name='u_top_3' value="{$post.u_top_3}">
+				<input type="hidden" name="u_top_4" value="{$post.u_top_4}">
 				</input>
 				&nbsp;状态：
 				<span class="select-box inline radius">
@@ -37,21 +37,22 @@
 			<option value="8" {eq name="$post.u_status" value="8"}selected{/eq} >正常</option>
 			<option value="1" {eq name="$post.u_status" value="1"}selected{/eq} >冻结</option>
 		</select>
-		</span>&nbsp
+		</span>&nbsp;
 				<button name=""  class="btn btn-success radius" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
 			</form>
 		</div>
 		{if condition="session('level') eq '3'"}
-	<div class="cl pd-5 bg-1 bk-gray mt-20 radius ">&nbsp;&nbsp;&nbsp;&nbsp;
-			    <span class="2"> <a href="javascript:;" onclick="member_add('账户管理>添加总代理账号','{:url("user/addUser2")}?u_id={$Think.session.u_id}','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>添加总代理账号</a></span>
-	 </div>
-	 {/if}
+		<div class="cl pd-5 bg-1 bk-gray mt-20 radius ">&nbsp;&nbsp;&nbsp;&nbsp;
+			<span class="2"> <a href="javascript:;" onclick="member_add('账户管理>添加总代理账号','{:url("user/addUser2")}?u_id={$Think.session.u_id}','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>添加总代理账号</a></span>
+		</div>
+		{/if}
 		<div class="mt-20 " >
 			<table class="table table-border table-bordered table-hover table-bg table-sort radius">
 				<thead>
 				<tr class="text-c ">
 					<th width="40">ID</th>
-					<th width="100">帐户名</th>
+					<th width="30">是否在线</th>
+					<th width="100">帐户名/总代</th>
 					{if condition="session('level') eq '5'"}<th width="30">总公司</th>{/if}
 					{if condition="session('level') egt '4'"}<th width="30">分公司</th>{/if}
 					<th width="30">股东</th>
@@ -71,21 +72,20 @@
 				{volist name="list" id="v"}
 				<tr class="text-c">
 					<td >{$v.u_id}</td>
-					<td ><a href="{:url('User/getUser1')}?u_level={$v.u_level}&u_username={$v.u_username}">{$v.u_username}</a></td>
+					<td>{if empty($v['isOnline'])}<span class="label label-error radius"><b>离线</b></span>{else/}<span class="label  label-success radius"><b>在线</b></span>{/if}</td>
+					<td ><a class="maincolor" href="{:url('User/getUser1')}?u_username={$v.u_username}{notempty name='$post.u_top_4'}&u_top_4={$post.u_top_4} {/notempty}{notempty name='$post.u_top_3'}&u_top_3={$post.u_top_3} {/notempty}">{$v.u_username}</a></td>
 					{if condition="session('level') eq '5'"}<td >{$v.u_proportion_5}%</td>{/if}
 					{if condition="session('level') egt '4'"}<td >{$v.u_proportion_4}%</td>{/if}
 					<td >{$v.u_proportion_3}%</td>
 					<td >{$v.u_proportion_2}%</td>
 					<td >{$v.u_proportion_1}%</td>
-					
-		
 					<td >{$v.u_count_1}</td>
 					<td >{$v.u_count_0}</td>
 					<td >{$v.u_last_ip}</td>
 					<td>{$v.u_last_time}</td>
 					<td>
 						{eq name="$v.u_is_test" value="2"}<span class="label  label-error radius"><b>测试</b></span>{/eq}
-						{eq name="$v.u_is_test" value="1"}<span class="label  label-success radius"><b>非测试</b></span>{/eq}
+						{eq name="$v.u_is_test" value="1"}<span class="label  label-success radius"><b>正式</b></span>{/eq}
 					</td>
 					<td>
 						{eq name="$v.u_status" value="0"}<span class="label  label-error radius"><b>已删除</b></span>{/eq}
@@ -93,13 +93,13 @@
 						{eq name="$v.u_status" value="8"}<span class="label  label-success radius"><b>正常</b></span>{/eq}
 					</td>
 					<td>
-       							{eq name="$v.u_own_level" value="5"}总{/eq}
-       							{eq name="$v.u_own_level" value="4"}分{/eq}
-       						</td>
+						{eq name="$v.u_own_level" value="5"}总{/eq}
+						{eq name="$v.u_own_level" value="4"}分{/eq}
+					</td>
 					<td class="td-manage">
-						<a href="javascript:;" title="添加代理" onclick="member_add('账户管理  > 添加代理','{:url("user/addUser1")}?u_id={$v.u_id}','','510')" <i class="Hui-iconfont">&#xe610;</i> 添加代理</a>&nbsp;&nbsp;
+						<a href="javascript:;" title="添加代理" class="maincolor" onclick="member_add('账户管理  > 添加代理','{:url("user/addUser1")}?u_id={$v.u_id}','','510')"> <i class="Hui-iconfont">&#xe610;</i> 添加代理</a>&nbsp;&nbsp;
 
-						<a title="修改" href="javascript:;" onclick="member_edit('账户管理  > 总代修改','{:url("user/editUser2")}?u_id={$v.u_id}','4','','510')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i>修改</a> &nbsp;&nbsp;&nbsp;
+						<a title="修改" href="javascript:;" class="maincolor" onclick="member_edit('账户管理  > 总代修改','{:url("user/editUser2")}?u_id={$v.u_id}','4','','510')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i>修改</a> &nbsp;&nbsp;&nbsp;
 					</td>
 				</tr>
 				{/volist}
@@ -114,20 +114,13 @@
 <!--_footer 作为公共模版分离出去-->
 {include file="common/_footer"}
 <!--/_footer /作为公共模版分离出去-->
-
+<!-- cookie 加密key-->
+{include file='common/key'}
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript" src="../../static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript" src="../../static/lib/datatables/1.10.0/jquery.dataTables.js"></script>
 <script type="text/javascript" src="../../static/lib/laypage/1.2/laypage.js"></script>
 <script type="text/javascript">
-    $(function(){
-        $('.table-sort').dataTable({
-            "aaSorting": [[ 1, "desc" ]],//默认第几个排序
-            "bStateSave": true,//状态保存
-            "aLengthMenu":[50],
-        });
-
-    });
     function member_add(title,url,w,h){
         layer_show(title,url,w,h);
     }

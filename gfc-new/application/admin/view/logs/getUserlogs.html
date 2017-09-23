@@ -21,7 +21,7 @@
 <title>日志管理 > 会员登录日志 </title>
 </head>
 <body>
-<nav class="breadcrumb"><a href="{:url('index/welcome')}"><i class="Hui-iconfont">&#xe67f;</i> 首页 </a><span class="c-gray en">&gt;</span> 日志管理 <span class="c-gray en">&gt;</span> <a href="{:url('logs/getUserlogs')}">会员登录日志</a><a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><a  class="maincolor"  href="{:url('index/welcome')}"><i class="Hui-iconfont">&#xe67f;</i> 首页 </a><span class="c-gray en">&gt;</span> 日志管理 <span class="c-gray en">&gt;</span> <a  class="maincolor"  href="{:url('logs/getUserlogs')}">会员登录日志</a><a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 	<div class="Hui-article">
 		<article class="cl pd-20">
 	<div class="text-c">
@@ -45,9 +45,9 @@
 					<thead>
 						<tr class="text-c  ">
 						   <th width="50">编号</th>
-				           <th width="80">帐户名</th>								
-							<th width="40">控制器</th>
-							<th width="40">动作</th>						            
+				           <th width="60">帐户名</th>
+							<th width="80">客户端(pc/mobile)</th>
+							<th width="30">操作</th>
 							<th width="30">状态</th>
                             <th width="80">操作时间</th>
 							<th width="150">数据详细</th>
@@ -86,13 +86,7 @@
 <script type="text/javascript" src="../../static/lib/datatables/1.10.0/jquery.dataTables.js"></script>
 <script type="text/javascript" src="../../static/lib/laypage/1.2/laypage.js"></script>
 <script type="text/javascript">
-$(function(){
-	$('.table-sort').dataTable({
-		"aaSorting": [[ 1, "desc" ]],//默认第几个排序
-		"bStateSave": true,//状态保存
-		 "aLengthMenu":[50]		
-	});
-	});
+
 </script>
 <!--/请在上方写此页面业务相关的脚本-->
 </body>

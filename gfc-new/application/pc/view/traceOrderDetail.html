@@ -1,0 +1,80 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>订单详情</title>
+    <link href="../../static/pc/css/package.css?v={$v}" rel="stylesheet" type="text/css"></link>
+    <script type="text/javascript" src="../../static/pc/js/jquery-1.8.3.min.js?v={$v}"></script>
+    <script src="../../static/pc/js/common.js?v={$v}" type="text/javascript"></script>
+    <script type="text/javascript" src="../../static/pc/js/layer/layer.min.js?v={$v}"></script> <!-- layer调用弹出层 -->
+    <link rel="Bookmark" type="image/x-icon" href="../../static/mobile/images/favicon57.ico?v={$v}"/>
+    <link rel="icon" type="image/x-icon" href="../../static/mobile/images/favicon57.ico?v={$v}"/>
+    <script>
+        $(function () {
+            $('#buttonCanle').click(function () {
+                if (!confirm('您真的要撤单吗？')) {
+                    return false;
+                }
+                $.post(
+                    'index.php?c=api&a=cacelPackage',
+                    {
+                        'wrap_id': $("#wrap_id").val()
+                    },
+                    function (response) {
+                        if (response.errno == 0) {
+                            layer.msg('<div title="提示">' + response.errstr + '</div>', 2, function () {
+                                location.reload(); //自动关闭后可做一些刷新页面等操作
+                            });
+                        }
+                        else {
+                            layer.alert(response.errstr);
+                        }
+                    }, 'json');
+            });
+        });
+    </script>
+</head>
+<body class="BodyMain">
+<div class="GameBoxall SubGamePlatePadding" style="width:1000px; margin:0 auto;">
+    <div class="Gamepart" style="  padding-bottom:30px;">
+        {volist name="list" id="v"}
+            <div class="BSrecordsBox h-100">
+            <ul class="recordsInput">
+                <li><span class="yellow_14px">订单编号:{$v.o_sn}</span></li>
+            </ul>
+            <div class="orderDetxinxi">
+                <p class="yellow_14px">订单摘要</p>
+                <ul class="orderDetxinxiBg1">
+                    <li>投注用户：<span>{$v.o_username}</span></li>
+                    <li>奖期：<span>{$v.lidName} 第 {$v.o_issue} 期</span></li>
+                </ul>
+                <ul class="orderDetxinxiBg2">
+                    <li class="btbg2_right">单倍注数：<span>{$v.o_single_num}</span></li>
+                    <li class="btbg2_right">投注倍数：<span>{$v.o_multiple}</span></li>
+                </ul>
+                <ul class="orderDetxinxiBg1">
+                    <li class="btbg2_right">投注模式：<span>{$v.modeName}模式</span></li>
+                    <li class="btbg2_right">是否追号：<span>{$v.trace_status}</span></li>
+                </ul>
+                <ul class="orderDetxinxiBg1">
+                    <li>投注时间：<span>{$v.o_add_time}</span></li>
+                    <li>订单状态：<span>{$v.prize_status}</span></li>
+                </ul>
+                <ul class="orderDetxinxiBg1">
+                    <li class="btbg2_right">下注金额：<span>{$v.o_amount}</span></li>
+                    <li class="btbg2_right">中奖金额：<span>{$v.o_wins}</span></li>
+                </ul>
+                <ul class="orderDetxinxiBg1">
+                    <li class="btbg2_right"><a href="{:url('Game/orderDetail')}?issue={$v.o_issue}&mg_id={$v.o_mg_id}&lid={$v.o_lid}&wrapId={$v.o_sn}" style="text-decoration:none;color:red !important;cursor:pointer;">【点击查看注单详情】</a></li>
+                </ul>
+                <ul class="orderDetxinxiBg1">
+                </ul>
+            </div>
+        </div>
+        {/volist}
+    </div>
+</div>
+
+</body>
+</html>

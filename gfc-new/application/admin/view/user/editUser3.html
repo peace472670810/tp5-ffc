@@ -75,7 +75,8 @@
 <!--_footer 作为公共模版分离出去-->
 {include file="common/_footer"}
 <!--/_footer /作为公共模版分离出去-->
-
+<!-- cookie 加密key-->
+{include file='common/key'}
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript" src="../../static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript" src="../../static/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
@@ -91,10 +92,7 @@ $(function(){
 	
 	$("#form-member-add").validate({
 		rules:{
-			u_username:{
-				required:true,
-				minlength:6,
-			},
+			
             u_proportion_3:{
 				required:true,
 			},

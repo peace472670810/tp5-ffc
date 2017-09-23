@@ -73,7 +73,7 @@ body{font-family: "\5FAE\8F6F\96C5\9ED1";}
 .pg_top_nav10:hover .pg_top_nav_ul_s2{color: #b2fff3;}
 
 /*彩票种类*/
-.cai_kind{width: 290px; height: 486px; border: 3px solid #bb111b; position: absolute; top: 50%; left: 50%; margin-top: -383px; margin-left: -145px; z-index: 20; background-color: #ffffff;}
+.cai_kind{width: 290px; height: 486px; border: 3px solid #bb111b; position: absolute; top: 45%; left: 50%; margin-top: -383px; margin-left: -145px; z-index: 20; background-color: #ffffff;}
 .cai_kind_box{width: 100%; height: 100%; position: relative; overflow: hidden;}
 .btn_close{display: block; width: 20px; height: 20px; background-color: #dadada; color: #c60000; text-align: center; line-height: 18px; font-size: 20px; position: absolute; top: 5px; right: 5px;}
 .cai_kind_title{width: 290px; height: 31px; font-size: 14px; line-height: 31px; color: #585858; text-indent: 18px; background-color: #efefef; font-weight: bold;}
@@ -96,10 +96,10 @@ body{font-family: "\5FAE\8F6F\96C5\9ED1";}
 .header_center{width: 320px; height: 80px; float: left; display: inline; margin: 5px 0 0 88px;}
 .user_inf{width: 320px; height: 30px; line-height: 30px; color: #fff; font-size: 12px; text-align: right; float: left; display: inline;}
 .user_inf_s2{width: 320px; height: 25px; color: #f1b81f; font-size: 12px;}
-.user_tz{ height: 45px; color: #adadad; font-size: 12px; margin-top: 20px; float: left; display: inline;}
-.user_tz_p1{ height: 20px; color: #fff; font-size: 12px;text-align:right}
-.user_tz_p1 span{color: #f1b81f; font-size: 12px;}
-.user_tz_p2{width: 94px; height: 20px; color: #fff; font-size: 12px; text-align: right; font-weight: bold;}
+.user_tz{ height: 45px; color: #adadad; font-size: 12px; margin-top: 20px; float: left; display: inline; width: 110px;}
+.user_tz_p1{ height: 20px; color: #fff; font-size: 12px;text-align:right;}
+.user_tz_p1 span{color: #f1b81f; font-size: 12px;width: 110px;}
+.user_tz_p2{ height: 20px; color: #fff; font-size: 12px; text-align: right; font-weight: bold;width: 110px;}
 .time_bg{width: 157px; height: 50px; background: url(../images/green/green_time_bg.png) no-repeat; margin-top: 20px; float: left; display: inline; margin-left: 18px;}
 .time_h{width: 28px; height: 21px; margin: 16px 0 0 10px; float: left; display: inline;}
 .time_h span{float: left; display: inline; margin-left: 1px; margin-right: 1px;}
@@ -120,12 +120,11 @@ body{font-family: "\5FAE\8F6F\96C5\9ED1";}
 .time_8{display: block; width: 12px; height: 21px; background-position: -153px 0;}
 .time_9{display: block; width: 12px; height: 21px; background-position: -172px 0;}
 
-.header_right{width:431px; height: 83px; float: left; display: inline; margin: 5px 0 0 20px; position: relative;}
+.header_right{width:431px; height: 82px; float: left; display: inline; margin: 5px 0 0 20px; position: relative;}
 .dqwf{float: left; display: inline; padding-right: 20px;}
 .header_bulletin{width: 630px; height: 30px; color: #fff; line-height: 30px; font-size: 12px; float: left; display: inline; }
 .header_bulletin_icon{display: block; width: 18px; height: 18px; margin-top: 7px; margin-left: 8px; background-position: 0 -3px; float: left; display: inline; margin-right: 3px;}
-.kj_ball{ height: 50px;  margin-left: 12px; margin-top: 20px; float: left; display: inline; }
-
+.kj_ball{height: 50px; margin-left: 10px;  margin-top: 15px; float: left; display: inline; }
 /*换皮肤*/
 .hd_skin_box{width: 69px; overflow: hidden;  position: absolute; top: 5px; right: 5px; z-index: 9;}
 .btn_changeSkin{display: block; width: 69px; height: 19px; background-position: -571px -232px; }
@@ -153,18 +152,18 @@ body{font-family: "\5FAE\8F6F\96C5\9ED1";}
 .kj_ball11{background: url(../images/blue/blue_kjNum.png) no-repeat; display: block; width: 43px; height: 50px; float: left; display: inline; margin-left: 3px; background-position: -509px 0;}
 
 /*小球*/
-.kj_small_ball0{background: url(../images/green/green_kjSmallNum.png) no-repeat; display: block; width: 29px; height: 33px; float: left; display: inline; margin-left: 3px; background-position: 0px 0;}
-.kj_small_ball1{background: url(../images/green/green_kjSmallNum.png) no-repeat; display: block; width: 29px; height: 33px; float: left; display: inline; margin-left: 3px; background-position: -29px 0;}
-.kj_small_ball2{background: url(../images/green/green_kjSmallNum.png) no-repeat; display: block; width: 29px; height: 33px; float: left; display: inline; margin-left: 3px; background-position: -58px 0;}
-.kj_small_ball3{background: url(../images/green/green_kjSmallNum.png) no-repeat; display: block; width: 29px; height: 33px; float: left; display: inline; margin-left: 3px; background-position: -86px 0;}
-.kj_small_ball4{background: url(../images/green/green_kjSmallNum.png) no-repeat; display: block; width: 29px; height: 33px; float: left; display: inline; margin-left: 3px; background-position: -115px 0;}
-.kj_small_ball5{background: url(../images/green/green_kjSmallNum.png) no-repeat; display: block; width: 29px; height: 33px; float: left; display: inline; margin-left: 3px; background-position: -144px 0;}
-.kj_small_ball6{background: url(../images/green/green_kjSmallNum.png) no-repeat; display: block; width: 29px; height: 33px; float: left; display: inline; margin-left: 3px; background-position: -173px 0;}
-.kj_small_ball7{background: url(../images/green/green_kjSmallNum.png) no-repeat; display: block; width: 29px; height: 33px; float: left; display: inline; margin-left: 3px; background-position: -202px 0;}
-.kj_small_ball8{background: url(../images/green/green_kjSmallNum.png) no-repeat; display: block; width: 29px; height: 33px; float: left; display: inline; margin-left: 3px; background-position: -230px 0;}
-.kj_small_ball9{background: url(../images/green/green_kjSmallNum.png) no-repeat; display: block; width: 29px; height: 33px; float: left; display: inline; margin-left: 3px; background-position: -259px 0;}
-.kj_small_ball10{background: url(../images/black/black_kjSmallNum.png) no-repeat; display: block; width: 29px; height: 33px; float: left; display: inline; margin-left: 3px; background-position: -291px 0;}
-.kj_small_ball11{background: url(../images/black/black_kjSmallNum.png) no-repeat; display: block; width: 29px; height: 33px; float: left; display: inline; margin-left: 3px; background-position: -322px 0;}
+.kj_small_ball0{background: url(../images/green/green_kjSmallNum.png) no-repeat; display: block; width: 25px; height: 26px; float: left; display: inline; margin-left: 2px; background-position: 0px 0;}
+.kj_small_ball1{background: url(../images/green/green_kjSmallNum.png) no-repeat; display: block; width: 25px; height: 26px; float: left; display: inline; margin-left: 2px; background-position: -25px 0;}
+.kj_small_ball2{background: url(../images/green/green_kjSmallNum.png) no-repeat; display: block; width: 25px; height: 26px; float: left; display: inline; margin-left: 2px; background-position: -49px 0;}
+.kj_small_ball3{background: url(../images/green/green_kjSmallNum.png) no-repeat; display: block; width: 25px; height: 26px; float: left; display: inline; margin-left: 2px; background-position: -73px 0;}
+.kj_small_ball4{background: url(../images/green/green_kjSmallNum.png) no-repeat; display: block; width: 25px; height: 26px; float: left; display: inline; margin-left: 2px; background-position: -98px 0;}
+.kj_small_ball5{background: url(../images/green/green_kjSmallNum.png) no-repeat; display: block; width: 25px; height: 26px; float: left; display: inline; margin-left: 2px; background-position: -123px 0;}
+.kj_small_ball6{background: url(../images/green/green_kjSmallNum.png) no-repeat; display: block; width: 25px; height: 26px; float: left; display: inline; margin-left: 2px; background-position: -147px 0;}
+.kj_small_ball7{background: url(../images/green/green_kjSmallNum.png) no-repeat; display: block; width: 25px; height: 26px; float: left; display: inline; margin-left: 2px; background-position: -173px 0;}
+.kj_small_ball8{background: url(../images/green/green_kjSmallNum.png) no-repeat; display: block; width: 25px; height: 26px; float: left; display: inline; margin-left: 2px; background-position: -196px 0;}
+.kj_small_ball9{background: url(../images/green/green_kjSmallNum.png) no-repeat; display: block; width: 25px; height: 26px; float: left; display: inline; margin-left: 2px; background-position: -222px 0;}
+.kj_small_ball10{background: url(../images/green/green_kjSmallNum.png) no-repeat; display: block; width: 25px; height: 26px; float: left; display: inline; margin-left: 2px; background-position: -248px 0;}
+.kj_small_ball11{background: url(../images/green/green_kjSmallNum.png) no-repeat; display: block; width: 25px; height: 26px; float: left; display: inline; margin-left: 2px; background-position: -307px 0;}
 
 /*lhc*/
 .kj_lhc_ball3,.kj_lhc_ball4,.kj_lhc_ball9,.kj_lhc_ball10,.kj_lhc_ball14,.kj_lhc_ball15,.kj_lhc_ball20,.kj_lhc_ball25,.kj_lhc_ball26,.kj_lhc_ball31,.kj_lhc_ball36,.kj_lhc_ball37,.kj_lhc_ball41,.kj_lhc_ball42,.kj_lhc_ball47,.kj_lhc_ball48{background: url(../images/black/lhc.png) no-repeat; background-position: -63px -25px;color: #fff;width: 33px;height: 30px;text-align: center;line-height: 30px;margin-left: 3px;font-size: 16px;display: inline-block;}
@@ -282,7 +281,7 @@ body{font-family: "\5FAE\8F6F\96C5\9ED1";}
 
 /*下注玩法*/
 .even_xz_left{width: 1020px; float: left; display: inline; margin:70px 0 0 22px;}
-.xz_rule{width: 1020px; height:40px;  color: #717171; font-size: 12px; }
+.xz_rule{width: 1020px; height:55px;  color: #717171; font-size: 12px; }
 .xz_rule_left{width:678px; height: 40px; float: left; display:inline; }
 .xz_rule_icon{display: block; width: 14px; height: 14px; background-position: -1px -63px; float: left; display: inline; margin-top: 2px; margin-right: 3px;margin-left: -16px;}
 .btn_xhsf{color: #ea1d23; text-decoration: underline;}
@@ -371,7 +370,7 @@ body{font-family: "\5FAE\8F6F\96C5\9ED1";}
 .num_try_text_list li{width: 750px; height: auto; line-height: 30px;overflow: hidden }
 .num_try_text_list_s1{display: block; width: 150px; height: 30px; color: #191919; font-size: 12px; line-height: 30px; float: left; display: inline; text-indent: 13px;}
 .num_try_text_list_s2{display: block; width: 300px; height: auto; color: #191919; font-size: 12px; line-height: 30px; float: left; display: inline;word-wrap: break-word}
-.num_try_text_list_s3{display: block; width: 120px; height: 30px; color: #191919; font-size: 12px; line-height: 30px; float: left; display: inline;}
+.num_try_text_list_s3{display: block; width: 120px; height: 30px; color: #191919; font-size: 12px; line-height: 30px; float: left; display: inline;text-align: center;}
 .num_try_text_list_s4{display: block; width: 120px; height: 30px; color: #191919; font-size: 12px; line-height: 30px; float: left; display: inline;}
 .num_try_text_list li a{color: #fe5e1e; text-decoration: none;}
 
@@ -474,6 +473,32 @@ body{font-family: "\5FAE\8F6F\96C5\9ED1";}
 .xz_list1_sixText_s1{display: block; width: 166px; height: 20px; line-height: 20px; font-size: 13px; text-align: center; line-height: 20px; color: #e31919;}
 .xz_list1_sixText_s2{display: block; width: 166px; height: 20px; line-height: 20px; font-size: 13px; text-align: center; line-height: 20px; color: #7b7b7b;}*/
 
+/**
+开奖动画下方位数字样式
+ */
+.font-color{
+    color: #f1b81f;
+}
+
+.dslotterycode5{
+    font-size: 10px;height: 20px;margin-left: 120px;float: left;display: inline; width: 100%;
+}
+.dslotterycode5 .dslotterycode-font5{
+    font-size: 10px;width: 43px;height: 20px;float: left;display: inline;text-align: center;margin-left: 3px;font-family: sans-serif;
+}
+
+.dslotterycode3{
+    font-size: 12px;height: 20px;float: left;display: inline; width: 100%;margin-left: 120px;
+}
+.dslotterycode3 .dslotterycode-font3{
+    font-size: 10px; width: 43px;height: 20px;float: left;display: inline;text-align: center;margin-left: 3px;font-family: sans-serif;
+}
+.dslotterycode10{
+    font-size: 10px;height: 20px;margin-left: 120px;float: left;display: inline; width: 100%;
+}
+.dslotterycode10 .dslotterycode-font10{
+    width: 25px;height: 20px; font-size:10px;float: left;display: inline;text-align: center;margin-left: 2px;font-family: sans-serif;
+}
 
 
 

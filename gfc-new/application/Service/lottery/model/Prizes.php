@@ -7,9 +7,9 @@
  */
 
 namespace app\Service\lottery\model;
+use think\Model;
 
-
-class Prizes
+class Prizes extends  Model
 {
     /**
      * 玩法奖金列表
@@ -4418,9 +4418,6 @@ class Prizes
             ),
     );
 
-    public function __construct()
-    {
-    }
 
     /**
      * 根据玩法id获取奖金列表
@@ -4428,27 +4425,56 @@ class Prizes
      */
     public function getPrizeByMethod($data){
 
-        $arr = [];
-        foreach ($this->prize_list as $v){
-            if($v['p_m_id'] == $data['m_id']){
-                $arr[] = $v;
-            }
-        }
+//        $arr = [];
+//        foreach ($this->prize_list as $v){
+//            if($v['p_m_id'] == $data['m_id']){
+//                $arr[] = $v;
+//            }
+//        }
+        $arr = $this->where('p_m_id','eq',$data['m_id'])->select();
         return  $arr;
     }
-
+    /**
+     * 前端下注根据玩法 盘口获取盘口赔率
+     */
+    public function getPrizesByOdd($data){
+        $sql = "select p_id,p_m_id,p_level,p_prize,{$data['odd']} from `ffc_prizes` where  p_m_id={$data['p_m_id']} ";
+        $list = $this->query($sql);
+        return $list;
+    }
     /**
      * 根据彩种id获取奖金列表
      * @param $m_lid
      * @return array
      */
     public function getPrizeByLid($data){
-        $arr = [];
-        foreach ($this->prize_list as $v){
-            if($v['p_lid'] == $data['lid']){
-                $arr[] = $v;
-            }
-        }
+//        $arr = [];
+//        foreach ($this->prize_list as $v){
+//            if($v['p_lid'] == $data['lid']){
+//                $arr[] = $v;
+//            }
+//        }
+        $arr = $this->where('p_lid','eq',$data['lid'])->select();
         return  $arr;
+    }
+
+    /**
+     *  根据彩种id赔率设定列表
+     */
+    public function getPrizeRebateByLid($data){
+        $sql = "select l.cname,m.m_cname,p.* from `ffc_prizes` as p left join  `ffc_lottery` as l on p.p_lid=l.lid left join `ffc_methods` as m on m.m_id=p.p_m_id  where p.p_lid={$data['lid']}";
+        $arr = $this->query($sql);
+        return $arr;
+    }
+    /**
+     * 修改赔率
+     */
+    public function editRebate($sql){
+        $res = $this->query($sql);
+        if($res){
+            return true;
+        }else{
+            return  false;
+        }
     }
 }

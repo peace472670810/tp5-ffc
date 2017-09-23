@@ -50,17 +50,56 @@ return [
     'class_suffix'           => false,
     // 控制器类后缀
     'controller_suffix'      => false,
+    //************************************************************************//
+    //数据库配置文件
+    //************************************************************************//
+    // +----------------------------------------------------------------------
+    //盘口库
+    // +----------------------------------------------------------------------
+    //注单库
+    // +----------------------------------------------------------------------
+    //试玩库
+    // +----------------------------------------------------------------------
+    //封锁值库
+    // +----------------------------------------------------------------------
+    //注单拉取库
+    // +----------------------------------------------------------------------
 
     // +----------------------------------------------------------------------
     // | crateDB 连接配置
     // +----------------------------------------------------------------------
-    'crate_conf'             =>'crate:10.10.195.2:4200',
+    'crate_conf'             =>'crate:10.10.195.20:4200',
     // +----------------------------------------------------------------------
-    // |测试钱包接口 连接配置
-    'test_wallet_address'           =>'',
-    'test_wallte_log_address'       =>'',
-    'wallet_address'                =>'',
+    // |钱包接口 连接配置
+    'wallet_address'                =>'http://10.10.0.1:9080/kg-fenfen-api/lottoGetMoney',
     'wallte_log_address'            =>'',
+    'wallte_order_address'            =>'http://10.10.0.1:9080/kg-fenfen-api/fenfenLotto',
+    'wallte_checkorder_address'          =>'http://10.10.0.1:9080/kg-fenfen-api/fenfenCheck',
+    //钱包交易记录地址
+    'wallet_order_log'      =>'http://10.10.239.138:9027/kg-money-api/memberMoneyLog',
+
+
+    // +----------------------------------------------------------------------
+    // |盘口部分 连接配置
+    // 修改彩种的时候调用
+    'pankou_url'      => 'http://10.10.2.6:5001/PanKou/SetPanKouStopTimeBySingle',
+     //开奖接口
+     'SetKaiJiang_url'   => 'http://10.10.2.6:5001/KaiJiang/SetKaiJiang',
+     //手动结算
+    'SetPanKouFinish_url' => 'http://10.10.2.6:5001/KaiJiang/SetPanKouFinish',
+     //手动派奖
+     'SetPanKouPay_url' =>  'http://10.10.2.6:5001/KaiJiang/SetPanKouPay',
+     //撤销接口
+     'SetPanKouCancel_url'  =>    'http://10.10.2.6:5001/KaiJiang/SetPanKouCancel',
+     //回滚接口
+     'SetPanKouRollback_url'    =>   'http://10.10.2.6:5001/KaiJiang/SetPanKouRollback',
+     'SetPanKouStateBySingle_url'   =>  'http://10.10.2.6:5001/PanKou/SetPanKouStateBySingle',
+     //盘口生成调用非种子
+     'BuildPanKouListByDate_url'    =>  'http://10.10.2.6:5001/Other/BuildPanKouListByDate',
+     //盘口生成调用带种子
+     'BuildPanKouListByFirstQiShu_url'  =>  'http://10.10.2.6:5001/Other/BuildPanKouListByFirstQiShu',
+     //盘口插入期数
+     'AddPanKou_url'    =>  'http://10.10.2.6:5001/PanKou/AddPanKou',
     // +----------------------------------------------------------------------
     // +----------------------------------------------------------------------
     // | 奖期接口 连接配置
@@ -189,7 +228,7 @@ return [
     // 错误显示信息,非调试模式有效
     'error_message'          => '页面错误！请稍后再试～',
     // 显示错误信息
-    'show_error_msg'         => false,
+    'show_error_msg'         => true,
     // 异常处理handle类 留空使用 \think\exception\Handle
     'exception_handle'       => '',
 
@@ -197,19 +236,35 @@ return [
     // | 日志设置
     // +----------------------------------------------------------------------
 
-    'log'                    => [
-        // 日志记录方式，内置 file socket 支持扩展
-        'type'  => 'File',
-        // 日志保存目录
-        'path'  => LOG_PATH,
-        // 日志记录级别
-        'level' => [
-            'error',
-            'sql',
-            'java_error',
-            'issue_error'
-        ],
-    ],
+//    'log'                    => [
+//        // 日志记录方式，内置 file socket 支持扩展
+//        'type'  => 'File',
+//        // 日志保存目录
+//        'path'  => LOG_PATH,
+//        // 日志记录级别
+//        'level' => [
+//            'error',
+//            'sql',
+//            'java_error',
+//            'issue_error',
+//            'mysql_error',
+//            'tongji',
+//            'jiaoyan',
+//            'jiaoyanerror',
+//            'yilou',
+//        ],
+//        'apart_level' =>[
+//            'error',
+//            'sql',
+//            'java_error',
+//            'issue_error',
+//            'mysql_error',
+//            'tongji',
+//            'jiaoyan',
+//            'jiaoyanerror',
+//            'yilou',
+//        ]
+//    ],
     'log'     =>  [
         'type'                  =>  'socket',
         'host'                  =>  'localhost',
@@ -221,21 +276,22 @@ return [
     // +----------------------------------------------------------------------
     // | Trace设置 开启 app_trace 后 有效
     // +----------------------------------------------------------------------
-    'trace'                  => [
-        // 内置Html Console 支持扩展
-        'type' => 'Console',
-        'trace_tabs' =>  [
-            'base'=>'基本',
-            'file'=>'文件',
-            'error|notice'=>'错误',
-            'sql'=>'SQL',
-            'debug|log|info'=>'调试',
-        ]
-    ],
+//    'trace'                  => [
+//        // 内置Html Console 支持扩展
+//        'type' => 'Html',
+//        'trace_tabs' =>  [
+//            'base'=>'基本',
+//            'file'=>'文件',
+//            'error|notice'=>'错误',
+//            'sql'=>'SQL',
+//            'debug|log|info'=>'调试',
+//        ]
+//    ],
     // +----------------------------------------------------------------------
     // | memcache缓存设置
     // +----------------------------------------------------------------------
-    'memcache'=>'http://127.0.0.1:11211',
+    'memcache'=>'http://10.10.197.1:11211',
+//    'memcache'=>'http://127.0.0.1:11211',
     // +----------------------------------------------------------------------
     // | 缓存设置
     // +----------------------------------------------------------------------
@@ -293,4 +349,512 @@ return [
         'var_page'  => 'page',
         'list_rows' => 15,
     ],
+    //权限control和action 全部使用小写字母
+    'auth' => array(
+        '1'=>array(
+            'menu_id'=>'1',
+            'parent_id'=>'1',//上级ID menu_id
+            'title'=>'即时注单',//名称
+            'control'=>'instant',//控制器
+            'action'=>'getinstant',//行为
+            'is_menu'=>'1',//是否菜单 1是  0 否
+            'operate'=>'1'// 1是查看  2 操作
+        ),
+        '2'=>array(
+            'menu_id'=>'2',
+            'parent_id'=>'2',//上级ID
+            'title'=>'账户管理',//名称
+            'control'=>'',//控制器
+            'action'=>'',//行为
+            'is_menu'=>'1',//是否菜单 1是  0 否
+            'operate'=>'1'// 1是查看  2 操作
+        ),
+        '3'=>array(
+            'menu_id'=>'3',
+            'parent_id'=>'2',//上级ID
+            'title'=>'分公司列表',//名称
+            'control'=>'user',//控制器
+            'action'=>'getuser4',//行为
+            'is_menu'=>'1',//是否菜单 1是  0 否
+            'operate'=>'1'// 1是查看  2 操作
+        ),
+        '4'=>array(
+            'menu_id'=>'4',
+            'parent_id'=>'2',//上级ID
+            'title'=>'添加分公司',//名称
+            'control'=>'user',//控制器
+            'action'=>'adduser4',//行为
+            'is_menu'=>'0',//是否菜单 1是  0 否
+            'operate'=>'2'// 1是查看  2 操作
+        ),
+        '5'=>array(
+            'menu_id'=>'5',
+            'parent_id'=>'2',//上级ID
+            'title'=>'修改分公司',//名称
+            'control'=>'user',//控制器
+            'action'=>'edituser4',//行为
+            'is_menu'=>'0',//是否菜单 1是  0 否
+            'operate'=>'2'// 1是查看  2 操作
+        ),
+        '6'=>array(
+            'menu_id'=>'6',
+            'parent_id'=>'2',//上级ID
+            'title'=>'股东列表',//名称
+            'control'=>'user',//控制器
+            'action'=>'getuser3',//行为
+            'is_menu'=>'1',//是否菜单 1是  0 否
+            'operate'=>'1'// 1是查看  2 操作
+        ),
+        '7'=>array(
+            'menu_id'=>'7',
+            'parent_id'=>'2',//上级ID
+            'title'=>'添加股东',//名称
+            'control'=>'user',//控制器
+            'action'=>'adduser3',//行为
+            'is_menu'=>'0',//是否菜单 1是  0 否
+            'operate'=>'2'// 1是查看  2 操作
+        ),
+        '8'=>array(
+            'menu_id'=>'8',
+            'parent_id'=>'2',//上级ID
+            'title'=>'修改股东',//名称
+            'control'=>'user',//控制器
+            'action'=>'edituser3',//行为
+            'is_menu'=>'0',//是否菜单 1是  0 否
+            'operate'=>'2'// 1是查看  2 操作
+        ),
+        '9'=>array(
+            'menu_id'=>'9',
+            'parent_id'=>'2',//上级ID
+            'title'=>'总代列表',//名称
+            'control'=>'user',//控制器
+            'action'=>'getuser2',//行为
+            'is_menu'=>'1',//是否菜单 1是  0 否
+            'operate'=>'1'// 1是查看  2 操作
+        ),
+        '10'=>array(
+            'menu_id'=>'10',
+            'parent_id'=>'2',//上级ID
+            'title'=>'添加总代',//名称
+            'control'=>'user',//控制器
+            'action'=>'adduser2',//行为
+            'is_menu'=>'0',//是否菜单 1是  0 否
+            'operate'=>'2'// 1是查看  2 操作
+        ),
+        '11'=>array(
+            'menu_id'=>'11',
+            'parent_id'=>'2',//上级ID
+            'title'=>'修改总代',//名称
+            'control'=>'user',//控制器
+            'action'=>'edituser2',//行为
+            'is_menu'=>'0',//是否菜单 1是  0 否
+            'operate'=>'2'// 1是查看  2 操作
+        ),
+        '12'=>array(
+            'menu_id'=>'12',
+            'parent_id'=>'2',//上级ID
+            'title'=>'代理列表',//名称
+            'control'=>'user',//控制器
+            'action'=>'getuser1',//行为
+            'is_menu'=>'1',//是否菜单 1是  0 否
+            'operate'=>'1'// 1是查看  2 操作
+        ),
+        '13'=>array(
+            'menu_id'=>'13',
+            'parent_id'=>'2',//上级ID
+            'title'=>'添加代理',//名称
+            'control'=>'user',//控制器
+            'action'=>'adduser1',//行为
+            'is_menu'=>'0',//是否菜单 1是  0 否
+            'operate'=>'2'// 1是查看  2 操作
+        ),
+        '14'=>array(
+            'menu_id'=>'14',
+            'parent_id'=>'2',//上级ID
+            'title'=>'修改代理',//名称
+            'control'=>'user',//控制器
+            'action'=>'edituser1',//行为
+            'is_menu'=>'0',//是否菜单 1是  0 否
+            'operate'=>'2'// 1是查看  2 操作
+        ),
+        '15'=>array(
+            'menu_id'=>'15',
+            'parent_id'=>'2',//上级ID
+            'title'=>'会员列表',//名称
+            'control'=>'user',//控制器
+            'action'=>'getuser0',//行为
+            'is_menu'=>'1',//是否菜单 1是  0 否
+            'operate'=>'1'// 1是查看  2 操作
+        ),
+        '16'=>array(
+            'menu_id'=>'16',
+            'parent_id'=>'2',//上级ID
+            'title'=>'添加会员',//名称
+            'control'=>'user',//控制器
+            'action'=>'adduser0',//行为
+            'is_menu'=>'0',//是否菜单 1是  0 否
+            'operate'=>'2'// 1是查看  2 操作
+        ),
+        '17'=>array(
+            'menu_id'=>'17',
+            'parent_id'=>'2',//上级ID
+            'title'=>'修改会员',//名称
+            'control'=>'user',//控制器
+            'action'=>'edituser0',//行为
+            'is_menu'=>'0',//是否菜单 1是  0 否
+            'operate'=>'2'// 1是查看  2 操作
+        ),
+        '18'=>array(
+            'menu_id'=>'18',
+            'parent_id'=>'2',//上级ID
+            'title'=>'子账号列表',//名称
+            'control'=>'admin',//控制器
+            'action'=>'adminlist',//行为
+            'is_menu'=>'1',//是否菜单 1是  0 否
+            'operate'=>'1'// 1是查看  2 操作
+        ),
+        '19'=>array(
+            'menu_id'=>'19',
+            'parent_id'=>'2',//上级ID
+            'title'=>'添加子账号',//名称
+            'control'=>'admin',//控制器
+            'action'=>'adminadd',//行为
+            'is_menu'=>'0',//是否菜单 1是  0 否
+            'operate'=>'2'// 1是查看  2 操作
+        ),
+        '20'=>array(
+            'menu_id'=>'20',
+            'parent_id'=>'2',//上级ID
+            'title'=>'修改子账号',//名称
+            'control'=>'admin',//控制器
+            'action'=>'adminedit',//行为
+            'is_menu'=>'0',//是否菜单 1是  0 否
+            'operate'=>'2'// 1是查看  2 操作
+        ),
+        '21'=>array(
+            'menu_id'=>'21',
+            'parent_id'=>'21',//上级ID
+            'title'=>'开奖管理',//名称
+            'control'=>'',//控制器
+            'action'=>'',//行为
+            'is_menu'=>'1',//是否菜单 1是  0 否
+            'operate'=>'1'// 1是查看  2 操作
+        ),
+        '22'=>array(
+            'menu_id'=>'22',
+            'parent_id'=>'21',//上级ID
+            'title'=>'盘口管理',//名称
+            'control'=>'drawhistory',//控制器
+            'action'=>'getissues',//行为
+            'is_menu'=>'1',//是否菜单 1是  0 否
+            'operate'=>'1'// 1是查看  2 操作
+        ),
+        '23'=>array(
+            'menu_id'=>'23',
+            'parent_id'=>'21',//上级ID
+            'title'=>'新增盘口',//名称
+            'control'=>'drawhistory',//控制器
+            'action'=>'pankouadd',//行为
+            'is_menu'=>'0',//是否菜单 1是  0 否
+            'operate'=>'2'// 1是查看  2 操作
+        ),
+        '24'=>array(
+            'menu_id'=>'24',
+            'parent_id'=>'21',//上级ID
+            'title'=>'盘口奖期写入',//名称
+            'control'=>'drawhistory',//控制器
+            'action'=>'addjiangqi',//行为
+            'is_menu'=>'0',//是否菜单 1是  0 否
+            'operate'=>'2'// 1是查看  2 操作
+        ),
+        '25'=>array(
+            'menu_id'=>'25',
+            'parent_id'=>'21',//上级ID
+            'title'=>'盘口日志',//名称
+            'control'=>'drawhistory',//控制器
+            'action'=>'logs',//行为
+            'is_menu'=>'0',//是否菜单 1是  0 否
+            'operate'=>'1'// 1是查看  2 操作
+        ),
+        '26'=>array(
+            'menu_id'=>'26',
+            'parent_id'=>'21',//上级ID
+            'title'=>'开盘',//名称
+            'control'=>'drawhistory',//控制器
+            'action'=>'kaipan',//行为
+            'is_menu'=>'0',//是否菜单 1是  0 否
+            'operate'=>'2'// 1是查看  2 操作
+        ),
+        '27'=>array(
+            'menu_id'=>'27',
+            'parent_id'=>'21',//上级ID
+            'title'=>'封盘',//名称
+            'control'=>'drawhistory',//控制器
+            'action'=>'fenpan',//行为
+            'is_menu'=>'0',//是否菜单 1是  0 否
+            'operate'=>'2'// 1是查看  2 操作
+        ),
+        '28'=>array(
+            'menu_id'=>'28',
+            'parent_id'=>'21',//上级ID
+            'title'=>'回滚',//名称
+            'control'=>'drawhistory',//控制器
+            'action'=>'huigun',//行为
+            'is_menu'=>'0',//是否菜单 1是  0 否
+            'operate'=>'2'// 1是查看  2 操作
+        ),
+        '29'=>array(
+            'menu_id'=>'29',
+            'parent_id'=>'21',//上级ID
+            'title'=>'开奖',//名称
+            'control'=>'drawhistory',//控制器
+            'action'=>'kaijiang',//行为
+            'is_menu'=>'0',//是否菜单 1是  0 否
+            'operate'=>'2'// 1是查看  2 操作
+        ),
+        '30'=>array(
+            'menu_id'=>'30',
+            'parent_id'=>'21',//上级ID
+            'title'=>'撤销',//名称
+            'control'=>'drawhistory',//控制器
+            'action'=>'chexiao',//行为
+            'is_menu'=>'0',//是否菜单 1是  0 否
+            'operate'=>'2'// 1是查看  2 操作
+        ),
+        '31'=>array(
+            'menu_id'=>'31',
+            'parent_id'=>'21',//上级ID
+            'title'=>'结算',//名称
+            'control'=>'drawhistory',//控制器
+            'action'=>'jiesuan',//行为
+            'is_menu'=>'0',//是否菜单 1是  0 否
+            'operate'=>'2'// 1是查看  2 操作
+        ),
+        '32'=>array(
+            'menu_id'=>'32',
+            'parent_id'=>'21',//上级ID
+            'title'=>'派彩',//名称
+            'control'=>'drawhistory',//控制器
+            'action'=>'paijiang',//行为
+            'is_menu'=>'0',//是否菜单 1是  0 否
+            'operate'=>'2'// 1是查看  2 操作
+        ),
+        '33'=>array(
+            'menu_id'=>'33',
+            'parent_id'=>'21',//上级ID
+            'title'=>'历史开奖',//名称
+            'control'=>'drawhistory',//控制器
+            'action'=>'getdrawhistory',//行为
+            'is_menu'=>'1',//是否菜单 1是  0 否
+            'operate'=>'1'// 1是查看  2 操作
+        ),
+        '34'=>array(
+            'menu_id'=>'34',
+            'parent_id'=>'34',//上级ID
+            'title'=>'报表管理',//名称
+            'control'=>'',//控制器
+            'action'=>'',//行为
+            'is_menu'=>'1',//是否菜单 1是  0 否
+            'operate'=>'1'// 1是查看  2 操作
+        ),
+        '35'=>array(
+            'menu_id'=>'35',
+            'parent_id'=>'34',//上级ID
+            'title'=>'注单搜索',//名称
+            'control'=>'order',//控制器
+            'action'=>'getorder',//行为
+            'is_menu'=>'1',//是否菜单 1是  0 否
+            'operate'=>'1'// 1是查看  2 操作
+        ),
+        '36'=>array(
+            'menu_id'=>'36',
+            'parent_id'=>'34',//上级ID
+            'title'=>'注单详情',//名称
+            'control'=>'order',//控制器
+            'action'=>'orderdetail',//行为
+            'is_menu'=>'0',//是否菜单 1是  0 否
+            'operate'=>'1'// 1是查看  2 操作
+        ),
+        '37'=>array(
+            'menu_id'=>'37',
+            'parent_id'=>'34',//上级ID
+            'title'=>'追号方案',//名称
+            'control'=>'order',//控制器
+            'action'=>'gettrace',//行为
+            'is_menu'=>'1',//是否菜单 1是  0 否
+            'operate'=>'1'// 1是查看  2 操作
+        ),
+        '38'=>array(
+            'menu_id'=>'38',
+            'parent_id'=>'34',//上级ID
+            'title'=>'追号详情',//名称
+            'control'=>'order',//控制器
+            'action'=>'tracedetail',//行为
+            'is_menu'=>'0',//是否菜单 1是  0 否
+            'operate'=>'1'// 1是查看  2 操作
+        ),
+        //不同层级查看的问题在代码里已经解决
+        '39'=>array(
+            'menu_id'=>'39',
+            'parent_id'=>'34',//上级ID
+            'title'=>'交付报表',//名称
+            'control'=>'report',//控制器
+            'action'=>'getreport',//行为
+            'is_menu'=>'1',//是否菜单 1是  0 否
+            'operate'=>'1'// 1是查看  2 操作
+        ),
+        '40'=>array(
+            'menu_id'=>'40',
+            'parent_id'=>'34',//上级ID
+            'title'=>'会员订单',//名称
+            'control'=>'report',//控制器
+            'action'=>'detailreport',//行为
+            'is_menu'=>'0',//是否菜单 1是  0 否
+            'operate'=>'1'// 1是查看  2 操作
+        ),
+        '41'=>array(
+            'menu_id'=>'41',
+            'parent_id'=>'34',//上级ID
+            'title'=>'会员报表',//名称
+            'control'=>'report',//控制器
+            'action'=>'userreport',//行为
+            'is_menu'=>'1',//是否菜单 1是  0 否
+            'operate'=>'1'// 1是查看  2 操作
+        ),
+        '42'=>array(
+            'menu_id'=>'42',
+            'parent_id'=>'42',//上级ID
+            'title'=>'公告管理',//名称
+            'control'=>'notices',//控制器
+            'action'=>'getnotice',//行为
+            'is_menu'=>'1',//是否菜单 1是  0 否
+            'operate'=>'1'// 1是查看  2 操作
+        ),
+        '43'=>array(
+            'menu_id'=>'43',
+            'parent_id'=>'42',//上级ID
+            'title'=>'添加公告',//名称
+            'control'=>'notices',//控制器
+            'action'=>'addnotice',//行为
+            'is_menu'=>'0',//是否菜单 1是  0 否
+            'operate'=>'2'// 1是查看  2 操作
+        ),
+        '44'=>array(
+            'menu_id'=>'44',
+            'parent_id'=>'42',//上级ID
+            'title'=>'修改公告',//名称
+            'control'=>'notices',//控制器
+            'action'=>'editnotice',//行为
+            'is_menu'=>'0',//是否菜单 1是  0 否
+            'operate'=>'2'// 1是查看  2 操作
+        ),
+        '45'=>array(
+            'menu_id'=>'45',
+            'parent_id'=>'42',//上级ID
+            'title'=>'删除公告',//名称
+            'control'=>'notices',//控制器
+            'action'=>'delnotice',//行为
+            'is_menu'=>'0',//是否菜单 1是  0 否
+            'operate'=>'2'// 1是查看  2 操作
+        ),
+        '46'=>array(
+            'menu_id'=>'46',
+            'parent_id'=>'46',//上级ID
+            'title'=>'日志管理',//名称
+            'control'=>'',//控制器
+            'action'=>'',//行为
+            'is_menu'=>'1',//是否菜单 1是  0 否
+            'operate'=>'1'// 1是查看  2 操作
+        ),
+        '47'=>array(
+            'menu_id'=>'47',
+            'parent_id'=>'46',//上级ID
+            'title'=>'会员登录日志',//名称
+            'control'=>'logs',//控制器
+            'action'=>'getuserlogs',//行为
+            'is_menu'=>'1',//是否菜单 1是  0 否
+            'operate'=>'1'// 1是查看  2 操作
+        ),
+        '48'=>array(
+            'menu_id'=>'48',
+            'parent_id'=>'46',//上级ID
+            'title'=>'用户操作日志',//名称
+            'control'=>'logs',//控制器
+            'action'=>'getlogs',//行为
+            'is_menu'=>'1',//是否菜单 1是  0 否
+            'operate'=>'1'// 1是查看  2 操作
+        ),
+        '49'=>array(
+            'menu_id'=>'49',
+            'parent_id'=>'49',//上级ID
+            'title'=>'内部管理',//名称
+            'control'=>'',//控制器
+            'action'=>'',//行为
+            'is_menu'=>'1',//是否菜单 1是  0 否
+            'operate'=>'1'// 1是查看  2 操作
+        ),
+        '50'=>array(
+            'menu_id'=>'50',
+            'parent_id'=>'49',//上级ID
+            'title'=>'系统初始化设定',//名称
+            'control'=>'system',//控制器
+            'action'=>'systeminitial',//行为
+            'is_menu'=>'1',//是否菜单 1是  0 否
+            'operate'=>'2'// 1是查看  2 操作
+        ),
+        '51'=>array(
+            'menu_id'=>'51',
+            'parent_id'=>'49',//上级ID
+            'title'=>'彩种设置',//名称
+            'control'=>'system',//控制器
+            'action'=>'systemlottery',//行为
+            'is_menu'=>'1',//是否菜单 1是  0 否
+            'operate'=>'2'// 1是查看  2 操作
+        ),
+        '52'=>array(
+            'menu_id'=>'52',
+            'parent_id'=>'49',//上级ID
+            'title'=>'赔率设定',//名称
+            'control'=>'system',//控制器
+            'action'=>'systemrebate',//行为
+            'is_menu'=>'1',//是否菜单 1是  0 否
+            'operate'=>'2'// 1是查看  2 操作
+        ),
+        '53'=>array(
+            'menu_id'=>'53',
+            'parent_id'=>'1',//上级ID menu_id
+            'title'=>'即时注单（订单列表）',//名称
+            'control'=>'instant',//控制器
+            'action'=>'groupinstant',//行为
+            'is_menu'=>'0',//是否菜单 1是  0 否
+            'operate'=>'1'// 1是查看  2 操作
+        ),
+        '54'=>array(
+            'menu_id'=>'54',
+            'parent_id'=>'49',//上级ID menu_id
+            'title'=>'赔率修改',//名称
+            'control'=>'system',//控制器
+            'action'=>'editrebate',//行为
+            'is_menu'=>'0',//是否菜单 1是  0 否
+            'operate'=>'2'// 1是查看  2 操作
+        ),
+        '55'=>array(
+            'menu_id'=>'55',
+            'parent_id'=>'49',//上级ID menu_id
+            'title'=>'封锁值设定',//名称
+            'control'=>'system',//控制器
+            'action'=>'systemlocks',//行为
+            'is_menu'=>'1',//是否菜单 1是  0 否
+            'operate'=>'2'// 1是查看  2 操作
+        ),
+        '56'=>array(
+            'menu_id'=>'56',
+            'parent_id'=>'34',//上级ID menu_id
+            'title'=>'转账记录',//名称
+            'control'=>'order',//控制器
+            'action'=>'transferrecord',//行为
+            'is_menu'=>'1',//是否菜单 1是  0 否
+            'operate'=>'2'// 1是查看  2 操作
+        ),
+    ),
 ];

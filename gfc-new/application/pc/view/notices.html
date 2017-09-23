@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>公告</title>
+</head>
+<body>
+<style>
+    body {
+        /*font-family: "\5FAE\8F6F\96C5\9ED1";*/
+        width: 850px;
+    }
+    .xubox_title {
+        width: 100%;
+        height: 35px;
+        line-height: 35px;
+        border-bottom: 1px solid #D5D5D5;
+        background: url(../../static/pc/js/layer/skin/default/xubox_title0.png) #EBEBEB repeat-x;
+        font-size: 14px;
+        color: #333;
+    }
+    em, b {
+        font-style: normal;
+    }
+    .MainListUl_More ul li {
+        height: 30px;
+        line-height: 30px;
+        width: 100%;
+        border-bottom: 1px solid #ccc;
+    }
+    li {
+        display: list-item;
+        text-align: -webkit-match-parent;
+    }
+    ul, ol {
+        list-style-type: none;
+    }
+    .listpart{
+        float: left;
+        font-size: 16px;
+        color: #333;
+        font-weight: bold;
+        width: 100px;
+        margin-right: 10px;
+        height: 30px;
+        overflow: hidden;
+    }
+    .listpart a{
+        text-decoration: none;
+        color: #333;
+    }
+    .listpart a:-webkit-any-link {
+        color: -webkit-link;
+        cursor: auto;
+        font-size: 14px;
+    }
+    .time{
+        float: right;
+        width: 120px;
+        font-size: 10px;
+    }
+    .content{
+        width: 500px;
+        font-size: 12px;
+        float: left;
+        overflow: hidden;
+        height: 30px;
+        line-height: 30px;
+    }
+</style>
+<div times="26" showtime="0" style="z-index: 19891041; width: 850px; height: auto;  top: 56px; left: 50%;" id="xubox_layer26" class="xubox_layer" type="page">
+    <!--<div class="xubox_title" style="cursor: move;" move="ok"><em  style="margin-left: 20px;">最新公告</em></div>-->
+    <div style="background-color: rgb(255, 255, 255); z-index: 19891040; ">
+        <div class="xubox_page" style="top: 36px;">
+            <div class="xuboxPageHtml">
+                <div class="MoreNewsCont">
+                    <!--<div class="popNewsLayer notice_info_3" style="display: block;"><h2>测试公告</h2>-->
+                        <!--<p>测试公告-发发发发</p>-->
+                    <!--</div>-->
+                </div>
+                <div class="MainListUl_More">
+                    <ul>
+                        {volist name="list" id="v"}
+                            <li>
+                                <span class="listpart"><a style="text-decoration: none; color: #333;"  href="{:url('Game/getNoticeDetail')}?n_id={$v.n_id}" title="点击查看">{$v.n_title}</a></span>
+                                <span class="content" ><span class="content1"><a style="text-decoration: none;color: #333;" href="{:url('Game/getNoticeDetail')}?n_id={$v.n_id}" title="点击查看">{$v.n_content} </a></span></span>
+                                <span class="time">{$v.n_add_time}</span>
+                            </li>
+                        {/volist}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <span class="xubox_setwin">
+            <a class="xubox_close xulayer_png32 xubox_close0" href="javascript:;" style=""></a>
+        </span>
+        <span class="xubox_botton"></span>
+    </div>
+    <!--<div id="xubox_border26" class="xubox_border" style="z-index: 19891039; background-color: rgb(0, 0, 0); opacity: 0.3; top: -6px; left: -6px; width: 862px; height: 587px;"></div>-->
+</div>
+</body>
+<script type="text/javascript" src="../../static/lib/jquery/1.9.1/jquery.js"></script>
+<script>
+    //滚动插件
+    $(function() {
+        $(".content1").each(function (res) {
+            var len = $(this).html().length;
+            if(len>200){
+                $(this).addClass(" content2 ");
+            }
+        });
+        var num = 0;
+        function goLeft() {
+            //500的尺寸，可变的
+            if (num == -500) {
+                num = 0;
+            }
+            num -= 1;
+            $(".content2").css({
+                'margin-left': num
+            })
+        }
+        //设置滚动速度
+        var timer = setInterval(goLeft, 20);
+        //设置鼠标经过时滚动停止
+        $(".content2").hover(function() {
+                clearInterval(timer);
+            },
+            function() {
+                timer = setInterval(goLeft, 20);
+            })
+    })
+//$(".MainListUl_More ul li .content").each()
+</script>
+</html>

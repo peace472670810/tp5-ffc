@@ -44,15 +44,19 @@ if (!Array.prototype.indexOf) {
 var runTime = {
     remainTimer: 0,
     waitOpenTimer: 0,
+    showCurIssueTimer:0,
+    drawIssueTimer:0,
     getLastOpenTimer: 0,
     traceRemainTimer: 0,
     traceWaitOpenTimer: 0,
     clearAll: function () {
         clearInterval(runTime.remainTimer);
         clearInterval(runTime.waitOpenTimer);
+        clearInterval(runTime.showCurIssueTimer);
+        clearInterval(runTime.drawIssueTimer);
         clearInterval(runTime.getLastOpenTimer);
-        clearInterval(runTime.traceRemainTimer);
-        clearInterval(runTime.traceWaitOpenTimer);
+        // clearInterval(runTime.traceRemainTimer);
+        // clearInterval(runTime.traceWaitOpenTimer);
     }
 };
 (function ($) {
@@ -102,7 +106,7 @@ var runTime = {
 
         var ps = $.extend({
             //应传过来的设置
-            lotteryId: 1,
+            lotteryId: 2,
             lotteryName: 'CQSSC',
             lotteryType: 1, //采种类型
             //startIssueInfo: {issue_id$.extendopenedIssues: '11444', issue:'20130131-080', 'end_time': '2013/01/31 19:14:10', 'input_time': '2013/01/31 19:14:20'},
@@ -407,6 +411,11 @@ var runTime = {
                     var ClassNo = i;
                     var StudentList = CombinList[i];
                     RepeatTime = RepeatTime / StudentList.length;
+                 if(RepeatTime>100000){
+                     layer.alert("最大注数不能超过10万注!");
+                     $('.ball_Selected').removeClass('ball_Selected');
+                     return 0;
+                 }
                     var StartPosition = 1;
                     for (j in StudentList) {
                         var TempStartPosition = StartPosition;
@@ -436,8 +445,6 @@ var runTime = {
                                         }
                                     }
                                 }
-
-
                             }
                             TempStartPosition += RepeatTime * StudentList.length;
                         }
@@ -736,9 +743,10 @@ var runTime = {
                 }
                 ps.curPrizeIndex = $("#curPrizeSpan").val();
                 //显示当前的最高 奖金
-                var selectPrize = prizeBar.computeFinalPrizePrize(ps.curMethod.prize, ps.rebateGapList[ps.curPrizeIndex].rebate);
+                // console.log(ps.rebateGapList);
+                // console.log(ps.curPrizeIndex);
+                var selectPrize = prizeBar.computeFinalPrizePrize(ps.curMethod.prizes, ps.rebateGapList[ps.curPrizeIndex].rebate);
                 $("#curPrizeSpanShower").text(selectPrize);
-
                 prizeBar.saveLastPrize();
             },
             generateGapList: function () {
@@ -772,7 +780,7 @@ var runTime = {
                 return result2;
             },
             computeFinalPrizePrize: function (prize, rebate) {
-                var selectPrize = round(prize * (ps.prizeRate + ps.rebate - rebate) / ps.prizeRate, 2);
+                var selectPrize = round(prize, 2);
                 if (ps.curMethod.name == 'YMBDW' && selectPrize > 6.61) {
                     selectPrize = 6.61;
                 }
@@ -786,27 +794,25 @@ var runTime = {
                 $.each(ps.rebateGapList,
                     function (k, v) {
                         var selectPrize = prizeBar.computeFinalPrizePrize(ps.curMethod.prize, ps.rebateGapList[k].rebate);
-                        if (ps.curMethod.prizes) {
-
-                            if (propLen(ps.curMethod.prizes) > 1) {
-                                var priceNum = 1;
-                                var prizeDesc = '';
-                                for (var i in ps.curMethod.prizes) {
-                                    if (prizeDesc != '') {
-                                        prizeDesc += ',';
-                                    }
-                                    prizeDesc += priceNum + '等奖<em>' + prizeBar.computeFinalPrizePrize(ps.curMethod.prizes[i], ps.rebateGapList[k].rebate) + '</em>元 ';
-                                    priceNum++;
-                                }
-                                $("#prizeDesc").html(prizeDesc + '。');
-                            }
-                            else {
-                                var prizeDesc = '奖金<em>' + selectPrize + '</em>元';
-                                $("#prizeDesc").html(prizeDesc + '。');
-                            }
-                        }
-
-
+                                             // if (ps.curMethod.prizes) {
+                        //     if (propLen(ps.curMethod.prizes) > 1) {
+                        //         var priceNum = 1;
+                        //         var prizeDesc = '';
+                        //         for (var i in ps.curMethod.prizes) {
+                        //             if (prizeDesc != '') {
+                        //                 prizeDesc += ',';
+                        //             }
+                        //             console.log(ps.curMethod.prizes);
+                        //             prizeDesc += priceNum + '等奖<em>' + prizeBar.computeFinalPrizePrize(ps.curMethod.prizes, ps.rebateGapList[k].rebate) + '</em>元 ';
+                        //             priceNum++;
+                        //         }
+                        //         $("#prizeDesc").html(prizeDesc + '。');
+                        //     }
+                        //     else {
+                        //         var prizeDesc = '奖金<em>' + selectPrize + '</em>元';
+                        //         $("#prizeDesc").html(prizeDesc + '。');
+                        //     }
+                        // }
                         var selectRebate = number_format(parseFloat(ps.rebateGapList[k].rebate) * 100, 1);
                         //显示当前的最高 奖金
                         if (ps.curPrizeIndex == k) {
@@ -947,14 +953,11 @@ var runTime = {
                         }
                         var ob = isLegalCode(codes);
                         if (ob.singleNum >= 1) {
-
                             var resultCode = ballBar.getBetCode(codes);
-
                             ob.code = resultCode;
                             ps.nextProjectCounter++;
                             var singleAmount = number_format(ob.singleNum * 2 * ps.curMode, 2);
-
-                            $('<li><span class="num_try_text_list_s1" mid="' + ps.curMethod.method_id + '">' + ps.nextProjectCounter + "." + ps.curMethod.cname + '</span><span class="num_try_text_list_s2">' + ob.code + '</span><span class="num_try_text_list_s3">' + ob.singleNum + '注</span><span class="num_try_text_list_s4">￥' + singleAmount + '</span><a href="javascript:;" class="btn_delete">删除</a></li>').appendTo("#projectList");
+                            $('<li><span class="num_try_text_list_s1"  mid="' + ps.curMethod.method_id + '">' + ps.nextProjectCounter + "." + ps.curMethod.cname + '</span><span class="num_try_text_list_s2">' + ob.code + '</span><span class="num_try_text_list_s3">' + ob.singleNum + '注</span><span class="num_try_text_list_s4">￥' + singleAmount + '</span><a href="javascript:;" class="btn_delete">删除</a></li>').appendTo("#projectList");
                             buyBar.updateTotalSingle();
                             break;
                         }
@@ -1551,6 +1554,7 @@ var runTime = {
                         }
                     });
                 var ob = isLegalCode(codes);
+
                 buyBar.updateSingle(ob.singleNum);
 
                 var resultCode = ballBar.getBetCode(codes);
@@ -1702,7 +1706,8 @@ var runTime = {
                         singleNum: 1,
                         isDup: 0
                     };
-                    var strPart1 = '<li><span class="num_try_text_list_s1" mid="' + ps.curMethod.method_id + '">';
+
+                    var strPart1 = '<li><span class="num_try_text_list_s1"  mid="' + ps.curMethod.method_id + '">';
                     var strPart2 = "." + ps.curMethod.cname + '</span><span class="num_try_text_list_s2">';
 
                     var unLegalCode = '';
@@ -1795,10 +1800,7 @@ var runTime = {
                 $("#betAmount").text(singleAmount);
                 if (singleNum > 0) {
                     $("#selectCodeBtn").addClass('selectCodeBtn_selected');
-
-
                     $('#prizeAmount').text($('#curPrizeSpanShower').text());
-
                     $('#winAmount').text(number_format($('#curPrizeSpanShower').text() - singleAmount, 2));
                     if ($("#prizeDesc").length > 0) {
                         $("#prizeAmountDetail").attr('title', $("#prizeDesc").text());
@@ -1869,7 +1871,9 @@ var runTime = {
                 //140329 按要求去掉重复选号
                 //1.先按玩法归类到一个对象
                 var methodCodes = {}, codes = '';
+                var projects = 0;
                 $("#projectList").children("li").each(function (i) {
+                    projects++;
                     if (!methodCodes[$(this).children().eq(0).attr("mid")]) {
                         methodCodes[$(this).children().eq(0).attr("mid")] = {};
                     }
@@ -1877,6 +1881,10 @@ var runTime = {
                     methodCodes[$(this).children().eq(0).attr("mid")][i] = $(this).children().eq(1).text();
                     //methodCodes[$(this).children().eq(0).attr("mid")][$(this).children().eq(1).text()] = $(this).children().eq(1).text();
                 });
+                if(projects>50){
+                    alert("提交下注一次最多只能下50注哦!");
+                    return false;
+                }
                 //2.拼出codes格式  46:1,2,3,4,5|6,7,8,9,0|1,2,3,4,5#43:1,2,3|6,7,0
                 $.each(methodCodes, function (mid, v) {
                     codes += mid + ':';
@@ -1904,20 +1912,21 @@ var runTime = {
                         //使用进度条代替按钮
                         $('.xubox_botton').empty();
                         $('.xubox_botton').html('<p class="">提交中</p>');
-                        $.post("?c=api&a=play" + urlSession(), {
+                        $.post(ps.getbuyUrl, {
                                 op: "buy",
                                 lotteryId: ps.lotteryId,
                                 issue: ps.curIssueInfo.issue,
                                 curRebate: ps.rebateGapList[ps.curPrizeIndex].rebate,
                                 modes: ps.curMode,
                                 codes: codes,
-                                multiple: $("#multiple").val()
+                                multiple: $("#multiple").val(),
+                                odd:ps.odds
                             },
                             function (response) {
                                 if (response.errno == 0) {
                                     $(".kj_right_btn_myFa").click();
                                     buyBar.removeAll();
-                                    var msg = '<div id="buy_success_message">投注成功!<br>投注编号：' + response.pkgnum + "<br>投注期号：" + ps.curIssueInfo.issue + "<br>投注金额：￥" + betTotalAmount + "<br>币值模式：" + ps.modeName[ps.curMode] + "模式<br>投注倍数：" + totalSingleInfo + "倍<br></div>";
+                                    var msg = '<div id="buy_success_message">投注成功!<br>投注注单数：' + response.ordersums + "<br>投注期号：" + ps.curIssueInfo.issue + "<br>投注金额：￥" + betTotalAmount + "<br>币值模式：" + ps.modeName[ps.curMode] + "模式<br>投注倍数：" + totalSingleInfo + "倍<br></div>";
                                     layer.close(i);
                                     layer.alert(msg, 1);
                                     $('.xubox_yes').focus();
@@ -1959,6 +1968,11 @@ var runTime = {
                     layer.alert("请先 添加号码 ");
                     return false
                 }
+
+                if ($("#user_is_test").val() == 2) {
+                    layer.alert("只有正式会员才能追号！试玩用户不能追号 ");
+                    return false
+                }
                 $("#traceBtn").attr('disabled', "true");
                 var mids = [];
                 $("#projectList li").each(function (i) {
@@ -1968,7 +1982,7 @@ var runTime = {
                 });
 
                 $.ajax({
-                    url: "?c=api&a=play" + urlSession(),
+                    url: traceUrl,
                     type: "POST",
                     data: {
                         op: "getTracePage",
@@ -1986,7 +2000,7 @@ var runTime = {
                             ps.tracePrizeLimit = response.prizeLimit;
                             var i = traceFunc.showTracePage(response.content);
                             if (response.prize == 0 || mids.length != 1) {
-                                $("#multipleStyle2").attr("disabled", true)
+                                $("#multipleStyle2").attr("disabled", true);
                             }
                             $("input[name=multipleStyle]").click(traceFunc.multipleStyle_Click);
                             $("#confirmTraceBtn").click(
@@ -2011,7 +2025,7 @@ var runTime = {
                             traceFunc.updateTotalMoney();
                             runTime.traceRemainTimer = window.setInterval(traceFunc.traceRemain_Timer_Handle, 1000);
                         } else {
-                            layer.alert("不能获取该奖期的可追号信息")
+                            layer.alert("不能获取该奖期的可追号信息");
                         }
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -2043,7 +2057,7 @@ var runTime = {
                         }).live("keyup", buyBar.checkMultiple).live("keyup", traceFunc.style1BodyMultiple_Keyup);
                     traceFunc.updateStyle1();
                     $("#multipleStyle1DIV").show();
-                    $("#multipleStyle2DIV").hide()
+                    $("#multipleStyle2DIV").hide();
                 } else {
                     $("#startMultiple").click(function () {
                         this.focus();
@@ -2088,18 +2102,26 @@ var runTime = {
             //追号界面也加一个倒计时
             traceRemain_Timer_Handle: function () {
                 var d = subTime(ps.curRemainTime);
-                if (ps.curRemainTime > 0) {
-                    $("#remainTimerLabel").text(d.hour + ":" + d.minute + ":" + d.second);
-                } else {
+                console.log(ps.curRemainTime);
+                if (ps.curRemainTime>0) {
+                    if(ps.curIssueInfo.state == 1){
+                        $("#curIssueText").html("投注还剩：");
+                        $("#remainTimerLabel").text(d.hour + ":" + d.minute + ":" + d.second);
+                    }else{
+                        $("#curIssueText").html("等待开奖中！");
+                        $("#remainTimerLabel").text(' ');
+                    }
+                } else{
+                    $("#curIssueText").html("开奖倒计时：");
                     clearInterval(runTime.traceRemainTimer);
                     var d2 = subTime(ps.curWaitOpenTime);
                     $("#remainTimerLabel").text(d2.hour + ":" + d2.minute + ":" + d2.second);
+                    $("#remainTimerLabel").text('');
                     runTime.traceWaitOpenTimer = window.setInterval(traceFunc.traceWaitOpen_Timer_Handle, 1000);
                     //去掉过期的一期
                     layer.alert("起始期" + ps.curIssueInfo.issue + "的投注时间已结束，自动设置下一期为起始期！");
                     $("#startIssue").children(":first").remove();
                     $("#startIssue").children(":first").text($("#startIssue").children(":first").text() + "(当前期)");
-
                     var tmpArr = [];
                     $(".style1BodyMultiple").each(function () {
                         tmpArr.push(this.value);
@@ -2239,11 +2261,10 @@ var runTime = {
                 traceFunc.destroyTracePage();
                 layer.confirm(confirmInfo,
                     function (i) {
-                        $.post("?c=api&a=play" + urlSession(), {
-                                op: "buy",
+                        $.post(traceUrlBuy, {
                                 lotteryId: ps.lotteryId,
                                 issue: ps.curIssueInfo.issue,
-                                curRebate: ps.rebateGapList[ps.curPrizeIndex].rebate,
+                                odd: ps.odds,
                                 modes: ps.curMode,
                                 codes: codes,
                                 traceData: traceData,
@@ -2253,7 +2274,7 @@ var runTime = {
                                 if (response.errno == 0) {
                                     $(".kj_right_btn_myZh").click();
                                     buyBar.removeAll();
-                                    var msg = '<div id="buy_success_message">追号成功!<br>投注编号：' + response.pkgnum + "<br>起始期号：" + traceData[0].issue + "<br>追号期数：" + traceData.length + "<br>投注金额：￥" + traceTotalAmount + "<br>币值模式：" + ps.modeName[ps.curMode] + "模式</div>";
+                                    var msg = '<div id="buy_success_message">追号成功!<br>注单数：' + 1 + "<br>起始期号：" + traceData[0].issue + "<br>追号期数：" + traceData.length + "<br>投注金额：￥" +traceTotalAmount + "<br>币值模式：" + ps.modeName[ps.curMode] + "模式</div>";
                                     layer.close(i);
                                     layer.alert(msg, 1);
                                     $('.xubox_yes').focus();
@@ -2270,7 +2291,7 @@ var runTime = {
                                     layer.close(i);
                                     layer.alert("追号失败:" + response.errstr);
                                 }
-                                //showBalance()
+                                showBalance();
                             },
                             "json").fail(function () {
                             layer.close(i);
@@ -2313,7 +2334,7 @@ var runTime = {
                 var i = $.layer({
                     type: 1,
                     title: '追号管理',
-                    offset: ['350px', ''],
+                    offset: ['240px', ''],
                     //border: [0],
                     area: ['700px', 'auto'],
                     page: {html: content},
@@ -2496,8 +2517,6 @@ var runTime = {
                 function (k, v) {
                     v.prop = drawBar.getMoreInfo(v.code);
                 });
-
-
             //初始化开奖球数目
             if (ps.lotteryType == 1 || ps.lotteryType == 4 || ps.lotteryType == 6 || ps.lotteryType == 9) {
                 var nums = ps.openedIssues[0].code.split("");
@@ -2507,7 +2526,6 @@ var runTime = {
             else {
                 throw '无效的彩种开奖区无法初始化';
             }
-
             $('#thisIssueNumUL').empty();
             $.each(nums, function (i, n) {
                 if (ps.lotteryType == 1 || ps.lotteryType == 4 || ps.lotteryType == 8 || ps.lotteryType == 9 || ps.lotteryType == 10) {
@@ -2521,13 +2539,13 @@ var runTime = {
                     $('#thisIssueNumUL').append('<div class="pendingNum_poker poker"><span class="poker_kj_num poker_kj_wait' + (i + 1) + ' poker_kj_wait"><i></i><em></em></span></div>');
                 }
             });
-
-
             drawBar.showLastDraw();
             drawBar.getCurIssue(drawBar.init);
         };
 
         var drawBar = {
+            isOpen:true,
+            lock_alert_time:3,
             init: function () {
                 runTime.remainTimer = window.setInterval(drawBar.showCurIssue_Timer, 1000);
                 ps.getLastOpenTime = 0;
@@ -2537,11 +2555,9 @@ var runTime = {
                     $("#thisIssueInfo").addClass("lock");
                     ps.canBuy = false;
                     $("#thisIssueSpan").text(ps.lastIssueInfo.issue);
-                }
-                else {  //友好界面 1秒等待后显示
+                } else {  //友好界面 1秒等待后显示
                     //更新最近一期数据，否则导致draw.init()中重复调用
                     var latest = ps.openedIssues[0];
-                    //tconsole.info("latest.issue=" + latest.issue);
                     if (ps.lastIssueInfo.length > 0 && ps.lastIssueInfo.issue != latest.issue) {
                         var tmp = ps.lastIssueInfo;
                         var ob = drawBar.getMoreInfo(tmp.code);
@@ -2550,47 +2566,251 @@ var runTime = {
                         ps.openedIssues.updateLast();
                     }
                 }
-
                 ps.canBuy = true;
             },
             getCurIssue: function (callback) {
+                var lids = '';
+                $('.lottery_timer').each(function (){
+                    var lottery_issue = $(this);
+                    var lotteryId = lottery_issue.attr('lottery');
+                    if(ps.lotteryId != lotteryId){
+                        lids +=lotteryId+',';//去掉显示当前页显示的彩种
+                    }
+                });
                 $.ajax({
-                    url: ps.getCurUrl,
-                    type: "POST",
-                    data: {
-                        op: "getCurIssue",
-                        lotteryId: ps.lotteryId
+                    url:allCurIssueURL,
+                    type:'POST',
+                    data:{
+                        lids:lids,
+                        curentLid:ps.lotteryId,//当前彩种
                     },
-                    cache: false,
-                    dataType: "json",
-                    timeout: 30000,
-                    success: function (response) {
-                        if (response.errno == 0) {
-                            ps.curIssueInfo = response.issueInfo;
+                    async:true,
+                    cache:false,
+                    dataType:'json',
+                    timeout:30000,
+                    success:function(response){
+                        if(response.errno == 0){
+                            //切换到当前页面的彩种 当前期和下一期
+                            ps.curIssueInfo = response.curIssue.issueInfo;
                             ps.curServerTime = response.serverTime;
                             ps.curRemainTime = getTS(ps.curIssueInfo.end_time) - getTS(ps.curServerTime);
-                            ps.curWaitOpenTime = 8;    //显示锁形的时间，可酌情减少，不构成风险
-                            ps.lastIssueInfo = response.lastIssueInfo;
-                            if (typeof (callback) == "function") {
-                                callback();
+                            ps.curWaitOpenTime = ps.curIssueInfo.waite_time;    //显示锁形的时间，可酌情减少，不构成风险
+                            ps.lastIssueInfo = response.curIssue.lastIssueInfo;
+                            //当前期上一次开奖号码
+                            lastIssueInfo = ps.lastIssueInfo ;
+                            //其他彩种
+                            $('.lottery_timer').each(function (){
+                                var lottery_issue = $(this);
+                                var lotteryId = lottery_issue.attr('lottery');
+                                var issueInfo = response.issueInfo;
+                                $.each(issueInfo,function(i,val){
+                                    if(i == lotteryId){
+                                        if(val.state != ''&& val.state <=1){
+                                            lottery_issue.attr('title', val.issue);
+                                            var d = val.end_time.match(/(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})/gi);
+                                            d = new Date(RegExp.$1, RegExp.$2, RegExp.$3, RegExp.$4, RegExp.$5, RegExp.$6);
+                                            serverTime = response.serverTime.match(/(\d{4})\/(\d{2})\/(\d{2}) (\d{2}):(\d{2}):(\d{2})/gi);
+                                            var serverTime = new Date(RegExp.$1, RegExp.$2, RegExp.$3, RegExp.$4, RegExp.$5, RegExp.$6);
+                                            var now = new Date();
+                                            var offset = d.getTimezoneOffset() / 60 + 8;
+                                            var nowDate = new Date(serverTime.getTime() - (3600000 * offset));
+                                            var nd = new Date(now.getTime() - nowDate.getTime() + d.getTime() - (3600000 * offset));
+                                            lottery_issue.countdown(nd.getTime(), function (event) {
+                                                var tmpTitle = $(this).attr('title').toString();
+                                                tmpTitle = tmpTitle.substr(tmpTitle.length - 4).replace('-', '');
+                                                var totalHours = event.offset.totalDays * 24 + event.offset.hours;
+                                                $(this).html(event.strftime(totalHours + ':%M:%S'));
+                                                var curTime = $(this).html();
+                                                if(curTime == '0:00:00'){
+                                                    $(this).html("等待开奖");
+                                                }
+                                            });
+                                        }else if(val.state != ''&&val.state >1){
+                                            lottery_issue.text('等待开奖');
+                                        }else{
+                                            lottery_issue.text('等待开盘');
+                                        }
+                                    }
+                                });
+                            });
+                            //更新上方倒计时 延迟1s 与下方匹配上
+                            if(response.curIssue.issueInfo.state >0){
+                                var lottery_issue =  $("#lotterycurrent"+ps.lotteryId);
+                                lottery_issue.attr('title', response.curIssue.issueInfo.issue);
+                                var d = response.curIssue.issueInfo.end_time.match(/(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})/gi);
+                                d = new Date(RegExp.$1, RegExp.$2, RegExp.$3, RegExp.$4, RegExp.$5, RegExp.$6);
+                                serverTime = response.serverTime.match(/(\d{4})\/(\d{2})\/(\d{2}) (\d{2}):(\d{2}):(\d{2})/gi);
+                                var serverTime = new Date(RegExp.$1, RegExp.$2, RegExp.$3, RegExp.$4, RegExp.$5, RegExp.$6);
+                                var now = new Date();
+                                var offset = d.getTimezoneOffset() / 60 + 8;
+                                var nowDate = new Date(serverTime.getTime()-(3600000 * offset));
+                                var nd = new Date(now.getTime() - nowDate.getTime() + d.getTime() - (3600000 * offset));
+                                lottery_issue.countdown(nd.getTime(), function (event) {
+                                    var tmpTitle = $(this).attr('title').toString();
+                                    tmpTitle = tmpTitle.substr(tmpTitle.length - 4).replace('-', '');
+                                    var totalHours = event.offset.totalDays * 24 + event.offset.hours;
+                                    $(this).html(event.strftime(totalHours + ':%M:%S'));
+                                    var curTime = $(this).html();
+                                    if(curTime == '0:00:00'){
+                                        $("#lotterycurrent"+ps.lotteryId).html("等待开奖");
+                                    }
+                                });
+                                if(response.curIssue.issueInfo.state > 1){
+                                    $("#lotterycurrent"+ps.lotteryId).html("等待开奖");
+                                }
+                            }else{
+                                $("#lotterycurrent"+ps.lotteryId).html("等待开盘");
                             }
-                        } else {
-                            layer.alert("当前期不存在");
+                        }else{
+                            $('.lottery_timer').each(function (){
+                                var lottery_issue = $(this);
+                                lottery_issue.text('等待开奖');
+                            });
                         }
+                        //执行下方倒计时
+                        $("#thisIssueSpan").text(ps.curIssueInfo.issue);
+                        $("#thisIssueSpan2").text(ps.curIssueInfo.issue);
+                        var d = subTime(ps.curRemainTime);
+                        if(ps.curRemainTime>=0 && response.curIssue.issueInfo.state == 1){//必须为1 和还剩时间才允许显示
+                            drawBar.showIssueRemainTime(d);
+                        }
+                        runTime.showCurIssueTimer = window.setInterval(function () {
+                            if(ps.curRemainTime>=0){//还没封盘
+                                if(response.curIssue.issueInfo.state == 1){
+                                    ps.canBuy = true;
+                                    window.clearInterval(window.runTime.lock_alert_timer);
+                                    $("#thisIssueTimerIcon").removeClass("lock").addClass('clock');
+                                    $('#thisIssueTimerIcon').text('投注还剩');
+                                    var d = subTime(--ps.curRemainTime);
+                                }else{
+                                    --ps.curRemainTime;
+                                    ps.canBuy = false;
+                                    drawBar.isOpen = true;//开启下一盘开启弹窗友好提示
+                                    $('#thisIssueTimerIcon').text('等待开盘');
+                                    $('#lastIssueSpan').html(parseInt(response.curIssue.lastIssueInfo.issue)+1);
+                                    $("#nextTimeOpen").text('开奖中');
+                                    var d = subTime(0);
+                                    var codes = ps.lastIssueInfo.code.split(",");
+                                    if(codes.length == 3){
+                                        $(".donghua1").hide();
+                                        $(".donghua2").hide();
+                                        $(".donghua3").show();
+                                        $(".ball5").hide();
+                                        $(".ball10").hide();
+                                    }
+                                    if(codes.length == 5){
+                                        $(".donghua3").hide();
+                                        $(".donghua2").hide();
+                                        $(".donghua1").show();
+                                        $(".ball5").hide();
+                                        $(".ball10").hide();
+                                    }
+                                    if(codes.length == 10){
+                                        $(".donghua1").hide();
+                                        $(".donghua3").hide();
+                                        $(".donghua2").show();
+                                        $(".ball5").hide();
+                                        $(".ball10").hide();
+                                    }
+                                }
+                                drawBar.showIssueRemainTime(d);
+                                if(ps.curRemainTime %5 == 0){
+                                    runTime.clearAll();
+                                    drawBar.getCurIssue();
+                                }
+                            }else{
+                                ps.canBuy = false;
+                                $('#thisIssueTimerIcon').removeClass('clock').addClass('lock');
+                                $('#thisIssueTimerIcon').text('开奖倒计时');
+                                clearInterval(runTime.showCurIssueTimer);
+                                if(drawBar.isOpen){
+                                    // window.clearInterval(window.runTime.lock_alert_timer);
+                                    // var lock_alert_time = ps.curWaitOpenTime;//友好提示
+                                    var lock_alert_time = 3;//友好提示
+                                    if(ps.curIssueInfo.issue.state == ''){
+                                        $.layer({
+                                            'title': '封盘提示', 'time': lock_alert_time,
+                                            'dialog': {
+                                                type: 7,
+                                                msg: '暂无当前期，封盘中'
+                                            }
+                                            , 'btns': 1
+                                            , btn: ['确定']
+                                        });
+                                    }else {
+                                        $.layer({
+                                            'title': '开奖倒计时提示', 'time': lock_alert_time,
+                                            'dialog': {
+                                                type: 7,
+                                                msg: '第' + ps.curIssueInfo.issue + '期已经截止<br/>投注时请注意期号<br/><span id="lock_alert_timer">' + lock_alert_time + '</span>秒后自动关闭窗口'
+                                            }
+                                            , 'btns': 1
+                                            , btn: ['确定']
+                                        });
+                                    }
+                                    $(".xubox_botton1").click(function () {
+                                        drawBar.isOpen = false;
+                                        window.clearInterval(window.runTime.lock_alert_timer);
+                                    });
+                                }
+                                // window.runTime.lock_alert_timer = window.setInterval(function () {
+                                //     $("#lock_alert_timer").text(parseInt($("#lock_alert_timer").text()) - 1);
+                                // }, 1000);
+                                window.setTimeout(function () {
+                                    drawBar.isOpen = false;
+                                    window.clearInterval(window.runTime.lock_alert_timer);
+                                }, 3);
+                                //开始开奖倒计时
+                                var d2 = subTime(ps.curWaitOpenTime);
+                                drawBar.showIssueRemainTime(d2);
+                                runTime.drawIssueTimer = window.setInterval(function (res){
+                                    if(ps.curWaitOpenTime >=0){
+                                        if(ps.curWaitOpenTime %5 == 0){
+                                            runTime.clearAll();
+                                            drawBar.getCurIssue();
+                                        }
+                                        var d2 = subTime(--ps.curWaitOpenTime);
+                                        drawBar.showIssueRemainTime(d2);
+                                        // console.log('开奖倒计时');
+                                    }else{
+                                        runTime.clearAll();
+                                        console.log('开奖倒计时结束');
+                                        drawBar.getCurIssue();
+                                    }
+                                },1000);
+                            }
+                        },1000);
+                        ps.getLastOpenTime = 0;
+                        clearInterval(runTime.getLastOpenTimer);
+                        runTime.getLastOpenTimer = window.setInterval(drawBar.getLastOpen_Timer, 1000);
+                        if (ps.lastIssueInfo.code == "") {
+                            $("#thisIssueInfo").addClass("lock");
+                            ps.canBuy = false;
+                            $("#thisIssueSpan").text(ps.lastIssueInfo.issue);
+                        } else {  //友好界面 1秒等待后显示
+                            //更新最近一期数据，否则导致draw.init()中重复调用
+                            var latest = ps.openedIssues[0];
+                            if (ps.lastIssueInfo.length > 0 && ps.lastIssueInfo.issue != latest.issue) {
+                                var tmp = ps.lastIssueInfo;
+                                var ob = drawBar.getMoreInfo(tmp.code);
+                                tmp.prop = ob;
+                                ps.openedIssues.unshift(tmp);
+                                ps.openedIssues.updateLast();
+                            }
+                        }
+                      if(response.curIssue.issueInfo.state == 1){
+                          ps.canBuy = true;
+                      }else{
+                          ps.canBuy = false;
+                      }
                     },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        var message = errorThrown.toString();
-                        if (errorThrown.message) {
-                            message = errorThrown.message;
-                        }
-                        if (message.indexOf("a=logout") != -1 || message.indexOf("a=login") != -1) {
-                            layer.alert("你与服务器的认证失败");
-                            //window.location.href = "?a=logout";
-                        } else {
-                            //layer.alert("服务器无法处理获取当前期数的请求");
-                        }
+                    error:function (XMLHttpRequest, textStatus, errorThrown) {
+                        $('.lottery_timer').each(function (){
+                            var lottery_issue = $(this);
+                            lottery_issue.text('封盘中');
+                        });
                     }
-                })
+                });
             },
             showIssueRemainTime: function (d) {
                 //$("#thisIssueRemainTime").text(d.hour + ":" + d.minute + ":" + d.second);
@@ -2606,46 +2826,45 @@ var runTime = {
                 var time_s = $("#thisIssueRemainTime .time_s");
                 time_s.empty();
                 time_s.html('<span class="time_' + d.second.toString().charAt(0) + ' time_sp"></span><span class="time_' + d.second.toString().charAt(1) + ' time_sp"></span>');
-
-
             },
             showCurIssue_Timer: function () {
                 $("#thisIssueSpan").text(ps.curIssueInfo.issue);
                 $("#thisIssueSpan2").text(ps.curIssueInfo.issue);
-                var d = subTime(--ps.curRemainTime);
-                if (ps.curRemainTime >= 0) {
-                    drawBar.showIssueRemainTime(d);
-                    $("#thisIssueTimerIcon").removeClass("lock").addClass('clock');
-                    $('#thisIssueTimerIcon').text('投注还剩');
-                } else {
-                    clearInterval(runTime.remainTimer);
-                    $('#thisIssueTimerIcon').removeClass('clock').addClass('lock');
-                    $('#thisIssueTimerIcon').text('封盘还剩');
-                    var lock_alert_time = ps.curWaitOpenTime;
-                    window.runTime.lock_alert_timer = window.setInterval(function () {
-                        $("#lock_alert_timer").text(parseInt($("#lock_alert_timer").text()) - 1);
-                    }, 1000);
-                    window.setTimeout(function () {
-                        window.clearInterval(window.runTime.lock_alert_timer);
-                    }, lock_alert_time * 1000);
-                    //layer.alert('第'+ps.curIssueInfo.issue+'期已经截止<br/>投注时请注意期号<br/><span id="lock_alert_timer">'+lock_alert_time+'</span>秒后自动关闭窗口', 7, '封盘提示');
-                    $.layer({
-                        'title': '封盘提示', 'time': lock_alert_time,
-                        'dialog': {
-                            type: 7,
-                            msg: '第' + ps.curIssueInfo.issue + '期已经截止<br/>投注时请注意期号<br/><span id="lock_alert_timer">' + lock_alert_time + '</span>秒后自动关闭窗口'
+                var d2 = subTime(ps.curRemainTime);
+                drawBar.showIssueRemainTime(d2);
+                runTime.showCurIssueTimer =  window.setInterval(function(){
+                    if (ps.curIssueInfo.state == 1) {
+                        var d = subTime(--ps.curRemainTime);
+                        var curRemainTime = ps.curRemainTime;
+                        if(curRemainTime%5 == 0){
+                            runTime.clearAll();
+                            drawBar.getCurIssue();
                         }
-                        , 'btns': 1
-                        , btn: ['确定']
-                    });
+                        $("#thisIssueTimerIcon").removeClass("lock").addClass('clock');
+                        $('#thisIssueTimerIcon').text('投注还剩');
+                        drawBar.showIssueRemainTime(d);
+                    } else {
+                        // clearInterval(runTime.remainTimer);
+                        $('#thisIssueTimerIcon').removeClass('clock').addClass('lock');
+                        $('#thisIssueTimerIcon').text('开奖倒计时');
+                        // var lock_alert_time = ps.curWaitOpenTime;
+                        var lock_alert_time = 8;//友好提示 10s
+                        window.runTime.lock_alert_timer = window.setInterval(function () {
+                            $("#lock_alert_timer").text(parseInt($("#lock_alert_timer").text()) - 1);
+                        }, 1000);
+                        window.setTimeout(function () {
+                            window.clearInterval(window.runTime.lock_alert_timer);
+                        }, lock_alert_time * 1000);
+                        var d2 = subTime(ps.curWaitOpenTime);
+                        drawBar.showIssueRemainTime(d2);
+                        console.log(ps.curWaitOpenTime);
+                        if(ps.curWaitOpenTime%5 == 0){
+                            runTime.clearAll();
+                            drawBar.getCurIssue();
+                        }
 
-                    var d2 = subTime(ps.curWaitOpenTime);
-                    drawBar.showIssueRemainTime(d2);
-                    //$("#thisIssueRemainTime").addClass("lotteryTime-lock");
-                    //$("#thisIssueMoreInfo").html('<div class="remainOpenDIV">第 ' + ps.curIssueInfo.issue + ' 期开奖倒计时：<span class="lotteryTime2">' + ps.curWaitOpenTime + "</span></div>");
-                    ps.canBuy = false;
-                    runTime.waitOpenTimer = window.setInterval(drawBar.waitOpen_Timer, 1000);
-                }
+                    }
+                },1000);
             },
             //显示锁倒计时
             waitOpen_Timer: function () {
@@ -2653,6 +2872,7 @@ var runTime = {
                 var d = subTime(ps.curWaitOpenTime);
                 drawBar.showIssueRemainTime(d);
                 if (ps.curWaitOpenTime < 0) {
+                    clearInterval(runTime.showCurIssueTimer);
                     clearInterval(runTime.waitOpenTimer);
                     drawBar.getCurIssue(drawBar.init);
                 }
@@ -2660,92 +2880,141 @@ var runTime = {
             getLastOpen_Timer: function () {
                 ps.getLastOpenTime++;
                 //console.info("ps.getLastOpenTime计时器=" + ps.getLastOpenTime);
-                //每10秒请求一次
+                //每10秒更新一次
                 if (ps.getLastOpenTime % 5 == 0) {
-                    $.ajax({
-                        url: "?c=api&a=play" + urlSession(),
-                        type: "POST",
-                        data: {
-                            op: "getLastIssueCode",
-                            lotteryId: ps.lotteryId,
-                            issue: ps.lastIssueInfo.issue
-                        },
-                        cache: false,
-                        dataType: "json",
-                        timeout: 30000,
-                        success: function (response) {
-                            if (response.errno == 0) {
-                                if (typeof (response.issueInfo.code) != "undefined" && response.issueInfo.issue != ps.openedIssues[0].issue) {
-                                    //clearInterval(runTime.getLastOpenTimer);
-                                    ps.getLastOpenTime = 0;
-                                    //更新最近一期数据，否则导致draw.init()中重复调用
-                                    ps.lastIssueInfo = response.issueInfo;
-                                    var ob = drawBar.getMoreInfo(response.issueInfo.code);
-                                    response.issueInfo.prop = ob;
-                                    ps.openedIssues.unshift(response.issueInfo);
-                                    ps.openedIssues.updateLast();
-
-                                    drawBar.showLastDraw();
-                                } else {
-                                }
-                            } else {
-                                //layer.alert("开号数据不存在");
-                            }
-                        },
-                        error: function (XMLHttpRequest, textStatus, errorThrown) {
-                            var message = errorThrown.toString();
-                            if (errorThrown.message) {
-                                message = errorThrown.message;
-                            }
-                            if (message.indexOf("a=logout") != -1 || message.indexOf("a=login") != -1) {
-                                alert("你与服务器的认证失败");
-                                //window.location.href = "?a=logout";
-                            } else {
-                                //alert("服务器无法处理获取开号的请求");
-                            }
+                    if (lastIssueInfo != -1) {
+                        if (typeof (lastIssueInfo.code) != "undefined" && lastIssueInfo.issue != ps.openedIssues[0].issue) {
+                            //clearInterval(runTime.getLastOpenTimer);
+                            ps.getLastOpenTime = 0;
+                            //更新最近一期数据，否则导致draw.init()中重复调用
+                            ps.lastIssueInfo = lastIssueInfo.issue_id;
+                            var ob = drawBar.getMoreInfo(lastIssueInfo.code);
+                            lastIssueInfo.prop = ob;
+                            ps.openedIssues.unshift(lastIssueInfo);
+                            ps.openedIssues.updateLast();
+                            drawBar.showLastDraw();
+                        } else {
+                            // layer.alert("开号数据不存在1");
                         }
-                    })
+                    } else {
+                        layer.alert("开号数据不存在");
+                    }
                 }
             },
             //显示上一期开奖结果
             showLastDraw: function () {
                 var latest = ps.openedIssues[0];
                 $("#lastIssueSpan").text(latest.issue);
-                var nums = [];
-                if (ps.lotteryType == 1 || ps.lotteryType == 4 || ps.lotteryType == 6 || ps.lotteryType == 9) {
-                    nums = latest.code.split("");
-                } else if (ps.lotteryType == 2 || ps.lotteryType == 7 || ps.lotteryType == 8 || ps.lotteryType == 10) {
-                    nums = latest.code.split(" ");
-                }
-                else {
-                    throw '无效的数据引用';
-                }
-
-                if (ps.lotteryType == 8 || ps.lotteryType == 9) {
-                    $(".ball5").hide();
-                    $(".ball10").empty().show();
-                    for (var i in nums) {
-                        $(".ball10").append('<span class="kj_small_ball' + parseInt(nums[i], 10) + ' kj_ball_sp"></span>');
+                $("#nextTimeOpen").text('开奖结果');
+                if(donghua){
+                    $(".donghua3").hide();
+                    $(".donghua2").hide();
+                    $(".donghua1").hide();
+                    var nums = [];
+                    if (ps.lotteryType == 1 || ps.lotteryType == 4 || ps.lotteryType == 6 || ps.lotteryType == 9) {
+                        nums = latest.code.split("");
+                    } else if (ps.lotteryType == 2 || ps.lotteryType == 7 || ps.lotteryType == 8 || ps.lotteryType == 10) {
+                        nums = latest.code.split(",");
                     }
-                }
-                else if (ps.lotteryType == 10) {
-                    $(".ball5").hide();
-                    $(".ball10").empty().show();
-                    for (var i in nums) {
-                        if (i == 6) {
-                            $(".ball10").append('<span class="kj_lhc_ball_pos">+</span>');
+                    else {
+                        throw '无效的数据引用';
+                    }
+                    if (ps.lotteryType == 8 || ps.lotteryType == 9) {
+                        $(".ball5").hide();
+                        $(".ball10").empty().show();
+                        for (var i in nums) {
+                            $(".ball10").append('<span class="kj_small_ball' + parseInt(nums[i], 10) + ' kj_ball_sp"></span>');
                         }
-                        $(".ball10").append('<span class="kj_lhc_ball' + parseInt(nums[i], 10) + ' kj_lhc_ball_pos' + i + ' kj_ball_sp">' + nums[i] + '</span>');
                     }
-                }
-                else {
-                    $(".ball5").empty().show();
-                    $(".ball10").hide();
-                    for (var i in nums) {
-                        $(".ball5").append('<span class="kj_ball' + parseInt(nums[i], 10) + ' kj_ball_sp"></span>');
+                    else if (ps.lotteryType == 10) {
+                        $(".ball5").hide();
+                        $(".ball10").empty().show();
+                        for (var i in nums) {
+                            if (i == 6) {
+                                $(".ball10").append('<span class="kj_lhc_ball_pos">+</span>');
+                            }
+                            $(".ball10").append('<span class="kj_lhc_ball' + parseInt(nums[i], 10) + ' kj_lhc_ball_pos' + i + ' kj_ball_sp">' + nums[i] + '</span>');
+                        }
                     }
-
+                    else {
+                        $(".ball5").empty().show();
+                        $(".ball10").hide();
+                        for (var i in nums) {
+                            $(".ball5").append('<span class="kj_ball' + parseInt(nums[i], 10) + ' kj_ball_sp"></span>');
+                        }
+                    }
+                    donghua = 0;
+                }else{
+                    var codes = latest.code.split(",");
+                    if(codes.length == 3){
+                        $(".donghua1").hide();
+                        $(".donghua2").hide();
+                        $(".donghua3").show();
+                        $(".ball5").hide();
+                        $(".ball10").hide();
+                    }
+                    if(codes.length == 5){
+                        $(".donghua3").hide();
+                        $(".donghua2").hide();
+                        $(".donghua1").show();
+                        $(".ball5").hide();
+                        $(".ball10").hide();
+                    }
+                    if(codes.length == 10){
+                        $(".donghua1").hide();
+                        $(".donghua3").hide();
+                        $(".donghua2").show();
+                        $(".ball5").hide();
+                        $(".ball10").hide();
+                    }
+                    setTimeout(function (res) {
+                        //用户余额
+                        showBalance();
+                        $(".donghua1").hide();
+                        $(".donghua2").hide();
+                        $(".donghua3").hide();
+                        var nums = [];
+                        if (ps.lotteryType == 1 || ps.lotteryType == 4 || ps.lotteryType == 6 || ps.lotteryType == 9) {
+                            nums = latest.code.split("");
+                        } else if (ps.lotteryType == 2 || ps.lotteryType == 7 || ps.lotteryType == 8 || ps.lotteryType == 10) {
+                            nums = latest.code.split(",");
+                        }
+                        else {
+                            throw '无效的数据引用';
+                        }
+                        if (ps.lotteryType == 8 || ps.lotteryType == 9) {
+                            $(".ball5").hide();
+                            $(".ball10").empty().show();
+                            for (var i in nums) {
+                                $(".ball10").append('<span class="kj_small_ball' + parseInt(nums[i], 10) + ' kj_ball_sp"></span>');
+                            }
+                        }
+                        else if (ps.lotteryType == 10) {
+                            $(".ball5").hide();
+                            $(".ball10").empty().show();
+                            for (var i in nums) {
+                                if (i == 6) {
+                                    $(".ball10").append('<span class="kj_lhc_ball_pos">+</span>');
+                                }
+                                $(".ball10").append('<span class="kj_lhc_ball' + parseInt(nums[i], 10) + ' kj_lhc_ball_pos' + i + ' kj_ball_sp">' + nums[i] + '</span>');
+                            }
+                        }
+                        else {
+                            $(".ball5").empty().show();
+                            $(".ball10").hide();
+                            for (var i in nums) {
+                                $(".ball5").append('<span class="kj_ball' + parseInt(nums[i], 10) + ' kj_ball_sp"></span>');
+                            }
+                        }
+                    },1000);
+                    $('.kj_right_btn_myFa').click();
+                    $('.kj_right_btn_myZh').click();
                 }
+                // $(".donghua1").hide();
+                // $(".donghua2").hide();
+                // $(".donghua3").show();
+                // $(".ball5").hide();
+                // $(".ball10").hide();
             },
             getMoreInfo: function (code) {   //得到扩展信息
                 var $result = {};
@@ -2766,7 +3035,7 @@ var runTime = {
                     $result.danshuang = drawBar.danshuang(nums);
                 }
                 else if (ps.lotteryType == 6) {
-                    var nums = code.split("");
+                    var nums = code.split(",");
                     $result.leixing = drawBar.leixing(nums);
                     $result.qshz = parseInt(nums[0]) + parseInt(nums[1]) + parseInt(nums[2]);
                 }
@@ -2775,8 +3044,8 @@ var runTime = {
                     $result.pkzt = drawBar.pokerZutai(nums[0], nums[1], nums[2]);
                 }
                 else if (ps.lotteryType == 8) {
-                    var nums = code.split(" ");
-                    $result.xt = drawBar.pk10xt(nums[0], nums[1], nums[2], nums[3], nums[4], nums[5], nums[6], nums[7], nums[8], nums[9]);
+                    // var nums = code.split(" ");
+                    // $result.xt = drawBar.pk10xt(nums[0], nums[1], nums[2], nums[3], nums[4], nums[5], nums[6], nums[7], nums[8], nums[9]);
                 }
 
                 return $result;

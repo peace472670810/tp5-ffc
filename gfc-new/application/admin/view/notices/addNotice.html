@@ -60,7 +60,7 @@
 $(function(){	
 	var ue = UE.getEditor('editor',{
 		 toolbars: [
-            ['source', 'undo', 'redo', '|', 'fontsize', '|',  'bold', 'italic', 'underline', 'forecolor','|',  '}', ],
+            ['source', 'undo', 'redo', '|',  '|',  'bold', 'italic', 'underline', 'forecolor','|',  '}', ],
             [   'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|',
                 'rowspacingtop', 'rowspacingbottom', 'lineheight', '|', ]
         ]
@@ -95,7 +95,7 @@ $(function(){
 				    if(res){
                         layer.msg('添加成功!',{icon:1,time:2000});
                        setTimeout(function(){
-                           parent.location.href = "{:url('Notices/getNotice')}";
+                           parent.location.replace(parent.location.href);
 					   },1000);
 					}else{
                         layer.msg('添加失败!',{icon:2,time:2000});

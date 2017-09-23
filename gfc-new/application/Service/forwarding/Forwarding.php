@@ -6,11 +6,10 @@
  * Time: 13:23
  */
 
-namespace app\Service\Forwarding;
+namespace app\Service\forwarding;
 
 use think\Loader;
 use think\Log;
-
 class  Forwarding
 {
     protected  static  $error_code = [

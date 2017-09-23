@@ -309,7 +309,7 @@ ul li{list-style:none;}
 }
 
 .ui-body-c .ui-link:visited {
-   /* color: #2489CE *//*{c-body-link-visited}*/;
+    /* color: #2489CE *//*{c-body-link-visited}*/;
 }
 
 .ui-body-c .ui-link:hover {
@@ -481,7 +481,7 @@ ul li{list-style:none;}
 
 /* Structure */
 
-/* links within "buttons" 
+/* links within "buttons"
 -----------------------------------------------------------------------------------------------------------*/
 
 a.ui-link-inherit {
@@ -617,7 +617,7 @@ only screen and (min-resolution: 240dpi) {
     .ui-icon-plus, .ui-icon-minus, .ui-icon-delete, .ui-icon-arrow-r,
     .ui-icon-arrow-l, .ui-icon-arrow-u, .ui-icon-arrow-d, .ui-icon-check,
     .ui-icon-gear, .ui-icon-refresh, .ui-icon-forward, .ui-icon-back,
-    .ui-icon-grid, .ui-icon-star, .ui-icon-alert, .ui-icon-info, .ui-icon-home, .ui-icon-search, .ui-icon-searchfield:after, 
+    .ui-icon-grid, .ui-icon-star, .ui-icon-alert, .ui-icon-info, .ui-icon-home, .ui-icon-search, .ui-icon-searchfield:after,
     .ui-icon-checkbox-off, .ui-icon-checkbox-on, .ui-icon-radio-off, .ui-icon-radio-on {
         background-image: url(images/icons-36-white.png);
         -moz-background-size: 776px 18px;
@@ -715,7 +715,7 @@ only screen and (min-resolution: 240dpi) {
 }
 .ui-icon-checkbox-off,
 .ui-icon-radio-off {
-    background-color: transparent;	
+    background-color: transparent;
 }
 .ui-checkbox-on .ui-icon,
 .ui-radio-on .ui-icon {
@@ -933,7 +933,7 @@ only screen and (min-resolution: 240dpi) {
 
 .ui-li
 {
-    padding: 0px !important;    
+    padding: 0px !important;
     font-weight: normal !important;
     background: #f6f6f3;
 }
@@ -1027,7 +1027,7 @@ fieldset
     float: left;
     width: 20%;
     margin: 0px 0px 0px 0px;
-    padding-top: 2px;    
+    padding-top: 2px;
 }
 
 .hl-logo img{
@@ -1042,7 +1042,7 @@ fieldset
 }
 .hl-header-no-logo
 {
-    background: url(images/bg.png) repeat-x center 0px;	
+    background: url(images/bg.png) repeat-x center 0px;
     /*    background-color: #e1b43f;*/
     width: 100%;
     height: 5px;
@@ -1064,9 +1064,9 @@ fieldset
 .hl-login-logo
 {
     position:relative;
-    text-align:center; 
+    text-align:center;
     margin:0 auto;
-    margin-top:0px;	
+    margin-top:0px;
 }
 .hl-options
 {
@@ -1098,12 +1098,12 @@ fieldset
 }
 
 .hl-top-nav-menu .ui-corner-left{
-    border-top-left-radius: 0.3em !important;       
+    border-top-left-radius: 0.3em !important;
     border-bottom-left-radius: 0.3em !important;
 }
 
 .hl-top-nav-menu .ui-corner-right {
-    border-top-right-radius: 0.3em !important;    
+    border-top-right-radius: 0.3em !important;
     border-bottom-right-radius: 0.3em !important;
 }
 
@@ -1113,7 +1113,7 @@ fieldset
 
 .hl-button-refresh
 {
-    background: url(images/ico-refresh.png) no-repeat;	    
+    background: url(images/ico-refresh.png) no-repeat;
     width: 25px;
     height: 25px;
     float: right;
@@ -1162,12 +1162,12 @@ fieldset
 }
 
 .hl-bottom-nav-menu .ui-corner-left{
-    border-top-left-radius: 0.3em !important;       
+    border-top-left-radius: 0.3em !important;
     border-bottom-left-radius: 0.3em !important;
 }
 
 .hl-bottom-nav-menu .ui-corner-right {
-    border-top-right-radius: 0.3em !important;    
+    border-top-right-radius: 0.3em !important;
     border-bottom-right-radius: 0.3em !important;
 }
 
@@ -1214,7 +1214,7 @@ fieldset
 .hl-draw-container {
     float: left;
     clear: both;
-    width: 100%;    
+    width: 100%;
 }
 
 .hl-draw-select-container {
@@ -1351,7 +1351,7 @@ fieldset
 }
 
 .hl-search-bet{
-    width: 35%;    
+    width: 35%;
     color: #cb1c02;
     display: inline-block;
     margin-left: 0px !important;
@@ -1377,7 +1377,7 @@ fieldset
 }
 
 .hl-search-status {
-    width: 20%;    
+    width: 20%;
     text-align: right;
     display: inline-block;
     margin-right: 0px !important;
@@ -1441,7 +1441,7 @@ fieldset
 .hl-detail-container {
     float: left;
     clear: both;
-    width: 100%;    
+    width: 100%;
 }
 
 .hl-detail-button-container {
@@ -1473,7 +1473,7 @@ fieldset
 .hl-detail-button {
     float: left;
     width: 20%;
-    margin-top: 2px !important; 
+    margin-top: 2px !important;
 }
 
 .hl-detail-button .ui-shadow{
@@ -1503,7 +1503,7 @@ fieldset
     font-size: 16px !important;
     float: left;
     width: 60%;
-    padding-top: 7px;    
+    padding-top: 7px;
     text-align: center;
 }
 
@@ -1623,7 +1623,7 @@ fieldset
 
 .hl-order-period {
     font-size: 16px !important;
-    padding-left: 2px; 
+    padding-left: 2px;
 }
 
 .hl-order-countdown-container {
@@ -1646,7 +1646,7 @@ fieldset
 
 .hl-order-countdown-title {
     float: left;
-    padding-top: 3px;
+    padding-top: 0px;
     color: #000;
     font-weight: normal;
     font-style: normal;
@@ -1668,7 +1668,7 @@ fieldset
 .hl-order-container {
     float: left;
     clear: both;
-    width: 100%;    
+    width: 100%;
 }
 
 .hl-order-select-container {
@@ -2069,7 +2069,7 @@ fieldset
     float: left !important;
     clear: both;
     width: 100% !important;
-} 
+}
 
 .hl-order-confirm-footer-top .ui-corner-all {
     border-top-left-radius: 0.3em !important;
@@ -2143,10 +2143,10 @@ fieldset
 
 .hl-captcha-refresh
 {
-    background: url(images/ico-refresh.png) no-repeat;	    
+    background: url(images/ico-refresh.png) no-repeat;
     width: 25px;
     height: 25px;
-    float: left;    
+    float: left;
     margin-bottom: 5px;
     cursor: pointer;
 }
@@ -2167,7 +2167,7 @@ fieldset
     margin-bottom: 5px;
 }
 
-.hl-login-footer 
+.hl-login-footer
 {
     float: left;
     width: 100%;
@@ -2289,7 +2289,7 @@ fieldset
 .hl-account-container {
     float: left;
     clear: both;
-    width: 100%;    
+    width: 100%;
 }
 
 .hl-account-button-container {
@@ -2514,7 +2514,7 @@ fieldset
 }
 
 .hl-account-inquiry-date-title{
-    width: 28%;    
+    width: 28%;
     display: inline-block;
 }
 
@@ -2524,13 +2524,13 @@ fieldset
 }
 
 .hl-account-inquiry-type-title {
-    width: 19%;    
+    width: 19%;
     text-align: right;
     display: inline-block;
 }
 
 .hl-account-inquiry-date{
-    width: 29%;    
+    width: 29%;
     display: inline-block;
     margin-left: 0px !important;
     vertical-align: top;
@@ -2545,7 +2545,7 @@ fieldset
 }
 
 .hl-account-inquiry-type {
-    width: 19%;    
+    width: 19%;
     text-align: right;
     display: inline-block;
     margin-left: -10px !important;
@@ -2573,7 +2573,7 @@ fieldset
 .hl-sport-container {
     float: left;
     clear: both;
-    width: 100%;    
+    width: 100%;
 }
 
 .hl-sport-button-container {
@@ -2644,7 +2644,7 @@ fieldset
     width: auto !important;
 }
 .hl-order-game-button {
-    background: url(images/game-buttons.png) no-repeat center 0px !important;	
+    background: url(images/game-buttons.png) no-repeat center 0px !important;
     width: 100px !important;
     height: 30px !important;
 }

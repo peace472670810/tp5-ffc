@@ -17,7 +17,7 @@ window.alert = function(str)
     strHtml = "<ul style=\"list-style:none;margin:0px;padding:0px;width:100%;border:1px solid #cd1b02;border-radius:5px;background:#f6f6f3;\">\n";
     strHtml += " <li style=\"background:#cd1b02;color:#fff;text-align:center;padding-left:20px;font-size:18px;font-weight:bold;height:41px;line-height:41px;border-bottom:1px solid #cd1b02;\">友情提示</li>\n";
     strHtml += " <li style=\"background:#f6f6f3;text-align:center;font-size:14px;height:100px;line-height:100px;\">"+str+"</li>\n";
-    strHtml += " <li style=\"text-align:center;font-weight:bold;height:46px;line-height:25px;\"><input type=\"button\" value=\"确 定\" onclick=\"doOk()\" style=\"width: 90%;height: 35px;color: #fff;border: 1px solid #cd1b02;font-size: 16px;border-radius: 5px;background-image: -webkit-gradient(linear, 0 0, 0 70%, from(#cd1b02), to(#cd1b02));background-image: -moz-linear-gradient(#cd1b02, #cd1b02);background-image:-ms-linear-gradient(#cd1b02, #cd1b02);\" /></li>\n";
+    strHtml += " <li class='checkLogin' style=\"text-align:center;font-weight:bold;height:46px;line-height:25px;\"><input type=\"button\" value=\"确 定\" onclick=\"doOk()\" style=\"width: 90%;height: 35px;color: #fff;border: 1px solid #cd1b02;font-size: 16px;border-radius: 5px;background-image: -webkit-gradient(linear, 0 0, 0 70%, from(#cd1b02), to(#cd1b02));background-image: -moz-linear-gradient(#cd1b02, #cd1b02);background-image:-ms-linear-gradient(#cd1b02, #cd1b02);\" /></li>\n";
     strHtml += "</ul>\n";
     alertFram.innerHTML = strHtml;
     //function doOk(){
@@ -32,28 +32,252 @@ window.alert = function(str)
 function doOk(){
     $(".alertFram").hide();
 }
+var into={};
+server.setInter = function(data,nowTime){ 
+   if(data.state != 1 && data.state != 0 ){
+      var   str = "<span style='color:#ef0808;font-size:65%;'>等待开奖</span>";
+      if(data.lid == 2){
+            $("#gameCQSSC").find("p").find("i").removeClass();
+            $("#gameCQSSC").find("p").find("i").addClass("am-icon-hourglass am-margin-right-xs  text-kaijiangzhong");
+            $("#gameCQSSC").find("p").find("span").html(str);
+        }else if(data.lid == 8){
+             $("#gameXJSSC").find("p").find("i").removeClass();
+            $("#gameXJSSC").find("p").find("i").addClass("am-icon-hourglass am-margin-right-xs  text-kaijiangzhong");
+            $("#gameXJSSC").find("p").find("span").html(str);
+        }else if(data.lid == 14){
+             $("#gameTJSSC").find("p").find("i").removeClass();
+            $("#gameTJSSC").find("p").find("i").addClass("am-icon-hourglass am-margin-right-xs  text-kaijiangzhong");
+            $("#gameTJSSC").find("p").find("span").html(str);
+        }else if(data.lid == 26){
+             $("#gameSD11Y").find("p").find("i").removeClass();
+            $("#gameSD11Y").find("p").find("i").addClass("am-icon-hourglass am-margin-right-xs  text-kaijiangzhong");
+            $("#gameSD11Y").find("p").find("span").html(str);
+        }else if(data.lid == 27){
+             $("#gameJX115").find("p").find("i").removeClass();
+            $("#gameJX115").find("p").find("i").addClass("am-icon-hourglass am-margin-right-xs  text-kaijiangzhong");
+            $("#gameJX115").find("p").find("span").html(str);
+        }else if(data.lid == 24){
+             $("#gameGD115").find("p").find("i").removeClass();
+            $("#gameGD115").find("p").find("i").addClass("am-icon-hourglass am-margin-right-xs  text-kaijiangzhong");
+            $("#gameGD115").find("p").find("span").html(str);
+        }else if(data.lid == 9){
+             $("#gameJSKS").find("p").find("i").removeClass();
+            $("#gameJSKS").find("p").find("i").addClass("am-icon-hourglass am-margin-right-xs  text-kaijiangzhong");
+            $("#gameJSKS").find("p").find("span").html(str);
+        }else if(data.lid == 30){
+             $("#gameHBKS").find("p").find("i").removeClass();
+            $("#gameHBKS").find("p").find("i").addClass("am-icon-hourglass am-margin-right-xs  text-kaijiangzhong");
+            $("#gameHBKS").find("p").find("span").html(str);
+        }else if(data.lid == 28){
+             $("#gameFC3D").find("p").find("i").removeClass();
+            $("#gameFC3D").find("p").find("i").addClass("am-icon-hourglass am-margin-right-xs  text-kaijiangzhong");
+            $("#gameFC3D").find("p").find("span").html(str);
+        }else if(data.lid == 29){
+             $("#gameP3P5").find("p").find("i").removeClass();
+            $("#gameP3P5").find("p").find("i").addClass("am-icon-hourglass am-margin-right-xs  text-kaijiangzhong");
+            $("#gameP3P5").find("p").find("span").html(str);
+        }else if(data.lid == 6){
+            $("#gamePK10").find("p").find("i").removeClass();
+            $("#gamePK10").find("p").find("i").addClass("am-icon-hourglass am-margin-right-xs  text-kaijiangzhong");
+            $("#gamePK10").find("p").find("span").html(str);
+        }
+        return;
+   }
+    var serverTime = nowTime * 1000;
+    var dateTime = new Date().getTime();
+    var difference =  dateTime - serverTime;
+    clearInterval(into[data.lid]);
+    into[data.lid]=setInterval(function(){ 
+        var endTime =new Date(data.end_time).getTime();
+        var nowTimess = new Date().getTime();
+        var nMS=endTime - nowTimess + difference;
+        var myD=Math.floor(nMS/(1000 * 60 * 60 * 24));
+        var myH=Math.floor(nMS/(1000*60*60)) % 24;
+        var myM=Math.floor(nMS/(1000*60)) % 60;
+        var myS=Math.floor(nMS/1000) % 60;
+        var myMS=Math.floor(nMS/100) % 10;
+        if(myD>= 0){
+           if(data.lid == 2){
+                $("#gameCQSSC").find("p").find("i").addClass("am-icon-hourglass am-margin-right-xs am-icon-spin text-kaijiangzhong");
+            }else if(data.lid == 8){
+                $("#gameXJSSC").find("p").find("i").addClass("am-icon-hourglass am-margin-right-xs am-icon-spin text-kaijiangzhong");
+            }else if(data.lid == 14){
+                $("#gameTJSSC").find("p").find("i").addClass("am-icon-hourglass am-margin-right-xs am-icon-spin text-kaijiangzhong");
+            }else if(data.lid == 26){
+                $("#gameSD11Y").find("p").find("i").addClass("am-icon-hourglass am-margin-right-xs am-icon-spin text-kaijiangzhong");
+            }else if(data.lid == 27){
+                $("#gameJX115").find("p").find("i").addClass("am-icon-hourglass am-margin-right-xs am-icon-spin text-kaijiangzhong");
+            }else if(data.lid == 24){
+                $("#gameGD115").find("p").find("i").addClass("am-icon-hourglass am-margin-right-xs am-icon-spin text-kaijiangzhong");
+            }else if(data.lid == 9){
+                $("#gameJSKS").find("p").find("i").addClass("am-icon-hourglass am-margin-right-xs am-icon-spin text-kaijiangzhong");
+            }else if(data.lid == 30){
+                $("#gameHBKS").find("p").find("i").addClass("am-icon-hourglass am-margin-right-xs am-icon-spin text-kaijiangzhong");
+            }else if(data.lid == 28){
+                $("#gameFC3D").find("p").find("i").addClass("am-icon-hourglass am-margin-right-xs am-icon-spin text-kaijiangzhong");
+            }else if(data.lid == 29){
+                $("#gameP3P5").find("p").find("i").addClass("am-icon-hourglass am-margin-right-xs am-icon-spin text-kaijiangzhong");
+            }else if(data.lid == 6){
+                $("#gamePK10").find("p").find("i").addClass("am-icon-hourglass am-margin-right-xs am-icon-spin text-kaijiangzhong");
+            }      
+          var  str ="<span style='font-size:75%' >"+myH+":"+myM+":"+myS+"</span>";
+        }else{
+                if(data.lid == 2){
+                $("#gameCQSSC").find("p").find("i").removeClass();
+                $("#gameCQSSC").find("p").find("i").addClass("am-icon-hourglass am-margin-right-xs  text-kaijiangzhong");
+            }else if(data.lid == 8){
+                $("#gameXJSSC").find("p").find("i").removeClass();
+                $("#gameXJSSC").find("p").find("i").addClass("am-icon-hourglass am-margin-right-xs  text-kaijiangzhong");
+            }else if(data.lid == 14){
+                $("#gameTJSSC").find("p").find("i").removeClass();
+                $("#gameTJSSC").find("p").find("i").addClass("am-icon-hourglass am-margin-right-xs  text-kaijiangzhong");
+            }else if(data.lid == 26){
+                $("#gameSD11Y").find("p").find("i").removeClass();
+                $("#gameSD11Y").find("p").find("i").addClass("am-icon-hourglass am-margin-right-xs  text-kaijiangzhong");
+            }else if(data.lid == 27){
+                $("#gameJX115").find("p").find("i").removeClass();
+                $("#gameJX115").find("p").find("i").addClass("am-icon-hourglass am-margin-right-xs  text-kaijiangzhong");
+            }else if(data.lid == 24){
+                $("#gameGD115").find("p").find("i").removeClass();
+                $("#gameGD115").find("p").find("i").addClass("am-icon-hourglass am-margin-right-xs  text-kaijiangzhong");
+            }else if(data.lid == 9){
+                $("#gameJSKS").find("p").find("i").removeClass();
+                $("#gameJSKS").find("p").find("i").addClass("am-icon-hourglass am-margin-right-xs  text-kaijiangzhong");
+            }else if(data.lid == 30){
+                $("#gameHBKS").find("p").find("i").removeClass();
+                $("#gameHBKS").find("p").find("i").addClass("am-icon-hourglass am-margin-right-xs  text-kaijiangzhong");
+            }else if(data.lid == 28){
+                $("#gameFC3D").find("p").find("i").removeClass();
+                $("#gameFC3D").find("p").find("i").addClass("am-icon-hourglass am-margin-right-xs  text-kaijiangzhong");
+            }else if(data.lid == 29){
+                $("#gameP3P5").find("p").find("i").removeClass();
+                $("#gameP3P5").find("p").find("i").addClass("am-icon-hourglass am-margin-right-xs  text-kaijiangzhong");
+            }else if(data.lid == 6){
+                $("#gamePK10").find("p").find("i").removeClass();
+                $("#gamePK10").find("p").find("i").addClass("am-icon-hourglass am-margin-right-xs  text-kaijiangzhong");
+            }
+          var   str = "<span style='color:#ef0808;font-size:65%;'>等待开奖</span>";
+                clearInterval(data.lid);
+        }
+        if(data.lid == 2){
+            $("#gameCQSSC").find("p").find("span").html(str);
+        }else if(data.lid == 8){
+            $("#gameXJSSC").find("p").find("span").html(str)
+        }else if(data.lid == 14){
+            $("#gameTJSSC").find("p").find("span").html(str)
+        }else if(data.lid == 26){
+            $("#gameSD11Y").find("p").find("span").html(str)
+        }else if(data.lid == 27){
+            $("#gameJX115").find("p").find("span").html(str)
+        }else if(data.lid == 24){
+            $("#gameGD115").find("p").find("span").html(str)
+        }else if(data.lid == 9){
+            $("#gameJSKS").find("p").find("span").html(str)
+        }else if(data.lid == 30){
+            $("#gameHBKS").find("p").find("span").html(str)
+        }else if(data.lid == 28){
+            $("#gameFC3D").find("p").find("span").html(str)
+        }else if(data.lid == 29){
+            $("#gameP3P5").find("p").find("span").html(str)
+        }else if(data.lid == 6){
+            $("#gamePK10").find("p").find("span").html(str)
+        }
+    }, 100);
+}
+server.getDjs=function(){
+    $.ajax({
+                  url: ISSUE_URL,
+                  cache: false,
+                  success: function(data){
+                   
+                    server.setInter(data.issueInfo[2],data.serverTime); 
+                   
+                    server.setInter(data.issueInfo[8],data.serverTime);
+                   
+                    server.setInter(data.issueInfo[14],data.serverTime);
+                   
+                    server.setInter(data.issueInfo[26],data.serverTime);
+                   
+                    server.setInter(data.issueInfo[27],data.serverTime);
+                   
+                    server.setInter(data.issueInfo[24],data.serverTime);
+                   
+                    server.setInter(data.issueInfo[9],data.serverTime);
+                   
+                    server.setInter(data.issueInfo[30],data.serverTime);
+                   
+                     server.setInter(data.issueInfo[28],data.serverTime);
+                   
+                    server.setInter(data.issueInfo[29],data.serverTime);
+                   
+                    server.setInter(data.issueInfo[6],data.serverTime);
+                  
+                    //console.log(into);
+                  }
+        });
+    
+}
+var dsq=null;
+server.setDjs=function(){
+    
+    dsq = setInterval(function(){     
+        $.ajax({
+                  url: ISSUE_URL,
+                  cache: false,
+                  success: function(data){
+  
+                    var times=data.serverTime+1;
+                    
+                    server.setInter(data.issueInfo[2],times); 
+                   
+                    server.setInter(data.issueInfo[8],times);
+        
+                    server.setInter(data.issueInfo[14],times);
+        
+                    server.setInter(data.issueInfo[26],times);
+        
+                    server.setInter(data.issueInfo[27],times);
+        
+                    server.setInter(data.issueInfo[24],times);
+                   
+                    server.setInter(data.issueInfo[9],times);
+        
+                    server.setInter(data.issueInfo[30],times);
+        
+                     server.setInter(data.issueInfo[28],times);
+        
+                    server.setInter(data.issueInfo[29],times);
+                   
+                    server.setInter(data.issueInfo[6],times);
+        
+                    //console.log(into);
+                  }
+              });
+     },5000);
+   
+}
 server.getConfig = function(callback) {
-    var config = {
-        'games':
-                [
-                    /*{'id': 'SSCFFC', 'lottery_id': 11, 'req': 'sscffc', 'desc': '一分钟一期', 'gc': null},*/
-                    {'id': 'CQSSC', 'lottery_id': 1, 'req': 'cqssc', 'desc': '最多人玩', 'gc': null},
-                    /*{'id': 'HLJSSC', 'lottery_id': 3, 'req': 'hljssc', 'desc': '十分钟一期', 'gc': null},*/
-                    {'id': 'XJSSC', 'lottery_id': 4, 'req': 'xjssc', 'desc': '十分钟一期', 'gc': null},
-                    {'id': 'TJSSC', 'lottery_id': 8, 'req': 'tjssc', 'desc': '十分钟一期', 'gc': null},
-                    /*{'id': 'CQ115', 'lottery_id': 5, 'req': 'cq115', 'desc': '返奖率高', 'gc': null},*/
-                    {'id': 'SD11Y', 'lottery_id': 2, 'req': 'sd11y', 'desc': '返奖率高', 'gc': null},
-                    {'id': 'JX115', 'lottery_id': 6, 'req': 'jx115', 'desc': '返奖率高', 'gc': null},
-                    {'id': 'GD115', 'lottery_id': 7, 'req': 'gd115', 'desc': '返奖率高', 'gc': null},
-                    {'id': 'JSKS', 'lottery_id': 12, 'req': 'jsks', 'desc': '三个号码一注', 'gc': null},
-                    {'id': 'HBKS', 'lottery_id': 17, 'req': 'hbks', 'desc': '三个号码一注', 'gc': null},
-                    {'id': 'FC3D', 'lottery_id': 9, 'req': 'low3D', 'desc': '最容易中奖', 'gc': null},
-                    {'id': 'P3P5', 'lottery_id': 10, 'req': 'P3P5', 'desc': '易玩多中', 'gc': null},
-                    {'id': 'PK10', 'lottery_id': 16, 'req': 'pk10', 'desc': '', 'gc': null}
-                ]
-    }
-    callback(config);
-};
+          var config = {
+          'games':
+            [
+                /*{'id': 'SSCFFC', 'lottery_id': 11, 'req': 'sscffc', 'desc': '一分钟一期', 'gc': null},*/
+                {'id': 'CQSSC', 'lottery_id': 2, 'req': 'cqssc', 'desc':'' , 'gc': null},
+                /*{'id': 'HLJSSC', 'lottery_id': 3, 'req': 'hljssc', 'desc': '十分钟一期', 'gc': null},*/
+                {'id': 'XJSSC', 'lottery_id': 8, 'req': 'xjssc', 'desc':'' , 'gc': null},
+                {'id': 'TJSSC', 'lottery_id': 14, 'req': 'tjssc', 'desc':'', 'gc': null},
+                /*{'id': 'CQ115', 'lottery_id': 5, 'req': 'cq115', 'desc': '返奖率高', 'gc': null},*/
+                {'id': 'SD11Y', 'lottery_id': 26, 'req': 'sd11y', 'desc': '', 'gc': null},
+                {'id': 'JX115', 'lottery_id': 27, 'req': 'jx115', 'desc': '', 'gc': null},
+                {'id': 'GD115', 'lottery_id': 24, 'req': 'gd115', 'desc': '', 'gc': null},
+                {'id': 'JSKS', 'lottery_id': 9, 'req': 'jsks', 'desc': '', 'gc': null},
+                {'id': 'HBKS', 'lottery_id': 30, 'req': 'hbks', 'desc': '', 'gc': null},
+                {'id': 'FC3D', 'lottery_id': 28, 'req': 'low3D', 'desc':'', 'gc': null},
+                {'id': 'P3P5', 'lottery_id': 29, 'req': 'P3P5', 'desc': '', 'gc': null},
+                {'id': 'PK10', 'lottery_id': 6, 'req': 'pk10', 'desc':'', 'gc': null}
+            ]
+         }
+       callback(config);    
+}; server.getDjs();
 server.getGameConfig = function(gameId, callback) {
     var game = utils.getGameById(gameId);
     //使用同步ajaxa 设置 sync: false,
@@ -61,7 +285,7 @@ server.getGameConfig = function(gameId, callback) {
         beforeSend: function() {
         },
         async: false,
-        url: RP_DATA + '?c=game&a=' + game.req,
+        url: getLotteryInfoUrl + '?lid=' + game.lottery_id,
         data: {},
         dataType: 'json',
         error: function() {
@@ -70,7 +294,7 @@ server.getGameConfig = function(gameId, callback) {
         },
         success: function(result) {
             if (result.errno) {
-                alert(result.errstr);
+                alert(result.message);
                 callback(null);
             } else {
                 callback(result);
@@ -81,10 +305,9 @@ server.getGameConfig = function(gameId, callback) {
 server.getDraw = function(gameId, callback) {
     var game = utils.getGameById(gameId);
     $.ajax({
-        url: RP_DATA + "?c=game&a=play",
+        url: getCurIssueUrl,
         type: "POST",
         data: {
-            op: "getCurIssue",
             lotteryId: game.lottery_id
         },
         cache: false,
@@ -97,6 +320,8 @@ server.getDraw = function(gameId, callback) {
                 result.curServerTime = response.serverTime;
                 result.curRemainTime = getTS(result.curIssueInfo.end_time) - getTS(result.curServerTime);
                 result.curWaitOpenTime = 30;
+                result.waite_time = response.issueInfo.waite_time;
+                result.state = response.issueInfo.state;
                 result.lastIssueInfo = response.lastIssueInfo;
                 callback(result);
             }
@@ -104,7 +329,6 @@ server.getDraw = function(gameId, callback) {
                 callback(LOGOUT);
             }
             else {
-
                 alert(response.errstr);
             }
         },
@@ -121,7 +345,7 @@ server.getDraw = function(gameId, callback) {
 server.getDrawResult = function(gameId, callback) {
     var game = utils.getGameById(gameId);
     common.ajax(OPENISSUE_URL,
-            {'lotteryName': game.req},
+            {'lid': game.lottery_id},
     function(result) {
         var s = result;
         var list = [];
@@ -173,12 +397,46 @@ server.logout = function(callback) {
 server.getAccount = function(data, callback) {
     common.ajax( BALANCE_URL, {},
             function(result) {
+            if(result == -1){
+               var  primaryKey = localStorage.getItem('primaryKey');
+               $.ajax({
+                   type:"post",
+                   url:reLoginUrl,
+                   data:{primaryKey:primaryKey},
+                   dataType:"json",
+                   success:function (data) {
+                        if(!data){
+                            alert('登陆时间已经超时！');
+                            delCookie();
+                            $(".checkLogin").click(function (res) {
+                                location.href = loginOutUrl;
+                            });
+                        }else{
+                            console.log('登陆时间已经超时,现在已经重新连接登录！');
+                        }
+                   },
+                   error:function (data) {
+                       alert('登陆时间已经超时！');
+                       delCookie();
+                       $(".checkLogin").click(function (res) {
+                           location.href = loginOutUrl;
+                       });
+                   }
+               });
+            }else if(result == -2){
+                delCookie();
+                alert('您已经在另一地方登录，已经被挤下线!');
+                $(".checkLogin").click(function (res) {
+                    location.href = loginResetUrl;
+                });
+            }
                 var s = [];
                 s.push({
                     id: 1,
                     aId: 1,
                     val: result.balance
                 });
+                localStorage.setItem('primaryKey',getCookie('primaryKey'));
                 callback(s);
             },
             function(result) {
@@ -278,11 +536,11 @@ server.saveOrder = function(orderDetail, callback) {
             'mids': mids
         };
     }
-    common.ajax(RP_DATA + '?c=game&a=play', orderInfo,
+    common.ajax(buyUrl, orderInfo,
             function(result) {
                 if (result.errno == 0) {
                     var r = {
-                        no: result.pkgnum
+                        no: result.ordersums
                     };
                     callback(r);
                 } else {
@@ -299,23 +557,13 @@ server.saveOrder = function(orderDetail, callback) {
 };
 server.getOrders = function(data, callback) {
     var game = utils.getGameById(data.gameId);
-    var timeNow = new Date();
-    var start_time = new Date();
-    var end_time = new Date();
-    end_time.setTime(timeNow.getTime() + 24 * 60 * 60 * 1000);
-    end_time = end_time.format("yyyy-MM-dd");
-    start_time.setTime(timeNow.getTime() - (data.day - 1) * 24 * 60 * 60 * 1000);
-    start_time = start_time.format("yyyy-MM-dd");
-    common.ajax(RP_DATA + '?submit=%E6%9F%A5%E8%AF%A2&c=game&a=packageList&wrap_id=&end_time=' + end_time + '&start_time=' + start_time + '&curPage=' + data.pageNumber + '&lottery_id=' + game.lottery_id
-            , {},
-            function(result) {
+    common.ajax(buyRecordUrl + '?day=' + data.day + '&curPage=' + data.pageNumber + '&lottery_id=' + game.lottery_id,
+        {}, function(result) {
                 var r = {};
                 if (result) {
                     r.c = data.pageNumber + 1;
                     r.r = result;
-                }
-                else
-                {
+                } else {
                     r.r = [];
                     r.c = 0;
                 }
@@ -327,10 +575,9 @@ server.getOrders = function(data, callback) {
             $("#search")
             );
 };
+//注单详情
 server.getDetail = function(data, callback) {
-    //var url_a=data.trace_id>0?'traceDetail':'packageDetail' ;
-    var url_a = 'packageDetail';
-    var url = RP_DATA + '?c=game&a=' + url_a + '&wrap_id=' + data.id;
+    var url = OrderDetailUrl+ '?wrap_id=' + data.id+'&lid='+data.lid+'&mg_id='+data.mg_id+'&trace_id='+data.trace_id+'&issue='+data.issue;
     common.ajax(url, {},
             function(result) {
                 callback(result);
@@ -341,21 +588,25 @@ server.getDetail = function(data, callback) {
             $("#detail")
             );
 };
+//追号注单详情
+server.getTraceDetail = function(data,callback){
+    var url = OrderTraceDetail+'?trace_id='+data.trace_id;
+    common.ajax(url,{},function (result) {
+        callback(result);
+    },function (result) {
+        utils.errorMsg(result.code, $("#traceDetail"));
+    }, $("#traceDetail"));
+}
 server.withdraw = function(data, callback) {
-    var url_a = data.trace_id > 0 ? 'cancelTrace' : 'cacelPackage';
-    var url = RP_DATA + '?c=game&a=' + url_a;
-    var params = {'wrap_id': data.wrap_id};
-    if (data.trace_id > 0 && data.pkids) {
-        params['pkids[]'] = data.pkids;
-    }
-    common.ajax(url, params,
+    var url = cancelTraceUrl;
+    common.ajax(url, data,
             function(result) {
                 callback(result);
             },
             function(result) {
-                utils.errorMsg(result.code, $("#detail"));
+                utils.errorMsg(result.code, $("#traceDetail"));
             },
-            $("#detail")
+            $("#traceDetail")
             );
 };
 //get account withdraw
@@ -430,16 +681,15 @@ server.getPay = function(data, callback) {
 
 //get account withdraw
 server.getTracePage = function(data, callback) {
-    var url = RP_DATA + '?c=game&a=play';
-    common.ajax(url, {op: 'getTracePage', lotteryId: data.lotteryId, mids: data.mids},
+    common.ajax(getTracePageUrl, {op: 'getTracePage', lid: data.lotteryId, mids: data.mids},
     function(result) {
         callback(result);
     },
-            function(result) {
-                utils.errorMsg(result.errstr, $("#orderConfirm"));
-            },
-            $("#orderConfirm")
-            );
+    function(result) {
+        utils.errorMsg(result.errstr, $("#orderConfirm"));
+    },
+    $("#orderConfirm")
+    );
 };
 
 

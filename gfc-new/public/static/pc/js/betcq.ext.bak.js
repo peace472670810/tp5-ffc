@@ -5,13 +5,13 @@ $(function () {
             var str = '';
             var showCode = v.code;
             if (lottery_type == 1 || lottery_type == 4) {
-                showCode = showCode.charAt(0) + ' ' + showCode.charAt(1) + ' ' + showCode.charAt(2) + ' ' + showCode.charAt(3) + ' ' + showCode.charAt(4);
+                showCode = showCode.charAt(0) + ' ' + showCode.charAt(2) + ' ' + showCode.charAt(4) + ' ' + showCode.charAt(6) + ' ' + showCode.charAt(8);
                 str = '<li class="old_kj_left_box_list_li2"><span class="old_kj_left_box_list_s1">' + v.issue + '</span><span class="old_kj_left_box_list_s2">' + showCode + '</span><span class="old_kj_left_box_list_s3">' + v.prop.hszt + '&nbsp;&nbsp;&nbsp;&nbsp;' + v.prop.daxiao + '&nbsp;&nbsp;&nbsp;&nbsp;' + v.prop.danshuang + "</span></li>";
             } else if (lottery_type == 2) {
                 str = '<li class="old_kj_left_box_list_li2"><span class="old_kj_left_box_list_s1">' + v.issue + '</span><span class="old_kj_left_box_list_s2">' + v.code + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="old_kj_left_box_list_s3">' + v.prop.daxiao + '&nbsp;&nbsp;&nbsp;&nbsp;' + v.prop.danshuang + "&nbsp;&nbsp;&nbsp;&nbsp;</span></li>";
             }
             else if (lottery_type == 6) {
-                showCode = showCode.charAt(0) + ' ' + showCode.charAt(1) + ' ' + showCode.charAt(2);
+                showCode = showCode.charAt(0) + ' ' + showCode.charAt(2) + ' ' + showCode.charAt(4);
                 str = '<li class="old_kj_left_box_list_li2"><span class="old_kj_left_box_list_s1">' + v.issue + '</span><span class="old_kj_left_box_list_s2">' + showCode + '</span><span class="old_kj_left_box_list_s3">' + v.prop.qshz + '&nbsp;&nbsp;&nbsp;&nbsp;' + v.prop.leixing + "</span></li>";
             }
             else if (lottery_type == 7) {
@@ -27,11 +27,10 @@ $(function () {
             else if (lottery_type == 10) {
                 str = '<li class="old_kj_left_box_list_li2"><span class="old_kj_left_box_list_s1">' + v.issue + '</span><span class="old_kj_left_box_list_s2">' + showCode + '</span><span class="old_kj_left_box_list_s3"></span></li>';
             }
-
-
             return str;
         };
-        openedIssues.updateLast = function () {
+
+            openedIssues.updateLast = function () {
             var v = openedIssues[0];
             $("#todayIssuesBody").prepend(openedIssues.render(v));
         };
@@ -117,8 +116,7 @@ $(function () {
                                 function (k, v) {
                                     $('<li name="' + v.issue + '" class="todayRecentIssues"' + (k == 2 ? " style='width:80px;'" : "") + '>' + v.issue.substr(v.issue.length - 3) + (k == 2 ? "(当前期)" : "") + "</li>").click(function () {
                                         $(this).addClass("yellow").siblings().removeClass("yellow");
-                                        $.post("?c=api&a=play" + urlSession(), {
-                                                op: "getBuyRecords",
+                                        $.post(BuyRecordsUrl, {
                                                 lotteryId: lottery_id,
                                                 issue: $(this).attr("name")
                                             },
@@ -131,9 +129,7 @@ $(function () {
                                                     } else {
                                                         $.each(response.prj,
                                                             function (k, v) {
-
                                                                 $('<ul><li class="C1"><a target="_blank" href="/?c=api&a=packageDetail&wrap_id=' + v.wrapId + urlSession() + '">' + v.methodName + '</a></li><li class="C2">' + v.code + '</li><li class="C3">' + v.multiple + '</li><li class="C4">' + v.amount + '</li><li class="C5">' + v.prizeStatus + "</li></ul>").click(function () {
-
                                                                 }).appendTo("#todayIssuesBody");
                                                             });
                                                     }
@@ -206,33 +202,31 @@ $(function () {
             e.stopPropagation(); //阻止事件向上冒泡  
         });
         //公告
-        $.getJSON('/?op=notice&a=ajax&c=api' + urlSession(), function (data) {
+        $.getJSON(notice_url , function (data) {
             if (data.errno == 0) {
                 $("#notice2").append(data.hot);
                 //滚动
-                $("#notice2").Scroll({line: 1, speed: 500, timer: 2000});
+                var str = $(".ShowNewsMore").html();
+                if(!(typeof (str) == "undefined")){
+                    if(str.length >50){
+                        $("#notice2").Scroll({line: 1, speed: 500, timer: 2000});
+                    }
+                }
                 $("#layer_containerMore").append(data.all);
                 function showNotice(notice_id) {
-                    $(".popNewsLayer").hide();
-                    $(".notice_info_" + notice_id).show();
                     var i = $.layer({
-                        type: 1,
+                        type: 2,
                         title: '最新公告',
-                        offset: ['50px', ''],
+                        offset: ['100px', ''],
                         //border: [0],
-                        area: ['850px', 'auto'],
-                        page: {html: $('#layer_containerMore').html()},
-                        success: function (l) {
-                            $(".ShowNews").click(function () {
-                                $(".popNewsLayer").hide();
-                                var notice_id = $(this).attr('notice_id');
-                                $(".notice_info_" + notice_id).show();
-                            });
+                        area: ['900px', '500px'],
+                        iframe: {
+                            src: noticeUrl ,
+                            scrolling: 'auto'
                         }
 
                     });
                 }
-
                 //最新公告弹出层
                 $(".ShowNewsMore").click(function () {
                     var notice_id = $(this).attr('notice_id');
@@ -242,20 +236,20 @@ $(function () {
 
 
         });
-        $('#gamerule').click(function () {
-            var i = $.layer({
-                type: 2,
-                title: '游戏规则',
-                offset: ['50px', ''],
-                //border: [0],
-                area: ['850px', '500px'],
-                iframe: {
-                    src: '/?c=api&a=prizeDetail' + urlSession(),
-                    scrolling: 'auto'
-                }
-
-            });
-        });
+        // $('#gamerule').click(function () {
+        //     var i = $.layer({
+        //         type: 2,
+        //         title: '游戏规则',
+        //         offset: ['50px', ''],
+        //         //border: [0],
+        //         area: ['850px', '500px'],
+        //         iframe: {
+        //             src: '/?c=api&a=prizeDetail' + urlSession(),
+        //             scrolling: 'auto'
+        //         }
+        //
+        //     });
+        // });
         $('#prizerule').click(function () {
             var i = $.layer({
                 type: 2,
@@ -264,7 +258,7 @@ $(function () {
                 //border: [0],
                 area: ['850px', '500px'],
                 iframe: {
-                    src: '/?c=api&a=prizeDetail&lottery_id=' + lottery_id + urlSession(),
+                    src: prizeDetailUrl + '?lottery_id='+lottery_id ,
                     scrolling: 'auto'
                 }
 
@@ -275,17 +269,13 @@ $(function () {
             var ops = $(this).attr('name').split('_');
             window.location.href = "index.php?c=" + ops[0] + "&a=" + ops[1] + "&_=" + Math.random() + urlSession();
         });
-        //追号记录
-
-
+        //投注记录
         $('.kj_right_btn_myFa').click(function () {
             $(this).addClass('kj_right_btn_myFa_select');
             $('.kj_right_btn_myZh').removeClass('kj_right_btn_myZh_select');
             $("#mybetList").show();
             $("#myTraceList").hide();
-
-            $.post("?c=api&a=play" + urlSession(), {
-                    op: "getBuyRecords",
+            $.post(BuyRecordsUrl, {
                     lotteryId: lottery_id
                 },
                 function (response) {
@@ -296,10 +286,8 @@ $(function () {
                             $("#mybetListContent").empty();
                             $.each(response.prj,
                                 function (k, v) {
-                                    $("#mybetListContent").append('<li class="old_kj_left_box_list_li2"><a href="/?c=api&a=packageDetail&wrap_id=' + v.wrapId + urlSession() + '" target="_blank"><span class="old_kj_right_box_list_s1">' + v['issue'] + '</span><span class="old_kj_right_box_list_s2">￥' + v.amount + '</span><span class="old_kj_right_box_list_s3">' + v.prizeStatus + '</span></a></li>');
-
+                                    $("#mybetListContent").append('<li class="old_kj_left_box_list_li2"><a href="' +v.detailUrl + '" target="_blank"><span class="old_kj_right_box_list_s1">' + v.issue + '</span><span class="old_kj_right_box_list_s2">￥' + v.amount + '</span><span class="old_kj_right_box_list_s3">' + v.prizeStatus + '</span></a></li>');
                                 });
-
                         }
                     }
                     else {
@@ -307,35 +295,27 @@ $(function () {
                     }
                 },
                 "json");
-
-
         });
         $('.kj_right_btn_myZh').click(function () {
             $(this).addClass('kj_right_btn_myZh_select');
             $('.kj_right_btn_myFa').removeClass('kj_right_btn_myFa_select');
-
             $("#myTraceList").show();
             $("#mybetList").hide();
-            $.post("?c=api&a=play" + urlSession(), {
-                    op: "getBuyRecords",
-                    trace: '1',
+            $.post(traceRecordsUrl, {
                     lotteryId: lottery_id
                 },
                 function (response) {
                     if (response.errno == 0) {
-
                         if (response.prj.length == 0) {
-                            $("#myTraceListContent").html('暂时没有记录！');
+                            $("#myTraceListContent").empty();
+                            $("#myTraceListContent").append('<li class="old_kj_left_box_list_li2" ><a href="javascript:;" onclick="moreTraceRecord()" ><span class="old_kj_right_box_list_s1"></span><span class="old_kj_right_box_list_s2 kg_trace_record_btn1" id="kg_trace_record_btn1" >更多追号记录</span><span class="old_kj_right_box_list_s3"></span></a></li>');
                         } else {
                             $("#myTraceListContent").empty();
-
                             $.each(response.prj,
                                 function (k, v) {
-
-                                    $("#myTraceListContent").append('<li class="old_kj_left_box_list_li2"><a href="/?c=api&a=traceDetail&wrap_id=' + v.wrap_id + urlSession() + '" target="_blank"><span class="old_kj_right_box_list_s1">' + v.start_issue + '</span><span class="old_kj_right_box_list_s2">￥' + v.total_amount + '</span><span class="old_kj_right_box_list_s3">' + v.states + '</span></a></li>');
-
+                                    $("#myTraceListContent").append('<li class="old_kj_left_box_list_li2"><a href="'+v.detailUrl + '" target="_blank"><span class="old_kj_right_box_list_s1">' + v.start_issue + '</span><span class="old_kj_right_box_list_s2">￥' + v.total_amount + '</span><span class="old_kj_right_box_list_s3">' + v.states + '</span></a></li>');
                                 });
-
+                            $("#myTraceListContent").append('<li class="old_kj_left_box_list_li2" ><a href="javascript:;" onclick="moreTraceRecord()" ><span class="old_kj_right_box_list_s1"></span><span class="old_kj_right_box_list_s2 kg_trace_record_btn1" id="kg_trace_record_btn1" >更多追号记录</span><span class="old_kj_right_box_list_s3"></span></a></li>');
                         }
                     }
                     else {
@@ -343,60 +323,11 @@ $(function () {
                     }
                 },
                 "json");
-
-
         });
 
 
         $('.kj_right_btn_myFa').click();
-        //投注记录
-        $('#touzhu_jl').click(function () {
-            if ($('.kj_right_btn_myFa').hasClass('kj_right_btn_myFa_select')) {
-                var i = $.layer({
-                    type: 2,
-                    title: '投注记录',
-                    offset: ['400px', ''],
-                    //border: [0],
-                    area: ['850px', '500px'],
-                    iframe: {
-                        src: '/?c=api&a=packageList' + urlSession(),
-                        scrolling: 'auto'
-                    }
 
-                });
-            }
-            else {
-
-                var i = $.layer({
-                    type: 2,
-                    title: '追号记录',
-                    offset: ['400px', ''],
-                    //border: [0],
-                    area: ['850px', '500px'],
-                    iframe: {
-                        src: '/?c=api&a=traceList' + urlSession(),
-                        scrolling: 'auto'
-                    }
-
-                });
-            }
-        });
-//用户余额
-        showBalance();
-        setInterval(showBalance, 5000);
-//余额隐藏
-
-        $(".contr_icon").toggle(function () {
-            $("#nowBalance").hide();
-            setCookie('hideBalance', 1, 60 * 60 * 24 * 30);
-        }, function () {
-            $("#nowBalance").show();
-            delCookie('hideBalance');
-        });
-        // 默认是隐藏的
-        if (getCookie('hideBalance')) {
-            $(".contr_icon").click();
-        }
 
         //实时推荐
 //        function gamePromo() {

@@ -1,113 +1,155 @@
-﻿<!DOCTYPE HTML>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="renderer" content="webkit|ie-comp|ie-stand">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport"
-          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
-    <meta http-equiv="Cache-Control" content="no-siteapp"/>
-    <!--[if lt IE 9]>
-    <script type="text/javascript" src="lib/html5shiv.js"></script>
-    <script type="text/javascript" src="lib/respond.min.js"></script>
-    <![endif]-->
-    <link rel="stylesheet" type="text/css" href="../../static/static/h-ui/css/H-ui.min.css"/>
-    <link rel="stylesheet" type="text/css" href="../../static/static/h-ui.admin/css/H-ui.admin.css"/>
-    <link rel="stylesheet" type="text/css" href="../../static/lib/Hui-iconfont/1.0.8/iconfont.css"/>
-    <link rel="stylesheet" type="text/css" href="../../static/static/h-ui.admin/skin/default/skin.css" id="skin"/>
-    <link rel="stylesheet" type="text/css" href="../../static/static/h-ui.admin/css/style.css"/>
-    <!--[if IE 6]>
-    <!/meta 作为公共模版分离出去-->
-    <title>报表管理 > 注单详情 </title>
+﻿{include file="common/_meta"}
+<!--[if IE 6]>
+<!/meta 作为公共模版分离出去-->
+
+<title>报表管理 > 注单详情 </title>
 </head>
 <body>
-<nav class="breadcrumb"><a href="{:url('index/welcome')}"><i class="Hui-iconfont">&#xe67f;</i> 首页 </a><span
+<nav class="breadcrumb"><a class="maincolor" href="{:url('index/welcome')}"><i class="Hui-iconfont">&#xe67f;</i> 首页 </a><span
         class="c-gray en">&gt;</span> 报表管理 <span class="c-gray en">&gt;</span>
-    <a href="{:url('report/detailReport')}?u_username={$u_username}">会员注单【{$u_username}】</a>
+    <a class="maincolor" href="javascript:location.replace(location.href);">会员注单【{$u_username}】</a>
     <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
        href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="Hui-article">
     <article class="cl pd-20">
-        <div class="text-c">
-            <form action="{:url('report/detailReport')}" method="get">
-                开奖时间：
-                <input type="text" readonly name="start_time" value="{$start_time}"
-                       onFocus="WdatePicker({startDate:'%y-%M-%d 00:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})"
-                       id="logmin" class="input-text Wdate" style="width:165px;">
-                -
-                <input type="text" readonly name="end_time" value="{$end_time}"
-                       onFocus="WdatePicker({startDate:'%y-%M-%d 23:59:59',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})"
-                       id="logmax" class="input-text Wdate radius" style="width:165px;">
-                <span>
-					<input name="time_type" type="radio" value="0" id="sex-1" checked>
-					<label for="sex-1">北京时间 (2017-05-29 10:18:06) </label>
-					<input type="radio" id="sex-2" name="time_type" value="1">
-					<label for="sex-2">美东时间 (2017-05-28 22:18:06) </label>
-			</span>
-                <input type="hidden" name="u_username" value="{$u_username}"/>
-                <button name="" id="" class="btn btn-success radius" type="submit"><i class="Hui-iconfont">&#xe665;</i>
-                    查看
-                </button>
-            </form>
-        </div>
         <div class="mt-20 ">
 
             <table class="table table-border table-bordered table-hover table-bg table-sort radius">
                 <thead>
                 <tr class="text-c ">
-                    <th width="40">ID</th>
-                    <th width="80">用户</th>
-                    <th width="80">订单编号</th>
-                    <th width="50">彩种</th>
-                    <th width="50">玩法组</th>
-                    <th width="50">玩法</th>
-                    <th width="60">奖期</th>
-                    <th width="60">单倍注数</th>
-                    <th width="40">倍数</th>
-                    <th width="40">模式</th>
-                    <th width="60">投注金额</th>
-                    <th width="80">总公司占成</th>
-                    <th width="80">分公司占成</th>
-                    <th width="80">股东占成</th>
-                    <th width="80">总代占成</th>
-                    <th width="80">代理占成</th>
-                    <th width="80">购买时间</th>
-                    <th width="80">开奖时间</th>
-                    <th width="80">派彩时间</th>
-                    <th width="80">中奖状态</th>
-                    <th width="80">奖金</th>
-                    <th width="80">撤单状态</th>
+
+                    <th width="150">帐户名/订单编号</th>
+                    <th width="80">彩种类型/奖期</th>
+                    <th width="30">单倍注数</th>
+                    <th width="30">倍数</th>
+                    <th width="30">模式</th>
+                    {neq name='2' value="$bytype"}
+                     <th width="40" onclick=" bytyoe(2); "><a class="maincolor" href="javascript:;">投注金额   <i class="Hui-iconfont">&#xe679;</i></a> </th>
+                    {/neq} 
+                    {eq name='2' value="$bytype"}
+                    <th width="40" onclick=" bytyoe(1); "><a class="maincolor" href="javascript:;">投注金额 <i class="Hui-iconfont">&#xe674;</i></a> </th>
+                    {/eq} 
+                   
+                    <th width="30">奖金系列</th>
+                    <th width="70">购买时间</th>
+                    {neq name='4' value="$bytype"}
+                    <th width="70" onclick=" bytyoe(4); "><a class="maincolor" href="javascript:;">奖期截止时间 <i class="Hui-iconfont">&#xe679;</i></a></th>
+                    {/neq} 
+                    {eq name='4' value="$bytype"}
+                    <th width="70" onclick=" bytyoe(3); "><a class="maincolor" href="javascript:;">奖期截止时间 <i class="Hui-iconfont">&#xe674;</i></a></th>
+                    {/eq} 
+                   
+                    <th width="40">代理占成</th>
+                    <th width="40">总代占成</th>
+                    <th width="40">股东占成</th>
+                    <th width="40">分公司占成</th>
+                    <th width="40">总公司占成</th>
+                    {neq name='6' value="$bytype"} 
+                    <th width="40" onclick=" bytyoe(6); "><a class="maincolor" href="javascript:;">总奖金 <i class="Hui-iconfont">&#xe679;</i></a></th>
+                    {/neq} 
+                    {eq name='6' value="$bytype"} 
+                    <th width="40" onclick=" bytyoe(5); "><a class="maincolor" href="javascript:;">总奖金 <i class="Hui-iconfont">&#xe674;</i></a></th>
+                    {/eq} 
+                   
+                    <th width="30">中奖状态</th>
+                    <th width="30">派奖状态</th>
+                    <th width="30">撤单状态</th>
+
                 </tr>
                 </thead>
                 <tbody>
-                {if condition="!empty($list)"}
                 {volist name="list" id="v"}
-                <tr class="text-c">
-                    <td>{$v.ffc_guid}</td>
-                    <td>{$v.ffc_username}</td>
-                    <td>{$v.ffc_sid}</td>
-                    <td>{$v.ffc_lid}</td>
-                    <td>{$v.ffc_mg_id}</td>
-                    <td>{$v.ffc_m_id}</td>
-                    <td>{$v.ffc_issue}</td>
-                    <td>{$v.ffc_single_num}</td>
-                    <td>{$v.ffc_multiple}</td>
-                    <td>{$v.ffc_modes}</td>
-                    <td>{$v.ffc_amount}</td>
-                    <td>{$v.ffc_proportion_5}</td>
-                    <td>{$v.ffc_proportion_4}</td>
-                    <td>{$v.ffc_proportion_3}</td>
-                    <td>{$v.ffc_proportion_2}</td>
-                    <td>{$v.ffc_proportion_1}</td>
-                    <td>{$v.ffc_add_time}</td>
-                    <td>{$v.ffc_draw_time}</td>
-                    <td>{$v.ffc_send_prize_time}</td>
-                    <td>{$v.ffc_send_prize_status}</td>
-                    <td>{$v.ffc_prize}</td>
-                    <td>{$v.ffc_cancel_status}</td>
+                {gt name="$v.o_wins" value="0"}
+                <tr class="text-c" style="background-color: #ff9224;">
+                    {else/}
+                <tr class="text-c" >
+                    {/gt}
+                    <td  >{$v.o_username}<br>
+                        <a class="maincolor" title="订单详情" href="javascript:;" onclick="picture_edit('订单详情','{:url('order/orderDetail')}?id={:orderWrapid($v.o_id,$v.o_issue,$v.o_lid)}&issue={$v.o_issue}&lid={$v.o_lid}&mg_id={$v.o_mg_id}','10001')">
+                            {:orderWrapId($v.o_id,$v.o_issue,$v.o_lid)}
+                        </a>
+                    </td>
+                    <td >
+                        {eq name="$v.o_lid" value="2"}CQSSC{/eq}
+                        {eq name="$v.o_lid" value="6"}PK10{/eq}
+                        {eq name="$v.o_lid" value="8"}XJSSC{/eq}
+                        {eq name="$v.o_lid" value="9"}JXKS{/eq}
+                        {eq name="$v.o_lid" value="14"}TJSSC{/eq}
+                        {eq name="$v.o_lid" value="24"}GD115{/eq}
+                        {eq name="$v.o_lid" value="26"}SY115{/eq}
+                        {eq name="$v.o_lid" value="27"}JX115{/eq}
+                        {eq name="$v.o_lid" value="28"}FC3D{/eq}
+                        {eq name="$v.o_lid" value="29"}P3P5{/eq}
+                        {eq name="$v.o_lid" value="30"}HBKS{/eq}
+                        {eq name="$v.o_trace_id" value="0"}{else/}
+                        &nbsp;&nbsp;
+                        <span >
+                                <a style="color: #FF0000;" href="javascript:;" title="追号订单详情" onclick="picture_edit('追号订单详情','{:url('order/traceDetail')}?id={$v.o_trace_id}','10001')">
+                                   -追-
+                              </a>
+
+                                </span>
+                        &nbsp;&nbsp;
+                        {/eq}
+                        <br>{$v.o_issue}</td>
+                    <td >{$v.o_single_num}</td>
+                    <td >{$v.o_multiple}</td>
+                    {eq name="$v.o_modes" value="1"}<td>2元</td>{/eq}
+                    {eq name="$v.o_modes" value="0.5"}<td>1元</td>{/eq}
+                    {eq name="$v.o_modes" value="0.1"}<td>2角</td>{/eq}
+                    {eq name="$v.o_modes" value="0.05"}<td>1角</td>{/eq}
+                    {eq name="$v.o_modes" value="0.01"}<td>2分</td>{/eq}
+                    {eq name="$v.o_modes" value="0.005"}<td>1分</td>{/eq}
+                    <td >{$v.o_amount}</td>
+                    <td >{$v.o_pan}</td>
+                    <td >{$v.o_add_time}</td>
+                    <td >{$v.o_draw_time}</td>
+                    <td >
+                        {$v.o_amount1}
+                        <br>
+                        {$v.u_proportion_1}%
+                    </td>
+                    <td >
+                        {$v.o_amount2}
+                        <br>
+                        {$v.u_proportion_2}%
+                    </td>
+                    <td >
+                        {$v.o_amount3}
+                        <br>
+                        {$v.u_proportion_3}%
+                    </td>
+                    <td >
+                        {$v.o_amount4}
+                        <br>
+                        {$v.u_proportion_4}%
+                    </td>
+                    <td >
+                        {$v.o_amount5}
+                        <br>
+                        {$v.u_proportion_5}%
+                    </td>
+                    <td >
+                        {$v.o_wins}
+                    </td>
+                    <td >
+                        {eq name="v.o_is_jiesuan" value="0"}未判断{/eq}
+                        {eq name="v.o_is_jiesuan" value="1"}中奖{/eq}
+                        {eq name="v.o_is_jiesuan" value="2"}未中奖{/eq}
+                    </td>
+                    <td >{eq name="v.o_is_pay" value="0"}未派奖{/eq}
+                        {eq name="v.o_is_pay" value="1"}已派奖{/eq}
+                    </td>
+                    <td >
+                        {eq name="v.o_is_cancel" value="0"}未撤单{/eq}
+                        {eq name="v.o_is_cancel" value="1"}用户撤单{/eq}
+                        {eq name="v.o_is_cancel" value="2"}追中撤单{/eq}
+                        {eq name="v.o_is_cancel" value="3"}出号撤单{/eq}
+                        {eq name="v.o_is_cancel" value="4"}未开撤单{/eq}
+                        {eq name="v.o_is_cancel" value="9"}管理员撤单{/eq}
+                    </td>
                 </tr>
                 {/volist}
-                {/if}
                 </tbody>
             </table>
             <!-- 分页start-->
@@ -121,70 +163,22 @@
 <!--_footer 作为公共模版分离出去-->
 {include file="common/_footer"}
 <!--/_footer /作为公共模版分离出去-->
+<script type="text/javascript">
+    function picture_edit(title,url,id){
+        var index = layer.open({
+            type: 2,
+            title: title,
+            content: url
+        });
+        layer.full(index);
+    }
+     function bytyoe(type){
+     window.location.href = "{:url('report/detailReport')}?u_username={$u_username}&start_time={$start_time}&end_time={$end_time}&bytype="+type;
+ }
+</script>
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript" src="../../static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript" src="../../static/lib/datatables/1.10.0/jquery.dataTables.js"></script>
 <script type="text/javascript" src="../../static/lib/laypage/1.2/laypage.js"></script>
-<script type="text/javascript">
-    $(function () {
-        $('.table-sort').dataTable({
-            "aaSorting": [[1, "desc"]],//默认第几个排序
-            "bStateSave": true,//状态保存
-
-        });
-        $('.table-sort tbody').on('click', 'tr', function () {
-            if ($(this).hasClass('selected')) {
-                $(this).removeClass('selected');
-            }
-            else {
-                table.$('tr.selected').removeClass('selected');
-                $(this).addClass('selected');
-            }
-        });
-    });
-    /*用户-添加*/
-    function member_add(title, url, w, h) {
-        layer_show(title, url, w, h);
-    }
-    /*用户-查看*/
-    function member_show(title, url, id, w, h) {
-        layer_show(title, url, w, h);
-    }
-    /*用户-停用*/
-    function member_stop(obj, id) {
-        layer.confirm('确认要停用吗？', function (index) {
-            $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_start(this,id)" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe6e1;</i></a>');
-            $(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已停用</span>');
-            $(obj).remove();
-            layer.msg('已停用!', {icon: 5, time: 1000});
-        });
-    }
-
-    /*用户-启用*/
-    function member_start(obj, id) {
-        layer.confirm('确认要启用吗？', function (index) {
-            $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_stop(this,id)" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>');
-            $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
-            $(obj).remove();
-            layer.msg('已启用!', {icon: 6, time: 1000});
-        });
-    }
-    /*用户-编辑*/
-    function member_edit(title, url, id, w, h) {
-        layer_show(title, url, w, h);
-    }
-    /*密码-修改*/
-    function change_password(title, url, id, w, h) {
-        layer_show(title, url, w, h);
-    }
-    /*用户-删除*/
-    function member_del(obj, id) {
-        layer.confirm('确认要删除吗？', function (index) {
-            $(obj).parents("tr").remove();
-            layer.msg('已删除!', {icon: 1, time: 1000});
-        });
-    }
-</script>
-<!--/请在上方写此页面业务相关的脚本-->
 </body>
 </html>

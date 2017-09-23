@@ -1,26 +1,27 @@
 <header class="navbar-wrapper">
 	<div class="navbar navbar-fixed-top">
-		<div class="container-fluid cl"> <a class="logo navbar-logo f-l mr-10 hidden-xs" href="javascript:;">分分彩</a> <a class="logo navbar-logo-m f-l mr-10 visible-xs" href="javascript:;">分分彩</a> <span class="logo navbar-slogan f-l mr-10 hidden-xs">后台</span> <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;">&#xe667;</a>
+		<div class="container-fluid cl"> <a class="logo navbar-logo f-l mr-10 hidden-xs" href="javascript:;">KG官方彩</a> <a class="logo navbar-logo-m f-l mr-10 visible-xs" href="javascript:;">KG官方彩</a> <span class="logo navbar-slogan f-l mr-10 hidden-xs">后台</span> <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;">&#xe667;</a>
+		<span class="logo navbar-logo mr-10" id='number'></span>
 			<nav class="nav navbar-nav">
 				<ul class="cl">
-					<li class="dropDown dropDown_hover">
-						
+					<li class="dropDown dropDown_hover"style="margin-left: 10%;">
+						在线用户/总用户&nbsp;<sapn id="onlinecounts"></sapn><span id="totalcounts"></span>
+					</li>
+					<li class="dropDown dropDown_hover" style="margin-left: 20%;">
+						在线管理员/管理员总数&nbsp;<sapn id="onlinecounts1"></sapn><span id="totalcounts1"></span>
 					</li>
 				</ul>
 			</nav>
 			<nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
 				<ul class="cl">
+					<li > <a href="javascript:;"onclick="member_edit('更改密码','{:url("index/editMima")}','4','','510')" >更改密码</a></li>
 				{eq name=":session('level')" value="5"}<li >超级管理员</li>{/eq}
 				{eq name=":session('level')" value="4"}<li >分公司管理员</li>{/eq}
 				{eq name=":session('level')" value="3"}<li >股东管理员</li>{/eq}
 				{eq name=":session('level')" value="2"}<li >总代理管理员</li>{/eq}
 				{eq name=":session('level')" value="1"}<li >代理管理员</li>{/eq}
-					
 					<li > <a href="javascript:;" >{:session('admin_auth_name')}</a> </li>
 					<li > <a href="javascript:;" onclick=" admin_exit()" >退出</a></li>
-						
-					
-					
 					<li id="Hui-skin" class="dropDown right dropDown_hover"> <a href="javascript:;" class="dropDown_A" title="换肤"><i class="Hui-iconfont" style="font-size:18px">&#xe62a;</i></a>
 						<ul class="dropDown-menu menu radius box-shadow">
 							<li><a href="javascript:;" data-val="default" title="默认（黑色）">默认（黑色）</a></li>
@@ -36,11 +37,51 @@
 		</div>
 	</div>
 </header>
+<!-- cookie 加密key-->
+{include file='common/key'}
+<script type="text/javascript" src="../../static/lib/jquery/1.9.1/jquery.min.js"></script> 
 <script type="text/javascript">
-	function admin_exit(){
+function admin_exit(){
 		if(confirm("确定退出吗？")){
 			var url = "{:url('admin/index/signOut')}";
 			location.href = url;
 		}
-	}
+}
+//在线用户人数统计
+function checkLogin(){
+    $.ajax({
+        url: "{:url('Index/numberInfo')}",
+        cache: false,
+        success: function(data){
+            if(data == -3){
+                alert("您已经下线，请重新登陆！");
+                var url = "{:url('admin/index/signOut')}";
+                location.href = url;
+            }else{
+                var is_another_login = data.is_another_login;
+                if(is_another_login === 0){
+                    $("#onlinecounts").text(':'+data.online+'/');
+                    $("#totalcounts").text(data.total);
+                    $("#onlinecounts1").text(':'+data.adminOnline+'/');
+                    $("#totalcounts1").text(data.adminTotal);
+                }else if(is_another_login == -1){
+                    alert("您已经被踢下线，上级修改了你的权限，请重新登陆！");
+                    var url = "{:url('admin/index/signOut')}";
+                           clearInterval(numberInfo);
+                    location.href = url;
+                }else{
+                    alert("您已经被挤下线,您已经在另一地方登录，登录ip:"+data.is_another_login);
+                    var url = "{:url('admin/index/signOut')}";
+                           clearInterval(numberInfo);
+                    location.href = url;
+                }
+            }
+        }
+    });
+}
+checkLogin();
+var numberInfo =  setInterval("checkLogin();", 15000);
+function member_edit(title,url,id,w,h){
+    layer_show(title,url,w,h);
+}
 </script>

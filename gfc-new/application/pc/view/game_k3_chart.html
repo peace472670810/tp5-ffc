@@ -1,0 +1,399 @@
+<html xmlns:esun="" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>娱乐平台 - 走势分析</title>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<meta content="no-cache" http-equiv="Pragma">
+<script src="../../static/pc/js/jquery-1.8.3.min.js" type="text/javascript"></script>
+<script src="../../static/pc/js/line.js" type="text/javascript" language="javascript"></script>
+<script language="JavaScript">function ResumeError() {return true;} window.onerror = ResumeError; </script>
+  <link href="../../static/pc/css/chart.css" rel="stylesheet" type="text/css" />
+<script language="javascript">
+fw.onReady(function(){drawrun();});
+
+function drawrun(){
+    Chart.init();
+	DrawLine.bind("chartsTable","has_line");  
+    DrawLine.color('#499495');
+    DrawLine.add(10,2,4,0);
+    DrawLine.color('#E4A8A8');
+    DrawLine.add(14,2,4,0);
+    DrawLine.color('#499495');
+    DrawLine.add(18,2,16,0);
+	DrawLine.draw(Chart.ini.default_has_line);
+	if($("#chartsTable").width()>$('body').width())
+	{
+	   $('body').width($("#chartsTable").width() + "px");
+	}
+	$("#container").height($("#chartsTable").height() + "px");
+	$("#missedTable").width($("#chartsTable").width() + "px");
+    resize();
+}
+function resize(){
+    window.onresize = func;
+    function func(){
+        window.location.href=window.location.href;
+    }
+}
+function daysBetween(start, end){
+   var startY = start.substring(0, start.indexOf('-'));
+   var startM = start.substring(start.indexOf('-')+1, start.lastIndexOf('-'));
+   var startD = start.substring(start.lastIndexOf('-')+1, start.length);
+
+   var endY = end.substring(0, end.indexOf('-'));
+   var endM = end.substring(end.indexOf('-')+1, end.lastIndexOf('-'));
+   var endD = end.substring(end.lastIndexOf('-')+1, end.length);
+
+   var val = (Date.parse(endY+'/'+endM+'/'+endD)-Date.parse(startY+'/'+startM+'/'+startD))/86400000;
+   return Math.abs(val);
+}
+function toggleMiss(){
+    $('#missedTable').toggle();
+}
+</script>
+</head>
+    <body>
+        <div id="rightcon_k3">
+	<div style="display:none;" class="win_bot" id="msgbox">
+		<h5 id="msgtitle"></h5>
+ 		<div class="clear"></div>
+		<div class="wb_con">
+			<p id="msgcontent"></p>
+		</div>
+		<div class="clear"></div>
+		<a id="msgpre" onClick="javascript:prenotice();" href="#" class="wb_p">上一条</a><a onClick="javascript:nextnotice();" href="#" class="wb_n">下一条</a> </div>
+	<script type="text/javascript">
+        function runoddeven(flag){
+            var class1 = 'evencol';
+            var class2 = 'oddcol';
+            var dataname = 'missodd';
+            
+            if(flag == 2){
+                class2 = 'evencol';
+                class1 = 'oddcol';
+                dataname = 'misseven';
+            }
+            $("canvas").remove();
+            $(".oe_none").each(function(j,jtem){
+                $(jtem).html($(jtem).data(dataname));
+            });
+            $("."+class1).each(function(i,item){
+                $(item).attr("class","wdh "+class1);
+                var evenchild =$(item).find(".ball02")[0];
+                $(evenchild).data("val",$(evenchild).html());
+                $(evenchild).html($(evenchild).data(dataname));
+                $(evenchild).attr("class","ball04");
+                if($("#no_miss").attr("checked") === 'checked'){
+                    $(evenchild).css("display","none");
+                }
+            });
+            $("."+class2).each(function(i1,item1){
+                $(item1).attr("class","charball "+class2);
+                var oddchild = $(item1).find(".ball04")[0];
+                $(oddchild).attr("class","ball02");
+                $(oddchild).html($(oddchild).data("val"));
+                if($("#no_miss").attr("checked") === 'checked'){
+                    $(oddchild).css("display","block");
+                }
+            });
+            
+            drawrun();
+        }
+        function change1(flag){
+            var str1='#odd';
+            var str2='#even';
+            if(flag == 'even'){
+                str1='#even';
+                str2='#odd';
+            }                    
+            $(str2).attr("class",'run');
+            $(str1).attr("class",'');
+            if(flag=='even'){
+                runoddeven(2);
+            }else{
+                runoddeven(1);
+            }
+        }
+        function change2(flag){
+            var str1='#big';
+            var str2='#small';
+            if(flag == 'small'){
+                str1='#small';
+                str2='#big';
+            }                    
+            $(str2).attr("class",'run');
+            $(str1).attr("class",'');
+            if(flag=='small'){
+                runbigsmall(2);
+            }else{
+                runbigsmall(1);
+            }
+        }
+        function runbigsmall(flag){
+            var class1 = 'smallcol';
+            var class2 = 'bigcol';
+            var dataname = 'missbig';
+            if(flag == 2){
+                class2 = 'smallcol';
+                class1 = 'bigcol';
+                dataname = 'misssmall';
+            }
+            $("canvas").remove();
+            $(".bs_none").each(function(j,jtem){
+                $(jtem).html($(jtem).data(dataname));
+            });
+            $("."+class1).each(function(i,item){
+                $(item).attr("class","wdh "+class1);
+                var evenchild =$(item).find(".ball01")[0];                
+                $(evenchild).data("val",$(evenchild).html());
+                $(evenchild).html($(evenchild).data(dataname));
+                $(evenchild).attr("class","ball03");
+                if($("#no_miss").attr("checked") === 'checked'){
+                    $(evenchild).css("display","none");
+                }
+            });
+            $("."+class2).each(function(i1,item1){
+                $(item1).attr("class","charball "+class2);
+                var oddchild = $(item1).find(".ball03")[0];                
+                $(oddchild).attr("class","ball01");
+                $(oddchild).html($(oddchild).data("val"));
+                if($("#no_miss").attr("checked") === 'checked'){
+                    $(oddchild).css("display","block");
+                }
+            });
+            drawrun();
+        }
+
+    window.onload=function(){
+        $("#even").click(function(){  
+            change1('even');
+        });
+        $("#odd").click(function(){
+            change1('odd');
+        });
+        $("#big").click(function(){ 
+            change2('big');
+        });
+        $("#small").click(function(){
+            change2('small');
+        });
+
+    //显示遗漏
+        $("#no_miss").click(function(){           
+            var checked = $(this).attr("checked");
+            $.each($("div[class^='ball03'],div[class^='ball04']"),function(i,n){
+                if(checked=='checked'){
+                    n.style.display='none';
+                }else{
+                    n.style.display='block';
+                }
+            });
+        });
+    };
+    </script>
+	<style>
+    esun\:*{behavior:url(#default#VML)}
+    #num{position: relative;index-x:8;background: #DA8028;width:14px;height:14px;
+         -moz-border-radius: 5px;
+         -webkit-border-radius: 5px;border:1px solid #fff;color: #fff;display: block; 
+         top:-30px;left:13px;line-height: 14px;text-align:center;
+    }
+    #odd,#even,#small,#big, :hover{cursor: pointer}
+    .run{color:#ee5859}
+    .hrc_list,table{margin:0px auto;display:block}
+    #rightcon_k3 {  display: block;  width: 100%; }
+</style>
+	<div class="rc_con history">
+		<div class="rc_con_lt"></div>
+		<div class="rc_con_rt"></div>
+		<div class="rc_con_lb"></div>
+		<div class="rc_con_rb"></div>
+		<div class="rc_con_to">
+			<div class="rc_con_ti">
+				<div class="history_code" >
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" id="tm">
+						<tbody>
+							<tr>
+								<td width="300" align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong> <font color="#FF0000"><?php  echo $lottery['cname'];?>：</font> 基本走势 </strong></td>
+								<td align="left"><form method="POST">
+                                                                        <input type="hidden" name="<?php echo isset($GLOBALS['urlSessionName']) ? $GLOBALS['urlSessionName'] : ''; ?>" value="<?php echo isset($GLOBALS['urlSessionValue']) ? $GLOBALS['urlSessionValue'] : ''; ?>"/>
+										<span>
+										<label for="has_line">
+											<input type="checkbox" id="has_line" value="checkbox" name="checkbox2"/>
+											显示折线 </label>
+										</span>&nbsp; <span>
+										<label for="no_miss">
+											<input type="checkbox" id="no_miss" value="checkbox" name="checkbox"/>
+											不带遗漏</label>
+										</span>
+									</form></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="hrc_list">
+					<div class="hrl_list">
+						<table width="90%" border="0" cellspacing="1" cellpadding="0" id="chartsTable">
+							<tbody>
+								<tr class="th">
+                                                                    <td   rowspan="2"><div style="width:auto;">期号</div></td>
+                                                                    <td colspan="3" rowspan="2">开奖号码</td>
+                                                                    <td colspan="6" >号码分布</td>
+                                                                    
+                                                                    <td colspan="4"><span id='odd'>奇数个数</span>/<span id='even' class='run'>偶数个数</span></td>
+                                                                    <td colspan="4"><span id='big'>大数个数</span>/<span id='small' class='run'>小数个数</span></td>   
+                                                                    <td colspan="16"><?php echo $scodeGroup['name']; ?></td>
+								</tr>
+								<tr class="th">
+                                                                    <?php foreach($vaildnum as $num) : ?>
+                                                                                        <td width="25" class="wdh"><?php echo $num; ?></td>
+                                                                    <?php endforeach; ?>
+                                                                    <?php foreach($codeGroup as $v) : ?>
+                                                                        <?php foreach($oddeven as $num) : ?>
+                                                                                    <td width="25" class="wdh"><?php echo $num; ?></td>
+                                                                        <?php endforeach; ?>
+                                                                    <?php endforeach; ?>
+                                                                    
+                                                                        <?php foreach($sumnum as $num) : ?>
+                                                                                    <td width="25" class="wdh"><?php echo $num; ?></td>
+                                                                        <?php endforeach; ?>
+                                                                    
+								</tr>
+          
+                                
+                <?php foreach($codes as $k =>$v) : ?>
+						<tr>                
+                            <td class="issue"><div><?php echo $v['issue']; ?></div></td>                   
+                       
+                    <?php foreach ($v['openNumber'] as $num): ?>
+                            <td width="17" align="center"><div class="wth"><?php echo $num; ?></div></td>
+                    <?php endforeach; ?>
+                            
+                    <?php 
+                    foreach ($vaildnum as $key1 => $val1):  
+                        $i = 0;
+                        foreach ($v['openNumber'] as $val):
+                          if($val1 == $val):  
+                              $i ++;
+                            endif;
+                        endforeach;
+                        if($i):
+                            ?>
+                            <td width="27" align="center" class="charball">
+                                <div class="tenthousand">
+                                    <div class="ball01" ><?php echo $val1;?></div>
+                                    <?php if($i>1): ?>
+                                    <em id="num"><?php echo $i;?></em>
+                                    <?php endif; ?>
+                                </div>
+                            </td>
+                        <?php else: ?>
+                            <td width="27" align="center" class="wdh">
+                                <div class="tenthousand">
+                                    <div class="ball03"><?php if(isset($v['miss_info'][$val1-1])) echo $v['miss_info'][$val1-1];else echo ''; ?></div>
+                                </div>
+                             </td>
+                    <?php endif;              
+                    endforeach;
+                    foreach ($codeGroup as $kk => $vv): 
+                        foreach ($oddeven as $vvv):
+                                if($kk == 0): 
+                                    if($vvv == $v['oddnum']):  ?>
+                                        
+                                        <td width="27" align="center" class="charball oddcol" >
+                                        <div class="thousand">
+                                        <div class="ball02" data-val="0" data-missodd="<?php if(isset($v['miss_k3']['odd'][$vvv])) echo $v['miss_k3']['odd'][$vvv];else echo ''; ?>" data-misseven="<?php if(isset($v['miss_k3']['even'][$vvv])) echo $v['miss_k3']['even'][$vvv];else echo ''; ?>"><?php echo $v['oddnum'];?></div>
+                                            </div>
+                                        </td>
+                                    <?php elseif($vvv == $v['evennum']) : ?>
+                                        <td width="27" align="center" class="wdh evencol">
+                                        <div class="thousand">
+                                        <div class="ball04" data-val="<?php echo $v['evennum'];?>" data-missodd="<?php if(isset($v['miss_k3']['odd'][$vvv])) echo $v['miss_k3']['odd'][$vvv];else echo ''; ?>" data-misseven="<?php if(isset($v['miss_k3']['even'][$vvv])) echo $v['miss_k3']['even'][$vvv];else echo ''; ?>"><?php if(isset($v['miss_k3']['odd'][$vvv])) echo $v['miss_k3']['odd'][$vvv];else echo ''; ?></div></div>
+                                        </td>
+									<?php else : ?>
+                                        <td width="27" align="center" class="wdh">
+                                        <div class="thousand">
+                                        <div class="ball04 oe_none" data-missodd="<?php if(isset($v['miss_k3']['odd'][$vvv])) echo $v['miss_k3']['odd'][$vvv];else echo ''; ?>" data-misseven="<?php if(isset($v['miss_k3']['even'][$vvv])) echo $v['miss_k3']['even'][$vvv];else echo ''; ?>"><?php if(isset($v['miss_k3']['odd'][$vvv])) echo $v['miss_k3']['odd'][$vvv];else echo ''; ?></div></div></td>
+									<?php endif; ?>
+                                            
+                                <?php elseif($kk == 1):
+                                        if($vvv == $v['bignum']): ?> 
+                                            
+                                            <td width="27" align="center" class="charball bigcol">
+                                            <div class="hundred">
+                                            <div class="ball01" data-val="0" data-misssmall="<?php if(isset($v['miss_k3']['small'][$vvv])) echo $v['miss_k3']['small'][$vvv];else echo ''; ?>" data-missbig="<?php if(isset($v['miss_k3']['big'][$vvv])) echo $v['miss_k3']['big'][$vvv];else echo ''; ?>"><?php echo $v['bignum'];?></div>
+                                                </div>
+                                            </td>
+                                            <?php elseif($vvv == $v['smallnum']) : ?>
+                                            <td width="27" align="center" class="wdh smallcol">
+                                            <div class="hundred">
+                                            <div class="ball03" data-val="<?php echo $v['smallnum'];?>" data-misssmall="<?php if(isset($v['miss_k3']['small'][$vvv])) echo $v['miss_k3']['small'][$vvv];else echo ''; ?>" data-missbig="<?php if(isset($v['miss_k3']['big'][$vvv])) echo $v['miss_k3']['big'][$vvv];else echo ''; ?>"><?php if(isset($v['miss_k3']['big'][$vvv])) echo $v['miss_k3']['big'][$vvv];else echo ''; ?></div>
+                                                </div>
+                                            </td>
+                                            <?php else : ?>
+                                            <td width="27" align="center" class="wdh " >
+                                            <div class="hundred">
+                                            <div class="ball03 bs_none" data-misssmall="<?php if(isset($v['miss_k3']['small'][$vvv])) echo $v['miss_k3']['small'][$vvv];else echo ''; ?>" data-missbig="<?php if(isset($v['miss_k3']['big'][$vvv])) echo $v['miss_k3']['big'][$vvv];else echo ''; ?>"><?php if(isset($v['miss_k3']['big'][$vvv])) echo $v['miss_k3']['big'][$vvv];else echo ''; ?> </div></div></td>
+									<?php endif;              
+                                 endif;      
+                            endforeach;
+                    endforeach; ?>
+
+                    <!--和值项-->
+                    <?php foreach ($sumnum as $v4):
+                    if($v4 == $v['sum']):  ?>
+
+                        <td width="27" align="center" class="charball">
+                        <div class="tenthousand">
+                        <div class="ball02" ><?php echo $v['sum'];?></div></div>
+                        </td>
+
+                    <?php else : ?>
+
+                        <td width="27" align="center" class="wdh">
+                        <div class="tenthousand">
+                        <div class="ball04"><?php if(isset($v['miss_k3']['sum'][$v4-3])) echo $v['miss_k3']['sum'][$v4-3];else echo ''; ?> </div></div>
+                        </td>
+
+                    <?php endif; ?>  
+                    <?php  endforeach; ?>
+                            <!--和值项-->        
+								</tr>
+                <?php endforeach; ?>
+                        
+								<tr class="th">
+                                    <td rowspan="2"><div style="width:200px; margin: 0 auto; text-align: center;">期号</div></td>
+                                    <td colspan="3" rowspan="2">开奖号码</td>
+                                    <?php foreach($vaildnum as $num) : ?>
+                                                                    <td width="25" class="wdh"><?php echo $num; ?></td>
+                                    <?php endforeach; ?>
+									<?php foreach($codeGroup as $v) : ?>
+                                    <?php foreach($oddeven as $num) : ?>
+                                        <td  class="wdh"><?php echo $num; ?></td>
+                                    <?php endforeach; ?>
+                                    <?php endforeach; ?>
+                                        
+                                        
+                                    <?php foreach($sumnum as $num) : ?>
+                                                <td width="25" class="wdh"><?php echo $num; ?></td>
+                                    <?php endforeach; ?>
+                                                                    
+								</tr>
+								<tr class="th">
+                                    <td colspan="6" rowspan="2">号码分布</td>
+                                    <?php foreach($codeGroup as $v) : ?>
+                                        <td colspan="4"><?php echo $v['name']; ?></td>
+                                    <?php endforeach; ?>
+                                        <td colspan="16"><?php echo $scodeGroup['name']; ?></td>
+                                        
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

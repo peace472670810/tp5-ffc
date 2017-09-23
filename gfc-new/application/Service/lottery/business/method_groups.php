@@ -70,6 +70,11 @@ class method_groups
         if(!is_numeric($data['lid'])){
             return   put_encode(false,'70000000',self::$error_code['70000000']);
         }
+        if(empty($data['odd'])){
+            $p_prize = 'p_prize';
+        }else{
+            $p_prize = $data['odd'];
+        }
         $method_model = new method_model();
         $prize_model = new prize_model();
         $mglist = $this->model->getMethodGroups($data['lid']);
@@ -77,14 +82,14 @@ class method_groups
         $plist = json_decode($prize_model->getPrizeByLid(['lid'=>$data['lid']]),true);
         $plist = $plist['data'];
         $arr = [];
-        $prizes  = [];
-        $prize = 0;
-        $childs = [];
         //玩法组下面的所有玩法及奖金组
-        foreach ($mglist as $k1 => $v1){
+        foreach ($mglist as $k1 => $v1){//玩法组列表
             $arr[$k1]['mg_id'] = $v1['mg_id'];
             $arr[$k1]['mg_name'] = $v1['mg_name'];
-            foreach ($mlist as $k2 => $v2){
+            foreach ($mlist as $k2 => $v2){//玩法列表
+                $prizes  = [];
+                $prize = 0;
+                $childs = [];
                 if($v2['m_mg_id'] == $v1['mg_id']){
                     $childs['can_input'] = $v2['m_can_input'];
                     $childs['cname'] = $v2['m_cname'];
@@ -94,17 +99,17 @@ class method_groups
                     $childs['method_id'] = $v2['m_id'];
                     $childs['mg_name'] = $v1['mg_name'];
                     $childs['name'] = $v2['m_name'];
-                    foreach ($plist as $k3 => $v3){
+                    foreach ($plist as $k3 => $v3){//奖金列表
                         if($v3['p_m_id'] == $v2['m_id']){
-                            $prizes[$v3['p_level']] = $v3['p_prize'];
+                            $prizes[$v3['p_level']] = floattostr($v3[$p_prize]);
                             if($v3['p_level'] == 1){
-                                $prize = $v3['p_prize'];
+                                $prize = $v3[$p_prize];
                             }
                         }
                     }
                     //选出最大的
-                    $childs['prize'] = $prizes;
-                    $childs['prizes'] = $prize;
+                    $childs['prize'] =$prizes;
+                    $childs['prizes'] = floattostr($prize);
                     $childs['sample'] = '';
                     $childs['team'] = $v2['m_team'];
                     $arr[$k1]['childs'][] =  $childs;

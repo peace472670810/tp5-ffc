@@ -64,4 +64,14 @@ class lottery
         $list = $this->model->getLotList($data);
         return put_encode($list, '', '');
     }
+     /**
+     * 后台获取彩种列表
+     * $data
+     */
+    public function getAdmin()
+    {
+       $list = $this->model->getlottery();
+       return put_encode($list, '', '');
+        
+    }
 }

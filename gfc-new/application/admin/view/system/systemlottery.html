@@ -1,0 +1,116 @@
+﻿<!--_meta 作为公共模版分离出去-->
+{include file="common/_meta"}
+<!--/meta 作为公共模版分离出去-->
+<title>彩种设置 </title>
+</head>
+<body>
+<!--_header 作为公共模版分离出去-->
+<!--/_menu 作为公共模版分离出去-->
+<nav class="breadcrumb">
+    <a  class="maincolor"  href="{:url('index/welcome')}"><i class="Hui-iconfont">&#xe67f;</i> 首页</a>
+    <span class="c-gray en">&gt;</span> 内部管理 <span class="c-gray en">&gt;</span>
+    <a  class="maincolor"  href="{:url('System/Systemlottery')}">彩种设置</a><a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i
+        class="Hui-iconfont">&#xe68f;</i></a>
+</nav>
+<div class="cl pd-20">
+    <div  class="form form-horizontal">
+        <div id="tab-system" class="HuiTab">
+            <div class="tabBar cl">
+                {volist name="list" id="v" key="k"}
+                <span {if condition="$k eq 1" }class="current"  {/if}>{$v}</span>
+                {/volist}
+            </div>
+            {volist name="conflist" id="v" key="k"}
+            <form action="{:url('System/Systemlottery')}" id="lid{$v.lid}" method="post">
+                <div class="tabCon"  {if condition="$k eq 1" }style="display: block;" {else/}style="display: none;"{/if}>
+                    <div class=" row cl">
+                        <input type="hidden" name="lid" value="{$v.lid}"/>
+                        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>运营状态(lid={$v.lid})：</label>
+                        <div class="formControls col-xs-8 col-sm-9 skin-minimal">
+                            <div class="radio-box">
+                                <label><input type="radio" name="G_ON_OFF_{$v.lid}" value="1" checked {if
+                                              condition="$v.G_ON_OFF == 1 " } {/if} />开启</label>
+                            </div>
+                            <div class="radio-box">
+                                <label><input type="radio" name="G_ON_OFF_{$v.lid}" value="0" {if condition="$v.G_ON_OFF == 0" }checked{/if} />关闭</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>自动开盘：</label>
+                        <div class="formControls col-xs-8 col-sm-9 skin-minimal">
+                            <div class="radio-box">
+                                <label class=""><input type="radio" name="G_OPEN_{$v.lid}" value="1" {if condition="$v['G_OPEN'] eq 1" }checked{/if}/>开启</label>
+                            </div>
+                            <div class="radio-box">
+                                <label class=""><input type="radio" name="G_OPEN_{$v.lid}" value="0" {if condition="$v['G_OPEN'] eq 0" }checked{/if} />关闭</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>自动任务：</label>
+                        <div class="formControls col-xs-8 col-sm-9 skin-minimal">
+                            <div class="radio-box">
+                                <label class=""><input type="radio" name="G_TASK_{$v.lid}" value="1" {if condition="$v['G_OPEN'] eq 1" }checked{/if}/>开启</label>
+                            </div>
+                            <div class="radio-box">
+                                <label class=""><input type="radio" name="G_TASK_{$v.lid}" value="0" {if condition="$v['G_OPEN'] eq 0" }checked{/if}/>关闭</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*(秒)</span>提前封盘：</label>
+                        <div class="formControls col-xs-8 col-sm-2">
+                            <input type="text" id="website-title" name="G_PROCESS_STOP_ORDER_{$v.lid}" placeholder="提前多少秒开盘"
+                                   value="{$v.G_PROCESS_STOP_ORDER}" class="input-text">
+                        </div>
+                    </div>
+                    <div class="row cl">
+                <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                    <button class="btn btn-primary radius" type="submit"><i
+                            class="Hui-iconfont"></i> 保存
+                    </button>
+                    <button onclick="javascript:location.replace(location.href);" class="btn btn-default radius" type="button">
+                        &nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+                </div>
+            </div>
+                 </div>
+            </form>
+        {/volist}
+    </div>
+</article>
+<!--_footer 作为公共模版分离出去-->
+{include file="common/_footer"}
+    <!-- cookie 加密key-->
+    {include file='common/key'}
+<!--/_footer /作为公共模版分离出去-->
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+    $(function () {
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+    });
+    changeTab("#tab-system .tabBar span","#tab-system .tabCon","current","click","0");
+    function changeTab(tabBar, tabCon, class_name, tabEvent, i) {
+            var $tab_menu = $(tabBar);
+            // 初始化操作
+            $tab_menu.removeClass(class_name);
+            $(tabBar).eq(i).addClass(class_name);
+            $(tabCon).hide();
+            $(tabCon).eq(i).show();
+            $tab_menu.on(tabEvent,
+                function() {
+                    $tab_menu.removeClass(class_name);
+                    $(this).addClass(class_name);
+                    var index = $tab_menu.index(this);
+                    $(tabCon).hide();
+                    $(tabCon).eq(index).show();
+                });
+        }
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

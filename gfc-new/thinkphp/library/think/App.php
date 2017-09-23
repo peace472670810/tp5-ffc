@@ -82,7 +82,6 @@ class App
                     Route::bind($name);
                 }
             }
-
             $request->filter($config['default_filter']);
 
             if ($config['lang_switch_on']) {
@@ -399,7 +398,6 @@ class App
             // 初始化应用
             $config       = self::init();
             self::$suffix = $config['class_suffix'];
-
             // 应用调试模式
             self::$debug = Env::get('app_debug', Config::get('app_debug'));
             if (!self::$debug) {

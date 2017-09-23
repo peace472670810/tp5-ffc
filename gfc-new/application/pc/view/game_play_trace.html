@@ -19,7 +19,7 @@
 			<label for="multipleStyle2">倍投工具</label>
 			</span>
             <span>
-                当前期倒计时：<label id="remainTimerLabel"></label>
+                <span id="curIssueText">投注还剩：</span><label id="remainTimerLabel"></label>
             </span>
         </li>
 	</ul>
@@ -27,7 +27,7 @@
 		<li class="beitouToolsQishiL"><span>起始</span> <span>
 			<select id="startIssue">
 				<?php foreach ($issues as $v): ?>
-				<option value="<?php echo $v['issue']; ?>"><?php echo $v['issue']; ?>期</option>
+				<option value="<?php echo $v['ds_qishu']; ?>"><?php echo $v['ds_qishu']; ?>期</option>
 				<?php endforeach; ?>
 			</select>
 			</span> </li>
@@ -44,14 +44,6 @@
 				<li>累计投入</li>
 			</ul>
 			<ul class="beitouToolsmainBoxCont" id="style1Body">
-				<!--
-          <li>
-           <span>123456789021</span>
-           <span><input type="text" value="1" class="beitouToolsinput style1BodyMultiple" /></span>
-           <span>10.00</span>
-           <span>100.00</span>
-         </li>
-          -->
 			</ul>
 		</div>
 		<div class="beitouToolSmainbt" id="multipleStyle2DIV" style="display:none;">
@@ -101,27 +93,12 @@
 				<li class="spanWidth70px">利润率</li>
 			</ul>
 			<ul class="beitouToolSmainBTContZneir" id="style2Body">
-				<!--
-           <li>
-             <span class="spanWidth90px"></span>
-             <span class="spanWidth50px"></span>
-             <span class="spanWidth70px"></span>
-             <span class="spanWidth70px"></span>
-             <span class="spanWidth70px"></span>
-             <span class="spanWidth70px"></span>
-             <span class="spanWidth70px"></span>
-           </li>
-            -->
 			</ul>
 		</div>
 		<div class="beitouToolsfotter">
 			<p>
 				<input  type="checkbox" value="1" name="stopOnWin" checked="checked" />
 				<span style="font-weight:bold;">中奖后停止</span>&nbsp;&nbsp;按照开奖的先后顺序，当有奖期中奖后，系统自动对未开奖的奖期进行撤单。</p>
-			<!--
-      <p><input type="checkbox" value="" checked="checked" />
-          <span style="font-weight:bold;">出号后放弃</span>&nbsp;&nbsp;延后投注时，投注号码提前开出，自动放弃后面几期投注操作。</p>
-      --> 
 		</div>
 	</div>
 </div>

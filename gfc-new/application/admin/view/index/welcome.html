@@ -22,13 +22,9 @@
 <title>我的桌面</title>
 </head>
 <body>
-<nav class="breadcrumb"><a href="{url('index/welcome')}"><i class="Hui-iconfont">&#xe67f;</i> 首页  </a><a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><a  class="maincolor" href="{url('index/welcome')}"><i class="Hui-iconfont">&#xe67f;</i> 首页  </a><a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
-	<p class="f-20 text-success">欢迎使用分分彩 <span class="f-14"></span>后台管理系统！</p>
-	
-	<p>上次登录IP：222.35.131.79.1  </p><p>上次登录时间：2014-6-14 11:19:55</p>
-	<p>本次登录IP：127.0.0.1  </p><p>本次登录时间：2014-6-14 11:19:55</p>
-	
+	<p class="f-20 text-success">欢迎使用KG官方彩 <span class="f-14"></span>后台管理系统！</p>
 	<table class="table table-border table-bordered table-bg mt-20">
 		<thead>
 			<tr>
@@ -36,22 +32,21 @@
 			</tr>
 		</thead>
 		<tbody>
-		
 			<tr>
 				<td>上次登录IP：</td>
-				<td>192.168.1.1</td>
+				<td>{if condition="empty($user['u_last_ip'])"}第一次登录{else/}{$user.u_last_ip}{/if}</td>
 			</tr>
 			<tr>
 				<td>上次登录时间：</td>
-				<td>2014-6-14 11:19:55</td>
+				<td>{if condition="empty($user['u_last_time'])"}第一次登录{else/}{$user.u_last_time}{/if}</td>
 			</tr>
 			<tr>
-				<td>上次登录IP：</td>
-				<td>192.168.1.1</td>
+				<td>本次登录IP：</td>
+				<td>{$ip}</td>
 			</tr>
 			<tr>
-				<td>上次登录时间：</td>
-				<td>2014-6-14 11:19:55</td>
+				<td>本次登录时间：</td>
+				<td>{$now}</td>
 			</tr>
 
 		</tbody>
@@ -61,16 +56,6 @@
 
 </footer>
 <script type="text/javascript" src="../../static/lib/jquery/1.9.1/jquery.min.js"></script> 
-<script type="text/javascript" src="../../static/static/h-ui/js/H-ui.min.js"></script> 
-<!--此乃百度统计代码，请自行删除-->
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?080836300300be57b7f34f4b3e97d911";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
+<script type="text/javascript" src="../../static/static/h-ui/js/H-ui.min.js"></script>
 </body>
 </html>

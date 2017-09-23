@@ -1,0 +1,125 @@
+﻿<!--_meta 作为公共模版分离出去-->
+{include file="common/_meta"}
+<!--/meta 作为公共模版分离出去-->
+<title>盘口管理-新增盘口 </title>
+</head>
+<body>
+<!--_header 作为公共模版分离出去-->
+
+<!--/_menu 作为公共模版分离出去-->
+
+		<nav class="breadcrumb"><a class="maincolor" href="{:url('index/welcome')}"><i class="Hui-iconfont">&#xe67f;</i> 首页</a> <span class="c-gray en">&gt;</span> 开奖管理 <span class="c-gray en">&gt;</span> <a href="{:url('drawhistory/getIssues')}" class="maincolor">盘口管理</a><a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a><span class="c-gray en">&gt;</span> <a href="{:url('drawhistory/pankouAdd')}"class="maincolor">新增盘口</a></nav>
+		
+	<div class="Hui-article">
+	<div class="mt-20" >
+	<div class="tabBar cl">
+					{volist name="lottery" id="v"}
+						<a href="{:url('Drawhistory/pankouAdd')}?id={$key}"> <span {if condition="$id eq $key"} class="current"{/if}>{$v}</span></a>
+					{/volist}
+				</div>
+	</div>
+		<article class="cl pd-20">	
+         {notempty name="id"}
+              <div class="text-c">
+	  <form action="{:url('drawhistory/pankouAdd')}" method="post">
+	  	开彩日：
+		<input type="text"onFocus="WdatePicker({startDate:'%y-%M-%d',dateFmt:'yyyy-MM-dd',alwaysUseStartDate:true})" name="start_time" id="logmin" class="input-text Wdate radius" style="width:110px;" value="{$start_time}">&nbsp;&nbsp;
+        <input type="hidden" name='lid' value="{$id}"></input>
+         {in name="id" value="6,28,29"}
+             种子：<input type="text" placeholder="如2015年10月27日第一期期数为519087期种子为519087" style="width:200px" class="input-text radius " title="如2015年10月27日第一期期数为519087期种子为519087" value="{$zhongzi}" name="zhongzi">&nbsp;&nbsp;
+         {/in}
+
+		
+		<button name=""  class="btn btn-success radius" type="submit"><i class="Hui-iconfont">&#xe600;</i>生成</button>
+		</form>
+			</div>
+         {/notempty}
+<!-- 		<div class="mt-20" >
+
+			<div class="cl pd-5 bg-1 bk-gray mt-20">	 
+			 	 <span class="2">  {foreach name="lottery" item="vo" }
+           {eq name="$id" value="$key"}
+            <a  href="javascript:;" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe68c;</i>{$vo} </a> {/eq}
+             {neq name="$id" value="$key"}
+			<a  href="{:url('Drawhistory/pankouAdd')}?id={$key}" class="btn btn-danger-outline radius"><i class="Hui-iconfont">&#xe68c;</i>{$vo} </a> 
+             {/neq}
+			 {/foreach}
+			 
+		</span>  
+			 </div>
+			</div> -->
+			<div class="mt-20">
+				<table class="table table-border table-bordered table-hover table-bg table-sort">
+					<thead>
+						<tr class="text-c">
+				            <th width="50">期数</th>
+							<th width="70">开盘时间</th>
+							<th width="70">封盘时间</th>
+    						<th width="70">开奖时间</th>										
+						</tr>
+					</thead>
+
+					<tbody>	
+					{volist name="list" id="vo"}		    
+                     <tr class="text-c" style="height: 27px;">
+                            <td>{$vo.QiShu}</td>
+                         	<td>
+                               <?php echo date("Y-m-d h:i:s",strtotime($vo['TimeOpen']));?>
+                         	</td>
+                         	<td>
+                         	  <?php echo date("Y-m-d h:i:s",strtotime($vo['TimeStop']));?>
+                         	</td>
+                            <td>
+                               <?php echo date("Y-m-d h:i:s",strtotime($vo['TimeDraw']));?>   
+                            </td>                                  
+                       </tr>
+                     {/volist}
+					</tbody>
+				</table>
+
+			</div>
+			<br><br>
+			 {notempty name="list"}
+			  <form action="{:url('drawhistory/addJiangqi')}" method="post">
+			  <input type="hidden" name="lid" value="{$id}"></input>
+			  <input type="hidden" name="text" value={$text} ></input>
+			<div class="text-c">			
+						<div class="formControls col-xs-8 col-sm-11 skin-minimal">
+						<span class="c-red">*</span>覆盖当前开盘：
+							<div class="radio-box">
+								<label  class="radio-1"><input type="radio" name="state" value="true" />是</label>
+							</div>
+							<div class="radio-box">
+								<label class="radio-2"><input type="radio" name="state" value="false" checked />否</label>
+							</div>
+							<button class="btn btn-primary radius" type="submit"><i class="Hui-iconfont"></i> 写入</button>
+						</div>
+
+			</div>
+			</form>
+			{/notempty}
+			<br><br>
+		</article>
+	</div>
+
+
+<!--_footer 作为公共模版分离出去-->
+{include file="common/_footer"}
+<!--/_footer /作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="../../static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="../../static/lib/datatables/1.10.0/jquery.dataTables.js"></script>
+<script type="text/javascript" src="../../static/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('.skin-minimal input').iCheck({
+		checkboxClass: 'icheckbox-blue',
+		radioClass: 'iradio-blue',
+		increaseArea: '20%'
+	});
+});
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

@@ -44,6 +44,7 @@ class issue
      */
     public function issueRemote($data = [],$url=''){
             $cur = curl_init();
+            curl_setopt($cur, CURLOPT_HTTPHEADER, array("Content-Type: application/json; charset=utf-8"));
             curl_setopt($cur,CURLOPT_URL,$url);
             curl_setopt($cur,CURLOPT_TIMEOUT,7);
             curl_setopt($cur,CURLOPT_CONNECTTIMEOUT,3);
@@ -63,4 +64,6 @@ class issue
                return false;
             }
     }
+
+    
 }

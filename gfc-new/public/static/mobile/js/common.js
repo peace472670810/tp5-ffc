@@ -1,6 +1,12 @@
-var KEY_UP = 38, KEY_DOWN = 40, KEY_ENTER = 13;
-var KEY_A = 65, KEY_Z = 90, KEY_0 = 48, KEY_9 = 57;
-var KEY_NUMPAD_0 = 96, KEY_NUMPAD_9 = 105;
+﻿var KEY_UP = 38;
+var KEY_DOWN = 40;
+var KEY_ENTER = 13;
+var KEY_A = 65;
+var KEY_Z = 90;
+var KEY_0 = 48;
+var KEY_9 = 57;
+var KEY_NUMPAD_0 = 96;
+var KEY_NUMPAD_9 = 105;
 var timeout = 3000;
 var lastBalance;
 var amsrefreshTimer;
@@ -8,9 +14,9 @@ var loginCount = 0;
 var retryCount = 3;
 var isReceived = false;
 var sslTimer;
-var LOGOUT = 2244;//服务端传来这个代码表示需要重新登陆
-
-﻿var label = {
+var LOGOUT = 2244;
+//服务端传来这个代码表示需要重新登陆﻿
+var label = {
     //common
     period: "期",
     noRecord: "暂时没有记录!",
@@ -21,7 +27,8 @@ var LOGOUT = 2244;//服务端传来这个代码表示需要重新登陆
     noOrder: '请先正确选择号码后再投注！',
     invalidCno: '请先正确选择追号后再投注！',
     invalidMultiplier: '请先正确选择倍数后再投注！',
-    drawDisable: '您好， 本期已截止',
+    drawDisable: '您好，本期已销售截止，进入开奖倒计时',
+    drawDisable1:"本期等待开奖中",
     //cp
     drawNumber: "第 {0} 期",
     drawVoid: "本期空开",
@@ -84,7 +91,7 @@ var LOGOUT = 2244;//服务端传来这个代码表示需要重新登陆
     inCorrect:'请按规则正确选择号码！',
     sameAccount: "同一账户不能互转，请重新选择账户",
     confirmOrders: '总投注金额为￥<span class="hl-popup-message-bold">{0}</span>, 请确认。',
-    orderSuccess: '投注成功，投注编号为 <span class="hl-popup-message-bold">{0}</span>.<br/> 总投注金额 ￥<span class="hl-popup-message-bold">{1}</span>。',
+    orderSuccess: '订单成功，注单数 <span class="hl-popup-message-bold">{0}</span>.<br/> 总投注金额 ￥<span class="hl-popup-message-bold">{1}</span>。',
     withdrawSuccess: '撤单成功',
     transferSuccess: '转账成功',
     withdrawMessage: '<font color="red">提示信息</font>: 提款下限：<font color="red"><b>{0}</b></font> 元/次,提款上限：<font color="green"><b>{1}</b></font> 元/次。',
@@ -1043,7 +1050,6 @@ var helper = {
 ﻿var utils = {
     //get game label
     getGameLabel: function (id) {
-
         return window["label"]["game" + id];
     },
     //get game by id

@@ -9,7 +9,7 @@
 	<form action="{:url('Admin/adminEdit')}" method="post" class="form form-horizontal" id="form-member-add">
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>
-							账号：</label>
+				账号：</label>
 			<div class="formControls col-xs-8 col-sm-9">
 				<input type="text" class="input-text" value="{$list.u_username}" placeholder="" readonly id="u_username" name="u_username" >
 			</div>
@@ -21,7 +21,7 @@
 				<input type="password" class="input-text" value="" placeholder="" id="u_pwd" name="u_pwd">
 			</div>
 		</div>
-     <div class="row cl">
+		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>昵称：</label>
 			<div class="formControls col-xs-8 col-sm-9">
 				<input type="text" class="input-text" value="{$list.u_nickname}" placeholder="" id="u_nickname" name="u_nickname">
@@ -43,6 +43,76 @@
 			</div>
 		</div>
 		</div>
+		<br/>
+		<div >
+			<table class="table table-border table-bordered table-hover table-bg table-sort radius" width="100%" >
+				<tbody>
+				<tr>
+					<td style="border: 0px; padding-right: 5px !important; display: table-cell;" valign="">
+						<table width="100%" class="table table-border table-bordered table-hover table-bg table-sort radius">
+							<tbody>
+							<tr>
+
+								{volist name='text' id='vo'}
+
+								<td style="border: 0px; padding-right: 5px !important; display: table-cell;" valign="top">
+									<table width="100%" class="table table-border table-bordered table-hover table-bg table-sort radius">
+										<tbody>
+										{foreach name="vo" item="v" key="k" }
+										{eq name="v.menu_id" value="$v.parent_id"}
+										<tr>
+											<td colspan="3" class="t_list_caption F_bold">{$v.title}</td>
+										</tr>
+										{/eq}
+										{/foreach}
+										<tr>
+											<td class="t_Edit_caption_center_per">
+												<input tabindex="10" type="checkbox" data-action="all">
+												<br> 全部
+											</td>
+											<td class="t_Edit_caption_center_per">
+												<input tabindex="11" type="checkbox" data-action="read">
+												<br> 查看
+											</td>
+											<td class="t_Edit_caption_center_per">
+												<input tabindex="12" type="checkbox" data-action="write">
+												<br> 操作
+											</td>
+										</tr>
+										{foreach name="vo" item="v" key="k" }
+										{notin name="v.menu_id" value="18,19,20"}
+										<tr>
+											<td class="f_left">{$v.title}</td>
+											<td>
+												{eq name="v.operate" value="1"}
+
+												<input name="Code[]" type="checkbox"   <?php  if(in_array($v['menu_id'],$list['u_group_id'])){ echo'checked'; };?>  value="{$v.menu_id}">
+
+												{/eq}
+											</td>
+											<td>
+												{eq name="v.operate" value="2"}
+
+												<input name="Code[]" type="checkbox"  <?php  if(in_array($v['menu_id'],$list['u_group_id'])){ echo'checked'; };?>  value="{$v.menu_id}">
+
+												{/eq}
+											</td>
+										</tr>
+										{/notin}
+										{/foreach}
+										</tbody>
+									</table>
+								</td>
+								{/volist}
+
+							</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
 				<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
@@ -61,43 +131,61 @@
 <script type="text/javascript" src="../../static/lib/jquery.validation/1.14.0/validate-methods.js"></script>
 <script type="text/javascript" src="../../static/lib/jquery.validation/1.14.0/messages_zh.js"></script>
 <script type="text/javascript">
-$(function(){
-	$('.skin-minimal input').iCheck({
-		checkboxClass: 'icheckbox-blue',
-		radioClass: 'iradio-blue',
-		increaseArea: '20%'
-	});
-	
-	$("#form-member-add").validate({
-		rules:{
-			u_username:{
-				required:true,
-				minlength:6,
-			},
-		},
-		onkeyup:false,
-		focusCleanup:true,
-		success:"valid",
-		submitHandler:function(form){
-			$(form).ajaxSubmit({
-			    'type':'post',
-                'url':"{:url('Admin/adminEdit')}",
-				'success':function(res,status){
-			        var str = eval('('+res+')');
-			        if(str.data){
-                        layer.msg('修改成功!',{icon:1,time:2000});
-                        setTimeout(function(){
-                            parent.location.href = "{:url('Admin/adminList')}";
-                        },1000);
-					}else{
-                        layer.msg(str.message,{icon:2,time:2000});
-					}
-				}
-			});
-		}
-	});
-});
-</script> 
+    $(function(){
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+
+        $("#form-member-add").validate({
+            rules:{
+                u_username:{
+                    required:true,
+                    minlength:6,
+                },
+            },
+            onkeyup:false,
+            focusCleanup:true,
+            success:"valid",
+            submitHandler:function(form){
+                $(form).ajaxSubmit({
+                    'type':'post',
+                    'url':"{:url('Admin/adminEdit')}",
+                    'success':function(res,status){
+                        var str = eval('('+res+')');
+                        if(str.data){
+                            layer.msg('修改成功!',{icon:1,time:2000});
+                            setTimeout(function(){
+                                parent.location.href = "{:url('Admin/adminList')}";
+                            },1000);
+                        }else{
+                            layer.msg(str.message,{icon:2,time:2000});
+                        }
+                    }
+                });
+            }
+        });
+    });
+    $(document).ready(function () {
+        InitTextBox = function () {
+            $("#Nick").val("");
+            $("#Pass").val("");
+            $("#UserName").val("");
+        };
+        InitTextBox();
+    });
+    $('input[data-action="all"]').click(function () {
+        $(this).parent().parent().find('input[data-action="read"]').click();
+        $(this).parent().parent().find('input[data-action="write"]').click();
+    });
+    $('input[data-action="read"]').click(function () {
+        $(this).parent().parent().parent().find('tr:gt(1)').find('td:eq(1)').find(':checkbox').prop('checked', $(this).prop('checked'));
+    });
+    $('input[data-action="write"]').click(function () {
+        $(this).parent().parent().parent().find('tr:gt(1)').find('td:eq(2)').find(':checkbox').prop('checked', $(this).prop('checked'));
+    });
+</script>
 <!--/请在上方写此页面业务相关的脚本-->
 </body>
 </html>

@@ -8,6 +8,7 @@
 
 namespace app\Service\users\business;
 use  app\Service\users\model\Admins as model_admins;
+use think\Db;
 use think\image\Exception;
 class admins
 {
@@ -29,7 +30,11 @@ class admins
         '2000024'=>'用户密码至少要8位！',
         '2000025'=>'改用户名已经存在！',
         '2000026'=>'昵称不能为空',
-
+        '2000027'=>'非法赋值非法权限！！',
+        '2000028'=>'非法赋值此权限！！',
+        '2000029'=>'新密码输入不一致！',
+        '2000030'=>'账号非法修改！',
+        '2000031'=>'密码错误！',
     ];
     public $admin_model = null;
     public function __construct()
@@ -42,7 +47,7 @@ class admins
      *
      */
     public function admin_list($data = []){
-       $data = data_decode($data);
+        $data = data_decode($data);
         if(empty($data['u_parent_id'])&&!is_numeric($data['u_parent_id'])){
             return  put_encode(false,'2000015',self::$error_code['2000015']);
         }
@@ -63,6 +68,20 @@ class admins
         $arr['u_level'] = $data['u_level'];
         $arr['u_parent_id'] = $data['u_parent_id'];
         $arr['u_pwd'] = $data['u_pwd'];
+        $arr['u_group_id']=implode(",",$data['code']);
+        //$data['code']['10']='20';
+        //halt($data['code']);
+        $group = explode(',', $data['u_group_id']);
+        $aaa= array_diff($data['code'], $group);
+        //子账号权限不能超过自己拥有的权限
+        if(!empty($aaa)){
+            return  put_encode(false,'2000027',self::$error_code['2000027']);
+        }
+        //子账号无法拥有添加子子账号权限
+        if(in_array('18',$data['code']) ||in_array('19',$data['code'])|| in_array('20',$data['code']) ){
+            return  put_encode(false,'2000028',self::$error_code['2000028']);
+        }
+
         if(empty($arr['u_username'])){
             return  put_encode(false,'2000016',self::$error_code['2000016']);
         }
@@ -109,7 +128,17 @@ class admins
             $arr['u_parent_name'] = $data['u_parent_name'];
             $arr['u_level'] = $data['u_level'];
             $arr['u_nickname'] = $data['u_nickname'];
-
+            $arr['u_group_id']=implode(",",$data['code']);
+            $group = explode(',', $data['u_group_id']);
+            $aaa= array_diff($data['code'], $group);
+            //子账号权限不能超过自己拥有的权限
+            if(!empty($aaa)){
+                return  put_encode(false,'2000027',self::$error_code['2000027']);
+            }
+            //子账号无法拥有添加子子账号权限
+            if(in_array('18',$data['code']) ||in_array('19',$data['code'])|| in_array('20',$data['code']) ){
+                return  put_encode(false,'2000028',self::$error_code['2000028']);
+            }
             if(empty($arr['u_username'])){
                 return  put_encode(false,'2000016',self::$error_code['2000016']);
             }
@@ -118,16 +147,16 @@ class admins
                 return  put_encode(false,'2000025',self::$error_code['2000025']);
             }
             if(empty($arr['u_nickname'])){
-            return  put_encode(false,'2000026',self::$error_code['2000026']);
+                return  put_encode(false,'2000026',self::$error_code['2000026']);
             }
             if(empty($data['u_pwd'])){
-               unset($data['u_pwd']);
+                unset($data['u_pwd']);
             }else if(!empty($data['u_pwd'])&&strlen($data['u_pwd'])<8){
                 return  put_encode(false,'2000024',self::$error_code['2000024']);
             }
-            if(!empty($data['u_pwd'])&&strlen($data['u_pwd'])>8){
-              $arr['u_pwd'] = $this->admin_model->setPassword($data['u_pwd']);
-            }        
+            if(!empty($data['u_pwd'])&&strlen($data['u_pwd'])>=8){
+                $arr['u_pwd'] = $this->admin_model->setPassword($data['u_pwd']);
+            }
             if(empty($arr['u_parent_id'])){
                 return  put_encode(false,'2000020',self::$error_code['2000020']);
             }
@@ -140,8 +169,9 @@ class admins
             }
             return  put_encode(false,'2000019',self::$error_code['2000019']);
         }else{
-
-            return put_encode($this->admin_model->find(['u_admin_id'=>$data['u_admin_id']]),'','');
+            $text=$this->admin_model->find(['u_admin_id'=>$data['u_admin_id']]);
+            $text['u_group_id'] = explode(',', $text['u_group_id']);
+            return put_encode($text,'','');
         }
     }
     /**
@@ -161,7 +191,7 @@ class admins
             }
         }
         try{
-            $admin =  $this->admin_model->login($data['username'],$data['pwd']);
+            $admin =  $this->admin_model->login($data['username'],$data['pwd'],$data['ip']);
         }catch (Exception $e){
             return put_encode(false,$e->getCode(),$e->getMessage());
         }
@@ -175,5 +205,41 @@ class admins
         $admin =  $this->admin_model->logout();
         return put_encode($admin,'','退出成功！');
     }
+    /**修改密码
+     * @return string
+     */
+    public function editMima($data){
+        try{
 
+            if(empty($data['u_username'])){
+                throw new Exception(self::$error_code['2000016'],'2000016');
+            }
+
+            if($data['u_username'] != $data['name'] ){
+                throw new Exception(self::$error_code['2000030'],'2000030');
+            }
+
+            if($data['u_pwd'] != $data['u_pwds']){
+                throw new Exception(self::$error_code['2000029'],'2000029');
+            }
+
+            $password = $this->admin_model->setPassword($data['u_password']);
+            $sql =" select u_pwd from ffc_admins  where  u_username ='{$data['u_username']}'";
+            $arr = Db::query($sql);
+            if( $password != $arr[0]['u_pwd'] ){
+                throw new Exception(self::$error_code['2000031'],'2000031');
+            }
+
+            $pwd  = $this->admin_model->setPassword($data['u_pwd']);
+            $sq   = " update ffc_admins set u_pwd='{$pwd}' where u_username='{$data['u_username']}' ";
+            $text = Db::query($sq);
+            if($text === false){
+                return put_encode(false,'','修改失败！');
+            }
+            return put_encode(true,'','修改成功！');
+        }catch (Exception $e){
+            return put_encode(false,$e->getCode(),$e->getMessage());
+        }
+
+    }
 }

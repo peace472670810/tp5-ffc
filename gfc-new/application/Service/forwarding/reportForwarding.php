@@ -6,8 +6,7 @@
  * Time: 15:46
  */
 
-namespace app\Service\Forwarding;
-use think\Log;
+namespace app\Service\forwarding;
 class reportForwarding extends Forwarding
 {
     public function _initialize()
@@ -25,7 +24,7 @@ class reportForwarding extends Forwarding
             $users = (Object)$this->medel;
             $method = $this->method;
             if(!method_exists($users,$method)){
-                throw new Exception($this->modelName.self::$error_code['1000001'],'1000002');
+                throw new Exception($this->modelName.'->'.$method.self::$error_code['1000002'],'1000002');
             }
             return $users->$method($this->input_data);
         }catch (Exception $e){

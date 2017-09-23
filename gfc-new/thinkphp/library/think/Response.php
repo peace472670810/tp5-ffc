@@ -304,15 +304,18 @@ class Response
         if (null == $this->content) {
             $content = $this->output($this->data);
 
-            if (null !== $content && !is_string($content) && !is_numeric($content) && !is_callable([
+            if (null !== $content && !is_string($content) &&!is_array($content)&& !is_numeric($content) && !is_callable([
                 $content,
                 '__toString',
             ])
             ) {
                 throw new \InvalidArgumentException(sprintf('variable type error： %s', gettype($content)));
             }
-
-            $this->content = (string) $content;
+            if(is_array($content)){
+                $this->content = json_encode($content);
+            }else{
+                $this->content = (string) $content;
+            }
         }
         return $this->content;
     }

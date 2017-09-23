@@ -1,0 +1,131 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>订单详情</title>
+    <link href="../../static/pc/css/package.css?v={$v}" rel="stylesheet" type="text/css"></link>
+    <script type="text/javascript" src="../../static/pc/js/jquery-1.8.3.min.js?v={$v}"></script>
+    <script src="../../static/pc/js/common.js?v={$v}" type="text/javascript"></script>
+    <link rel="Bookmark" type="image/x-icon" href="../../static/mobile/images/favicon57.ico?v={$v}"/>
+    <link rel="icon" type="image/x-icon" href="../../static/mobile/images/favicon57.ico?v={$v}"/>
+    <script type="text/javascript" src="../../static/pc/js/layer/layer.min.js?v={$v}"></script> <!-- layer调用弹出层 -->
+    <script>
+        $(function () {
+            $('#buttonCanle').click(function () {
+                if (!confirm('您真的要撤单吗？')) {
+                    return false;
+                }
+                $.post(
+                    'index.php?c=api&a=cacelPackage',
+                    {
+                        'wrap_id': $("#wrap_id").val()
+                    },
+                    function (response) {
+                        if (response.errno == 0) {
+                            layer.msg('<div title="提示">' + response.errstr + '</div>', 2, function () {
+                                location.reload(); //自动关闭后可做一些刷新页面等操作
+                            });
+                        }
+                        else {
+                            layer.alert(response.errstr);
+                        }
+                    }, 'json');
+            });
+        });
+    </script>
+</head>
+<body class="BodyMain">
+<div class="GameBoxall SubGamePlatePadding" style="width:1000px; margin:0 auto;">
+    <div class="Gamepart" style="  padding-bottom:30px;">
+        <div class="BSrecordsBox h-100">
+            <ul class="recordsInput">
+                <li><span class="yellow_14px">订单编号:{$orderDetail.o_sn}</span></li>
+            </ul>
+            <div class="orderDetxinxi">
+                <p class="yellow_14px">订单摘要</p>
+                <ul class="orderDetxinxiBg1">
+                    <li>投注用户：<span>{$orderDetail.o_username}</span></li>
+                    <li>奖期：<span>{$orderDetail.lidName} 第 {$orderDetail.o_issue} 期</span></li>
+                </ul>
+                <ul class="orderDetxinxiBg2">
+                    <li class="btbg2_right">单倍注数：<span>{$orderDetail.o_single_num}</span></li>
+                    <li class="btbg2_right">投注倍数：<span>{$orderDetail.o_multiple}</span></li>
+                </ul>
+                <ul class="orderDetxinxiBg1">
+                    <li class="btbg2_right">投注模式：<span>{$orderDetail.modeName}模式</span></li>
+                    <li class="btbg2_right">是否追号：<span>{$orderDetail.trace_status}</span></li>
+                </ul>
+                <ul class="orderDetxinxiBg1">
+                    <li>投注时间：<span>{$orderDetail.o_add_time}</span></li>
+                    <li class="btbg2_right width_poker"><em style="float:left;">开奖号码：</em>
+                        <span> {$orderDetail.draw_code} </span>
+                    </li>
+                </ul>
+                <ul class="orderDetxinxiBg1">
+                    <li>订单状态：<span>{$orderDetail.prize_status}</span></li>
+                    <li class="btbg2_right">中奖金额：<span style="color:#280">{$orderDetail.o_wins}</span></li>
+                </ul>
+                <ul class="orderDetxinxiBg1">
+                </ul>
+            </div>
+            <form name="form2" id="form2" action="" method="post">
+                <div class="order-first">
+                    <p class="orderDetxiangxTitle">奖金系列描述</p>
+                    <ul class="orderDetxiangxCont2">
+                        <li><span>玩法名称</span><span  style="width: auto;">奖金描述</span></li>
+                    </ul>
+                    <ul class="orderDetxiangxCont2 colorfff">
+                        {volist name="$orderDetail.odd_detail" id="v"}
+                            <li>
+                                <span>{$v.m_cname}</span>
+                                <span style="width: auto;">{$v.detail}</span>
+                            </li>
+                        {/volist}
+                    </ul>
+                </div>
+            </form>
+            <form name="form1" id="form1" action="" method="post">
+                <div class="order-first">
+                    <p class="orderDetxiangxTitle">订单明细</p>
+                    <ul class="orderDetxiangxCont2">
+                        <li><span>玩法名称</span><span>投注内容</span><span>投注注数</span> <span>投注金额</span></li>
+                    </ul>
+                    <ul class="orderDetxiangxCont2 colorfff">
+                        {volist name="$orderDetail.code_detail" id="v"}
+                            <li>
+                                <span>{$v.name}</span>
+                                <span>{$v.number}</span>
+                                <span><strong style="color:#280">{$v.nums}</strong></span>
+                                <span><strong style="color:#f60">{$v.amount}</strong></span>
+                            </li>
+                        {/volist}
+                    </ul>
+                </div>
+            </form>
+            {if condition="!empty($orderDetail.prize_detail)"}
+            <form name="form1" id="form3" action="" method="post">
+                <div class="order-first">
+                    <p class="orderDetxiangxTitle">中奖详情描述</p>
+                    <ul class="orderDetxiangxCont2">
+                        <li><span>玩法名称</span><span>号码</span><span>中奖注数</span> <span>中奖等级</span></li>
+                    </ul>
+                    <ul class="orderDetxiangxCont2 colorfff">
+                        {volist name="$orderDetail.prize_detail" id="v"}
+                        <li>
+                            <span>{$v.m_name}</span>
+                            <span>{$v.number}</span>
+                            <span><strong style="color:#280">{$v.count}</strong></span>
+                            <span><strong style="color:#f60">{$v.level}</strong></span>
+                        </li>
+                        {/volist}
+                    </ul>
+                </div>
+            </form>
+            {/if}
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

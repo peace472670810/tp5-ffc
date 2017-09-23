@@ -1,0 +1,137 @@
+﻿{include file="common/_meta"}
+<!--[if IE 6]>
+<!/meta 作为公共模版分离出去-->
+
+<title>即时订单 > 订单分组 </title>
+</head>
+<body>
+<nav class="breadcrumb"><a class="maincolor" href="{:url('index/welcome')}">
+	<i class="Hui-iconfont">&#xe67f;</i> 首页 </a>
+	<span class="c-gray en">&gt;</span>
+	<a class="maincolor" href="{:url('instant/getInstant')}?id={$data.lid}">即时订单</a>
+	<span class="c-gray en">&gt;</span>
+
+	<a class="maincolor"href="javascript:location.replace(location.href);">{$data.mg_name}</a><a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="Hui-article">
+	<article class="cl pd-20">
+
+		<div class="mt-20 " >
+
+			<table class="table table-border table-bordered table-hover table-bg table-sort radius">
+				<thead>
+				<tr class="text-c ">
+					<th width="130">订单编号</th>
+					<th width="150">帐户名</th>
+					<th width="30">彩种类型</th>
+					<th width="60">奖期</th>
+					<th width="30">单倍注数</th>
+					<th width="30">倍数</th>
+					<th width="30">模式</th>
+					<th width="50">投注金额</th>
+					<th width="40">奖金系列</th>
+					<th width="70">购买时间</th>
+					<th width="70">奖期截止时间</th>
+					<th width="30">中奖状态</th>
+					<th width="50">奖金</th>
+					<th width="30">派奖状态</th>
+					<th width="30">撤单状态</th>
+				</tr>
+				</thead>
+				<tbody>
+				{volist name="list" id="v"}
+				<tr class="text-c">
+					<td>
+						<a title="订单详情" class="maincolor" href="javascript:;" onclick="picture_edit('订单详情','{:url('order/orderDetail')}?id={:orderWrapid($v.o_id,$v.o_issue,$v.o_lid)}&mg_id={$v.o_mg_id}&issue={$v.o_issue}&lid={$v.o_lid}','10001')">
+							{:orderWrapId($v.o_id,$v.o_issue,$v.o_lid)}
+						</a>
+					</td>
+					<td>{$v.o_username}</td>
+					{eq name="$v.o_lid" value="2"}<td>CQSSC</td>{/eq}
+					{eq name="$v.o_lid" value="6"}<td>PK0</td>{/eq}
+					{eq name="$v.o_lid" value="8"}<td>XJSSC</td>{/eq}
+					{eq name="$v.o_lid" value="9"}<td>JXKS</td>{/eq}
+					{eq name="$v.o_lid" value="14"}<td>TJSSC</td>{/eq}
+					{eq name="$v.o_lid" value="24"}<td>GD115</td>{/eq}
+					{eq name="$v.o_lid" value="26"}<td>SY115</td>{/eq}
+					{eq name="$v.o_lid" value="27"}<td>JX115</td>{/eq}
+					{eq name="$v.o_lid" value="28"}<td>FC3D</td>{/eq}
+					{eq name="$v.o_lid" value="29"}<td>P3P5</td>{/eq}
+					{eq name="$v.o_lid" value="30"}<td>HBKS</td>{/eq}
+					<td>{$v.o_issue}</td>
+					<td>{$v.o_single_num}</td>
+					<td>{$v.o_multiple}</td>
+					{eq name="$v.o_modes" value="1"}<td>2元</td>{/eq}
+					{eq name="$v.o_modes" value="0.5"}<td>1元</td>{/eq}
+					{eq name="$v.o_modes" value="0.1"}<td>2角</td>{/eq}
+					{eq name="$v.o_modes" value="0.05"}<td>1角</td>{/eq}
+					{eq name="$v.o_modes" value="0.01"}<td>2分</td>{/eq}
+					{eq name="$v.o_modes" value="0.005"}<td>1分</td>{/eq}
+					<td>{$v.o_amount}</td>
+					<td>{$v.o_pan}</td>
+					<td>{$v.o_add_time}</td>
+					<td>{$v.o_draw_time}</td>
+					<td>{eq name="v.o_is_jiesuan" value="0"}未判断{/eq}
+						{eq name="v.o_is_jiesuan" value="1"}中奖{/eq}
+						{eq name="v.o_is_jiesuan" value="2"}未中奖{/eq}
+					</td>
+
+					<td>{$v.o_hit_detail}</td>
+
+					<td>{eq name="v.o_is_pay" value="0"}未派奖{/eq}
+						{eq name="v.o_is_pay" value="1"}已派奖{/eq}
+					</td>
+					<td>
+						{eq name="v.o_is_cancel" value="0"}未撤单{/eq}
+						{eq name="v.o_is_cancel" value="1"}用户撤单{/eq}
+						{eq name="v.o_is_cancel" value="2"}追中撤单{/eq}
+						{eq name="v.o_is_cancel" value="3"}出号撤单{/eq}
+						{eq name="v.o_is_cancel" value="4"}未开撤单{/eq}
+						{eq name="v.o_is_cancel" value="9"}管理员撤单{/eq}
+					</td>
+				</tr>
+				{/volist}
+				</tbody>
+			</table>
+		</div>
+	</article>
+</div>
+
+
+<!--_footer 作为公共模版分离出去-->
+{include file="common/_footer"}
+<!--/_footer /作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="../../static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="../../static/lib/datatables/1.10.0/jquery.dataTables.js"></script>
+<script type="text/javascript" src="../../static/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript">
+    $('#member_d').change(function(){
+        var id=this.value;
+        var tmp="<optgroup label='三星'>";
+        if(id){
+            $("#ffc_m_id").empty();
+            $.get("{:url('Order/ajax')}",{"lid":id},function(data){
+                $("#ffc_m_id").append("<option value>--全部方法--</option>");
+                $.each(data, function(indx,obj){
+                    var tmp = '<option value="' + obj.m_id + '">&nbsp;&nbsp;' + obj.m_cname + '</option>';
+                    $("#ffc_m_id").append(tmp);
+                });
+            });
+        }else{
+            $("#ffc_m_id").empty();
+            $("#ffc_m_id").append("<option value>--全部方法--</option>");
+        }
+    });
+    function picture_edit(title,url,id){
+        var index = layer.open({
+            type: 2,
+            title: title,
+            content: url
+        });
+        layer.full(index);
+    }
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

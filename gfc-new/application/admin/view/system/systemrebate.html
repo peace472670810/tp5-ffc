@@ -1,0 +1,130 @@
+﻿<!--_meta 作为公共模版分离出去-->
+{include file="common/_meta"}
+<!--/meta 作为公共模版分离出去-->
+
+<title>系统初始值设定 </title>
+</head>
+<body>
+<!--_header 作为公共模版分离出去-->
+<!--/_menu 作为公共模版分离出去-->
+<nav class="breadcrumb">
+	<a  class="maincolor"  href="{:url('index/welcome')}"><i class="Hui-iconfont">&#xe67f;</i> 首页</a>
+	<span class="c-gray en">&gt;</span> 内部管理 <span class="c-gray en">&gt;</span>
+	<a   class="maincolor" href="{:url('System/Systemrebate')}">赔率设定</a><a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
+</nav>
+<div class="Hui-article">
+	<article class="cl pd-20">
+			<div id="tab-system" class="HuiTab">
+				<div class="tabBar cl">
+					{volist name="lid_list" id="v"}
+						<a href="{:url('System/Systemrebate')}?lid={$v.lid}"> <span {if condition="$lid eq $v.lid"} class="current"{/if}>{$v.cname}</span></a>
+					{/volist}
+				</div>
+				<div class="tabCon" style="display: block;">
+					<form action="{:url('System/editRebate')}" method="post" onsubmit="return save_submit();">
+						<table class="table table-border table-bordered table-hover table-bg table-sort radius" align="center">
+							<thead>
+							<tr class="text-c ">
+								<th width="10">ID彩种</th>
+								<th width="20">彩种名称</th>
+								<th width="20">玩法</th>
+								<th width="20">奖金等级</th>
+								<th width="40">最高赔率(MAX)</th>
+								<th width="20">A盘</th>
+								<th width="20">B盘</th>
+								<th width="20">C盘</th>
+								<th width="20">D盘</th>
+								<!--<th width="30">封锁值</th>-->
+							</tr>
+							</thead>
+							<tbody>
+								{volist name="list" id="v"}
+									<tr class="text-c prizes-list"  value="{$v.p_id}" >
+										<td>{$v.p_lid}</td>
+										<td>{$v.cname}</td>
+										<td id="midName{$v.p_id}">{$v.m_cname}</td>
+										<td>{$v.p_level}等奖</td>
+										<td class="maxPrize" id="maxPrize{$v.p_id}">{$v.p_prize}</td>
+										<td><input style="width: 100px;" name="a_{$v.p_id}" value="{$v.a}" /> &nbsp; &nbsp;A/MAX：{:round($v.a/$v.p_prize,4)*100}%</td>
+										<td>奖金：{$v.b} &nbsp; &nbsp;(<span style="color: red;">降</span>)<input style="width: 100px;"  name="b_{$v.p_id}" value="{$v.b_step}" /> &nbsp; &nbsp;{:round($v.b/$v.p_prize,4)*100}%</td>
+										<td>奖金：{$v.c} &nbsp; &nbsp;(<span style="color: red;">降</span>)<input style="width: 100px;" name="c_{$v.p_id}"  value="{$v.c_step}" /> &nbsp; &nbsp;{:round($v.c/$v.p_prize,4)*100}%</td>
+										<td>奖金：{$v.d} &nbsp; &nbsp;(<span style="color: red;">降</span>)<input style="width: 100px;" name="d_{$v.p_id}" value="{$v.d_step}" /> &nbsp; &nbsp;{:round($v.d/$v.p_prize,4)*100}%</td>
+										<!--<td><input  name="p_flock" value=" " /></td>-->
+									</tr>
+								{/volist}
+							<tr class="text-c" >
+								<input type="hidden" name="prizeValue" id="prizeValue" value="">
+								<td colspan="9" style="border: none;"><input  class="btn btn-primary radius" name="提交" type="submit"/></td>
+							</tr>
+							</tbody>
+						</table>
+					</form>
+				</div>
+			</div>
+	</article>
+</div>
+
+<!--_footer 作为公共模版分离出去-->
+{include file="common/_footer"}
+<!--/_footer /作为公共模版分离出去-->
+<!-- cookie 加密key-->
+{include file='common/key'}
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="../../static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="../../static/lib/datatables/1.10.0/jquery.dataTables.js"></script>
+<script type="text/javascript" src="../../static/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript">
+    function save_submit(){
+		if(confirm("确定修改吗？")){
+		    var flag = false;
+		    var str = '';
+            $(".prizes-list").each(function (index) {
+                var pid = $(this).attr('value');
+                var midName = $("#midName"+pid).html();
+               	//最大赔率
+                var maxprize = $("#maxPrize"+pid).html();
+				//a盘口赔率
+				var a = $("input[name='a_"+pid+"']").val();
+                if(parseFloat(maxprize)< parseFloat(a)){
+                    str += "玩法："+midName+":A盘口赔率:"+a+"不能超过最大赔率:"+maxprize;
+                    flag = true;
+                }
+				//b盘口
+                var b = $("input[name='b_"+pid+"']").val();
+                if(Math.abs(parseFloat(b))> parseFloat(a)){
+                    str += "玩法："+midName+":B盘口赔率:"+b+"不能超过A盘赔率;";
+                    alert(str);
+                    flag = true;
+                }
+                //c盘口
+                var c = $("input[name='c_"+pid+"']").val();
+                if(parseFloat(c)>= parseFloat(b)){
+                    str += "玩法："+midName+":C盘口赔率:"+c+"不能超过B盘赔率:"+b;
+                    flag = true;
+                }
+                //d盘口
+                var d = $("input[name='d_"+pid+"']").val();
+                if(parseFloat(d)> parseFloat(c)){
+                    str += "玩法："+midName+":D盘口赔率:"+d+"不能超过C盘赔率:"+c;
+                    flag = true;
+                }
+                if(parseFloat(Math.abs(b))>parseFloat(maxprize) || parseFloat(Math.abs(c))>parseFloat(maxprize) || parseFloat(Math.abs(d))>parseFloat(maxprize)){
+                    str += "玩法："+midName+":赔率下降值不能超过最大赔率:"+maxprize;
+                    flag = true;
+                }
+                var prizeValue = $("#prizeValue").val();
+                prizeValue += 'p_id:'+pid+'|'+'a:'+a+'|'+'b_step:'+b+'|'+'c_step:'+c+'|'+'d_step:'+d+'#';
+                $("#prizeValue").val(prizeValue);
+            });
+            if(flag){
+                alert(str);
+				return false;
+			}
+			return true;
+		}
+		return  false;
+    }
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

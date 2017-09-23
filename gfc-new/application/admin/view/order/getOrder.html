@@ -2,97 +2,229 @@
 <!--[if IE 6]>
 <!/meta 作为公共模版分离出去-->
 
-<title>订单管理 > 订单列表 </title>
+<title>报表管理 > 注单搜索 </title>
 </head>
 <body>
-<nav class="breadcrumb"><a href="{:url('index/welcome')}"><i class="Hui-iconfont">&#xe67f;</i> 首页 </a><span class="c-gray en">&gt;</span> 订单管理 <span class="c-gray en">&gt;</span> <a href="{:url('order/getOrder')}">订单列表</a><a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
-	<div class="Hui-article">
-		<article class="cl pd-20">
-	<div class="text-c">
-	  <form action="{:url('order/getOrder')}" method="post">
-	  	订单编号：<input type="text" name="ffc_id" id="" placeholder="订单编号" style="width:250px" class="input-text radius " value="{$data['ffc_id']}">&nbsp;
-	  		彩种名称：<span class="select-box inline radius" >
-		<select name="ffc_lid" class="select"  id="member_d" >
-			<option value>--全部彩种--</option>
-{foreach name="lottery" item="vo" }
-    <option value="{$key}">{$vo}</option>
-{/foreach}
-
-		</select>
-		</span>	
-				&nbsp;玩法：<span class="select-box inline radius">
-		<select name="ffc_m_id" class="select" id='ffc_m_id'>
-			<option value>--全部方法--</option>
-		</select>
-		</span>	
-				&nbsp;奖期：
-		<input type="text" name="ffc_issue" id="" placeholder="奖期" style="width:120px" class="input-text radius " value="{$data['ffc_issue']}">
-		<br/><br/>
-		&nbsp;用户名：<input type="text" value="{$data['ffc_username']}" name="ffc_username" id="" placeholder="用户名" style="width:250px" class="input-text radius ">
-		&nbsp;游戏时间：
-		<input type="text"onFocus="WdatePicker({startDate:'%y-%M-%d 00:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})" name="start_time" id="logmin" class="input-text Wdate radius" style="width:165px;" value="{$data['start_time']}">-
-		<input type="text"  name="end_time" onFocus="WdatePicker({startDate:'%y-%M-%d 23:59:59',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})" id="logmax" class="input-text Wdate radius" style="width:165px;" value="{$data['end_time']}">
-		&nbsp;订单状态：
-		<span class="select-box inline radius">
-		<select name="order_state" class="select">
-			<option value="1" >已派彩</option>
-			<option value="2" >未派彩</option>
-
+<nav class="breadcrumb"><a class="maincolor" href="{:url('index/welcome')}"><i class="Hui-iconfont">&#xe67f;</i> 首页 </a><span
+        class="c-gray en">&gt;</span> 报表管理 <span class="c-gray en">&gt;</span> <a
+        href="{:url('order/getOrder')}" class="maincolor">注单搜索</a><a class="btn btn-success radius r"
+                                                   style="line-height:1.6em;margin-top:3px"
+                                                   href="javascript:location.replace(location.href);" title="刷新"><i
+        class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="Hui-article">
+    <article class="cl pd-20">
+        <div class="text-c">
+            <form action="{:url('order/getOrder')}" method="get">
+                订单编号：<input type="text" name="ffc_id"  placeholder="订单编号" style="width:250px" class="input-text radius " value="{$data['ffc_id']}">&nbsp;
+                彩种名称：<span class="select-box inline radius">
+		<select name="ffc_lid" class="select" id="member_d">
+			<option value = "0">--全部彩种--</option>
+            {foreach name="lottery" item="vo" }
+            <option value="{$key}" {eq name="$key" value="$data['ffc_lid']" }selected="selected" {/eq} >{$vo}</option>
+            {/foreach}
 		</select>
 		</span>
-		&nbsp;
-		<button name=""  class="btn btn-success radius" type="submit"><i class="Hui-iconfont">&#xe665;</i> 查看</button>
-		</form>
-			</div>
+                &nbsp;玩法：<span class="select-box inline radius">       
+		<select name="ffc_mg_id" class="select" id='ffc_m_id'>
+			<option value>--全部方法--</option>
+		</select>
+		</span>
+                &nbsp;奖期：
+                <input type="text" name="ffc_issue" placeholder="奖期" style="width:120px" class="input-text radius "
+                       value="{$data['ffc_issue']}">
+                <br/><br/>
+                &nbsp;用户名：<input type="text" value="{$data['ffc_username']}" name="ffc_username" id="" placeholder="用户名"
+                                 style="width:250px" class="input-text radius ">
+                &nbsp;开奖时间：
+                <input type="text"
+                       onFocus="WdatePicker({startDate:'%y-%M-%d 00:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})"
+                       name="start_time" id="logmin" class="input-text Wdate radius" style="width:165px;"
+                       value="{$data['start_time']}">-
+                <input type="text" name="end_time"
+                       onFocus="WdatePicker({startDate:'%y-%M-%d 23:59:59',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})"
+                       id="logmax" class="input-text Wdate radius" style="width:165px;" value="{$data['end_time']}">
+                &nbsp;订单状态：
+                <span class="select-box inline radius">
+                    <input name="is_submit" type="hidden"  value="1"/>
+		<select name="order_state" class="select">
+			<option value="1" {eq name="1" value="$data['order_state']" }selected="selected" {/eq} >已派彩</option>
+            <option value="2" {eq name="2" value="$data['order_state']" }selected="selected" {/eq} >未派彩</option>
+		</select>
+		</span>
+                &nbsp;
+                <button name="" class="btn btn-success radius" type="submit"><i class="Hui-iconfont">&#xe665;</i> 查看
+                </button>
+            </form>
+        </div>
+        <div class="mt-20 ">
 
-		<div class="mt-20 " >
-		
-				<table class="table table-border table-bordered table-hover table-bg table-sort radius">
-					<thead>
-						<tr class="text-c ">
-						<th width="150">订单编号</th>	
-				           <th width="150">帐户名</th>								
-							<th width="30">彩种类型</th>
-							<th width="60">奖期</th>
-							<th width="30">单倍注数</th>
-                            <th width="30">倍数</th>
-                            <th width="30">模式</th>
-							<th width="50">投注金额</th>
-							<th width="50">奖金系列</th>
-							<th width="70">购买时间</th>
-							<th width="70">奖期截止时间</th>
-							<th width="30">中奖状态</th>
-							<th width="50">奖金</th>
-							<th width="30">派奖状态</th>
-							<th width="30">撤单状态</th>
-						</tr>
-					</thead>
-					<tbody>
-					{volist name="list" id="v"}
-						 <tr class="text-c">
-							<td>{$v.ffc_id}</td>
-							<td>{$v.ffc_username}</td>
-							<td>{$v.ffc_lid}</td>
-							<td>{$v.ffc_issue}</td>
-							<td>{$v.ffc_single_num}</td>
-							<td>{$v.ffc_multiple}</td>
-       						<td >{$v.ffc_modes}</td>
-							<td>{$v.ffc_amount}</td>
-							<td>奖金系列</td>
-						    <td>ffc_add_time</td>
-						    <td>ffc_add_time</td>
-						    <td>ffc_check_prize_status</td>
-						    <td>ffc_prize</td>
-						    <td>ffc_send_prize_status</td>
-						    <td>ffc_cancel_status</td>
-							</td>{/eq}						
-			   </tr>
-					{/volist}
-					</tbody>
-				</table>
-			</div>
-		</article>
-	</div>
+            <table class="table table-border table-bordered table-hover table-bg table-sort radius">
+                <thead>
+                <tr class="text-c ">
+                    <th width="150">帐户名/订单编号</th>
+                    <th width="80">彩种类型/奖期</th>
+                    <th width="30">单倍注数</th>
+                    <th width="30">倍数</th>
+                    <th width="30">模式</th>
+                      
+                    {neq name='2' value="$data['bytype']"}
+                     <th width="40" onclick=" bytyoe(2); "> <a class="maincolor" href="javascript:;">投注金额<i class="Hui-iconfont">&#xe679;</i></a>   </th>
+                    {/neq} 
+                    {eq name='2' value="$data['bytype']"}
+                    <th width="40" onclick=" bytyoe(1); "><a class="maincolor" href="javascript:;">投注金额 <i class="Hui-iconfont">&#xe674;</i> </a></th>
+                    {/eq} 
+
+                   
+                   <!--  <th width="40" class="t_list_caption.money" >下注金额↑</th> -->
+
+                    <th width="30">奖金系列</th>
+                    <th width="70">购买时间      
+                    </th>
+                     
+                    {neq name='4' value="$data['bytype']"}
+                    <th width="70" onclick=" bytyoe(4); "><a class="maincolor" href="javascript:;">奖期截止时间 <i class="Hui-iconfont">&#xe679;</i></a></th>
+                    {/neq} 
+                    {eq name='4' value="$data['bytype']"}
+                    <th width="70" onclick=" bytyoe(3); "><a class="maincolor" href="javascript:;">奖期截止时间 <i class="Hui-iconfont">&#xe674;</i></a></th>
+                    {/eq} 
+
+                     
+                    <th width="40">代理占成</th>
+                    <th width="40">总代占成</th>
+                    <th width="40">股东占成</th>
+                    <th width="40">分公司占成</th>
+                    <th width="40">总公司占成</th>
+                     
+                    {neq name='6' value="$data['bytype']"} 
+                    <th width="40" onclick=" bytyoe(6); "><a class="maincolor" href="javascript:;">总奖金 <i class="Hui-iconfont">&#xe679;</i></a></th>
+                    {/neq} 
+                    {eq name='6' value="$data['bytype']"} 
+                    <th width="40" onclick=" bytyoe(5); "><a class="maincolor" href="javascript:;">总奖金 <i class="Hui-iconfont">&#xe674;</i></a></th>
+                    {/eq} 
+
+                    
+                    <th width="30">中奖状态</th>
+                    <th width="30">派奖状态</th>
+                    <th width="30">撤单状态</th>
+                    <!--<th width="30">是否扣款</th>-->
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="list" id="v"}
+                {gt name="$v.o_wins" value="0"}
+                <tr class="text-c" style="background-color:	#ff9224;">
+                    {else/}
+                <tr class="text-c">
+                    {/gt}
+                    <td>{$v.o_username}<br>
+                        <a class="maincolor" title="订单详情" href="javascript:;"
+    onclick="picture_edit('订单详情','{:url('order/orderDetail')}?id={:orderWrapid($v.o_id,$v.o_issue,$v.o_lid)}&mg_id={$v.o_mg_id}&issue={$v.o_issue}&lid={$v.o_lid}','10001')">
+                            {:orderWrapId($v.o_id,$v.o_issue,$v.o_lid)}
+                        </a>
+                    </td>
+                    <td>
+                        {eq name="$v.o_lid" value="2"}CQSSC{/eq}
+                        {eq name="$v.o_lid" value="6"}PK10{/eq}
+                        {eq name="$v.o_lid" value="8"}XJSSC{/eq}
+                        {eq name="$v.o_lid" value="9"}JXKS{/eq}
+                        {eq name="$v.o_lid" value="14"}TJSSC{/eq}
+                        {eq name="$v.o_lid" value="24"}GD115{/eq}
+                        {eq name="$v.o_lid" value="26"}SY115{/eq}
+                        {eq name="$v.o_lid" value="27"}JX115{/eq}
+                        {eq name="$v.o_lid" value="28"}FC3D{/eq}
+                        {eq name="$v.o_lid" value="29"}P3P5{/eq}
+                        {eq name="$v.o_lid" value="30"}HBKS{/eq}
+                        {eq name="$v.o_trace_id" value="0"}{else/}
+                        &nbsp;&nbsp;
+                        <span>
+								<a style="color: #FF0000;" href="javascript:;" title="追号订单详情"
+                                   onclick="picture_edit('追号订单详情','{:url('order/traceDetail')}?id={$v.o_trace_id}','10001')">
+                                   -追-
+							  </a>
+								</span>
+                        &nbsp;&nbsp;
+                        {/eq}
+                        <br>{$v.o_issue}
+                    </td>
+                    <td>{$v.o_single_num}</td>
+                    <td>{$v.o_multiple}</td>
+                    {eq name="$v.o_modes" value="1"}
+                    <td>2元</td>
+                    {/eq}
+                    {eq name="$v.o_modes" value="0.5"}
+                    <td>1元</td>
+                    {/eq}
+                    {eq name="$v.o_modes" value="0.1"}
+                    <td>2角</td>
+                    {/eq}
+                    {eq name="$v.o_modes" value="0.05"}
+                    <td>1角</td>
+                    {/eq}
+                    {eq name="$v.o_modes" value="0.01"}
+                    <td>2分</td>
+                    {/eq}
+                    {eq name="$v.o_modes" value="0.005"}
+                    <td>1分</td>
+                    {/eq}
+                    <td>{$v.o_amount}</td>
+                    <td>{$v.o_pan}</td>
+                    <td>{$v.o_add_time}</td>
+                    <td>{$v.o_draw_time}</td>
+                    <td>
+                        {$v.o_amount1}
+                        <br>
+                        {$v.u_proportion_1}%
+                    </td>
+                    <td>
+                        {$v.o_amount2}
+                        <br>
+                        {$v.u_proportion_2}%
+                    </td>
+                    <td>
+                        {$v.o_amount3}
+                        <br>
+                        {$v.u_proportion_3}%
+                    </td>
+                    <td>
+                        {$v.o_amount4}
+                        <br>
+                        {$v.u_proportion_4}%
+                    </td>
+                    <td>
+                        {$v.o_amount5}
+                        <br>
+                        {$v.u_proportion_5}%
+                    </td>
+                    <td>
+                        {$v.o_wins}
+                    </td>
+                    <td>
+                        {eq name="v.o_is_jiesuan" value="0"}未判断{/eq}
+                        {eq name="v.o_is_jiesuan" value="1"}中奖{/eq}
+                        {eq name="v.o_is_jiesuan" value="2"}未中奖{/eq}
+                    </td>
+                    <td>{eq name="v.o_is_pay" value="0"}未派奖{/eq}
+                        {eq name="v.o_is_pay" value="1"}已派奖{/eq}
+                    </td>
+                    <td>
+                        {eq name="v.o_is_cancel" value="0"}未撤单{/eq}
+                        {eq name="v.o_is_cancel" value="1"}用户撤单{/eq}
+                        {eq name="v.o_is_cancel" value="2"}追中撤单{/eq}
+                        {eq name="v.o_is_cancel" value="3"}出号撤单{/eq}
+                        {eq name="v.o_is_cancel" value="4"}未开撤单{/eq}
+                        {eq name="v.o_is_cancel" value="9"}管理员撤单{/eq}
+                        {eq name="v.o_is_cancel" value="5"}追中撤单{/eq}
+                    </td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+            <!-- 分页start-->
+            {include file="page"}
+            <!-- 分页end-->
+        </div>
+    </article>
+</div>
 
 
 <!--_footer 作为公共模版分离出去-->
@@ -105,31 +237,35 @@
 <script type="text/javascript" src="../../static/lib/laypage/1.2/laypage.js"></script>
 <script type="text/javascript">
 $(function(){
-	$('.table-sort').dataTable({
-		"aaSorting": [[1, "desc" ]],//默认第几个排序
-		"bStateSave": true,//状态保存
-	});
-	$('#member_d').change(function(){
-		var id=this.value;
-		var tmp="<optgroup label='三星'>";
-		if(id){
-		$("#ffc_m_id").empty();
-		$.get("{:url('Order/ajax')}",{"lid":id},function(data){ 
-			$("#ffc_m_id").append("<option value>--全部方法--</option>");
-			$.each(data, function(indx,obj){	
-               //<optgroup label="三星">
-                var tmp = '<option value="' + obj.m_id + '">&nbsp;&nbsp;' + obj.m_cname + '</option>';
-                $("#ffc_m_id").append(tmp);
-			});            
-			});
-	   }else{
-	   	   $("#ffc_m_id").empty();
-	   	   $("#ffc_m_id").append("<option value>--全部方法--</option>");
-	   }			
-	});
-	
+    $('#member_d').change(function () {
+        var id = this.value;
+        if (id != 0 ) {
+            $("#ffc_m_id").empty();
+            $.get("{:url('Order/ajax')}", {"lid": id}, function (data) {
+                $("#ffc_m_id").append("<option value>--全部方法--</option>");
+                $.each(data, function (indx, obj) {
+                    var tmp = '<option value="' + obj.mg_id + '">&nbsp;&nbsp;' + obj.mg_name + '</option>';
+                    $("#ffc_m_id").append(tmp);
+                });
+            });
+        } else {
+            $("#ffc_m_id").empty();
+            $("#ffc_m_id").append("<option value>--全部方法--</option>");
+        }
+    });
+    $('#member_d').change();
 });
-
+function picture_edit(title, url, id) {
+        var index = layer.open({
+            type: 2,
+            title: title,
+            content: url
+        });
+        layer.full(index);
+ }
+ function bytyoe(type){
+     window.location.href = "{:url('order/getOrder')}?ffc_id={$data['ffc_id']}&ffc_lid={$data['ffc_lid']}&ffc_issue={$data['ffc_issue']}&ffc_username={$data['ffc_username']}&start_time={$data['start_time']}&end_time={$data['end_time']}&is_submit={$data['is_submit']}&order_state={$data['order_state']}&bytype="+type;
+ }
 </script>
 <!--/请在上方写此页面业务相关的脚本-->
 </body>

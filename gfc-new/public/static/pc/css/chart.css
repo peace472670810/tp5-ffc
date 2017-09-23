@@ -27,7 +27,7 @@ h1, h2, h3, h4, h5, p, ul, li { margin: 0; padding: 0; }
 #chartsTable .tb td { color: #333333; }
 #showissue { border: 1px solid #FFFFFF; height: 21px; width: 53px; }
 .history .none { background: none repeat scroll 0 0 rgba(0, 0, 0, 0) !important; }
-#tm { height: 26px; line-height: 26px; }
+#tm { height: 44px; line-height: 44px; }
 .history a { color: #003399; text-decoration: none; }
 .history a:hover { text-decoration: underline; }
 .history .div_s1 { background-color: #FFFFFF; text-align: left; width: 1100px; }

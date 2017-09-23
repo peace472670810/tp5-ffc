@@ -21,7 +21,7 @@
 <title>日志管理 > 用户操作日志 </title>
 </head>
 <body>
-<nav class="breadcrumb"><a href="{:url('index/welcome')}"><i class="Hui-iconfont">&#xe67f;</i> 首页 </a><span class="c-gray en">&gt;</span> 日志管理 <span class="c-gray en">&gt;</span> <a href="{:url('logs/getLogs')}">用户操作日志</a><a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><a   class="maincolor" href="{:url('index/welcome')}"><i class="Hui-iconfont">&#xe67f;</i> 首页 </a><span class="c-gray en">&gt;</span> 日志管理 <span class="c-gray en">&gt;</span> <a  class="maincolor"  href="{:url('logs/getLogs')}">用户操作日志</a><a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 	<div class="Hui-article">
 		<article class="cl pd-20">
 	<div class="text-c">
@@ -36,7 +36,7 @@
 		</form>
 			</div>
 		<div class="mt-20 " >
-				<table class="table table-border table-bordered table-hover table-bg table-sort radius ">
+				<table class="table table-border table-bordered  table-hover  table-bg table-sort radius  ">
 					<thead>
 						<tr class="text-c ">
 						   <th width="30">编号</th>
@@ -78,14 +78,6 @@
 <script type="text/javascript" src="../../static/lib/datatables/1.10.0/jquery.dataTables.js"></script>
 <script type="text/javascript" src="../../static/lib/laypage/1.2/laypage.js"></script>
 <script type="text/javascript">
-$(function(){
-	$('.table-sort').dataTable({
-		"aaSorting": [[ 1, "desc" ]],//默认第几个排序
-		"bStateSave": true,//状态保存
-		"aLengthMenu":[50]
-	});
-
-});
 
 </script>
 <!--/请在上方写此页面业务相关的脚本-->

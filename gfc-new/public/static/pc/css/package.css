@@ -19,9 +19,11 @@ li{    display: list-item;  list-style: none;}
 .todayDetxiangxCont3 li, .todayDetxiangxCont2 li, .todayDetxiangxCont1 li, .orderDetxiangxCont2 li, .orderDetxiangxCont1 li { float: none; line-height: 25px; margin: 0 auto;padding: 0; width: 100%; clear:both;}
 .orderDetxiangxCont2 li{ line-height:22px;font-size: 12px; border-bottom: 1px solid #D9D9D9;  }
 .orderDetxiangxCont2 li:hover{background: #D9D9D9;  }
-
-.orderDetxiangxCont2 li span, .orderDetxiangxCont1 li span { color: #000000; display: block; float: left; overflow: hidden; text-align: center; width: 14%; word-break: normal; word-wrap: break-word;}
+.orderDetxiangxCont5 li{ line-height:22px;font-size: 12px; border-bottom: 1px solid #D9D9D9; overflow: hidden;  }
+.orderDetxiangxCont5 li:hover{background: #D9D9D9; }
+.orderDetxiangxCont5 li span,.orderDetxiangxCont2 li span, .orderDetxiangxCont1 li span { color: #000000; display: block; float: left; overflow: hidden; text-align: center; width: 14%; word-break: normal; word-wrap: break-word;}
 .order-first .orderDetxiangxCont2 li span,.order-first .orderDetxiangxCont1 li span{ width: 20%;}
+.order-first .orderDetxiangxCont5 li span,.order-first .orderDetxiangxCont1 li span{ width: 50%;}
 .orderDetxiangxCont2 { width: auto; overflow:hidden;}
 .orderDetxiangxCont2-center { margin: 0 auto; text-align: center; width: 185px; }
 .orderDetxiangxCont2-center input { margin: 20px 0 10px 20px;  }

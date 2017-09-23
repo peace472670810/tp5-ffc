@@ -1,0 +1,131 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../static/pc/css/gray.css" />
+</head>
+<body>
+<!-- 内页公用板块 -->
+<div class="GameBoxall SubGamePlatePadding">
+    <div class="Gamepart">
+
+        <div class="sub_public">
+
+            <div class="sub_ContBox">
+                <div class="subContCent">
+                    <!-- 搜索栏 -->
+                    <div class="SearchBar">
+                        <form method="get" action="{:url('Game/moreBuyRecord')}" id="form1" name="form1">
+                            <ul>
+                                <li>
+                                    <label>游戏名称：</label>
+                                    <select class=" w128px" name="lid">
+                                        <option value="2" {if condition="$lid eq 2"}selected{/if}>重庆时时彩</option>
+                                        <option value="26"{if condition="$lid eq 26"}selected{/if}>山东11选5</option>
+                                        <option value="8" {if condition="$lid eq 8"}selected{/if}>新疆时时彩</option>
+                                        <option value="27"{if condition="$lid eq 27"}selected{/if}>江西11选5</option>
+                                        <option value="24"{if condition="$lid eq 24"}selected{/if}>广东11选5</option>
+                                        <option value="14"{if condition="$lid eq 14"}selected{/if}>天津时时彩</option>
+                                        <option value="28"{if condition="$lid eq 28"}selected{/if}>福彩3D</option>
+                                        <option value="29"{if condition="$lid eq 29"}selected{/if}>排列三/五</option>
+                                        <option value="9"{if condition="$lid eq 9"}selected{/if}>江苏快三</option>
+                                        <option value="6"{if condition="$lid eq 6"}selected{/if}>PK拾</option>
+                                        <option value="30"{if condition="$lid eq 30"}selected{/if}>湖北快3</option>
+                                    </select>
+                                </li>
+                                <li>
+                                    <label>订单编号：</label>
+                                    <input size="20" value="{$wrap_id}" type="text" name="wrap_id" class="txtStyle">
+                                </li>
+                                <li>
+                                    <label>游戏时间：</label>
+                                    <div class="MutiTxt">
+                                        <input class="Wdate txtStyle w85px datepicker85" readonly onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd'})" my97mark="false" id="start_time" value="{$start_time}" name="start_time" size="16">
+                                        <em>到</em>
+                                        <input class="Wdate txtStyle w85px datepicker85" readonly onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd'})" my97mark="true" id="end_time" value="{$end_time}" name="end_time" size="16">
+                                    </div>
+                                </li>
+                                <li>
+                                    <label>状态：</label>
+                                    <select class="SelectStyle w128px" name="is_pay">
+                                        <option value="1" {if condition="$is_pay eq 1"}selected{/if}>未结算</option>
+                                        <option value="0" {if condition="$is_pay eq 0"}selected{/if}>已结算</option>
+                                    </select>
+                                </li>
+                                <li>
+                                    <input type="submit" value="查询" class="btnStyle m010" name="submit">
+                                </li>
+                            </ul>
+                            <input type="hidden" value="api" name="c">
+                            <input type="hidden" value="packageList" name="a">
+                        </form>
+                    </div>
+                    <!-- 列表数据 -->
+                    <div class="clear"></div>
+                    <table class="tab01" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <th width="15%">订单编号</th>
+                            <th width="10%">彩种</th>
+                            <th width="11%">奖期</th>
+                            <th width="4%">模式</th>
+                            <th width="11%">投注金额</th>
+                            <th width="14%">购买时间</th>
+                            <th width="4%">追号</th>
+                            <th width="10%">奖金</th>
+                            <th width="8%">状态</th>
+                        </tr>
+                        {if condition="empty($list)"}
+                             暂无数据
+                        {else/}
+                            {volist name="list" id="v"}
+                            <tr class="recordsContent">
+                                <td><a target="_blank" href="{:url('Game/orderDetail')}?issue={$v.o_issue}&mg_id={$v.o_mg_id}&lid={$v.o_lid}&wrapId={$v.wrap_id}" title="查看订单详情">{$v.wrap_id}</a></td>
+                                <td><span class="yellow">{$v.lidName}</span></td>
+                                <td>{$v.o_issue}</td>
+                                <td>{$v.modes}</td>
+                                <td><strong class="yellow">{$v.o_amount}</strong></td>
+                                <td>{$v.o_add_time}</td>
+                                <td>{$v.is_trace}</td>
+                                <td><strong class="yellow">{$v.o_wins}</strong></td>
+                                <td><b><span class="yellow">{$v.status}</span></b></td>
+                            </tr>
+                            {/volist}
+                            <tr>
+                                <th colspan="10">
+                                    <div class="bottom_info">
+                                        <!--计划投注金额 <span class="yellow">1,240.00</span> 元 -->&nbsp;&nbsp;实际投注金额: <span class="yellow">{$amount}</span> 元
+                                    </div></th>
+                            </tr>
+                        {/if}
+
+                    </table>
+                    <!-- 分页  -->
+                    {$page}
+                    <!-- 分页end -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../static/pc/js/jquery-1.8.3.min.js"></script>
+<script src="../../static/pc/js/ds.js" type="text/javascript"></script>
+<script src="../../static/pc/js/jqextend.js" type="text/javascript"></script>
+<script src="../../static/pc/js/My97DatePicker/WdatePicker.js"></script>
+<script>
+    $(function () {
+        //设置默认值
+        $('#start_time').val('{$start_time}');
+        $('#end_time').val('{$end_time}');
+        $.post('', {'getCode': 1, 'data':{"1":["20170713-078","20170713-077","20170713-076","20170713-075","20170713-074","20170713-073","20170713-072","20170713-071","20170713-070","20170713-069"]}}, function (ret, textStatus, jqXHR) {
+            if (ret && ret.errno == '0') {
+                for (var i in ret.data) {
+                    $('.code' + i).text(ret.data[i]);
+                }
+            }
+        }, 'json');
+    });
+</script>
+</body>
+</html>

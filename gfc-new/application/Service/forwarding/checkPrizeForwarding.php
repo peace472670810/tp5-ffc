@@ -6,9 +6,10 @@
  * Time: 15:45
  */
 
-namespace app\Service\Forwarding;
+namespace app\Service\forwarding;
 
-
+use think\Exception;
+use think\Log;
 class checkPrizeForwarding extends  Forwarding
 {
 

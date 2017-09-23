@@ -1,0 +1,63 @@
+﻿<!--_meta 作为公共模版分离出去-->
+{include file="common/_meta"}
+<!--/meta 作为公共模版分离出去-->
+<title>封锁值设定 </title>
+</head>
+<body>
+<!--_header 作为公共模版分离出去-->
+<!--/_menu 作为公共模版分离出去-->
+<nav class="breadcrumb">
+    <a  class="maincolor" href="{:url('index/welcome')}"><i class="Hui-iconfont">&#xe67f;</i> 首页</a>
+    <span class="c-gray en">&gt;</span> 内部管理 <span class="c-gray en">&gt;</span>
+    <a  class="maincolor" href="{:url('System/Systemlottery')}">封锁值设定</a><a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i
+        class="Hui-iconfont">&#xe68f;</i></a>
+</nav>
+<div class="cl pd-20">
+    <div  class="form form-horizontal">
+        <div id="tab-system" class="HuiTab">
+            <div class="tabBar cl">
+                {volist name="list" id="v"}
+                    <a href="{:url('System/Systemlocks')}?lid={$v.lid}"> <span {if condition="$lid eq $v.lid"} class="current"{/if}>{$v.cname}</span></a>
+                {/volist}
+            </div>
+            <div class="tabCon" style="display: block;">
+                <form action="{:url('System/Systemlocks')}?lid={$lid}" method="post" onsubmit="return save_submit();">
+                    <table class="table table-border table-bordered table-hover table-bg table-sort radius" align="center">
+                        <thead>
+                        <tr class="text-c ">
+                            <th width="10">ID彩种</th>
+                            <th width="20">玩法名称</th>
+                            <th width="20">封锁值【0是默认不设置封锁值】</th>
+                            <th width="20">创建时间</th>
+                            <th width="40">修改时间</th>
+                            <!--<th width="30">封锁值</th>-->
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {volist name="methodslist" id="v"}
+                        <tr class="text-c prizes-list"  value="{$v.m_id}" >
+                            <td>{$v.m_lid}</td>
+                            <td>{$v.m_cname}</td>
+                            <td><input  name="m_id-{$v.m_id}" value="{$v.m_flock}"/></td>
+                            <td>{$v.m_description}</td>
+                            <td class="maxPrize">{$v.m_update_time}</td>
+                        </tr>
+                        {/volist}
+                        <tr class="text-c" >
+                            <td colspan="9" style="border: none;"><input  class="btn btn-primary radius" name="提交" type="submit"/></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+    </div>
+</article>
+<!--_footer 作为公共模版分离出去-->
+{include file="common/_footer"}
+<!--/_footer /作为公共模版分离出去-->
+<!--请在下方写此页面业务相关的脚本-->
+        <!-- cookie 加密key-->
+        {include file='common/key'}
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

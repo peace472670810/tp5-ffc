@@ -1,0 +1,110 @@
+﻿{include file="common/_meta"}
+<!--[if IE 6]>
+<!/meta 作为公共模版分离出去-->
+
+<title>报表管理 > 转账记录 </title>
+</head>
+<body>
+<nav class="breadcrumb"><a  class="maincolor"  href="{:url('index/welcome')}"><i class="Hui-iconfont">&#xe67f;</i> 首页 </a><span
+        class="c-gray en">&gt;</span> 报表管理 <span class="c-gray en">&gt;</span> <a
+        class="maincolor"  href="{:url('order/transferRecord')}">转账记录</a><a class="btn btn-success radius r"
+                                                   style="line-height:1.6em;margin-top:3px"
+                                                   href="javascript:location.replace(location.href);" title="刷新"><i
+        class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="Hui-article">
+    <article class="cl pd-20">
+        <div class="text-c">
+            <form action="{:url('order/transferRecord')}" method="get">
+              <!--   存取序号：<input type="text" name="remitno"  placeholder="存取序号" style="width:200px" class="input-text radius " value="">              
+                &nbsp; -->用户名：<input type="text" value="{$data['username']}" name="username" id="" placeholder="用户名"style="width:200px" class="input-text radius ">
+                &nbsp;转账时间：
+                <input type="text"
+                       onFocus="WdatePicker({startDate:'%y-%M-%d 00:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})"
+                       name="start_time" id="logmin" class="input-text Wdate radius" style="width:165px;"
+                       value="{$data['start_time']}">-
+                <input type="text" name="end_time"
+                       onFocus="WdatePicker({startDate:'%y-%M-%d 23:59:59',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})"
+                       id="logmax" class="input-text Wdate radius" style="width:165px;" value="{$data['end_time']}">
+         &nbsp;   
+                网站ID：<input type="text" value="{$data['siteid']}" name="siteid"  placeholder="网站ID"style="width:100px" class="input-text radius "><br><br>
+                            
+               变动类型：
+                <span class="skin-minimal">
+
+    <input type="checkbox" name="type[]" value="60000"
+    {empty name="$data['type']"}checked{else /} {in name="60000" value="$data['type']"}checked {/in}{/empty}>
+    <label for="checkbox-1">转出</label>
+ 
+    <input type="checkbox" name="type[]" value="60001" 
+    {empty name="$data['type']"}checked{else /} {in name="60001" value="$data['type']"}checked {/in}{/empty}>
+    <label for="checkbox-2">转入</label>
+
+    <input type="checkbox" name="type[]" value="50001" 
+    {empty name="$data['type']"}checked{else /} {in name="50001" value="$data['type']"}checked {/in}{/empty}>
+    <label for="checkbox-1">下注</label>
+
+    <input type="checkbox" name="type[]" value="50002" 
+    {empty name="$data['type']"}checked{else /} {in name="50002" value="$data['type']"}checked {/in}{/empty}>
+    <label for="checkbox-2">派彩</label>
+  </span>&nbsp;&nbsp;
+                <input type="hidden" name="state" value="6666"></input>
+                
+                <button name="" class="btn btn-success radius" type="submit"><i class="Hui-iconfont">&#xe665;</i> 查看
+                </button>
+            </form>
+        </div>
+        <div class="mt-20 ">
+
+            <table class="table table-border table-bordered table-hover table-bg table-sort radius">
+                <thead>
+                <tr class="text-c ">            
+                    <th width="80">帐户名</th>
+                    <th width="50">网站ID</th>           
+                    <th width="30">变动类型</th>          
+                    <th width="30">变动金额</th>
+                    <th width="40">变动后金额</th>   
+                    <th width="60">变动时间</th>
+                    <th width="120">变动备注</th>
+                </tr>
+                </thead>
+                <tbody>
+     {volist name="list" id="v"}
+          <tr class="text-c">    
+              <td>{$v.username}</td>
+              <td>{$v.siteId}</td>    
+              {eq name="v.fromKeyType" value="60001"}<td>转入</td>{/eq}
+              {eq name="v.fromKeyType" value="60000"}<td>转出</td>{/eq}
+              {eq name="v.fromKeyType" value="50001"}<td>下注</td>{/eq}
+              {eq name="v.fromKeyType" value="50002"}<td>派彩</td>{/eq}    
+              <td>{empty name='$v.remit'}{$v.remit}{else/}
+                   {eq name="v.transType" value="in"} <span style="color: #0000FF">+{$v.remit}</span>{/eq}
+                   {eq name="v.transType" value="out"}<span style="color: #FF0000">-{$v.remit}</span>{/eq}
+                 {/empty}
+              </td>
+              <td>{$v.afterMoney}</td>            
+              <td><?php echo date('Y-m-d H:i:s',$v['createTime']/1000); ?></td>
+              <td>{$v.memo}</td>
+          </tr>
+     {/volist}        
+                </tbody>
+            </table>
+             {include file="page"}
+        </div>
+    </article>
+</div>
+
+
+<!--_footer 作为公共模版分离出去-->
+
+<!--/_footer /作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="../../static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="../../static/lib/datatables/1.10.0/jquery.dataTables.js"></script>
+<script type="text/javascript" src="../../static/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript">
+
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

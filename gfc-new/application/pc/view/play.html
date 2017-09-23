@@ -2,10 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>投注</title>
-    <link rel="stylesheet" type="text/css" href="../../static/pc/css/skin_black.css"/>
-    <link rel="stylesheet" type="text/css" href="../../static/pc/css/skin_black_layer.css"/>
-    <script type="text/javascript" src="../../static/pc/js/jquery-1.8.3.min.js"></script>
+    <title>KG官方彩</title>
+    <link rel="stylesheet" type="text/css" href="../../static/pc/css/skin_{$skin}.css?v={$v}"/>
+    <link rel="stylesheet" type="text/css" href="../../static/pc/css/skin_{$skin}_layer.css?v={$v}"/>
+    <!-- 开奖动画-->
+    <link rel="stylesheet" href="../../static/pc/css/ds.animation.css?v={$v}">
+    <!-- end -->
+    <script type="text/javascript" src="../../static/pc/js/jquery-1.8.3.min.js?v={$v}"></script>
+    <link rel="Bookmark" type="image/x-icon" href="../../static/mobile/images/favicon57.ico?v={$v}"/>
+    <link rel="icon" type="image/x-icon" href="../../static/mobile/images/favicon57.ico?v={$v}"/>
 </head>
 <body>
 <div class="page">
@@ -20,7 +25,7 @@
             </div>
         </div>
         <div id="layer_containerMore" class="layer_containerMore" style="display: none;"></div>
-        <p class="user_inf">欢迎您，<span id="nowUsername">yaboxiaxi3</span> &nbsp;余额：<span
+        <p class="user_inf">欢迎您，<span id="nowUsername">{$username}</span> &nbsp;余额：<span
                 class="user_inf_s2" id="nowBalance"></span></p>
         <div class="hd_skin_box" id="hdSkinBox">
             <a href="javascript:;" class="btn_changeSkin btn_sp" title="皮肤" id="btnChangeSkin"></a>
@@ -32,6 +37,7 @@
             </ul>
         </div>
     </div>
+    <input type="hidden" name="is_test" value="{$is_test}" id="user_is_test"/>
     <!-- 公告 E-->
     <!-- 头部公共导航 S-->
     <div class="pg_top_nav">
@@ -103,8 +109,7 @@
     </div>
     <!-- header S-->
     <div class="header">
-        <a href="javascript:;" class="logo" title="山东11选5"> <img
-                src="../../static/pc/images/black/SD11Y.png"/></a>
+        <a href="javascript:;" style="color: white;font-family:-webkit-body;font-weight: 800; margin-top: 15px;" class="logo" title="{$lottery.cname}"><span style="float: left; width: 100%;font-size: 20px; text-align: center;">KG官方彩</span><span style="float: left; width: 100%;font-size: 28px;text-align: center;">{$lottery.cname}</span></a>
         <div class="header_center">
             <div class="user_tz">
                 <p class="user_tz_p1">第<span id="thisIssueSpan"></span>期</p>
@@ -129,16 +134,70 @@
         <div class="header_right">
             <div class="user_tz">
                 <p class="user_tz_p1">第<span id="lastIssueSpan"></span>期</p>
-                <p class="user_tz_p2">开奖结果</p>
+                <p class="user_tz_p2" id="nextTimeOpen">开奖结果</p>
             </div>
-            <div class="kj_ball ball5" style="display:none">
-                <span class="kj_ball0 kj_ball_sp"></span>
-                <span class="kj_ball1 kj_ball_sp"></span>
-                <span class="kj_ball2 kj_ball_sp"></span>
-                <span class="kj_ball3 kj_ball_sp"></span>
-                <span class="kj_ball4 kj_ball_sp"></span>
+            <div class="kj_ball ball5 " style="display:none">
+                <span class="kj_ball0 kj_ball_sp "></span>
+                <span class="kj_ball1 kj_ball_sp "></span>
+                <span class="kj_ball2 kj_ball_sp "></span>
+                <span class="kj_ball3 kj_ball_sp "></span>
+                <span class="kj_ball4 kj_ball_sp "></span>
             </div>
-            <div class="kj_ball ball10" style="display:none">
+            <div class="dsLotto-prev donghua1 right" style="padding-right:22px !important;">
+                <div class="dsLotto-rs dsLotto-win--gd10 status--on">
+                    <div class="row row-1">
+                        <ul class="array cf">
+                            <li class="circle circle-11" style="margin-left: 14px !important;"></li>
+                            <li class="circle circle-15"></li>
+                            <li class="circle circle-1"></li>
+                            <li class="circle circle-19"></li>
+                            <li class="circle circle-17"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <style>
+                {if condition="$lottery.lid eq 6"}
+                    .dsLotto-win--gd10 .circle {
+                        background: url('../../static/pc/images/spr_circle.png?v={$v}') no-repeat;
+                    }
+                {else/}
+                    .dsLotto-win--gd10 .circle {
+                        background: url('../../static/pc/images/spr_circle1.png?v={$v}') no-repeat;
+                    }
+                {/if}
+            </style>
+            <!--style="padding-top: 29px !important;     padding-right: 16px !important;"-->
+            <div class="dsLotto-prev donghua2 right">
+                <div class="dsLotto-rs dsLotto-win--gd10   status--on" id="pk10">
+                    <div class="row row-1" style="padding-top: 25px !important;padding-right: 16px !important;">
+                        <ul class="array cf">
+                            <li class="circle circle-11" style="width: 25px !important; margin-left:12px !important;height: 24px !important;"></li>
+                            <li class="circle circle-2"  style="width: 25px !important;height: 24px !important;"></li>
+                            <li class="circle circle-1"  style="width: 25px !important;height: 24px !important;"></li>
+                            <li class="circle circle-3"  style="width: 25px !important;height: 24px !important;"></li>
+                            <li class="circle circle-4"  style="width: 25px !important;height: 24px !important;"></li>
+                            <li class="circle circle-5"  style="width: 25px !important;height: 24px !important;"></li>
+                            <li class="circle circle-6"  style="width: 25px !important;height: 24px !important;"></li>
+                            <li class="circle circle-1"  style="width: 25px !important;height: 24px !important;"></li>
+                            <li class="circle circle-9"  style="width: 25px !important;height: 24px !important;"></li>
+                            <li class="circle circle-8"  style="width: 25px !important;height: 24px !important;"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="dsLotto-prev donghua3 right">
+                <div class="dsLotto-rs dsLotto-win--gd10 status--on">
+                    <div class="row row-1" style="padding-right: 160px !important;">
+                        <ul class="array cf">
+                            <li class="circle circle-11" style="margin-left: 14px !important;"></li>
+                            <li class="circle circle-15"></li>
+                            <li class="circle circle-1"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="kj_ball ball10 " style="display:none ;height: 32px !important;margin-top:25px !important;">
                 <span class="kj_small_ball0 kj_ball_sp"></span>
                 <span class="kj_small_ball1 kj_ball_sp"></span>
                 <span class="kj_small_ball2 kj_ball_sp"></span>
@@ -150,8 +209,39 @@
                 <span class="kj_small_ball8 kj_ball_sp"></span>
                 <span class="kj_small_ball9 kj_ball_sp"></span>
             </div>
+            {if condition="$codesum eq 5"}
+                <p class="dslotterycode5 font-color">
+                    <span class="dslotterycode-font5">万</span>
+                    <span class="dslotterycode-font5">千</span>
+                    <span class="dslotterycode-font5">百</span>
+                    <span class="dslotterycode-font5">十</span>
+                    <span class="dslotterycode-font5">个</span>
+                </p>
+            {/if}
+            {if condition="$codesum eq 3"}
+                <p class="dslotterycode3 font-color">
+                    <span style=" width: 43px;height: 20px;float: left;display: inline;text-align: center;margin-left: 3px;font-family: sans-serif;">百</span>
+                    <span style=" width: 43px;height: 20px;float: left;display: inline;text-align: center;margin-left: 3px;font-family: sans-serif;">十</span>
+                    <span style=" width: 43px;height: 20px;float: left;display: inline;text-align: center;margin-left: 3px;font-family: sans-serif;">个</span>
+                </p>
+            {/if}
+            {if condition="$codesum eq 10"}
+                <p  class="dslotterycode10 font-color">
+                    <span class="dslotterycode-font10">一</span>
+                    <span class="dslotterycode-font10">二</span>
+                    <span class="dslotterycode-font10">三</span>
+                    <span class="dslotterycode-font10">四</span>
+                    <span class="dslotterycode-font10">五</span>
+                    <span class="dslotterycode-font10">六</span>
+                    <span class="dslotterycode-font10">七</span>
+                    <span class="dslotterycode-font10">八</span>
+                    <span class="dslotterycode-font10">九</span>
+                    <span class="dslotterycode-font10">十</span>
+                </p>
+            {/if}
         </div>
     </div>
+
     <!-- header E-->
     <!-- 下注 S-->
     <div class="even_xz">
@@ -176,7 +266,7 @@
                 </div>
                 <div class="even_xz_right_btn_box">
                     <a class="btn_qst btn_sp" title="走势图" target="_blank"
-                       href="index.php?c=api&a=chart&lottery_id=2&urlSession=3b8befed8f19ab240f8875c50166019e1c85a585"></a>
+                       href="{:url('Api/chart')}?lottery_id={$lottery.lid}"></a>
                     <a href="javascript:;" title="奖金规则" class="btn_jjgz btn_sp" id="prizerule"></a>
                     <a href="javascript:;" title="" class="btn_zthm btn_sp" id="inputBtn"></a>
                 </div>
@@ -224,9 +314,6 @@
             </div>
         </div>
         <ul class="moshi">
-            <!--<li class="ms_yuan_li"><a href="javascript:;" class="ms_yuan modesDIV" val="1">元模式</a></li>
-            <li class="ms_jiao_li"><a href="javascript:;" class="ms_jiao modesDIV" val="0.1">角模式</a></li>
-            <li class="ms_fen_li"><a href="javascript:;" class="ms_fen modesDIV" val="0.01">分模式</a></li>-->
             <li class="ms_2yuan_li"><a href="javascript:;" class="ms_2yuan modesDIV" val="1">2元</a></li>
             <li class="ms_1yuan_li"><a href="javascript:;" class="ms_1yuan modesDIV" val="0.5">1元</a></li>
             <li class="ms_jiao_li"><a href="javascript:;" class="ms_jiao modesDIV" val="0.1">2角</a></li>
@@ -253,8 +340,7 @@
         <div class="kj_left">
             <div class="old_kj_title">
                 <p class="old_kj_title_p1"><span class="old_kj_title_icon btn_sp"></span>历史开奖</p>
-                <a href="/?c=api&a=chart&lottery_id=2&urlSession=3b8befed8f19ab240f8875c50166019e1c85a585"
-                   class="btn_more btn_sp" title="更多历史号码" target="_blank"></a>
+                <a href="{:url('Api/chart')}?lottery_id={$lottery.lid}" class="btn_more btn_sp" title="更多历史号码" target="_blank"></a>
             </div>
             <div class="old_kj_left_box">
                 <div class="old_kj_left_box_title" id="todayIssuesHead">
@@ -265,9 +351,9 @@
         </div>
         <div class="kj_right">
             <div class="kj_right_btn_box">
-                <a href="javascript:;" class="kj_right_btn_myFa btn_sp" title="我的方案"></a>
-                <a href="javascript:;" class="kj_right_btn_myZh btn_sp" title="我的追号"></a>
-                <a href="javascript:;" class="kj_right_btn_moreFa btn_sp" title="更多方案" id="touzhu_jl"></a>
+                <a href="javascript:;" class="kj_right_btn_myFa btn_sp" title="未结算注单"></a>
+                <a href="javascript:;" class="kj_right_btn_myZh btn_sp" title="今日追号"></a>
+                <a href="javascript:;" class="kj_right_btn_moreFa btn_sp" title="更多投注记录" id="touzhu_jl"></a>
             </div>
             <div class="old_kj_right_box" id="mybetList">
                 <div class="old_kj_right_box_title">
@@ -291,46 +377,74 @@
     </div>
     <!-- 历史开奖 E-->
 </div>
-
-<script type="text/javascript" src="../../static/pc/js/ds.js"></script>
-<script type="text/javascript" src="../../static/pc/js/layer/layer.min.js"></script>
-<script src="../../static/pc/js/jqextend.js" type="text/javascript"></script>
-<script src="../../static/pc/js/betcp.bak.js" type="text/javascript"></script>
+<script type="text/javascript" src="../../static/pc/js/ds.js?v={$v}"></script>
+<script type="text/javascript" src="../../static/pc/js/layer/layer.min.js?v={$v}"></script>
+<script src="../../static/pc/js/jqextend.js?v={$v}" type="text/javascript"></script>
+<script src="../../static/pc/js/betcp.bak.js?v={$v}" type="text/javascript"></script>
 <script type="text/javascript">
-    function showBalance() {
-        try {
-            $('#nowBalance').text('...');
-            $.post(
-                "{:url('Game/showbalance')}",
-                {},
-                function (response) {
-                    if (response) {
-                        response = eval('(' + response + ')');
-                        $('#nowBalance').text('￥' + response.balance);
-                        if (response.username) {
-                            if ($('#nowUsername').text() != response.username) {
-                                layer.msg('您已经在别处登录了本彩票平台<br/>现在为你切换到用户<br/>' + response.username, 4, 10);
-                                $('#nowUsername').text(response.username);
-                            }
-                        }
-                    }
-                }, 'json');
-        }
-        catch (e) {
-        }
-
-    }
-    function urlSession() {
-        return '&urlSession=' + Math.random();
-    }
+    var balance_url = "{:url('Game/showbalance')}";
     var lottery_id = {$lottery.lid};
     var lottery_type = {$lottery.lottery_type};
     var openedIssues = {$json_openedIssues};
-    var total_profit = 1-{$lottery.total_profit};
+    var total_profit = 1 - {$lottery.total_profit};
     var json_methods = {$json_methods};
     var cname = "{$lottery.cname}";
     var maxPrize = {$maxCombPrize};
     var getCurIssueUrl = "{:url('Game/getCurIssue')}";
+    var getLastIssueCode = "{:url('Game/getLastIssueCode')}";
+    var skin_url = "{:url('Game/skinSave')}";
+    var notice_url = "{:url('Game/getNotice')}";
+    var sortLotterysSave = "{:url('Game/sortLotterysSave')}";
+    var buyUrl = "{:url('Game/buy')}";
+    var traceUrl = "{:url('Game/trace')}";
+    var traceUrlBuy = "{:url('Game/traceBuy')}";
+    var BuyRecordsUrl = "{:url('Game/buyRecord')}";
+    var traceRecordsUrl = "{:url('Game/traceRecord')}";
+    var moreBuyRecordUrl = "{:url('Game/moreBuyRecord')}?lid={$lottery.lid}";
+    var moreTraceRecordUrl = "{:url('Game/moreTraceRecord')}";
+    var PANKOU = "{$odd}";
+    var allCurIssueURL = "{:url('Game/getAllCurIssue')}";
+    var prizeDetailUrl = "{:url('Game/prizeDetail')}";
+    var noticeUrl = "{:url('Game/getNoticeList')}";
+    var donghua = {$donghua};
+    function showBalance() {
+        try {
+            $('#nowBalance').text('...');
+            $.ajax({
+                type:"post",
+                url:balance_url,
+                cache:false,
+                async:true,
+                dataType:'json',
+                success:function (response) {
+                    if (response) {
+                        $('#nowBalance').text('￥' + response.balance);
+                        if (response == -1) {
+                            layer.alert('尊敬的客户你好，由于您长时间未操作，登陆时间已经过期,现在请重新进入本平台！<br/>');
+                            $(".xubox_botton1").click(function(res){
+                                location.href = "{:url('Game/loginOut')}";
+                            });
+                        }else if(response == -2){
+                            layer.alert('尊敬的客户您好，您已经在另一地方登录，已经被挤下线!如要登录，现在请重新进入本平台！<br/>');
+                            $(".xubox_botton1").click(function(res){
+                                location.href = "{:url('Game/loginReset')}";
+                            });
+                        }
+                    }else{
+                        $('#nowBalance').text('￥' + response);
+                    }
+                },
+                failure:function(res){
+                    layer.alert('访问钱包中心异常<br/>');
+                }
+            });
+        }
+        catch (e) {
+        }
+    }
+    function urlSession() {
+        return '';
+    }
     $(function () {
         $.bet({
             lotteryId: lottery_id,
@@ -344,126 +458,17 @@
             rebate: 0.090,
             defaultMode: 1,
             defaultRebate: 0.090,
-            missHot: {
-                "miss": [{
-                    "01": 14,
-                    "02": 20,
-                    "03": 2,
-                    "04": 24,
-                    "05": 16,
-                    "06": 0,
-                    "07": 1,
-                    "08": 5,
-                    "09": 30,
-                    "10": 37,
-                    "11": 7
-                }, {
-                    "01": 18,
-                    "02": 3,
-                    "03": 12,
-                    "04": 17,
-                    "05": 2,
-                    "06": 1,
-                    "07": 0,
-                    "08": 11,
-                    "09": 4,
-                    "10": 10,
-                    "11": 14
-                }, {
-                    "01": 1,
-                    "02": 0,
-                    "03": 22,
-                    "04": 7,
-                    "05": 3,
-                    "06": 29,
-                    "07": 14,
-                    "08": 2,
-                    "09": 5,
-                    "10": 8,
-                    "11": 12
-                }, {
-                    "01": 2,
-                    "02": 4,
-                    "03": 27,
-                    "04": 3,
-                    "05": 0,
-                    "06": 25,
-                    "07": 15,
-                    "08": 9,
-                    "09": 23,
-                    "10": 5,
-                    "11": 10
-                }, {
-                    "01": 19,
-                    "02": 2,
-                    "03": 0,
-                    "04": 18,
-                    "05": 12,
-                    "06": 14,
-                    "07": 9,
-                    "08": 4,
-                    "09": 7,
-                    "10": 33,
-                    "11": 3
-                }],
-                "hot": [{
-                    "01": 0,
-                    "02": 0,
-                    "03": 3,
-                    "04": 0,
-                    "05": 0,
-                    "06": 1,
-                    "07": 3,
-                    "08": 1,
-                    "09": 0,
-                    "10": 0,
-                    "11": 2
-                }, {
-                    "01": 0,
-                    "02": 3,
-                    "03": 0,
-                    "04": 0,
-                    "05": 3,
-                    "06": 1,
-                    "07": 2,
-                    "08": 0,
-                    "09": 1,
-                    "10": 0,
-                    "11": 0
-                }, {
-                    "01": 1,
-                    "02": 1,
-                    "03": 0,
-                    "04": 1,
-                    "05": 3,
-                    "06": 0,
-                    "07": 0,
-                    "08": 2,
-                    "09": 1,
-                    "10": 1,
-                    "11": 0
-                }, {
-                    "01": 2,
-                    "02": 1,
-                    "03": 0,
-                    "04": 2,
-                    "05": 2,
-                    "06": 0,
-                    "07": 0,
-                    "08": 1,
-                    "09": 0,
-                    "10": 2,
-                    "11": 0
-                }, {"01": 0, "02": 1, "03": 4, "04": 0, "05": 0, "06": 0, "07": 1, "08": 1, "09": 1, "10": 0, "11": 2}]
-            },
-            getCurUrl:getCurIssueUrl,
-
+            missHot: '',
+            getCurUrl: getCurIssueUrl,
+            getLastIssueUrl: getLastIssueCode,
+            getbuyUrl:buyUrl,
+            odds:PANKOU
         });
     });
 </script>
-<script src="../../static/pc/js/betcq.ext.bak.js" type="text/javascript"></script>
-<script src="../../static/pc/js/jquery.countdown.min.js" type="text/javascript"></script>
-<script src="../../static/pc/js/jqueryUI/jquery-ui.min.js" type="text/javascript"></script>
+<script src="../../static/pc/js/betcq.ext.bak.js?v={$v}" type="text/javascript"></script>
+<script src="../../static/pc/js/jquery.countdown.min.js?v={$v}" type="text/javascript"></script>
+<script src="../../static/pc/js/jqueryUI/jquery-ui.min.js?v={$v}" type="text/javascript"></script>
 <script>
     var sortLotterys = {$sortLotterys};
     function initSortLotterys() {
@@ -478,12 +483,12 @@
                 if (sortIns < 8) {
                     var sortli = $('.pg_top_nav' + (sortIns + 1).toString());
                     sortli.attr('title', sortLotterys[i]['cname']);
-                    sortli.attr('href', '/?c=api&a=' + sortLotterys[i]['alink'] + urlSession());
-                    var tmphtml = '<span class="pg_top_nav_ul_s1">' + sortLotterys[i]['cname'] + '</span><span class="pg_top_nav_ul_s2 lottery_timer" lottery="' + sortLotterys[i]['lotteryId'] + '">载入中</span>';
+                    sortli.attr('href', sortLotterys[i]['alink'] + '?lid=' + sortLotterys[i]['lotteryId']);
+                    var tmphtml = '<span class="pg_top_nav_ul_s1">' + sortLotterys[i]['cname'] + '</span><span class="pg_top_nav_ul_s2 lottery_timer " id="lotterycurrent'+sortLotterys[i]['lotteryId']+'" lottery="' + sortLotterys[i]['lotteryId'] + '">载入中</span>';
                     sortli.html(tmphtml);
                 }
                 else {
-                    var tmphtml = '<a href="/?c=api&a=' + sortLotterys[i]['alink'] + urlSession() + '">' + sortLotterys[i]['cname'] + '</a>';
+                    var tmphtml = '<a href=" ' + sortLotterys[i]['alink'] + '?lid=' + sortLotterys[i]['lotteryId'] + '">' + sortLotterys[i]['cname'] + '</a>';
                     $('#topNavMenu').append(tmphtml);
                 }
                 sortIns++;
@@ -491,61 +496,57 @@
         }
 
     }
+    //用户余额
+    showBalance();
+    setInterval(showBalance, 8000);
+    //余额隐藏
+
+    $(".contr_icon").toggle(function () {
+        $("#nowBalance").hide();
+        setCookie('hideBalance', 1, 60 * 60 * 24 * 30);
+    }, function () {
+        $("#nowBalance").show();
+        delCookie('hideBalance');
+    });
+    // 默认是隐藏的
+    if (getCookie('hideBalance')) {
+        $(".contr_icon").click();
+    }
+
     //彩种列表
     initSortLotterys();
-    function refreshLottery() {
-        $('.lottery_timer').each(function () {
-            var lottery_issue = $(this);
-            var lotteryId = lottery_issue.attr('lottery');
-            if (lotteryId) {
-                $.ajax({
-                    url: "?c=api&a=play" + urlSession(),
-                    type: "POST",
-                    data: {
-                        op: "getCurIssue",
-                        lotteryId: lotteryId
-                    },
-                    cache: false,
-                    dataType: "json",
-                    timeout: 30000,
-                    success: function (response) {
-                        if (response.errno == 0) {
-                            lottery_issue.attr('title', response.issueInfo.issue);
-                            var d = response.issueInfo.end_time.match(/(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})/gi);
-                            d = new Date(RegExp.$1, RegExp.$2, RegExp.$3, RegExp.$4, RegExp.$5, RegExp.$6);
-                            serverTime = response.serverTime.match(/(\d{4})\/(\d{2})\/(\d{2}) (\d{2}):(\d{2}):(\d{2})/gi);
-                            var serverTime = new Date(RegExp.$1, RegExp.$2, RegExp.$3, RegExp.$4, RegExp.$5, RegExp.$6);
-                            var now = new Date();
-                            var offset = d.getTimezoneOffset() / 60 + 8;
-                            var nowDate = new Date(serverTime.getTime() - (3600000 * offset));
-                            var nd = new Date(now.getTime() - nowDate.getTime() + d.getTime() - (3600000 * offset));
-//                              console.log(response.issueInfo.end_time);
-//                               console.log(response.serverTime);
-//                                    console.log(serverTime);
-//                                    console.log(nowDate);
-//                                    console.log(nd.getTime());
-                            lottery_issue.countdown(nd.getTime(), function (event) {
-                                var tmpTitle = $(this).attr('title').toString();
-                                tmpTitle = tmpTitle.substr(tmpTitle.length - 4).replace('-', '');
-                                var totalHours = event.offset.totalDays * 24 + event.offset.hours;
-                                $(this).html(event.strftime(totalHours + ':%M:%S'));
-                            });
-                        } else {
-                            lottery_issue.text('封盘');
-                            //alert("获取当前期数据失败");
-                        }
-                    },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        lottery_issue.text('载入中');
-                        //alert("调用当前期数据失败，请再次尝试");
-                    }
-                });
+    var curIssue = '';//下方赋值 当前奖期
+    var lastIssueInfo = '';//上一期奖期
+    var serverTimeInfo = '';
+    //投注记录
+    $('#touzhu_jl').click(function () {
+        var i = $.layer({
+            type: 2,
+            title: '投注记录',
+            offset: ['150px;', ''],
+            //border: [0],
+            area: ['862px', '601px'],
+            iframe: {
+                src:moreBuyRecordUrl,
+                scrolling: 'auto'
+            }
+        });
+    });
+    //追号记录
+   function moreTraceRecord(){
+        var i = $.layer({
+            type: 2,
+            title: '追号记录',
+            offset: ['150px', ''],
+            //border: [0],
+            area: ['862px', '601px'],
+            iframe: {
+                src: moreTraceRecordUrl,
+                scrolling: 'auto'
             }
         });
     }
-    setInterval('refreshLottery()', 20000);
     //刷新彩种列表倒计时
-    refreshLottery();
     var btnAddNum = document.getElementById("btnAddNum");
     var btnSubNum = document.getElementById("btnSubNum");
     var inpNumber = document.getElementById("multiple");
@@ -559,7 +560,6 @@
         inpNumber.value = num;
         $('#multiple').keyup();
     }
-
     btnSubNum.onclick = function () {
         var num = inpNumber.value;
         if (num <= 1) {
@@ -570,12 +570,10 @@
         inpNumber.value = num;
         $('#multiple').keyup();
     }
-
     // 导航菜单
     var evenXzNav = document.getElementById("evenXzNav");
     var evenXzNavLi = evenXzNav.getElementsByTagName("li");
     var evenXzNavMenu = document.getElementById("evenXzNavMenu");
-
     // 浮层
     function show(showbBtn, showBox) {
         var showbBtn = document.getElementById(showbBtn);
@@ -591,7 +589,6 @@
     function initSetLotterys() {
         $('#caiKndXz').empty();
         if (!sortLotterys) {
-
             return;
         }
         for (var i in sortLotterys) {
@@ -604,20 +601,15 @@
             $('#caiKndXz').append(tmphtml);
         }
         $('#caiKndXz li').css('cursor', 'move');
-
         $('#caiKndXz').sortable();
     }
-
-
     initSetLotterys();
-
     var shezhi = document.getElementById("shezhi");
     var caiKind = document.getElementById("caiKind");
     shezhi.onclick = function () {
         caiKind.style.display = "block";
         initSetLotterys();
     }
-
     //更多游戏
     var moreGame = document.getElementById("moreGame");
     var topNavMenu = document.getElementById("topNavMenu");
@@ -633,20 +625,14 @@
     topNavMenu.onmouseout = function () {
         topNavMenu.style.display = "none";
     }
-
-
     function hide(hidebBtn, hideBox) {
         var hidebBtn = document.getElementById(hidebBtn);
         var hideBox = document.getElementById(hideBox);
         hidebBtn.onmouseout = function () {
             hideBox.style.display = "none";
         }
-    }
-    ;
-
+    };
     hide("hdSkinBox", "skinList");
-
-
     //全选-反选
     var quanXuan = document.getElementById("quanXuan");
     var fanXuan = document.getElementById("fanXuan");
@@ -669,8 +655,6 @@
             }
         }
     }
-
-
     //关闭设置弹窗
     var btnClose = document.getElementById("btnClose");
     var caiKind = document.getElementById("caiKind");
@@ -687,12 +671,9 @@
         var caiKind = document.getElementById("caiKind");
         caiKind.style.display = "none";
     });
-
-
     $('#caiKindTrue').click(function () {
         if (sortLotterys) {
             var newSortLotterys = [];
-
             $sortlis = $('#caiKndXz li input');
             $sortlis.each(function (i, v) {
                 var item = {};
@@ -704,7 +685,6 @@
                         item['alink'] = sortLotterys[j]['alink'];
                         item['isopened'] = $(v).attr('checked') ? 1 : 0;
                     }
-
                 }
                 if (item != {}) {
                     newSortLotterys.push(item);
@@ -712,52 +692,42 @@
             });
             if (newSortLotterys != []) {
                 sortLotterys = newSortLotterys;
-
-
+//                sortLotterys = sortLotterys.join('-');
                 $.ajax({
-                    url: window.location.href + urlSession(),
+                    url: sortLotterysSave,
                     type: "POST",
                     data: {
-                        op: "sortLotterysSave",
                         sortLotterys: sortLotterys
                     },
                     cache: false,
                     dataType: "json",
                     timeout: 30000,
                     success: function (response) {
-
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
                         //alert("调用当前期数据失败，请再次尝试");
                     }
                 });
-
-
                 initSortLotterys();
-                refreshLottery()
             }
-
         }
-
         var caiKind = document.getElementById("caiKind");
         caiKind.style.display = "none";
     });
     function skinSave(skin) {
         $.ajax({
-            url: window.location.href + urlSession(),
+            url: skin_url,
             type: "POST",
             data: {
-                op: "skinSave",
                 skin: skin
             },
             cache: false,
             dataType: "json",
             timeout: 1000,
             success: function (response) {
-                if (response && response.errno == 0) {
+                if (response) {
                     window.location.reload();
                 }
-
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 //alert("调用当前期数据失败，请再次尝试");
@@ -777,7 +747,6 @@
         skinSave('green');
     });
 </script>
-
 
 </body>
 </html>

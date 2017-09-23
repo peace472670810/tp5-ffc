@@ -18,79 +18,80 @@
 <!--[if IE 6]>
 <!/meta 作为公共模版分离出去-->
 
-<title>订单管理 > 追号列表 </title>
+<title>报表管理 > 追号方案 </title>
 </head>
 <body>
-<nav class="breadcrumb"><a href="{:url('index/welcome')}"><i class="Hui-iconfont">&#xe67f;</i> 首页 </a><span class="c-gray en">&gt;</span> 订单管理 <span class="c-gray en">&gt;</span> <a href="{:url('order/getTrace')}">追号列表</a><a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><a href="{:url('index/welcome')}" class="maincolor"><i class="Hui-iconfont">&#xe67f;</i> 首页 </a><span class="c-gray en">&gt;</span> 报表管理 <span class="c-gray en">&gt;</span> <a href="{:url('order/getTrace')}" class="maincolor">追号方案</a><a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 	<div class="Hui-article">
 		<article class="cl pd-20">
 	<div class="text-c">
-	  <form action="{:url('order/getTrace')}" method="post">
-	  	追号单编号：<input type="text"  name="ffc_id" value="{$data['ffc_id']}" id="" placeholder="订单编号" style="width:250px" class="input-text radius ">
+	  <form action="{:url('order/getTrace')}" method="get">
+	  	追号单编号：<input type="text"  name="ffc_id" value="{$data['ffc_id']}"  placeholder="订单编号" style="width:250px" class="input-text radius ">
 	  		&nbsp;彩种名称：<span class="select-box inline radius">
 		<select name="ffc_lid" class="select">
 			<option value>--全部彩种--</option>
-{foreach name="lottery" item="vo" }
+                {foreach name="lottery" item="vo" }
     <option value="{$key}" {eq name="$key" value="$data['ffc_lid']"}selected="selected"{/eq} >{$vo}</option>
-{/foreach}
+                {/foreach}
 		</select>
 		</span>	
 		
 			&nbsp;	 开始追号奖期：
-		<input type="text" name="t_start_issue" id="" placeholder="开始追号奖期" style="width:120px" class="input-text radius " value="{$data['t_start_issue']}">
-			<!-- &nbsp;	是否测试账号：
-		<span class="select-box inline radius">
-		<select name="is_test" class="select  ">
-			<option value="1">测试</option>
-			<option value="0" selected="selected">非测试</option>
-		</select> 
-		</span>	 -->
-	
+		<input type="text" name="t_start_issue"  placeholder="开始追号奖期" style="width:120px" class="input-text radius " value="{$data['t_start_issue']}">
+		  <input name="is_submit" type="hidden"  value="1"/>
 		<br/><br/>
 		&nbsp;用户名：<input type="text" name="ffc_username" value="{$data['ffc_username']}" id="" placeholder="用户名" style="width:250px" class="input-text radius ">
-		&nbsp;游戏时间：
+		&nbsp;购买时间：
 		<input type="text"onFocus="WdatePicker({startDate:'%y-%M-%d 00:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})" id="logmin" class="input-text Wdate radius" style="width:165px;" name="start_time" value="{$data['start_time']}">-
 		<input type="text"  name="end_time" onFocus="WdatePicker({startDate:'%y-%M-%d 23:59:59',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})" id="logmax" class="input-text Wdate radius" style="width:165px;" value="{$data['end_time']}">
 		&nbsp;				
-		<button name="" id="" class="btn btn-success radius" type="submit"><i class="Hui-iconfont">&#xe665;</i> 查看</button>
+		<button name=""  class="btn btn-success radius" type="submit"><i class="Hui-iconfont">&#xe665;</i> 查看</button>
 		</form>
 			</div>
 
-
-
-<!-- 			<div class="cl pd-5 bg-1 bk-gray mt-20 radius ">&nbsp;&nbsp;&nbsp;&nbsp;
-			 <span class="2"> <a href="javascript:;" target="iframeone" onclick="member_add('账户管理 > 用户列表 > 添加分公司','{:url("User/addBranch")}','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加分公司</a></span> &nbsp;&nbsp;&nbsp;&nbsp;
-			  <span class="2"> <a href="javascript:;" onclick="member_add('账户管理 > 用户列表 > 添加股东','{:url("User/addShareholders")}','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加股东</a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			   <span class="2"> <a href="javascript:;" onclick="member_add('账户管理 > 用户列表 > 添加总代','{:url("User/addGeneral")}','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加总代</a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			    <span class="2"> <a href="javascript:;" onclick="member_add('账户管理 > 用户列表 > 添加代理','{:url("User/addAgent")}','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加代理</a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			    <span class="2"> <a href="javascript:;" onclick="member_add('账户管理 > 用户列表 > 添加会员','{:url("User/addMembers")}','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加会员</a></span>
-			 </div> -->
 		<div class="mt-20 " >	
 				<table class="table table-border table-bordered table-hover table-bg table-sort radius">
 					<thead>
 						<tr class="text-c ">
-						    <th width="120">追号单编号</th>	
-				            <th width="120">帐户名</th>								
+						    <th width="100">追号单编号</th>	
+				            <th width="80">帐户名</th>								
 							<th width="40">彩种类型</th>
 							<th width="60">开始追号奖期</th>
 							<th width="20">追号期数</th>
 							<th width="20">单倍注数</th>
                             <th width="30">总倍数</th>
-                            <th width="30">总金额</th>
+                     {neq name='2' value="$data['bytype']"}
+                     <th width="40" onclick=" bytyoe(2); "><a class="maincolor" href="javascript:;">投注金额   <i class="Hui-iconfont">&#xe679;</i></a> </th>
+                    {/neq} 
+                    {eq name='2' value="$data['bytype']"}
+                    <th width="40" onclick=" bytyoe(1); "><a class="maincolor" href="javascript:;">投注金额 <i class="Hui-iconfont">&#xe674;</i> </a></th>
+                    {/eq}
 							<th width="20">完成期数</th>
 							<th width="30">模式</th>
 							<th width="30">追中即停？</th>
-							<th width="70">购买时间</th>
+					{neq name='4' value="$data['bytype']"}
+                     <th width="70" onclick=" bytyoe(4); "><a class="maincolor" href="javascript:;">购买时间   <i class="Hui-iconfont">&#xe679;</i> </a></th>
+                    {/neq} 
+                    {eq name='4' value="$data['bytype']"}
+                    <th width="70" onclick=" bytyoe(3); "><a class="maincolor" href="javascript:;">购买时间 <i class="Hui-iconfont">&#xe674;</i> </a></th>
+                    {/eq}
+
+                  <!--   {neq name='6' value="$data['bytype']"}
+                     <th width="40" onclick=" bytyoe(6); ">中奖金额   <i class="Hui-iconfont">&#xe679;</i> </th>
+                    {/neq} 
+                    {eq name='6' value="$data['bytype']"}
+                    <th width="40" onclick=" bytyoe(5); ">中奖金额 <i class="Hui-iconfont">&#xe674;</i> </th>
+                    {/eq} -->
+							
 							<th width="30">追号状态</th>
-							<th width="30">撤单状态</th>
-							<th width="10">中奖次数</th>
+							<th width="15">中奖次数</th>
 						</tr>
 					</thead>
 					<tbody>
 					{volist name="list" id="v"}
 					  <tr class="text-c">
-							<td><a class="maincolor" href="javascript:;" onclick="picture_edit('追号订单详情','{:url('order/traceDetail')}?id={:traceWrapid($v.t_id,$v.t_start_issue,$v.t_lid)}','10001')">
-                            {:traceWrapid($v.t_id,$v.t_start_issue,$v.t_lid)}
+							<td><a class="maincolor" href="javascript:;" title="追号订单详情" onclick="picture_edit('追号订单详情','{:url('order/traceDetail')}?id={:orderWrapId($v.t_id,$v.t_start_issue,$v.t_lid)}','10001')">
+                            {:orderWrapId($v.t_id,$v.t_start_issue,$v.t_lid)}
 							</a></td>
 							<td>{$v.t_username}</td>
 							{eq name="$v.t_lid" value="2"}<td>CQSSC</td>{/eq}
@@ -110,27 +111,30 @@
        						<td >{$v.t_total_multiple}</td>
 							<td>{$v.t_total_amount}</td>
 							<td>{$v.t_finish_times}</td>
-							{eq name="$v.t_modes" value="1"}<td>2元</td>{/eq}
-							{eq name="$v.t_modes" value="0.5"}<td>1元</td>{/eq}
-							{eq name="$v.t_modes" value="0.1"}<td>2角</td>{/eq}
-							{eq name="$v.t_modes" value="0.05"}<td>1角</td>{/eq}
-							{eq name="$v.t_modes" value="0.01"}<td>2分</td>{/eq}
-							{eq name="$v.t_modes" value="0.005"}<td>1分</td>{/eq}
+							{eq name="$v.t_modes" value="1"}<td>2元模式</td>{/eq}
+							{eq name="$v.t_modes" value="0.5"}<td>1元模式</td>{/eq}
+							{eq name="$v.t_modes" value="0.1"}<td>2角模式</td>{/eq}
+							{eq name="$v.t_modes" value="0.05"}<td>1角模式</td>{/eq}
+							{eq name="$v.t_modes" value="0.01"}<td>2分模式</td>{/eq}
+							{eq name="$v.t_modes" value="0.005"}<td>1分模式</td>{/eq}
 							
 							{eq name="$v.t_stop_on_win" value="1"}<td>是</td>{/eq}
-							{eq name="$v.t_stop_on_win" value="2"}<td>否</td>{/eq}
+							{eq name="$v.t_stop_on_win" value="0"}<td>否</td>{/eq}
 							<td>{$v.t_add_time}</td>
-							
+							<!-- <td>{$v.t_wins}</td> -->
 							{eq name="$v.t_status" value="0"}<td>未开始</td>{/eq}
 							{eq name="$v.t_status" value="1"}<td>正在进行</td>{/eq}
 							{eq name="$v.t_status" value="2"}<td>已完成</td>{/eq}
 							{eq name="$v.t_status" value="3"}<td>已取消</td>{/eq}
-							<td>{$v.t_status}</td>
+							
 							<td>{$v.t_win_times}</td>
 			         </tr>
 					{/volist}
 					</tbody>
 				</table>
+			<!-- 分页start-->
+			{include file="page"}
+			<!-- 分页end-->
 			</div>
 		</article>
 	</div>
@@ -145,22 +149,6 @@
 <script type="text/javascript" src="../../static/lib/datatables/1.10.0/jquery.dataTables.js"></script>
 <script type="text/javascript" src="../../static/lib/laypage/1.2/laypage.js"></script>
 <script type="text/javascript">
-$(function(){
-	$('.table-sort').dataTable({
-		"aaSorting": [[ 1, "desc" ]],//默认第几个排序
-		"bStateSave": true,//状态保存
-		
-	});
-	$('.table-sort tbody').on( 'click', 'tr', function () {
-		if ( $(this).hasClass('selected') ) {
-			$(this).removeClass('selected');
-		}
-		else {
-			table.$('tr.selected').removeClass('selected');
-			$(this).addClass('selected');
-		}
-	});
-});
 function picture_edit(title,url,id){
 	var index = layer.open({
 		type: 2,
@@ -169,6 +157,9 @@ function picture_edit(title,url,id){
 	});
 	layer.full(index);
 }
+function bytyoe(type){
+     window.location.href = "{:url('order/gettrace')}?ffc_id={$data['ffc_id']}&ffc_lid={$data['ffc_lid']}&t_start_issue={$data['t_start_issue']}&ffc_username={$data['ffc_username']}&start_time={$data['start_time']}&end_time={$data['end_time']}&is_submit={$data['is_submit']}&bytype="+type;
+ }
 </script>
 <!--/请在上方写此页面业务相关的脚本-->
 </body>

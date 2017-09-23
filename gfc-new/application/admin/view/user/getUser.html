@@ -82,7 +82,8 @@
 					  
 						<tr class="text-c ">
 						<th width="40">ID</th>	
-				           <th width="100">帐户名</th>
+				           <th width="80">帐户名</th>
+							<th width="50">是否在线</th>
 				 			<th width="30">分公司</th>
 							<th width="30">股东</th>
 							<th width="30">总代理</th>
@@ -103,6 +104,7 @@
 						 <tr class="text-c">
 							<td >{$v.u_id}</td>							
 							<td >{$v.u_username}</td>
+							 <td >{:isOnline($v['u_username'])}</td>
 							<td >{$v.u_proportion_4}%</td>												
 							<td >{$v.u_proportion_3}%</td>
 							<td >{$v.u_proportion_2}%</td>
@@ -150,7 +152,8 @@
 <!--_footer 作为公共模版分离出去-->
 {include file="common/_footer"}
 <!--/_footer /作为公共模版分离出去-->
-
+<!-- cookie 加密key-->
+{include file='common/key'}
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript" src="../../static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript" src="../../static/lib/datatables/1.10.0/jquery.dataTables.js"></script>

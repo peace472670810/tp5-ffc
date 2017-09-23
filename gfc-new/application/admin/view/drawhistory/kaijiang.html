@@ -1,0 +1,84 @@
+<!--_meta 作为公共模版分离出去-->
+{include file="common/_meta"}
+<!--/meta 作为公共模版分离出去-->
+
+<title>盘口管理-开奖</title>
+</head>
+<body>
+<article class="cl pd-20">
+	<form action="" method="post" class="form form-horizontal" id="form-member-add">
+		<table class="table table-border table-bordered radius">
+
+			<tr class="text-c success">
+				<td colspan="{$num}"><b>彩种&nbsp;&nbsp;{$lid}&nbsp;&nbsp; 第{$qishu}期 &nbsp;&nbsp;开奖号码</b></td>
+			</tr>
+			<tr class="text-c ">
+				{volist name='list' id='vo'}
+				<td><b>第{$vo}球</b></td>
+				{/volist}
+			</tr>
+			<tr class="text-c ">
+				{volist name='list' id='vo'}
+				<td><div class="formControls "><input type="text" class="input-text radius" name="balls[]"  nullmsg="开奖号码不能为空！" ></div></td>
+				{/volist}
+			</tr>
+		</table>
+		<input type="hidden" name="lid" value="{$id}"></input>
+		<input type="hidden" name="qishu" value="{$qishu}"></input>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-6">
+				<input class="btn btn-primary radius" onclick=" return confirm('\n第{$qishu}期\n\n当前号码为开奖号码！\n\n此操作存在风险，您是否确定执行？')" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+			</div>
+		</div>
+
+	</form>
+</article>
+
+<!--_footer 作为公共模版分离出去-->
+{include file="common/_footer"}
+<!--/_footer /作为公共模版分离出去-->
+
+<script type="text/javascript" src="../../static/lib/ueditor/1.4.3/ueditor.config.js"></script>
+<script type="text/javascript" src="../../static/lib/ueditor/1.4.3/ueditor.all.js"></script>
+<script type="text/javascript" src="../../static/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="../../static/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="../../static/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="../../static/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $("#form-member-add").validate({
+            rules:{
+                "balls[]":{
+                    required:true,
+                    digits:true,
+                    range:[0,11],
+                },
+            },
+            digits:true,
+            onkeyup:true,
+            focusCleanup:true,
+            success:"valid",
+            submitHandler:function(form){
+                $(form).ajaxSubmit({
+                    "type":"post",
+                    "url":"{:url('drawhistory/kaijiang')}",
+                    "success":function(res,status){
+                        if(res.Result){
+                            layer.msg('添加成功!',{icon:1,time:2000});
+                            setTimeout(function(){
+                                parent.location.replace(parent.location.href);
+                            },1000);
+                        }else{
+                            layer.msg(res.Message,{icon:2,time:2000});
+                        }
+                    }
+                });
+            }
+        });
+
+    });
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>公告</title>
+</head>
+<body>
+<style>
+    body {
+        /*font-family: "\5FAE\8F6F\96C5\9ED1";*/
+        width: 850px;
+    }
+    .xubox_title {
+        width: 100%;
+        height: 35px;
+        line-height: 35px;
+        border-bottom: 1px solid #D5D5D5;
+        background: url(../../static/pc/js/layer/skin/default/xubox_title0.png) #EBEBEB repeat-x;
+        font-size: 14px;
+        color: #333;
+    }
+    em, b {
+        font-style: normal;
+    }
+    .MainListUl_More ul li {
+        height: 30px;
+        line-height: 30px;
+        width: 100%;
+        border-bottom: 1px solid #ccc;
+    }
+    li {
+        display: list-item;
+        text-align: -webkit-match-parent;
+    }
+    ul, ol {
+        list-style-type: none;
+    }
+    .listpart{
+        float: left;
+        font-size: 22px;
+        color: #333;
+        font-weight: bold;
+        margin-right: 10px;
+        height: 30px;
+        overflow: hidden;
+        width: 100%;
+    }
+    .listpart a{
+        text-decoration: none;
+        color: #333;
+
+    }
+    .listpart a:-webkit-any-link {
+        color: -webkit-link;
+        cursor: auto;
+        color: #333;
+        font-size: 14px;
+    }
+    .time{
+        float: right;
+        width: 18%;
+        font-size: 10px;
+    }
+    .content{
+        text-indent: 25px;
+        font-size: 12px;
+        float: left;
+        height: 30px;
+        line-height: 30px;
+    }
+</style>
+<div times="26" showtime="0" style="z-index: 19891041; width: 850px; height: auto;  top: 56px; left: 50%;" id="xubox_layer26" class="xubox_layer" type="page">
+    <div style="background-color: rgb(255, 255, 255); z-index: 19891040; ">
+        <div class="xubox_page" style="top: 36px;">
+            <div class="xuboxPageHtml">
+                <div class="MainListUl_More">
+                    <ul>
+                        <li class="n-title">
+                            <span class="listpart" style="text-align: center;"><a href="javascript:void(0);" title="{$detail.n_title}">{$detail.n_title}</a></span>
+                        </li>
+                        <li class="timer" style="border: none;line-height: 15px;height: 15px;">
+                            <span class="timer" style="float: right;border: none; font-size: 12px;">发布时间：{$detail.n_add_time}</span>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li style="border: none;">
+                            <span class="content">{$detail.n_content}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<div id="xubox_border26" class="xubox_border" style="z-index: 19891039; background-color: rgb(0, 0, 0); opacity: 0.3; top: -6px; left: -6px; width: 862px; height: 587px;"></div>-->
+</div>
+</body>
+</html>

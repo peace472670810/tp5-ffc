@@ -1,0 +1,115 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../static/pc/css/gray.css" />
+</head>
+<body>
+<!-- 内页公用板块 -->
+<div class="GameBoxall SubGamePlatePadding">
+    <div class="Gamepart">
+        <div class="clear"></div>
+        <div class="sub_public">
+            <div class="sub_ContBox">
+                <div class="subContCent">
+                    <!-- 搜索栏 -->
+                    <div class="SearchBar">
+                        <form method="GET" action="{:url('Game/moreTraceRecord')}" id="form1" name="form1">
+                            <input type="hidden" name="urlSession" value="d49fcfe1c0b2f5c7253d6279b5662faf9e421b27"/>
+                            <ul>
+                                <li>
+                                    <label>游戏名称：</label>
+                                    <select class=" w128px" name="lid">
+                                        <option value="2" {if condition="$lid eq 2"}selected{/if}>重庆时时彩</option>
+                                        <option value="26"{if condition="$lid eq 26"}selected{/if}>山东11选5</option>
+                                        <option value="8" {if condition="$lid eq 8"}selected{/if}>新疆时时彩</option>
+                                        <option value="27"{if condition="$lid eq 27"}selected{/if}>江西11选5</option>
+                                        <option value="24"{if condition="$lid eq 24"}selected{/if}>广东11选5</option>
+                                        <option value="14"{if condition="$lid eq 14"}selected{/if}>天津时时彩</option>
+                                        <option value="28"{if condition="$lid eq 28"}selected{/if}>福彩3D</option>
+                                        <option value="29"{if condition="$lid eq 29"}selected{/if}>排列三/五</option>
+                                        <option value="9"{if condition="$lid eq 9"}selected{/if}>江苏快三</option>
+                                        <option value="6"{if condition="$lid eq 6"}selected{/if}>PK拾</option>
+                                        <option value="30"{if condition="$lid eq 30"}selected{/if}>湖北快3</option>
+                                    </select>
+                                </li>
+                                <li>
+                                    <label>订单编号：</label>
+                                    <input size="20" value="{$wrap_id}" type="text" name="wrap_id" class="txtStyle">
+                                </li>
+                                <li>
+                                    <label>游戏时间：</label>
+                                    <div class="MutiTxt">
+                                        <input class="Wdate txtStyle w85px datepicker85" readonly onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd'})" my97mark="false" id="start_time" name="start_time" size="16">
+                                        <em>到</em>
+                                        <input class="Wdate txtStyle w85px datepicker85" readonly onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd'})" my97mark="true" id="end_time" name="end_time" size="16">
+                                    </div>
+                                </li>
+                                <li>
+                                    <input type="submit" value="查询" class="btnStyle m010" name="submit">
+                                </li>
+                            </ul>
+                            <input type="hidden" name="c" value="api"/><input type="hidden" name="a" value="traceList"/>
+                        </form>
+                    </div>
+                    <!-- 列表数据 -->
+                    <div class="clear"></div>
+                    <form name="form2" id="form2" action="" method="GET">
+                        <input type="hidden" name="urlSession" value="d49fcfe1c0b2f5c7253d6279b5662faf9e421b27"/>
+                        <table class="tab01" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                                <th>订单编号</th>
+                                <th>彩种</th>
+                                <th>开始追号奖期</th>
+                                <th>追号期数</th>
+                                <th>总金额</th>
+                                <th>完成期数</th>
+                                <th>模式</th>
+                                <th>追中即停？</th>
+                                <th>购买时间</th>
+                                <th>追号状态</th>
+                            </tr>
+                            {volist name="list" id="v"}
+                                <tr class="recordsContent">
+                                    <td><a title="查看追号详情" target="_blank" href="{$v.url}">{$v.wrap_id}</a></td>
+                                    <td><span class="yellow">{$v.lidName}</span></td>
+                                    <td>{$v.t_start_issue}</td>
+                                    <td>{$v.t_trace_times}</td>
+                                    <td><strong class="yellow">{$v.t_total_amount}</strong></td>
+                                    <td>{$v.t_finish_times}</td>
+                                    <td>{$v.modes}</td>
+                                    <td>{$v.t_stop}</td>
+                                    <td>{$v.t_add_time}</td>
+                                    <td>{$v.status}</td>
+                                </tr>
+                            {/volist}
+                            <tr>
+                                <th colspan="10"><div class="bottom_info">本页金额小计: <span class="yellow">{$amount}</span> 元  </div></th>
+                            </tr>
+                        </table>
+                    </form>
+                    <!-- 分页 -->
+                   {$page}
+                    <!-- 分页end -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../static/pc/js/jquery-1.8.3.min.js"></script>
+<script src="../../static/pc/js/ds.js" type="text/javascript"></script>
+<script src="../../static/pc/js/jqextend.js" type="text/javascript"></script>
+<script src="../../static/pc/js/My97DatePicker/WdatePicker.js"></script>
+<script>
+    $(function() {
+        //准备数据
+        //设置默认值
+        $('#start_time').val('{$start_time}');
+        $('#end_time').val('{$end_time}');
+
+    });
+</script>
+</body>
+</html>

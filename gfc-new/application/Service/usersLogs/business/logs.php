@@ -37,14 +37,13 @@ class Logs
 
     public function addLogs($arr = []){
         $data = array(
-            // 'u_admin_id'   => empty($arr['u_id'])?'':$arr['u_id'],
-            //'u_username'   => empty($arr['u_username'])?'':$arr['u_username'],
             'u_control'    => empty($arr['u_control'])?'':$arr['u_control'],
             'u_action'     => empty($arr['u_action'])?'':$arr['u_action'],
             'u_is_success' => empty($arr['u_is_success'])?0:$arr['u_is_success'],
-            'u_remark'     => empty($arr['u_remark'])?'':serialize($arr['u_remark']),
-            //'u_client_ip'  => empty($arr['client_ip'])?'':$arr['client_ip'],
+            'u_remark'     => empty($arr['u_remark'])?'':$arr['u_remark'],
+            'u_username'     => empty($arr['u_username'])?'':$arr['u_username'],
             'u_date'       => date('Y-m-d H:i:s'),
+            'u_client_ip'     => empty($arr['u_client_ip'])?'':$arr['u_client_ip'],
         );
         $res = $this->logs_model->addLogs($data);
         if($res){
@@ -98,7 +97,7 @@ class Logs
         if(!is_numeric($page)){
             return put_encode(false,'9100013',self::$error_code['9100013']);
         }
-        $sql = " select * from ffc_logs  where 1";
+        $sql = " select * from ffc_logs  where 1 ";
         $where = '';
         if(!empty($data['u_client_ip'])){
             $where .= " and  u_client_ip='{$data['u_client_ip']}' ";
@@ -123,6 +122,7 @@ class Logs
             return  put_encode($list,'','查询成功');
 
         }
-        return put_encode(false,'9100012',self::$error_code['9100012']);
+        return put_encode(true,'','');
+        
     }
 }

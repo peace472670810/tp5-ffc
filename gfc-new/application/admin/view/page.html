@@ -1,12 +1,14 @@
 {if condition="!empty($page)"}
-    <div class="dataTables_info" style="float: left;" >显示 {$page.start} 到 {$page.end} ，共 {$page.total} 条，共{$page.pagecounts}页</div>
-    <div class="dataTables_info " style="float: right;" >
-        <a  href="{$page.pre_url}">上一页</a>
-        <span>
+<div class="dataTables_info" style="float: left;" >显示 {$page.start} 到 {$page.end} ，共 {$page.total} 条，共{$page.pagecounts}页</div>
+{notempty name="$page.middle"}
+<div class="dataTables_info " style="float: right;" >
+    <a  href="{$page.pre_url}">上一页</a>
+    <span>
             {$page.middle}
         </span>
-        <a href="{$page.next_url}">下一页</a>
-    </div>
+    <a href="{$page.next_url}">下一页</a>
+</div>
+{/notempty}
 {/if}
 
 <style type="text/css">

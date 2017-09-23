@@ -3,19 +3,19 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
-    <link rel="Bookmark" type="image/x-icon" href="../../static/mobile/images/favicon57.ico"/>
-    <link rel="icon" type="image/x-icon" href="../../static/mobile/images/favicon57.ico"/>
-    <link rel="shortcut icon" type="image/x-icon" href="../../static/mobile/images/favicon57.ico"/>
-    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="../../static/mobile/images/favicon57.ico"/>
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../static/mobile/images/favicon72.ico"/>
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../static/mobile/images/favicon114.ico"/>
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../static/mobile/images/favicon144.ico"/>
+    <link rel="Bookmark" type="image/x-icon" href="../../static/mobile/images/favicon57.ico?v={$v}"/>
+    <link rel="icon" type="image/x-icon" href="../../static/mobile/images/favicon57.ico?v={$v}"/>
+    <link rel="shortcut icon" type="image/x-icon" href="../../static/mobile/images/favicon57.ico?v={$v}"/>
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="../../static/mobile/images/favicon57.ico?v={$v}"/>
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../static/mobile/images/favicon72.ico?v={$v}"/>
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../static/mobile/images/favicon114.ico?v={$v}"/>
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../static/mobile/images/favicon144.ico?v={$v}"/>
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1, target-densityDpi=medium-dpi,maximum-scale=1, user-scalable=no">
-    <title></title>
-    <link rel="stylesheet" href="../../static/mobile/css/jquery.mobile-1.2.1.min.css">
-    <link rel="stylesheet" href="../../static/mobile/css/custom.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, target-densityDpi=medium-dpi,maximum-scale=1, user-scalable=no">
+    <title>KG官方彩</title>
+    <link rel="stylesheet" href="../../static/mobile/css/jquery.mobile-1.2.1.min.css?v={$v}">
+    <link rel="stylesheet" href="../../static/mobile/css/custom.css?v={$v}">
+    <link rel="stylesheet" href="../../static/mobile/css/common.css?v={$v}">
     <script type="text/javascript" lang="javascript" src="../../static/mobile/js/jquery-1.7.2.min.js"></script>
     <!--<script src="js/layer/layer.js"></script>-->
     <script type="text/javascript" lang="javascript">
@@ -26,6 +26,70 @@
             $.mobile.buttonMarkup.hoverDelay = 10;
         });
     </script>
+    <style type="text/css">
+        @font-face {
+            font-family: 'FontAwesome';
+            src: url('../../static/mobile/fonts/fontawesome-webfont.eot?v={$v}');
+            src: url('../../static/mobile/fonts/fontawesome-webfont.eot?#iefix?v={$v}') format('embedded-opentype'),url('../../static/mobile/fonts/fontawesome-webfont.woff2?v={$v}') format('woff2'),url('../../static/mobile/fonts/fontawesome-webfont.woff??v={$v}') format('woff'),url('../../static/mobile/fonts/fontawesome-webfont.ttf?v={$v}') format('truetype'),url('../../static/mobile/fonts/fontawesome-webfont.svg?v={$v}#fontawesomeregular') format('svg');
+            font-weight: normal;
+            font-style: normal;
+        }
+        [class*="am-icon-"] {
+            display: inline-block; /* 漏斗转动 */
+            font-style: normal;
+        }
+            [class*="am-icon-"]:before {
+                display: inline-block;
+                font: normal normal normal 1.6rem/1 "FontAwesome",sans-serif; /*font-weight:normal;// 2  font-style:normal;// 2  vertical-align:baseline;// 3  line-height:1;// 4*/
+                font-size: inherit;
+                text-rendering: auto;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                -webkit-transform: translate(0,0);
+                -ms-transform: translate(0,0);
+                transform: translate(0,0);
+            }
+
+        .am-icon-hourglass:before {
+            /* z-index: 200; */
+            content: "\f254";
+            font: normal normal normal 0.9rem/1 "FontAwesome",sans-serif;
+        }
+        /* Modifier:`am-icon-spin`============================================================================= */ @-webkit-keyframes icon-spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(359deg);
+                transform: rotate(359deg);
+            }
+        }
+
+        @keyframes icon-spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(359deg);
+                transform: rotate(359deg);
+            }
+        }
+
+        .am-icon-spin {
+            -webkit-animation: icon-spin 2s infinite linear;
+            animation: icon-spin 2s infinite linear;
+        }
+
+
+        .text-kaijiangzhong {
+            color: #F37B1D;
+        }
+      
+        </style>
     <script type="text/javascript" lang="javascript" src="../../static/mobile/js/jquery.mobile-1.2.1.min.js"></script>
     <script type="text/javascript" lang="javascript" src="../../static/mobile/js/jquery.plugin.min.js"></script>
     <script type="text/javascript" lang="javascript" src="../../static/mobile/js/jquery.countdown.min.js"></script>
@@ -34,17 +98,28 @@
     <script type="text/javascript" lang="javascript" src="../../static/mobile/js/jquery.md5.js"></script>
     <script type="text/javascript" lang="javascript">
         //返回当前请求的服务端信息
-        var SV = {"isLogin": true, "id": "jimm1", "a": [{"id": "1"}]};
+        var SV = {"isLogin": true, "id": "{$username}", "a": [{"id": "1"}]};
         var RP_STATIC = '../../static/mobile/';//资源静态文件的跟路径
         var RP_DATA = '../../static/mobile/';//数据层网址的跟路径
         var BALANCE_URL = "{:url('Game/showBalance')}";//钱包地址
         var OPENISSUE_URL = "{:url('Game/getOpenedIssues')}";//开奖记录地址
+        var getCurIssueUrl = "{:url('Game/getCurIssue')}";//获取彩种奖期
+        var getLotteryInfoUrl = "{:url('Game/getLotteryInfo')}";//获取彩种内容
+        var getTracePageUrl = "{:url('Game/getTracePage')}";//获取追号期数
+        var buyUrl = "{:url('Game/buy')}";//下注和追号地址
+        var buyRecordUrl = "{:url('Game/buyRecord')}";//注单记录
+        var OrderDetailUrl = "{:url('Game/orderDetail')}";//注单详情
+        var OrderTraceDetail = "{:url('Game/orderTraceDetail')}";
+        var ISSUE_URL="{:url('game/getAllCurIssue')}";//获取全部彩种开盘时间，倒计时。
+        var cancelTraceUrl = "{:url('Game/cancelTrace')}";
+        var loginResetUrl = "{:url('Game/loginReset')}";
+        var loginOutUrl = "{:url('Game/loginOut')}";
+        var reLoginUrl = "{:url('Game/reLogin')}";
         $(function () {
             app.login(SV);
         });
     </script>
 </head>
-
 <body class="hl-body ui-mobile-viewport ui-overlay-a" style="background: #f6f6f3">
 <!--  login start -->
 <!--  login end -->
@@ -60,20 +135,19 @@
 {include file="order"}
 <!-- preload images -->
 <div style="display: none">
-    <img src="../../static/mobile/images/ico-logout.png">
-    <img src="../../static/mobile/images/ico-progress.gif">
-    <img src="../../static/mobile/images/ico-blank.png">
+    <img src="../../static/mobile/images/ico-logout.png?v={$v}">
+    <img src="../../static/mobile/images/ico-progress.gif?v={$v}">
+    <img src="../../static/mobile/images/ico-blank.png?v={$v}">
 </div>
-
-<script type="text/javascript" lang="javascript" src="../../static/mobile/js/common.js"></script>
+<script type="text/javascript" lang="javascript" src="../../static/mobile/js/common.js?v={$v}"></script>
 <!--缓存data-->
-<script type="text/javascript" lang="javascript" src="../../static/mobile/js/cache.js"></script>
+<script type="text/javascript" lang="javascript" src="../../static/mobile/js/cache.js?v={$v}"></script>
 <!--程序控制器-->
-<script type="text/javascript" lang="javascript" src="../../static/mobile/js/app.js"></script>
+<script type="text/javascript" lang="javascript" src="../../static/mobile/js/app.js?v={$v}"></script>
 <!-- 面板处理 start -->
-<script type="text/javascript" lang="javascript" src="../../static/mobile/js/allPages.js"></script>
+<script type="text/javascript" lang="javascript" src="../../static/mobile/js/allPages.js?v={$v}"></script>
 <!--  服务器数据 -->
-<script type="text/javascript" lang="javascript" src="../../static/mobile/js/dal.js"></script>
+<script type="text/javascript" lang="javascript" src="../../static/mobile/js/dal.js?v={$v}"></script>
 
 <div class="ui-loader ui-corner-all ui-body-a ui-loader-default"><span class="ui-icon ui-icon-loading"></span>
     <h1>loading</h1></div>
@@ -92,7 +166,6 @@
         var num = cache.getBet().length;
         document.getElementById('group').innerHTML = num;
     });
-
 </script>
 <script>
     window.location.hash = "";
@@ -149,9 +222,9 @@
         fn.addEvent(obj, 'touchstart', start);
         fn.addEvent(obj, 'touchmove', move);
         fn.addEvent(obj, 'touchend', end);
-        fn.addEvent(obj, 'mousedown', start)
-        fn.addEvent(obj, 'mousemove', move)
-        fn.addEvent(obj, 'mouseup', end)
+        fn.addEvent(obj, 'mousedown', start);
+        fn.addEvent(obj, 'mousemove', move);
+        fn.addEvent(obj, 'mouseup', end);
 
 //滑动开始
         function start(e) {
@@ -202,7 +275,6 @@
 //保留提示部分
                     fn.translate(0);
 //执行回调函数
-
                     if (typeof option.next == "function") {
                         option.next.call(fn, e);
                     }
@@ -213,6 +285,7 @@
             }
         }
     }
+    
     slide({
         container: ".hl-draw-main-container", next: function (e) {
 //松手之后执行逻辑,ajax请求数据，数据返回后隐藏加载中提示
@@ -224,6 +297,5 @@
         }
     });
 </script>
-
 </body>
 </html>

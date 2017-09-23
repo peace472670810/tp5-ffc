@@ -9,6 +9,8 @@
  */
 namespace app\admin\controller;
 use app\admin\controller\Base;
+use think\Log;
+
 class Admin extends Base{
     public function _initialize()
     {
@@ -30,16 +32,23 @@ class Admin extends Base{
      * 子账户添加
      */
     public function adminAdd(){
+        $u_group_id=session('admin_auth')['u_group_id'];
+        $list = \think\Config::get('auth');
+        $text=$this->authAdmin($u_group_id,$list);
+        $this->assign('text',$text);
         if($this->request->isPost()){
+            $data['code'] = $this->request->post('Code/a');
             $data['u_username'] = $this->request->post('u_username');
             $data['u_nickname'] = $this->request->post('u_nickname');
             $data['u_pwd'] = $this->request->post('u_pwd');
             $data['u_is_enabled'] = $this->request->post('u_is_enabled');
             $data['u_reg_time'] = date('Y-m-d H:i:s',time());
             $data['admin_auth_id'] = session('admin_auth_id');
+            $data['u_group_id'] = session('admin_auth')['u_group_id'];
             $data['u_parent_name'] = session('admin_auth_name');
             $data['u_parent_id'] = session('admin_auth_id');
             $data['u_level'] = session('level');
+            $this->adminAddLogs('添加了子账户'. $data['u_username'].'','1');
             return forwarding('UserForwarding','\app\Service\users\business\admins','admin_add',data_encode($data));
         }
         return $this->fetch();
@@ -50,7 +59,12 @@ class Admin extends Base{
      * op 0 获取  1 修改
      */
     public function adminEdit(){
+        $u_group_id=session('admin_auth')['u_group_id'];
+        $list = \think\Config::get('auth');
+        $text=$this->authAdmin($u_group_id,$list);
+        $this->assign('text',$text);
         if($this->request->isPost()){
+            $data['code'] = $this->request->post('Code/a');
             $data['u_username'] = $this->request->post('u_username');
             $data['u_nickname'] = $this->request->post('u_nickname');
             $data['u_pwd'] = $this->request->post('u_pwd');
@@ -58,10 +72,21 @@ class Admin extends Base{
             $data['u_admin_id'] = $this->request->post('u_admin_id');
             $data['u_reg_time'] = date('Y-m-d H:i:s',time());
             $data['u_parent_name'] = session('admin_auth_name');
+            $data['u_group_id'] = session('admin_auth')['u_group_id'];
             $data['u_level'] = session('level');
             $data['u_parent_id'] = session('admin_auth_id');
-            $data['op'] = 1;      
-            return forwarding('UserForwarding','\app\Service\users\business\admins','admin_edit',data_encode($data));
+            $data['op'] = 1;
+            $res =  forwarding('UserForwarding','\app\Service\users\business\admins','admin_edit',data_encode($data));
+            $res1 = json_decode($res,true);
+            if($res1['data']){//如果权限修改成功,把在线用户踢掉重新登陆
+                $this->adminAddLogs('修改了用户'. $data['u_username'].'权限返回结果：修改成功','1');
+                $session = $this->memcache->get('session', $data['u_username']);
+                if(!empty($session)){
+                    $session['s_client_ip'] = '-1';
+                    $this->memcache->set('session',$data['u_username'],$session,180);
+                }
+            }
+            return $res;
         }else{
             $data['u_admin_id'] = $this->request->get('u_admin_id');
             $data['op'] = 0;
@@ -69,13 +94,6 @@ class Admin extends Base{
             $this->assign('list',$res['data']);
             return $this->fetch();
         }
-    }
-
-    /**
-     * 子账户删除
-     */
-    public function adminRemove(){
-        return $this->fetch();
     }
 
     /**

@@ -59,24 +59,35 @@ $(document).on('pagebeforechange', function (e, data) {
 /*---------------------------------------------------------------------------cp--------------------------------------------------------------------------------------------------------*/
 //page show event
 $("#cp").on('pageshow', function () {
+   
+    $("#detail").hide();
+    $("#traceDetail").hide();
     //initialiaze
     cp.init();
 });
 
 //refresh event
 $(document).on('refresh', function (event, data) {
+
     if (data == "cp") {
+
         cp.updateDrawNumber(true);
     }
 });
 
 var cp = {
     //init
+   //alert(123);
     init: function () {
+        clearInterval(dsq);
         //reset user game related cache
-        cache.resetGame();
-        var data = cache.getData();
+        
+        cache.resetGame(); 
+        var data = cache.getData(); 
+        server.getDjs();
+        server.setDjs();
         if (data == null) {
+            
             //show load
             $.mobile.loading('hide');
             $.mobile.loading('show');
@@ -91,7 +102,8 @@ var cp = {
                 }
             });
         }
-        else {
+        else { 
+          //  alert('qweqweqweq');
             cp.render(data);
         }
     },
@@ -124,7 +136,7 @@ var cp = {
                 g.push(this.id);
                 g.push('.png" class="hl-thumbnail" /><h3>');
                 g.push(gameLabel);
-                g.push('</h3><p>&nbsp;</p></a></li>');
+                g.push("</h3><p>&nbsp;<i class='am-icon-hourglass am-margin-right-xs am-icon-spin text-kaijiangzhong' ></i>&nbsp;<span><span></p></a></li>");
                 i++;
             });
         }
@@ -225,6 +237,7 @@ $(document).on('refresh', function (event, data) {
 var draw = {
     //init
     init: function () {
+        clearInterval(dsq);
         //clear content
         $("#drawList").empty();
         var data = cache.getData();
@@ -335,7 +348,7 @@ var draw = {
                 if (data.length > 0) {
                     $.each(data, function (index) {
                         if (this.val.indexOf(" ") == -1) {
-                            arrt = this.val.split("");
+                            arrt = this.val.split(",");
                         } else {
                             arrt = this.val.split(" ");
                         }
@@ -399,6 +412,7 @@ $("#search").on('pagebeforeshow', function () {
 //page show event
 $("#search").on('pageshow', function () {
     //initialiaze
+    $("#traceDetail").hide();
     search.init();
 });
 
@@ -452,6 +466,7 @@ var search = {
     cqd: 0,
     //init
     init: function () {
+        clearInterval(dsq);
         //clear
         $("#searchList").empty();
         var data = cache.getData();
@@ -557,6 +572,7 @@ var search = {
                     d.push(i.toString());
                     d.push("天</option>");
                 }
+                d.push('<option value="-1">未结算</option>');
                 searchRangeList.empty().html(d.join(""));
                 //reset dropdown
                 searchRangeList[0].selectedIndex = search.selectday - 1;
@@ -597,7 +613,7 @@ var search = {
                 modestr['0.01'] = ['2分'];
                 if (data.r.length > 0) {
                     $.each(data.r, function (index) {
-                        s.push('<li><a href="#detail?id=' + this.wrap_id + '&trace_id=' + this.trace_id);
+                        s.push('<li><a href="#detail?id=' + this.wrapId +'&lid='+this.lottery_id+ '&trace_id=' + this.traceId+'&mg_id='+this.mg_id+'&issue='+this.issue);
                         s.push('"><div class="hl-search-search"><div class="hl-search-bet">');
                         s.push(this.create_time);
                         s.push('</div><div class="hl-search-order">');
@@ -605,11 +621,10 @@ var search = {
                         s.push('</div><div class="hl-search-amount">');
                         s.push(utils.digits(this.amount, 2));
                         s.push('</div><div class="hl-search-status">');
-                        s.push((this.status));
+                        s.push((this.prizeStatus));
                         s.push('</div></div></a></li>');
                     });
-                }
-                else {
+                } else {
                     s.push('<li>');
                     s.push(label.noRecord);
                     s.push('</div></li>');
@@ -651,18 +666,153 @@ $(document).on("pagebeforechange", function (e, data) {
         if (u.hash.search(re) !== -1) {
             detail.id = getUrlParam('id', u.hash);
             detail.trace_id = getUrlParam('trace_id', u.hash);
+            traceDetail.trace_id = getUrlParam('trace_id',u.hash);
+            detail.lid = getUrlParam('lid',u.hash);
+            detail.mg_id = getUrlParam('mg_id',u.hash);
+            detail.issue = getUrlParam('issue',u.hash);
         }
     }
 });
-
-//page before show event
+//追号详情
+$("#traceDetail").on('pagebeforeshow', function () {
+    //hide content
+    $("#detailNumber").text("");
+    $(".hl-detail-main, #cancelpackage").hide();
+    var profile = cache.getProfile();
+    if (profile != null && profile.id.length > 0) {
+        //clear
+        $("#detailList").empty();
+    }
+    else {
+        $.mobile.changePage($("#search"), {
+            changeHash: false
+        });
+    }
+});
+$("#traceDetail").on('pageshow',function () {
+    $("#traceDetail").show();
+    traceDetail.init();
+});
+var traceDetail = {
+    trace_id:"",
+    init:function () {
+        clearInterval(dsq);
+        if(traceDetail.trace_id.length>0){
+            server.getTraceDetail({trace_id:traceDetail.trace_id},function (data) {
+                $.mobile.loading('hide');
+                if (data != null) {
+                    //render
+                    traceDetail.render(data);
+                }else{
+                    $("#detailNumber1").text(label.noRecord);
+                }
+            });
+        }else{
+            $("#detailNumber1").text(label.noRecord);
+        }
+    },
+    render:function(data){
+        $.mobile.loading('hide');
+        var o = [];
+        if(data != null){
+            $.each(data.detail, function () {
+                o.push('<li>');
+                o.push('<span class="hl-detail-game">');
+                o.push(this.m_name);
+                o.push('</span><span class="hl-detail-number">号码：');
+                o.push(this.number);
+                o.push('</span><span class="hl-detail-bet">');
+                o.push(this.nums);
+                o.push('注</span></li>');
+            });
+            $("#detailList1").html(o.join("")).listview('refresh');
+            $(".hl-detail-normal").hide();
+            $(".hl-detail-cno").show();
+            $("#detailNumber1").text(data.wrap_id);
+            $("#detail2_lottery").text(data.lidName);
+            $("#detail2_issue").text(data.t_start_issue);
+            $("#detail2_modes").text(data.t_modes);
+            $("#detail2_single_num").text(data.t_single_num);
+            $("#detail2_total_multiple").text(data.t_total_multiple);
+            $("#detail2_trace_times").text(data.t_trace_times);
+            $("#detail2_total_amount").text(data.t_total_amount);
+            $("#detail2_stop_on_win").text(data.t_stop);
+            $("#detail2_status").text(data.status);
+            $("#detail2_create_time").text(data.t_add_time);
+            var oPackages = [];
+                $.each(data.order, function (aii) {
+                    oPackages.push('<li>');
+                    oPackages.push('<div data-role="fieldcontain"><label class="hl-detail-display-label1">追号期号:</label>');
+                    oPackages.push('<label class="hl-detail-display-label2">' + this.ds_qishu + '</label></div>');
+                    oPackages.push('<div data-role="fieldcontain"><label class="hl-detail-display-label1">开奖号码:</label>');
+                    oPackages.push('<label class="hl-detail-display-label2">' + this.ds_balls + '</label></div>');
+                    oPackages.push('<div data-role="fieldcontain"><label class="hl-detail-display-label1">当期倍数:</label>');
+                    oPackages.push('<label class="hl-detail-display-label2">' + this.multiple + '</label></div>');
+                    oPackages.push('<div data-role="fieldcontain"><label class="hl-detail-display-label1">投注金额:</label>');
+                    oPackages.push('<label class="hl-detail-display-label2">' + this.total_amount + '</label></div>');
+                    oPackages.push('<div data-role="fieldcontain"><label class="hl-detail-display-label1">中奖金额:</label>');
+                    oPackages.push('<label class="hl-detail-display-label2">' + this.total_prize + '</label></div>');
+                    oPackages.push('<div data-role="fieldcontain"><label class="hl-detail-display-label1">订单状态:</label>');
+                    oPackages.push('<label class="hl-detail-display-label2">' + this.status + '</label>');
+                    oPackages.push('<div data-role="fieldcontain"><label class="hl-detail-display-label1">当期状态:</label>');
+                    oPackages.push('<label class="hl-detail-display-label2">' + this.issue_status + '</label>');
+                    var cancel_status = false;
+                    if(this.cancel_status == 1){
+                        cancel_status = true;
+                        oPackages.push('<input type="checkbox" id="canceltrace' + aii + '" checked="checked" style="position: absolute" name="arrTrace" value=' + aii + ' />');
+                    }
+                    if(cancel_status){
+                        $("#cancelpackage").off("click").click(function () {
+                            $("#withdrawPopup").popup("open");
+                            //programmatically bind click event
+                            $("#confirmWithdraw").off("click").click(function () {
+                                var cancelIssues = '';
+                                $("input[name='arrTrace']:checked").each(function(i){
+                                    cancelIssues += this.value+',';
+                                });
+                                traceDetail.withdraw({'issues': cancelIssues, 'trace_id': traceDetail.trace_id});
+                                $("#cancelpackage").hide();
+                            });
+                        }).show();
+                        $("#cancelpackage").show();
+                    }
+                    oPackages.push('</div></li>');
+                });
+                $("#zhuihaoList1").html(oPackages.join("")).listview('refresh');
+            $(".hl-detail-main").show();
+        }else{
+            $("#detailNumber1").text(label.noRecord);
+        }
+    },
+    withdraw:function(sdata){
+        //show load
+        $.mobile.loading('hide');
+        $.mobile.loading('show');
+        server.withdraw(sdata, function (data) {
+            //hide load
+            $.mobile.loading('hide');
+            $(".hl-detail-main, #cancelpackage").hide();
+            if (data.errno == '0') {
+                utils.alert(label.withdrawSuccess, $("#traceDetail"));
+            }
+            else {
+                utils.alert(data.errstr, $("#traceDetail"));
+            }
+            $("#traceDetail").show();
+            traceDetail.init();
+        });
+    }
+};
+$("#back_search1").click(function () {
+    $("#traceDetail").hide();
+    window.history.go(-1);
+});
+//page before show event  注单详情
 $("#detail").on('pagebeforeshow', function () {
     //hide content
     $("#detailNumber").text("");
     $(".hl-detail-main, #cancelpackage").hide();
-
     var profile = cache.getProfile();
-
     if (profile != null && profile.id.length > 0) {
         //clear
         $("#detailList").empty();
@@ -676,34 +826,37 @@ $("#detail").on('pagebeforeshow', function () {
 $("#back_search").click(function () {
     window.history.go(-1);
 });
+
 //page show event
 $("#detail").on('pageshow', function () {
     //initialiaze
+    $("#detail").show();
     detail.init();
 });
 
 var detail = {
     id: "",
+    lid:"",
+    mg_id:"",
+    issue:"",
     //init
     init: function () {
+        clearInterval(dsq);
         if (detail.id.length > 0) {
             //show load
             $.mobile.loading('hide');
             $.mobile.loading('show');
-            server.getDetail({'id': detail.id, 'trace_id': detail.trace_id}, function (data) {
+            server.getDetail({'id': detail.id, 'trace_id': detail.trace_id,'mg_id':detail.mg_id,'lid':detail.lid,issue:detail.issue}, function (data) {
                 //hide load
                 $.mobile.loading('hide');
-
                 if (data != null) {
                     //render
                     detail.render(data);
-                }
-                else {
+                } else {
                     $("#detailNumber").text(label.noRecord);
                 }
             });
-        }
-        else {
+        } else {
             $("#detailNumber").text(label.noRecord);
         }
     },
@@ -711,164 +864,44 @@ var detail = {
     render: function (data) {
         var o = [];
         //number list
-        $.each(data.projects, function () {
+        $.each(data.code_detail, function () {
             o.push('<li>');
             o.push('<span class="hl-detail-game">');
-            o.push(this.cname);
+            o.push(this.name);
             o.push('</span><span class="hl-detail-number">');
-            o.push(this.code);
+            o.push(this.number);
             o.push('</span><span class="hl-detail-bet">');
-            o.push(this.single_num);
+            o.push(this.nums);
             o.push('注</span></li>');
         });
         $("#detailList").html(o.join("")).listview('refresh');
-        //detail
-
-        if (data.trace) {
-            //默认1950系列
-            //data.prizeMode='1950';
-            var pid = detail.id.substr(detail.id.length - 12, 11);
-            pid = pid.match(/[1-9][0-9]*/g);
-            //console.log(pid);
-            $(".hl-detail-normal").hide();
-            $(".hl-detail-cno").show();
-            $("#detailNumber").text(data.trace.wrap_id);
-            //$("#detailNumber").text(detail.id);
-            $("#detail2_lottery").text(data.lottery.cname);
-            $("#detail2_issue").text(data.packages[pid].issue);
-            $("#detail2_modes").text(data.modes);
-            $("#detail2_single_num").text(data.trace.single_num);
-            $("#detail2_total_multiple").text(data.trace.total_multiple);
-            $("#detail2_trace_times").text(data.trace.trace_times);
-            $("#detail2_total_amount").text(data.trace.total_amount);
-            $("#detail2_prizeMode").text(data.prizeMode);
-            $("#detail2_stop_on_win").text(data.trace.stop_on_win);
-            $("#detail2_status").text(data.trace.status);
-            $("#detail2_create_time").text(data.trace.create_time);
-            var oPackages = [];
-            var cancel_status = false;
-            $.each(data.packages, function (aii) {
-                if (this.cancel_status == '0')
-                    cancel_status = true;
-                oPackages.push('<li>');
-                oPackages.push('<div data-role="fieldcontain"><label class="hl-detail-display-label1">追号期号:</label>');
-                oPackages.push('<label class="hl-detail-display-label2">' + this.issue + '</label></div>');
-                oPackages.push('<div data-role="fieldcontain"><label class="hl-detail-display-label1">开奖号码:</label>');
-                oPackages.push('<label class="hl-detail-display-label2">' + this.openCodes + '</label></div>');
-                oPackages.push('<div data-role="fieldcontain"><label class="hl-detail-display-label1">当期倍数:</label>');
-                oPackages.push('<label class="hl-detail-display-label2">' + this.multiple + '</label></div>');
-                oPackages.push('<div data-role="fieldcontain"><label class="hl-detail-display-label1">投注金额:</label>');
-                oPackages.push('<label class="hl-detail-display-label2">' + this.amount + '</label></div>');
-                oPackages.push('<div data-role="fieldcontain"><label class="hl-detail-display-label1">中奖金额:</label>');
-                oPackages.push('<label class="hl-detail-display-label2">' + this.prize + '</label></div>');
-                oPackages.push('<div data-role="fieldcontain"><label class="hl-detail-display-label1">订单状态:</label>');
-                oPackages.push('<label class="hl-detail-display-label2">' + this.status + '</label>');
-                if (!data.packages[aii].openCodes && data.packages[aii].cancel_status == 0 && data.packages[aii].issue != data.lastIssueInfo.issue) {
-                    oPackages.push('<input type="checkbox" id="canceltrace' + aii + '" checked="checked" style="position: absolute" name="arrTrace" value=' + aii + ' />');
-                }
-                oPackages.push('</div></li>');
-            });
-            $("#zhuihaoList").html(oPackages.join("")).listview('refresh');
-
-            //withdraw button 撤单
-            detail.wrap_id = data.trace.wrap_id;
-            //detail.pkids = pkids;
-            if (cancel_status) {
-                $("#cancelpackage").off("click").click(function () {
-                    var pkids = [];
-                    var traceon = 0;
-                    var str = document.getElementsByName("arrTrace");
-                    $.each(str, function (i) {
-                        if (str[i].checked == true && data.packages[str[i].value].issue != data.lastIssueInfo.issue) {
-                            pkids.push(this.value);
-                        } else if (str[i].checked == true && data.packages[str[i].value].issue == data.lastIssueInfo.issue) {
-                            $('#canceltrace' + str[i].value).remove();
-                            traceon = 1;
-                            return false;
-                        }
-                    });
-                    if (traceon == 1) {
-                        alert('所选撤单的奖期正在开奖！');
-                        return false;
-                    }
-                    if (pkids.length == 0) {
-                        alert('请选中所要撤单的奖期！');
-                        return false;
-                    }
-                    $("#withdrawPopup").popup("open");
-                    //programmatically bind click event
-                    $("#confirmWithdraw").off("click").click(function () {
-                        detail.withdraw({
-                            'id': detail.id, 'trace_id': detail.trace_id, 'wrap_id': detail.wrap_id,
-                            'pkids': pkids
-                        });
-                        $.each(pkids, function (i) {
-                            $('#canceltrace' + pkids[i]).hide();
-                        });
-                        var tempstatus = 0;
-                        $.each(data.packages, function (i) {
-                            if (this.cancel_status == '0' && !this.openCodes && data.packages[i].issue != data.lastIssueInfo.issue) {
-                                //$("#withdraw").hide();
-                                tempstatus = 1;
-                                return false;
-                            }
-                        });
-                        if (tempstatus == 0) {
-                            $("#cancelpackage").hide();
-                        }
-                    });
-                }).show();
-            }
-            var tracestatus = 0;
-            $.each(data.packages, function (i) {
-                if (this.cancel_status == '0' && !this.openCodes && data.packages[i].issue != data.lastIssueInfo.issue) {
-                    //$("#withdraw").hide();
-                    tracestatus = 1;
-                    return false;
-                }
-            });
-            if (tracestatus == 0) {
-                $("#cancelpackage").hide();
-            }
-            //if (data.packages[pid].openCodes||data.packages[pid].cancel_status==1||data.packages[pid].cancel_status==2) {
-            //    $("#withdraw").hide();
-            //}
-        }
-        else if (data.package) {
-            //默认1950系列
-            //data.prizeMode='1950';
             $(".hl-detail-normal").show();
             $(".hl-detail-cno").hide();
-            $("#detailNumber").text(data.package.wrap_id);
-            $("#detail_username").text(data.user.username);
-            $("#detail_create_time").text(data.package.create_time);
-            $("#detail_lottery").text(data.lottery.cname);
-            $("#detail_issue").text(data.package.issue);
-            $("#detail_single_num").text(data.package.single_num);
-            $("#detail_multiple").text(data.package.multiple);
-            $("#detail_modes").text(data.modes);
-            $("#detail_is_trace").text(data.package.is_trace);
-            $("#detail_amount").text(data.package.amount);
-            $("#detail_prizeMode").text(data.prizeMode);
-            $("#detail_openCodes").text(data.package.openCodes);
-            $("#detail_status").text(data.package.status);
-            $("#detail_prize").text(data.package.prize);
+            $("#detailNumber").text(data.o_sn);
+            $("#detail_username").text(data.o_username);
+            $("#detail_create_time").text(data.o_add_time);
+            $("#detail_lottery").text(data.lidName);
+            $("#detail_issue").text(data.o_issue);
+            $("#detail_single_num").text(data.o_single_num);
+            $("#detail_multiple").text(data.o_multiple);
+            $("#detail_modes").text(data.modeName);
+            if(data.o_trace_id){
+                var create_trace_a = document.createElement("a");
+                var create_node = document.createTextNode("是【查看追号详情】");
+                create_trace_a.appendChild(create_node);
+                create_trace_a.setAttribute('href','#traceDetail?trace_id='+data.o_trace_id);
+                create_trace_a.setAttribute('class','create_trace_a');
+                $("#detail_is_trace").html(create_trace_a);
+            }else{
+                $("#detail_is_trace").text(data.trace_status);
+            }
+            $("#detail_amount").text(data.o_amount);
+            $("#detail_prizeMode").text(data.odd_detail);
+            $("#detail_openCodes").text(data.draw_code);
+            $("#detail_status").text(data.prize_status);
+            $("#detail_prize").text(data.o_wins);
             //withdraw button 撤单
-            detail.wrap_id = data.package.wrap_id;
-            if (data.package.cancel_status == '0') {
-                $("#cancelpackage").off("click").click(function () {
-                    $("#withdrawPopup").popup("open");
-                    //programmatically bind click event
-                    $("#confirmWithdraw").off("click").click(function () {
-                        detail.withdraw({'id': detail.wrap_id, 'trace_id': detail.trace_id, 'wrap_id': detail.wrap_id});
-                        $("#cancelpackage").hide();
-                    });
-                }).show();
-            }
-            if (data.package.openCodes) {
-                $("#cancelpackage").hide();
-            }
-        }
+            detail.wrap_id = data.o_sn;
         $(".hl-detail-main").show();
     },
     //withdraw
@@ -902,6 +935,7 @@ $("#member").on('pageshow', function () {
 var member = {
     //init
     init: function () {
+        clearInterval(dsq);
         member.render();
     },
     //render
@@ -967,6 +1001,7 @@ $("#deposits").on('pageshow', function () {
 var deposits = {
     //init
     init: function () {
+        clearInterval(dsq);
         deposits.render();
     },
     //render
@@ -1031,6 +1066,7 @@ $(document).on('refresh', function (event, data) {
 var accountSummary = {
     //init
     init: function () {
+        clearInterval(dsq);
         //clear content
         $("#accountList").empty();
         accountSummary.search(false);
@@ -1164,6 +1200,7 @@ var accountInquiry = {
     pageNumber: 1,
     //init
     init: function () {
+        clearInterval(dsq);
         //clear
         $("#accountInquiryList").empty();
         accountInquiry.render();
@@ -1318,6 +1355,7 @@ $(document).on('refresh', function (event, data) {
 var accountWithdraw = {
     //init
     init: function () {
+        clearInterval(dsq);
         //clear content
         $("#accountWithdrawMessage, #accountWithdrawBalance").text("");
         $("#txtWithdrawAmount, #txtAccountPassword").val("");
@@ -1357,7 +1395,6 @@ var accountWithdraw = {
     render: function (data) {
         if (data) {
             if (isEmpty(data.errno)) {
-                console.log(data.errno);
                 var s = [];
                 if (data.bindCards && data.withdrawBankList) {
                     $.each(data.bindCards, function (index) {
@@ -1453,6 +1490,7 @@ $(document).on('refresh', function (event, data) {
 var alipay = {
     //init
     init: function () {
+        clearInterval(dsq);
         alipay.search(false);
     },
     //search
@@ -1541,6 +1579,7 @@ $(document).on('refresh', function (event, data) {
 var yeepaycard = {
     //init
     init: function () {
+        clearInterval(dsq);
         yeepaycard.search(false);
     },
     //search
@@ -1648,6 +1687,7 @@ $(document).on('refresh', function (event, data) {
 var tenpay = {
     //init
     init: function () {
+        clearInterval(dsq);
         tenpay.search(false);
     },
     //search
@@ -1736,6 +1776,7 @@ $(document).on('refresh', function (event, data) {
 var icbc = {
     //init
     init: function () {
+        clearInterval(dsq);
         icbc.search(false);
     },
     //search
@@ -2116,6 +2157,7 @@ var orderSelect = {
     newopen: 0,
     //init
     init: function () {
+        clearInterval(dsq);
         //$.mobile.loading('hide');
         //$.mobile.loading('show');
         //$(".scrollWrapper").css('display','none');
@@ -2323,7 +2365,6 @@ var orderSelect = {
         if (subOption) {
             //cache subOption
             orderSelect.gameSubOption = subOption;
-
             if (!isEmpty(subOption.field_def) && subOption.can_input != '0') {
                 //需要显示输入方式选择
                 $('#enterNum').show();
@@ -2520,7 +2561,8 @@ var orderSelect = {
                 bets_total = 0;
             }
             function computeFinalPrizePrize(prize) {
-                var selectPrize = round(parseFloat(game.defaultMode) * parseFloat(prize) * (parseFloat(game.prizeRate) + parseFloat(game.rebate)) / parseFloat(game.prizeRate), 2);
+                // var selectPrize = round(parseFloat(game.defaultMode) * parseFloat(prize) * (parseFloat(game.prizeRate) + parseFloat(game.rebate)) / parseFloat(game.prizeRate), 2);
+                var selectPrize= round(parseFloat(game.defaultMode) * parseFloat(prize[1]),2);
                 if (orderSelect.gameSubOption.name == 'YMBDW' && selectPrize > 6.61) {
                     selectPrize = 6.61;
                 }
@@ -2709,21 +2751,17 @@ var orderSelect = {
                     cache.setDraw(data);
                     //update title
                     $("#orderTitle").html(utils.getGameLabel(gameId));
-                    orderSelect.countDownTimer($("#orderCountdown"), data.curRemainTime);
-                    var q = [], arrt = [], reinfo = [], perinfo = [];
-                    reinfo = data.lastIssueInfo.issue.split("-");
-                    perinfo = data.curIssueInfo.issue.split("-");
-                    if (!perinfo[1]) {
-                        perinfo[1] = data.curIssueInfo.issue;
-                    }
-                    if (!reinfo[1]) {
-                        reinfo[1] = data.lastIssueInfo.issue;
-                    }
-                    $("#orderPeriod").html('距<span class="hl-order-period">' + perinfo[1] + label.period + '</span>:');
-                    $("#orderLastkj").html(reinfo[1] + label.period + "开奖结果");
+                    orderSelect.countDownTimer($("#orderCountdown"), data.curRemainTime,data.waite_time,data.state);
+                    var q = [], arrt = [], reinfo = null, perinfo = null;
+                    // reinfo = data.lastIssueInfo.issue.split("-");
+                    // perinfo = data.curIssueInfo.issue.split("-");
+                    reinfo = data.lastIssueInfo.issue;
+                    perinfo = data.curIssueInfo.issue;
+                    $("#orderPeriod").html('距<span class="hl-order-period">' + perinfo + label.period + '</span>:');
+                    $("#orderLastkj").html(reinfo + label.period + "开奖结果");
                     q.push('<li>');
                     if (data.lastIssueInfo.code.indexOf(" ") == -1) {
-                        arrt = data.lastIssueInfo.code.split("");
+                        arrt = data.lastIssueInfo.code.split(",");
                     } else {
                         arrt = data.lastIssueInfo.code.split(" ");
                     }
@@ -2751,7 +2789,7 @@ var orderSelect = {
         $("#orderCountdown").countdown('destroy');
     },
     //count down timer
-    countDownTimer: function (gameTime, timestamp) {
+    countDownTimer: function (gameTime, timestamp,waite_time,state) {
         //timestamp = 999999;
         gameTime.countdown('destroy');
         gameTime.countdown({
@@ -2761,11 +2799,46 @@ var orderSelect = {
             onExpiry: function () {
                 utils.alert(label.drawDisable, $("#orderSelect"), orderSelect.setCountdown);
                 //refresh countdown
-
             }
         });
-        if (timestamp < 1) {
-            utils.alert(label.drawDisable, $("#orderSelect"), orderSelect.setCountdown);
+
+        if (timestamp < 1 ) {
+            gameTime.countdown('destroy');
+            if($("#orderCountdown").html() == '00:00:00'){
+                // utils.alert(label.drawDisable1, $("#orderSelect"), orderSelect.setCountdown);
+                alert(label.drawDisable1);
+            }
+            orderConfirm.countDownTimer($("#orderConfirmCountdown"),timestamp,waite_time,state);
+            $("#orderCountdown").hide();
+            $("#orderPeriod").hide();
+            $("#orderCountdown1").show();
+            $("#orderPeriod1").show();
+            $("#orderCountdown1").countdown({
+                until: waite_time,
+                format: "dHMS",
+                compact: true,
+                onExpiry: function () {
+                    // utils.alert('封盘结束！', $("#orderSelect"), orderSelect.setCountdown);
+                    alert('该期截止！');
+                    //refresh countdown
+                    $("#orderCountdown1").hide();
+                    $("#orderPeriod1").hide();
+                    $("#orderCountdown").show();
+                    $("#orderPeriod").show();
+                }
+            });
+        }else{
+            $("#orderCountdown1").hide();
+            $("#orderPeriod1").hide();
+            $("#orderCountdown").show();
+            $("#orderPeriod").show();
+        }
+        if(isNaN(timestamp)){
+            $("#orderCountdown").hide();
+            $("#orderPeriod").hide();
+            $("#orderPeriod1").text('等待开奖');
+            $("#orderCountdown1").show();
+            $("#orderPeriod1").show();
         }
     },
     //reset draw
@@ -2924,6 +2997,7 @@ var orderConfirm = {
     payoutStack: [],
     //init
     init: function () {
+        clearInterval(dsq);
         var data = cache.getData();
         $('.hl-order-footer-left').css('display', 'block');
         var game = utils.getGameConfigsById(cache.getGame()).gc;
@@ -3557,7 +3631,6 @@ var orderConfirm = {
                                     $.mobile.loading('hide');
                                     if (data) {
                                         orderConfirm.resetBet();
-
                                         utils.prompt(label.orderSuccess.replace("{0}", data.no).replace("{1}", $("#lblTotal").text().replace("￥", "")),
                                             $("#orderConfirm"),
                                             function () {
@@ -3594,7 +3667,7 @@ var orderConfirm = {
                     //cache data
                     cache.setDraw(data);
                     $(".hl-order-confirm-bet-no").text(cache.getDraw().curIssueInfo.issue);
-                    orderConfirm.countDownTimer($("#orderConfirmCountdown"), data.curRemainTime);
+                    orderConfirm.countDownTimer($("#orderConfirmCountdown"), data.curRemainTime,data.curIssueInfo.waite_time,data.curIssueInfo.state);
                     //追号也要刷新
                     if ($("#advCno").attr('enable') == '1') {
                         orderConfirm.refreshTraceData();
@@ -3608,20 +3681,36 @@ var orderConfirm = {
         $("#orderConfirmCountdown").countdown('destroy');
     },
     //count down timer
-    countDownTimer: function (gameTime, timestamp) {
+    countDownTimer: function (gameTime, timestamp,waite_time,state) {
         //set display
-        if (timestamp < 1) {
-            utils.alert(label.drawDisable, $("#orderConfirm"), orderConfirm.setCountdown());
-        } else {
-            gameTime.countdown('destroy');
+        gameTime.countdown('destroy');
+        if (timestamp > 0) {
+            $("#orderStop").html("<span>截止：</span>");
+            // utils.alert(label.drawDisable, $("#orderConfirm"), orderConfirm.setCountdown());
             gameTime.countdown({
-                until: timestamp - 1,
+                until: timestamp,
                 format: "dHMS",
                 compact: true,
                 onExpiry: function () {
                     utils.alert(label.drawDisable, $("#orderConfirm"), orderConfirm.setCountdown);
                 }
             });
+        } else {
+            $("#orderStop").html("<span>开奖倒计时：</span>");
+            gameTime.countdown({
+                until: waite_time,
+                format: "dHMS",
+                compact: true,
+                onExpiry: function () {
+                    // utils.alert(label.drawDisable1, $("#orderConfirm"), orderConfirm.setCountdown);
+                    orderConfirm.setCountdown();
+                }
+            });
+        }
+        if(isNaN(timestamp)){
+            gameTime.countdown('destroy');
+            $("#orderStop").empty();
+            gameTime.text('等待开奖');
         }
     },
     //reset bet

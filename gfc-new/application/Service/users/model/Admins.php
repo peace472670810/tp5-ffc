@@ -26,53 +26,105 @@ class Admins extends  Model
         '20000012'=>'登录失败：密码错误',
         '20000013'=>'登录失败：已被冻结',
         '20000014'=>'登录失败：非法IP',
+        '20000015'=>'登录失败：用户已被冻结！',
+        '20000016'=>'登录失败：用户信息有误！',
     ];
     /**
      * 登录验证
+     * 先去admins表里面查 没有的话就去uses
+     * users表不存在在则提示不存在该用户  存在的话就用users 表里面的数据添加一个admin用户
      * @param $username
      * @param $pwd
      * @return int|mixed
      */
-    public function login($username, $pwd)
+    public function login($username, $pwd,$ip)
     {
-        if (!preg_match('`^[a-zA-Z]\w{3,20}$`Uims', $username)) {
+        if (!preg_match('`^[0-9a-zA-Z]\w{3,50}$`Uims', $username)) {
             throw  new Exception(self::$ADMIN_CODE['20000010'],'20000010');
         }
-        $map = '';
-        $map['u_username'] = $username;   
-        $admin = $this->get($map);      
+        $admin = $this->table('ffc_admins')->where('u_username','eq',$username)->find();
+        $now = date('Y-m-d H:i:s');
         if (!$admin) {
-            throw  new Exception(self::$ADMIN_CODE['20000011'],'20000011');
-        }
-        if ($admin['u_pwd'] !== $this->setPassword($pwd)) {
-            throw  new Exception(self::$ADMIN_CODE['20000012'],'20000012');
-        }
-        if ($admin['u_is_enabled'] != 8) {
-            throw  new Exception(self::$ADMIN_CODE['20000013'],'20000013');
-        }
-
-        $data = $admin->data;
-       
-        if(!empty($data['u_name'])){
-          $text=Db::table('ffc_users')->where("u_id",$data['u_id'])->where("u_status","8")->select();
-          if(empty($text)){
-             throw  new Exception(self::$ADMIN_CODE['20000013'],'20000013');
-           }
-            session('u_name',$data['u_name']);
+            $res = $this->query("select * from  ffc_users where u_username = '{$username}' and u_level != 0  limit 1");
+            if(empty($res)){//users 表不存在
+                throw  new Exception(self::$ADMIN_CODE['20000011'],'20000011');
+            }else{//users表存在则admin新增
+                $user = $res[0];
+                if ($user['u_pwd'] !== $this->setPassword($pwd)) {
+                    throw  new Exception(self::$ADMIN_CODE['20000012'],'20000012');
+                }
+                if($user['u_status'] == '8'){//正常上级才能创建登录
+                    $admin['u_username'] = $user['u_username'];
+                    $admin['u_name'] = $user['u_username'];
+                    $admin['u_pwd'] = $user['u_pwd'];
+                    $admin['u_nickname'] = $user['u_nick_name'];
+                    $admin['u_reg_time'] = $now;
+                    $admin['u_last_time']= $now;
+                    $admin['u_level'] = $user['u_level'];
+                    switch ($user['u_level']){
+                        case 1:
+                            $admin['u_group_id']='1,2,15,16,17,21,33,34,35,36,37,38,39,40,41';
+                            break;
+                        case 2:
+                            $admin['u_group_id']='1,2,12,13,14,15,16,17,21,33,34,35,36,37,38,39,40,41';
+                            break;
+                        case 3:
+                            $admin['u_group_id']='1,2,9,10,11,12,13,14,15,16,17,21,33,34,35,36,37,38,39,40,41';
+                            break;
+                        case 4:
+                            $admin['u_group_id']='1,2,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,33,34,35,36,37,38,39,40,41,56';
+                            break;
+                    }
+                    $admin['u_is_enabled'] = $user['u_status'];
+                    $admin['u_id'] = $user['u_id'];
+                    $admin['u_admin_id'] = $this->table('ffc_admins')->insertGetId($admin);
+                    if(!$admin['u_admin_id']){
+                        throw  new Exception(self::$ADMIN_CODE['20000016'],'20000016');
+                    }
+                    session('u_name',$admin['u_name']);
+                }else{
+                    throw  new Exception(self::$ADMIN_CODE['20000015'],'20000015');
+                }
+            }
         }else{
-          $text=Db::table('ffc_users')->where("u_username",$data['u_parent_name'])->where("u_status","8")->select();
-          if(empty($text)){
-             throw  new Exception(self::$ADMIN_CODE['20000013'],'20000013');
-           }
-            session('is_child',1);
-            session('u_name',$data['u_parent_name']);
+            $admin = $admin->data;
+            if ($admin['u_pwd'] !== $this->setPassword($pwd)) {
+                throw  new Exception(self::$ADMIN_CODE['20000012'],'20000012');
+            }
+            if ($admin['u_is_enabled'] != 8) {
+                throw  new Exception(self::$ADMIN_CODE['20000013'],'20000013');
+            }
+            if(!empty($admin['u_name'])){//不是子账户登录
+                $text=Db::table('ffc_users')->where("u_id",$admin['u_id'])->where("u_status","8")->find();
+                if(empty($text)){
+                    throw  new Exception(self::$ADMIN_CODE['20000013'],'20000013');
+                }
+                session('u_name',$admin['u_name']);
+            }else{//子账户登录
+                $text=Db::table('ffc_users')->where("u_username",$admin['u_parent_name'])->where("u_status","8")->find();
+                if(empty($text)){
+                    throw  new Exception(self::$ADMIN_CODE['20000013'],'20000013');
+                }
+                session('is_child',1);
+                session('u_name',$admin['u_parent_name']);
+            }
         }
-        session('admin_auth_id',$data['u_admin_id']);
-        session('admin_auth_name',$data['u_username']);
-        session('u_id',$data['u_id']);      
-        session('level',$data['u_level']);
-        session('admin_auth',$data);
-        return $admin->data;
+        $sql = "update `ffc_users` set u_last_time='{$now}',u_last_ip='{$ip}'  where  u_username='{$username}'";
+        $ssql= "update `ffc_admins` set u_last_time='{$now}',u_last_ip='{$ip}'  where  u_username='{$username}'";
+        $this->query($sql);
+        $this->query($ssql);
+        session('admin_auth_id',$admin['u_admin_id']);
+        session('admin_auth_name',$admin['u_username']);
+        session('u_id',$admin['u_id']);
+        session('level',$admin['u_level']);
+        session('admin_auth',$admin);
+        if(empty($admin['u_parent_name'])){//不是子账户  用本身自己用户名去ffc_users 表查询账号 并记录
+            $userInfo = $this->query("select * from  ffc_users where u_username ='{$admin['u_username']}' limit 1");
+        }else{//子账户的话查询去ffc_users 表查询主账号 记录
+            $userInfo = $this->query("select * from  ffc_users where u_username ='{$admin['u_parent_name']}' limit 1");
+        }
+        session('userInfo',$userInfo[0]);
+        return $admin;
     }
 
     /**
